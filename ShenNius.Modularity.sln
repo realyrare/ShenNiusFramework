@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.ModuleCore", "src\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj", "{C0CFAD4C-DF74-460C-9DE6-F970C83D2683}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0CFAD4C-DF74-460C-9DE6-F970C83D2683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0CFAD4C-DF74-460C-9DE6-F970C83D2683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0CFAD4C-DF74-460C-9DE6-F970C83D2683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0CFAD4C-DF74-460C-9DE6-F970C83D2683}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0CFAD4C-DF74-460C-9DE6-F970C83D2683} = {96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}
+	EndGlobalSection
+EndGlobal
