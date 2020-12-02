@@ -11,6 +11,7 @@ namespace ShenNius.Repository
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
+           
         }
     }
 }

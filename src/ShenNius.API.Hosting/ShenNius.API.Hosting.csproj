@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Code\ShenNius.Modularity\src\ShenNius.API.Hosting\ShenNius.API.Hosting.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShenNius.API\ShenNius.API.csproj" />
+    <ProjectReference Include="..\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
+    <ProjectReference Include="..\ShenNius.Swagger\ShenNius.Swagger.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,7 +15,6 @@ namespace ModuleCore.Context
         public IServiceProvider ServiceProvider { get; }
 
         public IConfiguration Configuration { get; }
-
         public ApplicationInitializationContext([NotNull] IServiceProvider serviceProvider, [NotNull] IConfiguration configuration)
         {
             ServiceProvider = serviceProvider;
