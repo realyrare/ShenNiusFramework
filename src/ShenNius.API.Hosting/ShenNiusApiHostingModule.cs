@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +12,8 @@ using ShenNius.Swagger;
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
-        typeof(ShenNiusApiModule),
-        typeof(ShenNiusSwaggerModule)
+        typeof(ShenNiusSwaggerModule),
+        typeof(ShenNiusApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
     {
@@ -67,10 +66,10 @@ namespace ShenNius.API.Hosting
             //app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             // 身份验证
-           // app.UseAuthentication();
+            app.UseAuthentication();
 
             // 认证授权
-           // app.UseAuthorization();
+            app.UseAuthorization();
 
             // HTTP => HTTPS
             app.UseHttpsRedirection();

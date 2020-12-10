@@ -4,5 +4,11 @@
         <name>ShenNius.API.Hosting</name>
     </assembly>
     <members>
+        <member name="M:ShenNius.API.Hosting.Controller.ValuesController.GetContent2">
+            <summary>
+            请求测试内容
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

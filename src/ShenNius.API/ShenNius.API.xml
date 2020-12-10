@@ -4,6 +4,30 @@
         <name>ShenNius.API</name>
     </assembly>
     <members>
+        <member name="M:ShenNius.API.Controllers.HomeController.GetContent">
+            <summary>
+            请求测试内容
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.API.Controllers.HomeController.PostContent">
+            <summary>
+            post请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.API.Controllers.HomeController.PutContent">
+            <summary>
+            put 请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.API.Controllers.HomeController.DelContent">
+            <summary>
+            put 请求
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:ShenNius.API.ShenNiusApiModule">
             <summary>
             

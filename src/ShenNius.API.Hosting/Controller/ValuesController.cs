@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ShenNius.API.Hosting.Controller
 {
@@ -6,7 +7,12 @@ namespace ShenNius.API.Hosting.Controller
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        /// <summary>
+        /// 请求测试内容
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public IActionResult GetContent2()
         {
             return Ok("test。。。");
