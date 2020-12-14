@@ -50,19 +50,16 @@ namespace ShenNius.Swagger
                     In = ParameterLocation.Header,//jwt默认存放Authorization信息的位置(请求头中)
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer",
-
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement {
                     {
-
                        new OpenApiSecurityScheme{
                          Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
                        },
                        new[] { "readAccess", "writeAccess" }
                     }
                 });
-
             });            
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -85,8 +82,6 @@ namespace ShenNius.Swagger
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShenNius API V1");
                 c.RoutePrefix = string.Empty;
             });
-
-
         }
     }
 }

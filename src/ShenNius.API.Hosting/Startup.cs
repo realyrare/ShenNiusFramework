@@ -19,26 +19,11 @@ namespace ShenNius.API.Hosting
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddModule<ShenNiusApiHostingModule>(Configuration);
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShenNius.API", Version = "v1" });
-            //    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            //    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            //    c.IncludeXmlComments(xmlPath);
-            //});
+            services.AddModule<ShenNiusApiHostingModule>(Configuration);           
         }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-           
-            app.UseModule();
-            //app.UseSwagger( );
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShenNius API V1");
-            //});
-           
+        {          
+            app.UseModule();           
         }
     }
 }

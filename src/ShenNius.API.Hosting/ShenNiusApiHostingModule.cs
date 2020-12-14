@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
+using ShenNius.Models.ViewModels.Response;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Swagger;
+using System.Linq;
+using System.Reflection;
 
 namespace ShenNius.API.Hosting
 {
@@ -24,7 +29,7 @@ namespace ShenNius.API.Hosting
             //{
             //    options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             //});
-            context.Services.AddControllers();
+            var mvcBuilder = context.Services.AddControllers();
             // 路由配置
             context.Services.AddRouting(options =>
             {
@@ -33,12 +38,41 @@ namespace ShenNius.API.Hosting
                 // 在生成的URL后面添加斜杠
                 options.AppendTrailingSlash = true;
             });
-           
-      
+
+            // FluentValidation 统一请求参数验证          
+            mvcBuilder.AddFluentValidation(fv =>
+            {
+                var types = Assembly.Load("ShenNius.Models").GetTypes().ToList();
+                    // .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null);
+                    types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+            });
+
+            // 模型验证自定义返回格式
+            context.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    var errors = context.ModelState
+                        .Values
+                        .SelectMany(x => x.Errors
+                            .Select(p => p.ErrorMessage))
+                        .ToList();
+
+                    var result = new ApiResult<string>()
+                    {
+                        StatusCode = 400,
+                        Msg = errors.FirstOrDefault(),
+                        Success = false
+                    };
+                    return new BadRequestObjectResult(result);
+                };
+            });
+
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            var app =  context.GetApplicationBuilder();          
+            var app = context.GetApplicationBuilder();
             var env = ServiceProviderServiceExtensions.GetRequiredService<IWebHostEnvironment>(context.ServiceProvider);
             // 环境变量，开发环境
             if (env.IsDevelopment())
@@ -55,7 +89,7 @@ namespace ShenNius.API.Hosting
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-           
+
             // 路由
             app.UseRouting();
 

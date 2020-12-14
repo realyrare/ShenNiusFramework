@@ -10,10 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ShenNius.API\ShenNius.API.csproj" />
+    <ProjectReference Include="..\ShenNius.Infrastructure\ShenNius.Infrastructure.csproj" />
+    <ProjectReference Include="..\ShenNius.Models\ShenNius.Models.csproj" />
     <ProjectReference Include="..\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\ShenNius.Swagger\ShenNius.Swagger.csproj" />
   </ItemGroup>
