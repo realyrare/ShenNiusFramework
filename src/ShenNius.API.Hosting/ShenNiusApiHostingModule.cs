@@ -1,23 +1,34 @@
 ﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Models.ViewModels.Response;
 using ShenNius.ModuleCore.Extensions;
+using ShenNius.OrderApi;
 using ShenNius.Swagger;
+using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
         typeof(ShenNiusSwaggerModule),
+        typeof(ShenNiusOrderApiModule),
         typeof(ShenNiusApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
@@ -25,10 +36,35 @@ namespace ShenNius.API.Hosting
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
             // 跨域配置
-            //context.Services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            //});
+            context.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            });
+
+
+            #region JWT 认证
+            context.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = "jonny",
+                    ValidAudience = "jonny",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretsecretsecret")),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            #endregion
+
+            context.Services.AddAuthorization();
+
+
+
+            // context.Services.AddAuthorization();
             var mvcBuilder = context.Services.AddControllers();
             // 路由配置
             context.Services.AddRouting(options =>
@@ -43,8 +79,8 @@ namespace ShenNius.API.Hosting
             mvcBuilder.AddFluentValidation(fv =>
             {
                 var types = Assembly.Load("ShenNius.Models").GetTypes().ToList();
-                    // .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null);
-                    types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
+                // .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null);
+                types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
                 fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
 
@@ -78,7 +114,7 @@ namespace ShenNius.API.Hosting
             if (env.IsDevelopment())
             {
                 // 生成异常页面
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
 
             // 使用HSTS的中间件，该中间件添加了严格传输安全头
@@ -94,10 +130,8 @@ namespace ShenNius.API.Hosting
             app.UseRouting();
 
             // 跨域
-            //app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-            // 异常处理中间件
-            //app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             // 身份验证
             app.UseAuthentication();
