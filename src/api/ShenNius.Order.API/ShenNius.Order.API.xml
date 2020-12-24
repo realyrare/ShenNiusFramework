@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShenNius.Order.API</name>
+    </assembly>
+    <members>
+        <member name="T:ShenNius.Order.API.Controllers.OrderController">
+            <summary>
+            订单控制器
+            </summary>
+        </member>
+        <member name="M:ShenNius.Order.API.Controllers.OrderController.GetAll">
+            <summary>
+            请求测试内容4444
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Order.API.Controllers.OrderController.AddOrder">
+            <summary>
+            post请求
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

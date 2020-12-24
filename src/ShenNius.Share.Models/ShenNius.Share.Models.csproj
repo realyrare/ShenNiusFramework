@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Code\ShenNius.Framework\src\ShenNius.Share.Models\ShenNius.Share.Models.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Entity\Product\" />
+    <Folder Include="Entity\Order\" />
+    <Folder Include="Maps\" />
+    <Folder Include="Enums\" />
+    <Folder Include="ViewModels\Input\" />
+    <Folder Include="ViewModels\Configs\" />
+  </ItemGroup>
+	<ItemGroup>
+	
+		<PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+	</ItemGroup>
+</Project>

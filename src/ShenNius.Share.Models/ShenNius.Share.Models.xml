@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShenNius.Share.Models</name>
+    </assembly>
+    <members>
+        <member name="T:ShenNius.Share.Models.Entity.Sys.User">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.User.Name">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.User.Password">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+    </members>
+</doc>

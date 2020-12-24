@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShenNius.Product.API</name>
+    </assembly>
+    <members>
+        <member name="M:ShenNius.Product.API.Controllers.HomeController.GetContent">
+            <summary>
+            请求测试内容
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Product.API.Controllers.HomeController.PostContent">
+            <summary>
+            post请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Product.API.Controllers.HomeController.PutContent">
+            <summary>
+            put 请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Product.API.Controllers.HomeController.DelContent">
+            <summary>
+            put 请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ShenNius.Product.API.ShenNiusApiModule">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
