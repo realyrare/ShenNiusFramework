@@ -4,6 +4,11 @@
         <name>ShenNius.Product.API</name>
     </assembly>
     <members>
+        <member name="T:ShenNius.Product.API.Controllers.HomeController">
+            <summary>
+            产品控制器
+            </summary>
+        </member>
         <member name="M:ShenNius.Product.API.Controllers.HomeController.GetContent">
             <summary>
             请求测试内容
@@ -28,7 +33,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:ShenNius.Product.API.ShenNiusApiModule">
+        <member name="T:ShenNius.Product.API.ShenNiusProductApiModule">
             <summary>
             
             </summary>

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Code\ShenNius.Framework\src\ShenNius.Product.API\ShenNius.Product.API.xml</DocumentationFile>
+    <DocumentationFile>C:\Code\ShenNius.Framework\src\api\ShenNius.Product.API\ShenNius.Product.API.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
