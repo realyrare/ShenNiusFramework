@@ -1,4 +1,4 @@
-﻿namespace ShenNius.Service.Enum
+﻿namespace ShenNius.Share.Service.Enum
 {
     public enum DbOrder
     {

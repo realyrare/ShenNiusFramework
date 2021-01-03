@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ShenNius.Infrastructure.ApiResponse;
 using ShenNius.Infrastructure.JsonWebToken.Model;
 using ShenNius.Share.Infrastructure.JsonWebToken;
+using ShenNius.Share.Service.Interface.Sys;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,31 +20,45 @@ namespace ShenNius.Login.API.Controllers
     public class UserController : ApiControllerBase
     {
         readonly IOptions<JwtSetting> _jwtSetting;
+        private readonly IAdminService _adminService;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jwtSetting"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting)
+        /// <param name="adminService"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IAdminService adminService)
         {
             _jwtSetting = jwtSetting;
+            _adminService = adminService;
+        }
+      
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task <ApiResult> GetListPages(int page,string key)
+        {
+            var res = await _adminService.GetPagesAsync(page,15);
+            return new ApiResult() { Data = new  { count = res.TotalItems, items = res.Items } };
         }
         /// <summary>
         /// 登录
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<string> SignIn()
+        public ApiResult SignIn()
         {
-            return new ApiResult<string>() { Data = "SignIn", StatusCode = 200, Msg = "msg" };
+            return new ApiResult() { Data = "SignIn", StatusCode = 200, Msg = "msg" };
         }
         /// <summary>
         /// 请求用户信息
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize]
-        public ApiResult<string> GetUser()
+        public ApiResult GetUser()
         {
-            return new ApiResult<string>() { Data = "GetUser", StatusCode = 200, Msg = "GetUser" };
+            return new ApiResult () { Data = "GetUser", StatusCode = 200, Msg = "GetUser" };
         }
         private string GetJwtToken(int id)
         {

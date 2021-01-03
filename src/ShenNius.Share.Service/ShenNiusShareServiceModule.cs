@@ -1,9 +1,9 @@
 ﻿using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
-using ShenNius.Service.Configurations;
+using ShenNius.Share.Service.Configurations;
 using System;
 
-namespace ShenNius.Service
+namespace ShenNius.Share.Service
 {
     public class ShenNiusShareServiceModule : AppModule
     {
@@ -14,7 +14,7 @@ namespace ShenNius.Service
             {
                 throw new ArgumentException("data connectionStr is not fuond");
             }
-            //AppSettings.Db.Connection => connectionStr;
+            AppSettings.Db.Connection =connectionStr;
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

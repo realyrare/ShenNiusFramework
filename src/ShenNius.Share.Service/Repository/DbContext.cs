@@ -1,8 +1,8 @@
-﻿using ShenNius.Service.Configurations;
+﻿using ShenNius.Share.Service.Configurations;
 using SqlSugar;
 using System;
 
-namespace ShenNius.Service
+namespace ShenNius.Share.Service.Repository
 {
     public class DbContext
     {
@@ -10,7 +10,7 @@ namespace ShenNius.Service
         {
             Db = new SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = AppSettings.Db.Connection,
+                ConnectionString = AppSettings.Db.Connection??throw new ArgumentNullException("数据库连接字符串为空"),
                
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true

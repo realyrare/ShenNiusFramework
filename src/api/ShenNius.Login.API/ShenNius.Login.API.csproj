@@ -16,5 +16,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\module\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
 		<ProjectReference Include="..\..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\ShenNius.Share.Service\ShenNius.Share.Service.csproj" />
 	</ItemGroup>
 </Project>

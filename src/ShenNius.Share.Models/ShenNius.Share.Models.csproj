@@ -20,5 +20,7 @@
 	<ItemGroup>
 	
 		<PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+	
+		<PackageReference Include="SqlSugarCore" Version="5.0.1.8" />
 	</ItemGroup>
 </Project>

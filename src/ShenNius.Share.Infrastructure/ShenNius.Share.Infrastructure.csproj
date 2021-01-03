@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Client\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>

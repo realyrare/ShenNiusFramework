@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Service.DbBusinessModel
+namespace ShenNius.Share.Service.DbBusinessModel
 {
     public class Page<T>
     {

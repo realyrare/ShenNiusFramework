@@ -1,14 +1,14 @@
-﻿using ShenNius.Service.DbBusinessModel;
-using ShenNius.Service.Enum;
-using ShenNius.Service.Extensions;
+﻿using ShenNius.Share.Service.DbBusinessModel;
+using ShenNius.Share.Service.Enum;
+using ShenNius.Share.Service.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace ShenNius.Service
+namespace ShenNius.Share.Service.Repository
 {
-    public class BaseService<T> : DbContext, IBaseService<T> where T : class, new()
+    public class BaseServer<T> : DbContext, IBaseServer<T> where T : class, new()
     {
         #region 同步版本
 

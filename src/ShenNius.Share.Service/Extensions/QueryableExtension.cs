@@ -1,8 +1,8 @@
-﻿using ShenNius.Service.DbBusinessModel;
+﻿using ShenNius.Share.Service.DbBusinessModel;
 using SqlSugar;
 using System.Threading.Tasks;
 
-namespace ShenNius.Service.Extensions
+namespace ShenNius.Share.Service.Extensions
 {
     public static class QueryableExtension
     {

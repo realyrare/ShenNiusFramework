@@ -16,6 +16,7 @@ using ShenNius.Order.API;
 using ShenNius.Product.API;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Middleware;
+using ShenNius.Share.Infrastructure.Utils;
 using System.Linq;
 using System.Reflection;
 
@@ -30,6 +31,7 @@ namespace ShenNius.API.Hosting
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
+            InjectHelper.AddAssembly(context.Services, "ShenNius.Share.Service");
             // 跨域配置
             context.Services.AddCors(options =>
             {
@@ -67,7 +69,7 @@ namespace ShenNius.API.Hosting
                             .Select(p => p.ErrorMessage))
                         .ToList();
 
-                    var result = new ApiResult<string>()
+                    var result = new ApiResult()
                     {
                         StatusCode = 400,
                         Msg = errors.FirstOrDefault(),

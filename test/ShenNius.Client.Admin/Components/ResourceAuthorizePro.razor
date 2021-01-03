@@ -1,0 +1,34 @@
+﻿@namespace ShenNius.Client.Admin.Components
+
+@if (NotAuthorized != null || Authorized != null || Authorizing != null)
+{
+<AuthorizeView Resource="@(ResourceKey)" Policy="@Policy">
+    <Authorized>
+        @if (Authorized != null)
+        {
+            @((Authorized ?? ChildContent)?.Invoke(context))
+        }
+    </Authorized>
+    <NotAuthorized>
+        @if (NotAuthorized != null)
+        {
+            @NotAuthorized.Invoke(context)
+        }
+    </NotAuthorized>
+    <Authorizing>
+        @if (Authorizing != null)
+        {
+            @Authorizing
+        }
+    </Authorizing>
+</AuthorizeView>
+}
+else
+{
+    <AuthorizeView Resource="@(ResourceKey)" Policy="@Policy">
+        @if (ChildContent != null)
+        {
+            @ChildContent.Invoke(context)
+        }
+    </AuthorizeView>
+}
