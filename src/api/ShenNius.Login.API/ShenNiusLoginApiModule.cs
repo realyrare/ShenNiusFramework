@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
-using ShenNius.Infrastructure.JsonWebToken.Model;
+using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿namespace ShenNius.Infrastructure.ApiResponse
+﻿namespace ShenNius.Share.Infrastructure.ApiResponse
 {
     public class ApiResult
     {

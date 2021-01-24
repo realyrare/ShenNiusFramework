@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using ShenNius.Infrastructure.JsonWebToken;
-using ShenNius.Infrastructure.JsonWebToken.Model;
+using ShenNius.Share.Infrastructure.JsonWebToken;
+using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShenNius.Infrastructure.AuthorizationSetup
+namespace ShenNius.Share.Infrastructure.Extension
 {
     public static class AuthorizationExtension
     {

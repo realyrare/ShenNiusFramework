@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Infrastructure.JsonWebToken.Model
+namespace ShenNius.Share.Infrastructure.JsonWebToken.Model
 {
     public class JwtSetting
     {

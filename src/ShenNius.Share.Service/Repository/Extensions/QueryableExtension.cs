@@ -1,8 +1,8 @@
-﻿using ShenNius.Share.Service.DbBusinessModel;
+﻿using ShenNius.Share.Service.Repository;
 using SqlSugar;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Extensions
+namespace ShenNius.Share.Service.Repository.Extensions
 {
     public static class QueryableExtension
     {
@@ -13,16 +13,16 @@ namespace ShenNius.Share.Service.Extensions
         /// <param name="query"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <param name="isOrderBy"></param>
         /// <returns></returns>
         public static async Task<Page<T>> ToPageAsync<T>(this ISugarQueryable<T> query,
             int pageIndex,
-            int pageSize,
-            bool isOrderBy = false)
+            int pageSize)
         {
             RefAsync<int> totalItems = 0;
-            var page = new Page<T>();
-            page.Items = await query.ToPageListAsync(pageIndex, pageSize, totalItems);
+            var page = new Page<T>
+            {
+                Items = await query.ToPageListAsync(pageIndex, pageSize, totalItems)
+            };
             var totalPages = totalItems != 0 ? (totalItems % pageSize) == 0 ? (totalItems / pageSize) : (totalItems / pageSize) + 1 : 0;
             page.CurrentPage = pageIndex;
             page.ItemsPerPage = pageSize;
@@ -38,12 +38,10 @@ namespace ShenNius.Share.Service.Extensions
         /// <param name="query"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <param name="isOrderBy"></param>
         /// <returns></returns>
         public static Page<T> ToPage<T>(this ISugarQueryable<T> query,
             int pageIndex,
-            int pageSize,
-            bool isOrderBy = false)
+            int pageSize)
         {
             var page = new Page<T>();
             var totalItems = 0;
