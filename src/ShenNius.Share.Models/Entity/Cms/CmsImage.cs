@@ -9,9 +9,9 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 图片表
     ///</summary>
     [SugarTable("Cms_Image")]
-    public partial class CmsImage
+    public partial class Image
     {
-        public CmsImage()
+        public Image()
         {
 
 

@@ -7,9 +7,9 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 下载管理表
     ///</summary>
     [SugarTable("Cms_Download")]
-    public partial class CmsDownload
+    public partial class Download
     {
-        public CmsDownload()
+        public Download()
         {
 
 

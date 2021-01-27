@@ -9,9 +9,9 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 留言管理
     ///</summary>
     [SugarTable("Cms_Message")]
-    public partial class CmsMessage
+    public partial class Message
     {
-        public CmsMessage()
+        public Message()
         {
 
 

@@ -9,7 +9,7 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 图片列表分类
     /// </summary>
     [SugarTable("Cms_ImgType")]
-    public class CmsImgType
+    public class ImgType
     {
         /// <summary>
         /// Desc:唯一ID

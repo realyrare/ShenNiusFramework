@@ -7,9 +7,9 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 评论表
     ///</summary>
     [SugarTable("Cms_Comment")]
-    public partial class CmsComment
+    public partial class Comment
     {
-        public CmsComment()
+        public Comment()
         {
 
 

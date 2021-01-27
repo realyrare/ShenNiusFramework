@@ -7,7 +7,7 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 站点表
     /// </summary>
     [SugarTable("Cms_Site")]
-    public class CmsSite 
+    public class Site 
     {
         
         /// <summary>

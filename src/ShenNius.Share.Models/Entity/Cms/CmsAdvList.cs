@@ -6,7 +6,7 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 广告位管理
     /// </summary>
     [SugarTable("Cms_AdvList")]
-    public class CmsAdvList 
+    public class AdvList 
     {
         
         /// <summary>

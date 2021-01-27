@@ -8,7 +8,7 @@ namespace ShenNiusSystem.Core.Model.Cms
     /// 文章表
     /// </summary>
     [SugarTable("Cms_Article")]
-    public class CmsArticle 
+    public class Article 
     {
         /// <summary>
         /// Desc:-
