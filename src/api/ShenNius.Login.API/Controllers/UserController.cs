@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ShenNius.Infrastructure.ApiResponse;
-using ShenNius.Infrastructure.JsonWebToken.Model;
+using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using ShenNius.Share.Infrastructure.JsonWebToken;
 using ShenNius.Share.Service.Interface.Sys;
 using System;

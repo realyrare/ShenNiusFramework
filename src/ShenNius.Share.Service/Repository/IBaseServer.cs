@@ -1,5 +1,4 @@
-﻿using ShenNius.Share.Service.DbBusinessModel;
-using ShenNius.Share.Service.Enum;
+﻿using ShenNius.Share.Service.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Share.Service.Repository
 {
-    public interface IBaseServer<T> where T:class
+    public interface IBaseServer<T> where T:class, new()
     {
         #region 同步版本
         /// <summary>
         /// 添加一条数据
         /// </summary>
-        /// <param name="param">cms_advlist</param>
+        /// <param name="param">实体</param>
         /// <returns></returns>
         int Add(T param);
 
@@ -24,29 +23,33 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
         int AddList(List<T> param);
 
-
-
-        #region 查询操作
         /// <summary>
         /// 获得列表
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
-        /// <param name="order">Expression<Func<T, object>></param>
-        /// <param name="orderEnum">DbOrderEnum</param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序条件</param>
+        /// <param name="isAsc">排序</param>
         /// <returns></returns>
-        List<T> GetList(Expression<Func<T, bool>> where,
-            Expression<Func<T, object>> order, DbOrder orderEnum);
-
-
-        List<T> GetList(Expression<Func<T, bool>> where,
-           Expression<Func<T, object>> order, DbOrder orderEnum, int take);
+        List<T> GetList(Expression<Func<T, bool>> whereExpression,
+            Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>
         /// 获得列表
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序条件</param>
+        /// <param name="isAsc">排序</param>
+        /// <param name="take">多少条</param>
         /// <returns></returns>
-        List<T> GetList(Expression<Func<T, bool>> where);
+        List<T> GetList(Expression<Func<T, bool>> whereExpression,
+           Expression<Func<T, object>> orderExpression, bool isAsc, int take);
+
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <param name="whereExpression">查询条件</param>
+        /// <returns></returns>
+        List<T> GetList(Expression<Func<T, bool>> whereExpression);
 
         /// <summary>
         /// 获得列表
@@ -60,17 +63,18 @@ namespace ShenNius.Share.Service.Repository
 		/// <param name="param">Pageparam</param>
 		/// <returns></returns>
 		Page<T> GetPages(int page,int limit);
-
+      
         /// <summary>
         /// 分页
         /// </summary>
-        /// <param name="param">分页参数</param>
-        /// <param name="where">条件</param>
-        /// <param name="order">排序值</param>
-        /// <param name="orderEnum">排序方式OrderByType</param>
+        /// <param name="page">当前页</param>
+        /// <param name="limit">一页多少条</param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序条件</param>
+        /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
-        Page<T> GetPages(int page,int limit, Expression<Func<T, bool>> where,
-            Expression<Func<T, object>> order, DbOrder orderEnum);
+        Page<T> GetPages(int page,int limit, Expression<Func<T, bool>> whereExpression,
+            Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>
         /// 获得一条数据
@@ -82,12 +86,10 @@ namespace ShenNius.Share.Service.Repository
         /// <summary>
         /// 获得一条数据
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">查询条件</param>
         /// <returns></returns>
-        T GetModel(Expression<Func<T, bool>> where);
-        #endregion
+        T GetModel(Expression<Func<T, bool>> whereExpression);
 
-        #region 修改操作
         /// <summary>
         /// 修改一条数据
         /// </summary>
@@ -103,25 +105,23 @@ namespace ShenNius.Share.Service.Repository
         int Update(List<T> param);
 
         /// <summary>
-        /// 修改一条数据，可用作假删除
+        /// 修改一条数据
         /// </summary>
-        /// <param name="columns">修改的列=Expression<Func<T,T>></param>
-        /// <param name="where">Expression<Func<T,bool>></param>
+        /// <param name="columnsExpression">要修改的字段</param>
+        /// <param name="whereExpression">条件判断</param>
         /// <returns></returns>
-        int Update(Expression<Func<T, T>> columns,
-            Expression<Func<T, bool>> where);
+        int Update(Expression<Func<T, T>> columnsExpression,
+            Expression<Func<T, bool>> whereExpression);
 
         /// <summary>
-        /// 修改一条数据，可用作假删除
+        /// 修改一条数据
         /// </summary>
-        /// <param name="columns">修改的列=Expression<Func<T,T>></param>
-        /// <param name="where">Expression<Func<T,bool>></param>
+        /// <param name="columnsExpression">要修改的字段</param>
+        /// <param name="whereExpression">条件判断</param>
         /// <returns></returns>
-        int Update(Expression<Func<T, bool>> columns,
-            Expression<Func<T, bool>> where);
-        #endregion
+        int Update(Expression<Func<T, bool>> columnsExpression,
+            Expression<Func<T, bool>> whereExpression);
 
-        #region 删除操作
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>
@@ -132,31 +132,27 @@ namespace ShenNius.Share.Service.Repository
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">删除条件</param>
         /// <returns></returns>
-        int Delete(Expression<Func<T, bool>> where);
-
-        #endregion
+        int Delete(Expression<Func<T, bool>> whereExpression);
 
         /// <summary>
         /// 查询条数
         /// </summary>
-        /// <param name="where"></param>
+        /// <param name="whereExpression">查询条件</param>
         /// <returns></returns>
-        int Count(Expression<Func<T, bool>> where);
-
-
+        int Count(Expression<Func<T, bool>> whereExpression);
         /// <summary>
         /// 是否存在
         /// </summary>
-        /// <param name="where"></param>
+        /// <param name="whereExpression">查询条件</param>
         /// <returns></returns>
-        bool IsExist(Expression<Func<T, bool>> where);
+        bool IsExist(Expression<Func<T, bool>> whereExpression);
 
         #endregion
 
         #region 异步版本
-        #region 添加操作
+
         /// <summary>
         /// 添加一条数据
         /// </summary>
@@ -171,29 +167,33 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
         Task<int> AddListAsync(List<T> param);
 
-        #endregion
-
-        #region 查询操作
         /// <summary>
         /// 获得列表
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
-        /// <param name="order">Expression<Func<T, object>></param>
-        /// <param name="orderEnum">DbOrderEnum</param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序字段</param>
+        /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
-        Task<List<T>> GetListAsync(Expression<Func<T, bool>> where,
-            Expression<Func<T, object>> order, DbOrder orderEnum);
-
-
-        Task<List<T>> GetListAsync(Expression<Func<T, bool>> where,
-           Expression<Func<T, object>> order, DbOrder orderEnum, int take);
+        Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression,
+            Expression<Func<T, object>> orderExpression,  bool isAsc);
 
         /// <summary>
         /// 获得列表
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序字段</param>
+        /// <param name="isAsc">是否升序</param>
+        /// <param name="take">多少条</param>
         /// <returns></returns>
-        Task<List<T>> GetListAsync(Expression<Func<T, bool>> where);
+        Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression,
+           Expression<Func<T, object>> orderExpression, bool isAsc, int take);
+
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <param name="where">查询条件</param>
+        /// <returns></returns>
+        Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression);
 
         /// <summary>
         /// 获得列表
@@ -202,22 +202,24 @@ namespace ShenNius.Share.Service.Repository
         Task<List<T>> GetListAsync();
 
         /// <summary>
-		/// 获得列表——分页
-		/// </summary>
-		/// <param name="param">Pageparam</param>
-		/// <returns></returns>
+        /// 分页
+        /// </summary>
+        /// <param name="page">当前页</param>
+        /// <param name="limit">一页多少条</param>
+        /// <returns></returns>
 		Task<Page<T>> GetPagesAsync(int page,int limit);
 
         /// <summary>
         /// 分页
         /// </summary>
-        /// <param name="param">分页参数</param>
-        /// <param name="where">条件</param>
-        /// <param name="order">排序值</param>
-        /// <param name="orderEnum">排序方式OrderByType</param>
+        /// <param name="page">当前页</param>
+        /// <param name="limit">一页多少条</param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="orderExpression">排序条件</param>
+        /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
-        Task<Page<T>> GetPagesAsync(int page,int limit, Expression<Func<T, bool>> where,
-            Expression<Func<T, object>> order, DbOrder orderEnum);
+        Task<Page<T>> GetPagesAsync(int page,int limit, Expression<Func<T, bool>> whereExpression,
+            Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>
         /// 获得一条数据
@@ -229,16 +231,14 @@ namespace ShenNius.Share.Service.Repository
         /// <summary>
         /// 获得一条数据
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">查询条件</param>
         /// <returns></returns>
-        Task<T> GetModelAsync(Expression<Func<T, bool>> where);
-        #endregion
+        Task<T> GetModelAsync(Expression<Func<T, bool>> whereExpression);
 
-        #region 修改操作
         /// <summary>
         /// 修改一条数据
         /// </summary>
-        /// <param name="param">T</param>
+        /// <param name="param">实体</param>
         /// <returns></returns>
         Task<int> UpdateAsync(T param);
 
@@ -252,23 +252,21 @@ namespace ShenNius.Share.Service.Repository
         /// <summary>
         /// 修改一条数据，可用作假删除
         /// </summary>
-        /// <param name="columns">修改的列=Expression<Func<T,T>></param>
-        /// <param name="where">Expression<Func<T,bool>></param>
+        /// <param name="columnsExpression">修改的列</param>
+        /// <param name="whereExpression">判断条件</param>
         /// <returns></returns>
-        Task<int> UpdateAsync(Expression<Func<T, T>> columns,
-            Expression<Func<T, bool>> where);
+        Task<int> UpdateAsync(Expression<Func<T, T>> columnsExpression,
+            Expression<Func<T, bool>> whereExpression);
 
         /// <summary>
         /// 修改一条数据，可用作假删除
         /// </summary>
-        /// <param name="columns">修改的列=Expression<Func<T,T>></param>
-        /// <param name="where">Expression<Func<T,bool>></param>
+        /// <param name="columnsExpression">修改的列</param>
+        /// <param name="whereExpression">判断条件</param>
         /// <returns></returns>
-        Task<int> UpdateAsync(Expression<Func<T, bool>> columns,
-            Expression<Func<T, bool>> where);
-        #endregion
+        Task<int> UpdateAsync(Expression<Func<T, bool>> columnsExpression,
+            Expression<Func<T, bool>> whereExpression);
 
-        #region 删除操作
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>
@@ -279,19 +277,41 @@ namespace ShenNius.Share.Service.Repository
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>
-        /// <param name="where">Expression<Func<T, bool>></param>
+        /// <param name="whereExpression">Expression<Func<T, bool>></param>
         /// <returns></returns>
-        Task<int> DeleteAsync(Expression<Func<T, bool>> where);
+        Task<int> DeleteAsync(Expression<Func<T, bool>> whereExpression);
 
-        #endregion
+        /// <summary>
+        /// 查询Count
+        /// </summary>
+        /// <param name="whereExpression">查询条件</param>
+        /// <returns></returns>
+        Task<int> CountAsync(Expression<Func<T, bool>> whereExpression);
 
-        #region 查询Count
-        Task<int> CountAsync(Expression<Func<T, bool>> where);
-        #endregion
 
-        #region 是否存在
-        Task<bool> IsExistAsync(Expression<Func<T, bool>> where);
-        #endregion 
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="whereExpression">查询条件</param>
+        /// <returns></returns>
+        Task<bool> IsExistAsync(Expression<Func<T, bool>> whereExpression);
+
+        /// <summary>
+        /// 多表查询
+        /// </summary>
+        /// <typeparam name="T1">表1</typeparam>
+        /// <typeparam name="T2">表2</typeparam>
+        /// <typeparam name="T3">表3</typeparam>
+        /// <typeparam name="TResult">结果</typeparam>
+        /// <param name="joinExpression">连接条件</param>
+        /// <param name="selectExpression">投影</param>
+        /// <param name="whereExpression">查询条件</param>
+        /// <returns></returns>
+        public Task<List<TResult>> QueryMuch<T1, T2, T3, TResult>(
+          Expression<Func<T1, T2, T3, object[]>> joinExpression,
+          Expression<Func<T1, T2, T3, TResult>> selectExpression,
+          Expression<Func<T1, T2, T3, bool>> whereExpression = null) where T1 : class, new();
+
         #endregion
     }
 }

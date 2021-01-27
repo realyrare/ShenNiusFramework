@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace ShenNius.Share.Service.Configurations
+namespace ShenNius.Share.Infrastructure.Configurations
 {
     public class AppSettings
     {
@@ -24,7 +24,7 @@ namespace ShenNius.Share.Service.Configurations
         }
         public static class Db
         {
-            public static string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
+            public static  string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
         }
     }
 }

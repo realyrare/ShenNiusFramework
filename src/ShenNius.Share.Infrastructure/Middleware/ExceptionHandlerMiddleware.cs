@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using ShenNius.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.ApiResponse;
 using System;
 using System.Collections.Generic;
 using System.Net;

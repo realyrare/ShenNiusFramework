@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ShenNius.Infrastructure.JsonWebToken.Model;
+using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

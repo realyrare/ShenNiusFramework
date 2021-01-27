@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using ShenNius.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.ApiResponse;
 using System;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace ShenNius.Infrastructure.JsonWebToken
+namespace ShenNius.Share.Infrastructure.JsonWebToken
 {
     public class ApiResponseHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
