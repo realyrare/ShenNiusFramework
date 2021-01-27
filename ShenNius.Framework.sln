@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Product.API", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Client.Admin", "src\client\ShenNius.Client.Admin\ShenNius.Client.Admin.csproj", "{DF266027-CEE4-4C03-942D-2FEADCA4291E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Client.Admin", "src\client\ShenNius.Client.Admin\ShenNius.Client.Admin.csproj", "{DF266027-CEE4-4C03-942D-2FEADCA4291E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
