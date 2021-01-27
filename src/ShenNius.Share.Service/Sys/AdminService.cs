@@ -3,11 +3,11 @@ using ShenNius.Share.Service.Repository;
 
 namespace ShenNius.Share.Service.Sys
 {
-    public interface IAdminService : IBaseServer<Admin>
+    public interface IUserService : IBaseServer<User>
     {
         
     }
-    public class AdminService : BaseServer<Admin>, IAdminService
+    public partial class UserService : BaseServer<User>, IUserService
     {
     }
 }

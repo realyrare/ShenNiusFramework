@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Login.API
+namespace ShenNius.Sys.API
 {
   public  class ShenNiusLoginApiModule : AppModule
     {

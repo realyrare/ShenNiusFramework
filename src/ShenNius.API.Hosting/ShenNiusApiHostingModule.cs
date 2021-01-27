@@ -9,7 +9,7 @@ using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Login.API;
+using ShenNius.Sys.API;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Order.API;
 using ShenNius.Product.API;
