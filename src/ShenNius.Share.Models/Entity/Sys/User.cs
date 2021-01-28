@@ -47,11 +47,6 @@ namespace ShenNius.Share.Model.Entity.Sys
         public string TrueName { get; set; }
 
         /// <summary>
-        /// 编号
-        /// </summary>
-        public string Number { get; set; }
-
-        /// <summary>
         /// 头像
         /// </summary>
         public string HeadImg { get; set; }
@@ -84,8 +79,8 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// <summary>
         /// 添加时间
         /// </summary>
-        public DateTime CreateTime { get; set; } = DateTime.Now;
-        public DateTime UpdateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
 
         /// <summary>
         /// 当前登录时间

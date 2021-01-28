@@ -11,8 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ShenNius.Share.Service.Sys;
-using ShenNius.Share.Models.ViewModels.Input;
-using ShenNius.Share.Models.ViewModels.Output;
+using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Output;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -41,47 +41,35 @@ namespace ShenNius.Sys.API.Controllers
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
-            return new ApiResult() { Data = new { count = res.TotalItems, items = res.Items } };
+            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         /// <summary>
         /// 登录
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ApiResult> SignIn([FromBody] LoginInput loginInput)
+        public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
         {
-            var loginModel = await _userService.GetModelAsync(d => d.Name.Equals(loginInput.loginname) && d.Password.Equals(loginInput.password));
-            if (loginModel == null)
-            {
-                return new ApiResult() { Data = "SignIn", StatusCode = 400, Msg = "用户名或密码错误" };
-            }
-            var token = GetJwtToken(loginModel.Id);
+            var result = await _userService.Login(loginInput);
+            var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))
             {
-                return new ApiResult() { StatusCode = 500, Msg = "生成的token字符串为空!" };
+                return new ApiResult<LoginOutput>("生成的token字符串为空!");
             }
-            var loginOutput = new LoginOutput() { LoginName = loginModel.Name, TrueName = loginModel.TrueName, Id = loginModel.Id, Token = token, LoginTime = loginModel.LoginTime.Value };
-            return new ApiResult() { Data = loginOutput, StatusCode = 200, Msg = "msg" };
+            result.Data.Token = token;
+            return result;
         }
-        /// <summary>
-        /// 请求用户信息
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet, Authorize]
-        public ApiResult GetUser()
-        {
-            return new ApiResult() { Data = "GetUser", StatusCode = 200, Msg = "GetUser" };
-        }
-        private string GetJwtToken(int id)
+
+        private string GetJwtToken(LoginOutput loginOutput)
         {
             //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
             var claims = new List<Claim>
             {
-                    new Claim(ClaimTypes.Name, "UserName"),
-                    new Claim(JwtRegisteredClaimNames.Jti, id.ToString()),
+                    new Claim(ClaimTypes.Name, loginOutput.LoginName),
+                    new Claim(JwtRegisteredClaimNames.Jti, loginOutput.Id.ToString()),
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_jwtSetting.Value.ExpireSeconds).ToString(CultureInfo.InvariantCulture)),
                     new Claim(ClaimTypes.Role,"Type"),
-                    new Claim("mobile","Mobile")
+                    new Claim("mobile",loginOutput.Mobile)
             };
             var token = JwtHelper.BuildJwtToken(claims.ToArray(), _jwtSetting);
             return token;

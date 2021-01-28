@@ -14,7 +14,7 @@
     <Folder Include="Entity\Order\" />
     <Folder Include="Maps\" />
     <Folder Include="Enums\" />
-    <Folder Include="ViewModels\Configs\" />
+    <Folder Include="Dtos\Configs\" />
   </ItemGroup>
 	<ItemGroup>
 	

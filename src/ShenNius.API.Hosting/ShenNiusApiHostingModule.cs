@@ -24,13 +24,13 @@ namespace ShenNius.API.Hosting
     [DependsOn(
         typeof(ShenNiusOrderApiModule),
         typeof(ShenNiusProductApiModule),
-        typeof(ShenNiusLoginApiModule)
+        typeof(ShenNiusSysApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-            InjectHelper.AddAssembly(context.Services, "ShenNius.Share.Service");
+           
             // 跨域配置
             context.Services.AddCors(options =>
             {
@@ -68,12 +68,12 @@ namespace ShenNius.API.Hosting
                             .Select(p => p.ErrorMessage))
                         .ToList();
 
-                    var result = new ApiResult()
-                    {
-                        StatusCode = 400,
-                        Msg = errors.FirstOrDefault(),
-                        Success = false
-                    };
+                    var result = new ApiResult(
+                        null,
+                        statusCode: 400,
+                         success:false,
+                        msg: errors.FirstOrDefault()                      
+                    );
                     return new BadRequestObjectResult(result);
                 };
             });

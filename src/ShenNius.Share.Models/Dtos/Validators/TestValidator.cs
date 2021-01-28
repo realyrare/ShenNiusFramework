@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Share.Models.ViewModels.Validators
+namespace ShenNius.Share.Models.Dtos.Validators
 {
    public class TestValidator:AbstractValidator<Test>
     {

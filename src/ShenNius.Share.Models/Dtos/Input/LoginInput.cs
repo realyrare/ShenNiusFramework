@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Share.Models.ViewModels.Input
+namespace ShenNius.Share.Models.Dtos.Input
 {
    public class LoginInput
     {

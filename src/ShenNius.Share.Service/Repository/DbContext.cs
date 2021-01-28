@@ -12,7 +12,7 @@ namespace ShenNius.Share.Service.Repository
             {
                 ConnectionString = _connectionStr ?? throw new ArgumentNullException("数据库连接字符串为空"),
                
-                DbType = DbType.SqlServer,
+                DbType = DbType.MySql,
                 IsAutoCloseConnection = true
             });
             // 调式代码 用来打印SQL

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShenNius.Sys.API</name>
+    </assembly>
+    <members>
+        <member name="T:ShenNius.Sys.API.Controllers.UserController">
+            <summary>
+            用户控制器
+            </summary>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService)">
+            <summary>
+            
+            </summary>
+            <param name="jwtSetting"></param>
+            <param name="userService"></param>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.GetListPages(System.Int32,System.String)">
+            <summary>
+            查询列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
+            <summary>
+            登录
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
