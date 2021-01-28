@@ -5,21 +5,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ShenNius.Share.Infrastructure.ApiResponse;
 
 namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class WeatherForecastController : ControllerBase
+    public class TestController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TestController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public TestController(ILogger<TestController> logger)
         {
             _logger = logger;
         }
@@ -38,9 +39,9 @@ namespace WebApplication1.Controllers
         }
         [HttpGet]
         [Authorize]
-        public string Get2()
-        {
-            return "121212312";
+        public ApiResult Get2()
+        {        
+            return new ApiResult("测试内容信息");
         }
     }
 }

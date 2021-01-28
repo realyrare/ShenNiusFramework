@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using ShenNius.Share.Service.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Output;
+using ShenNius.Sys.API.Authority;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -38,6 +39,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
