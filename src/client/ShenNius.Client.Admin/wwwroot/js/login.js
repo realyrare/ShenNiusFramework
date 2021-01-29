@@ -1,4 +1,7 @@
 ﻿
+
+
+
 layui.config({
     base: '/js/modules/'
 });
@@ -6,35 +9,9 @@ layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,
         os = layui.common;
+        layer = layui.layer;
     // 登录过期的时候，跳出ifram框架
     if (top.location != self.location) top.location = self.location;
-
-    // 粒子线条背景
-    $(document).ready(function () {
-        $('.layui-container').particleground({
-            dotColor: '#7ec7fd',
-            lineColor: '#7ec7fd'
-        });
-    });
-
-    $(function () {
-        $.get("https://localhost:5001/api/user/LoadLoginInfo", function (res) {
-            if (res.success == true && res.statusCode === 200) {
-                if (res.data.rsaKey[0] != null && res.data.rsaKey[0] != "") {
-                    console.log("rsaKey:" + res.data.rsaKey[0]);
-                    $("#privateKey").val(res.data.rsaKey[0]);
-                }
-                if (res.data.number != null && res.data.number != "") {
-                    console.log("number:" + res.data.number);
-                    $("#number").val(res.data.number);
-                }
-                return;
-            } else {
-                alert(res.message);
-                return;
-            }
-        });
-    });
 
     // 进行登录操作
     form.on('submit(login)', function (data) {
@@ -52,7 +29,7 @@ layui.use(['jquery', 'form', 'common'], function () {
         //    return false;
         //}
         $.ajax({
-            url: 'https://localhost:5001/api/user/sigin',
+            url: 'https://localhost:5001/api/user/signin',
             type: 'POST',
             contentType: 'application/json',
             data: data.field,

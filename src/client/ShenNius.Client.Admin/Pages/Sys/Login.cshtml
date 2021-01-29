@@ -121,7 +121,7 @@
     <div class="layui-container">
         <div class="admin-login-background">
             <div class="layui-form login-form">
-                <form class="layui-form" action="">
+                <form class="layui-form" action="https://localhost:5001/api/user/signin" method="post">
                     <div class="layui-form-item logo-title">
                         <h1>LayuiMini后台登录</h1>
                     </div>
@@ -134,12 +134,14 @@
                         <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
                     </div>
                     @*<div class="layui-form-item">
-                        <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                        <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
-                        <div class="captcha-img">
-                            <img id="captchaPic" src="../images/captcha.jpg">
-                        </div>
-                    </div>*@
+            <label class="layui-icon layui-icon-vercode" for="captcha"></label>
+            <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
+            <div class="captcha-img">
+                <img id="captchaPic" src="../images/captcha.jpg">
+            </div>
+        </div>*@
+                    <input type="hidden" name="privateKey" id="privateKey"/>
+                    <input type="hidden" name="number" id="number"/>
                     <div class="layui-form-item">
                         <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                     </div>
@@ -155,6 +157,33 @@
     <script src="~/lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
     <script src="~/js/jsencrypt.js"></script>
     <script src="~/js/login.js"></script>
+    <script>
+        $(function () {
+            // 粒子线条背景
+            $(document).ready(function () {
+                $('.layui-container').particleground({
+                    dotColor: '#7ec7fd',
+                    lineColor: '#7ec7fd'
+                });
+            });
+            $.get("https://localhost:5001/api/user/LoadLoginInfo", function (res) {
+                if (res.success == true && res.statusCode === 200) {
+                    if (res.data.rsaKey[0] != null && res.data.rsaKey[0] != "") {
+                        console.log("rsaKey:" + res.data.rsaKey[0]);
+                        $("#privateKey").val(res.data.rsaKey[0]);
+                    }
+                    if (res.data.number != null && res.data.number != "") {
+                        console.log("number:" + res.data.number);
+                        $("#number").val(res.data.number);
+                    }
+                    return;
+                } else {
+                    alert(res.message);
+                    return;
+                }
+            });
+        });
+    </script>
     @*<script>
         layui.use(['form'], function () {
             var form = layui.form,
