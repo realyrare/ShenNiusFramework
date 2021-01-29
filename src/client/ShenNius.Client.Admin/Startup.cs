@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +25,19 @@ namespace ShenNius.Client.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            // 认证
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.Cookie.Name = "ShenNius.Client.Admin";
+                o.LoginPath = new PathString("/sys/login");
+                o.Cookie.HttpOnly = true;
+            });
+            services.AddRazorPages(options => {
+                options.Conventions.AddPageRoute("/sys/Login", "");
+            });
+            //性能 压缩
+            services.AddResponseCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,12 +52,14 @@ namespace ShenNius.Client.Admin
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            //性能压缩
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

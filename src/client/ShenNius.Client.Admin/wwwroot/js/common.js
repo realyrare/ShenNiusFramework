@@ -22,7 +22,7 @@
             return "http://localhost:8015/";
         },
         ajax: function (url, options, callFun,method='post') {
-            var token = tool.GetSession('admin_ACCESS_TOKEN');
+            var token = tool.GetSession('ADMIN_ACCESS_TOKEN');
             var _headers = {};
             if (token !== null) {
                 _headers = {
@@ -40,6 +40,20 @@
                 timeout: 10 * 2000, //超时时间设置为50秒；
                 headers: _headers,
                 success: function (data) {
+                    if (data.statusCode === 401) {
+                        tool.error(data.msg);
+                        setTimeout(function () {
+                            window.location.href = "/sys/login";
+                        }, 3000)  
+                    }
+                    if (data.statusCode ===500) {
+                        tool.error(data.msg);
+                        return;
+                    }
+                    if (data.statusCode === 400) {
+                        tool.error(data.msg);
+                        return ;
+                    }
                     callFun(data);
                 },
                 error: function (xhr, type, errorThrown) {
