@@ -22,7 +22,7 @@
             return "http://localhost:8015/";
         },
         ajax: function (url, options, callFun,method='post') {
-            var token = tool.GetSession('ADMIN_ACCESS_TOKEN');
+            var token = tool.GetSession('admin_ACCESS_TOKEN');
             var _headers = {};
             if (token !== null) {
                 _headers = {

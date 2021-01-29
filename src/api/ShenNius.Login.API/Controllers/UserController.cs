@@ -14,6 +14,8 @@ using ShenNius.Share.Service.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Sys.API.Authority;
+using ShenNiusSystem.Common;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -23,15 +25,18 @@ namespace ShenNius.Sys.API.Controllers
     {
         readonly IOptions<JwtSetting> _jwtSetting;
         private readonly IUserService _userService;
+        private readonly IMemoryCache _cache;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jwtSetting"></param>
         /// <param name="userService"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService)
+        /// <param name="cache"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
+            _cache = cache;
         }
 
         /// <summary>
@@ -45,6 +50,22 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _userService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ApiResult LoadLoginInfo()
+        {         
+            var rsaKey = RSACrypt.GetKey();
+            var number = Guid.NewGuid().ToString();            
+            if (rsaKey.Count <= 0|| rsaKey==null)
+            {
+                throw new ArgumentNullException("获取登录的公钥和私钥为空");   
+            }
+            //获得公钥和私钥
+            _cache.Set("LOGINKEY" + number, rsaKey);
+          var str=  _cache.Get<List<string>>("LOGINKEY" + number);
+            return new ApiResult(data:new{ RsaKey = rsaKey, Number = number });
+        }
+
         /// <summary>
         /// 登录
         /// </summary>
@@ -52,6 +73,15 @@ namespace ShenNius.Sys.API.Controllers
         [HttpPost]
         public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
         {
+            var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.Number);
+            if (rsaKey == null)
+            {
+                return new ApiResult<LoginOutput>("登录失败，请刷新浏览器再次登录!");
+
+            }
+            //Ras解密密码
+            var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
+           var password = ras.Decrypt(loginInput.Password);
             var result = await _userService.Login(loginInput);
             var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))

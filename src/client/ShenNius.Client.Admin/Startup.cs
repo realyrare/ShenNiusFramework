@@ -33,9 +33,9 @@ namespace ShenNius.Client.Admin
                 o.LoginPath = new PathString("/sys/login");
                 o.Cookie.HttpOnly = true;
             });
-            services.AddRazorPages(options => {
-                options.Conventions.AddPageRoute("/sys/Login", "");
-            });
+
+           
+            services.AddRazorPages();
             //ÐÔÄÜ Ñ¹Ëõ
             services.AddResponseCompression();
         }

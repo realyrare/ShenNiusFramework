@@ -23,10 +23,10 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult<LoginOutput>> Login(LoginInput loginInput)
         {
-            var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.loginname) && d.Password.Equals(loginInput.password));
+            var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.Loginname) && d.Password.Equals(loginInput.Password));
             if (loginModel == null)
             {
-                return new ApiResult<LoginOutput>(null, statusCode: 400, success: false, msg: "用户名或密码错误");
+                return new ApiResult<LoginOutput>(statusCode: 400, success: false, msg: "用户名或密码错误");
             }
             var data = _mapper.Map<LoginOutput>(loginModel);
             return new ApiResult<LoginOutput>(data);

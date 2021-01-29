@@ -127,19 +127,19 @@
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-username" for="username"></label>
-                        <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
+                        <input type="text" name="loginname" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input" value="admin">
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-password" for="password"></label>
                         <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
                     </div>
-                    <div class="layui-form-item">
+                    @*<div class="layui-form-item">
                         <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                         <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
                         <div class="captcha-img">
                             <img id="captchaPic" src="../images/captcha.jpg">
                         </div>
-                    </div>
+                    </div>*@
                     <div class="layui-form-item">
                         <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                     </div>
@@ -153,7 +153,9 @@
     <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
-    <script>
+    <script src="~/js/jsencrypt.js"></script>
+    <script src="~/js/login.js"></script>
+    @*<script>
         layui.use(['form'], function () {
             var form = layui.form,
                 layer = layui.layer;
@@ -180,16 +182,16 @@
                     layer.msg('密码不能为空');
                     return false;
                 }
-                if (data.captcha == '') {
-                    layer.msg('验证码不能为空');
-                    return false;
-                }
+                //if (data.captcha == '') {
+                //    layer.msg('验证码不能为空');
+                //    return false;
+                //}
                 layer.msg('登录成功', function () {
                     window.location = '../index.html';
                 });
                 return false;
             });
         });
-    </script>
+    </script>*@
 </body>
 </html>
