@@ -9,9 +9,9 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 组织表
     ///</summary>
     [SugarTable("Sys_Organize")]
-    public partial class SysOrganize
+    public partial class Organize
     {
-        public SysOrganize()
+        public Organize()
         {
 
 

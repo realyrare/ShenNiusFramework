@@ -1,15 +1,19 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
+using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.JsonWebToken.Model;
+using ShenNius.Share.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Login.API
+namespace ShenNius.Sys.API
 {
-  public  class ShenNiusLoginApiModule : AppModule
+    [DependsOn(typeof(ShenNiusShareServiceModule)
+       )]
+    public  class ShenNiusSysApiModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {

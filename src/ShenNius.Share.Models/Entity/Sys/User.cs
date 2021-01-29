@@ -1,22 +1,20 @@
 ﻿using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Model.Entity.Sys
 {
-    [SugarTable("Sys_Admin")]
-    public class Admin
+    [SugarTable("Sys_User")]
+    public class User
     {
         /// <summary>
         /// 唯一编号
         /// </summary>
-        public string Guid { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 归属角色
         /// </summary>
-        public string RoleGuid { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
         /// 归属部门
@@ -26,22 +24,22 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// <summary>
         /// 归属部门
         /// </summary>
-        public string DepartmentGuid { get; set; }
+        public int DepartmentId { get; set; }
 
         /// <summary>
         /// 部门集合
         /// </summary>
-        public string DepartmentGuidList { get; set; }
+        public string DepartmentIdList { get; set; }
 
         /// <summary>
         /// 登录账号
         /// </summary>
-        public string LoginName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 登录密码
         /// </summary>
-        public string LoginPwd { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// 真是姓名
@@ -49,14 +47,9 @@ namespace ShenNius.Share.Model.Entity.Sys
         public string TrueName { get; set; }
 
         /// <summary>
-        /// 编号
-        /// </summary>
-        public string Number { get; set; }
-
-        /// <summary>
         /// 头像
         /// </summary>
-        public string HeadPic { get; set; }
+        public string HeadImg { get; set; }
 
         /// <summary>
         /// 性别
@@ -81,21 +74,18 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// <summary>
         /// 备注
         /// </summary>
-        public string Summary { get; set; }
+        public string Remark { get; set; }
 
         /// <summary>
         /// 添加时间
         /// </summary>
-        public DateTime AddDate { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
 
         /// <summary>
         /// 当前登录时间
         /// </summary>
-        public DateTime? LoginDate { get; set; }
+        public DateTime? LoginTime { get; set; }
 
-        /// <summary>
-        /// 上次登录时间
-        /// </summary>
-        public DateTime? UpLoginDate { get; set; }
     }
 }

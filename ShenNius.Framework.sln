@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.ModuleCore", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Share.Swagger", "src\module\ShenNius.Share.Swagger\ShenNius.Share.Swagger.csproj", "{A632378D-F1B0-4455-AFBB-1B41D66CE3AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Login.API", "src\api\ShenNius.Login.API\ShenNius.Login.API.csproj", "{531BF9FA-B06C-4498-B605-478D8752036E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Sys.API", "src\api\ShenNius.Login.API\ShenNius.Sys.API.csproj", "{531BF9FA-B06C-4498-B605-478D8752036E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Order.API", "src\api\ShenNius.Order.API\ShenNius.Order.API.csproj", "{7C5B9D37-A36C-4E12-B8AF-EB785C3B4FEE}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Product.API", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Client.Admin", "src\client\ShenNius.Client.Admin\ShenNius.Client.Admin.csproj", "{DF266027-CEE4-4C03-942D-2FEADCA4291E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Client.Admin", "src\client\ShenNius.Client.Admin\ShenNius.Client.Admin.csproj", "{DF266027-CEE4-4C03-942D-2FEADCA4291E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

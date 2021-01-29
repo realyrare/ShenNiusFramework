@@ -10,12 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dtos\Configs\**" />
+    <Compile Remove="Maps\**" />
+    <EmbeddedResource Remove="Dtos\Configs\**" />
+    <EmbeddedResource Remove="Maps\**" />
+    <None Remove="Dtos\Configs\**" />
+    <None Remove="Maps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\Common\" />
     <Folder Include="Entity\Product\" />
     <Folder Include="Entity\Order\" />
-    <Folder Include="Maps\" />
     <Folder Include="Enums\" />
-    <Folder Include="ViewModels\Input\" />
-    <Folder Include="ViewModels\Configs\" />
+    <Folder Include="Configs\" />
   </ItemGroup>
 	<ItemGroup>
 	
