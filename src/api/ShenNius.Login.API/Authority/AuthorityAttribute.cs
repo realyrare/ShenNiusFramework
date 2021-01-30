@@ -28,7 +28,7 @@ namespace ShenNius.Sys.API.Authority
         {          
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
-                context.Result = new JsonResult(new ApiResult("", StatusCodes.Status401Unauthorized, false, "很抱歉,您未登录"));               
+                context.Result = new JsonResult(new ApiResult("很抱歉,您未登录", StatusCodes.Status401Unauthorized));               
                 return;
             }
 

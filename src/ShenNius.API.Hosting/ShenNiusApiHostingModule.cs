@@ -15,9 +15,10 @@ using ShenNius.Order.API;
 using ShenNius.Product.API;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Middleware;
-using ShenNius.Share.Infrastructure.Utils;
 using System.Linq;
 using System.Reflection;
+using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.API.Hosting
 {
@@ -30,15 +31,20 @@ namespace ShenNius.API.Hosting
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-           
             // 跨域配置
             context.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            
+
             context.Services.AddAuthorizationSetup(context.Configuration);
             var mvcBuilder = context.Services.AddControllers();
+
+            mvcBuilder.AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeConverter());
+                options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeNullableConverter());
+            });
             // 路由配置
             context.Services.AddRouting(options =>
             {
@@ -51,8 +57,8 @@ namespace ShenNius.API.Hosting
             // FluentValidation 统一请求参数验证          
             mvcBuilder.AddFluentValidation(fv =>
             {
-                var types = Assembly.Load("ShenNius.Share.Models").GetTypes().ToList();
-                // .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null);
+                var types = Assembly.Load("ShenNius.Share.Models").GetTypes()
+                 .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null).ToList();
                 types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
                 fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
@@ -69,10 +75,8 @@ namespace ShenNius.API.Hosting
                         .ToList();
 
                     var result = new ApiResult(
-                        null,
-                        statusCode: 400,
-                         success:false,
-                        msg: errors.FirstOrDefault()                      
+                        msg: errors.FirstOrDefault(),
+                        statusCode: 400
                     );
                     return new BadRequestObjectResult(result);
                 };

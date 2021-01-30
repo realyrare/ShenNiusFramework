@@ -15,6 +15,6 @@ namespace ShenNius.Share.Models.Dtos.Input
         /// </summary>
         public string Password { get; set; }
 
-        public string Number { get; set; }
+        public string NumberGuid { get; set; }
     }
 }

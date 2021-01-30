@@ -35,7 +35,7 @@ namespace ShenNius.Client.Admin
             });
 
            
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
             //ÐÔÄÜ Ñ¹Ëõ
             services.AddResponseCompression();
         }
@@ -56,7 +56,7 @@ namespace ShenNius.Client.Admin
             app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseStatusCodePagesWithReExecute("/Error");
             app.UseRouting();
 
             app.UseAuthentication();

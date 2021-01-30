@@ -4,12 +4,12 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.loginname">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.Loginname">
             <summary>
             登录账号
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.password">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.Password">
             <summary>
             登录密码
             </summary>

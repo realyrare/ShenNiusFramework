@@ -38,7 +38,11 @@ namespace ShenNius.Sys.API.Controllers
             _userService = userService;
             _cache = cache;
         }
-
+        [HttpPost]
+        public ApiResult PostTest([FromBody] LoginInput loginInput)
+        {
+            return new ApiResult("自己定义的错误码  不知道能不能走到这来",408);
+        }
         /// <summary>
         /// 查询列表
         /// </summary>
@@ -71,17 +75,17 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
+        [AllowAnonymous]
+        public async Task<ApiResult<LoginOutput>> SignIn([FromBody]LoginInput loginInput)
         {
-            var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.Number);
+            var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.NumberGuid);
             if (rsaKey == null)
             {
                 return new ApiResult<LoginOutput>("登录失败，请刷新浏览器再次登录!");
-
             }
             //Ras解密密码
             var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
-           var password = ras.Decrypt(loginInput.Password);
+            loginInput.Password = ras.Decrypt(loginInput.Password);
             var result = await _userService.Login(loginInput);
             var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))

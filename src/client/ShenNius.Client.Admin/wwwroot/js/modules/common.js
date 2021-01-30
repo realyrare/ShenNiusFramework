@@ -19,9 +19,9 @@
             toastr.success(msg);
         },
         httpUrl() {
-            return "http://localhost:8015/";
+            return "https://localhost:5001/api/";
         },
-        ajax: function (url, options, callFun,method='post') {
+        ajax: function (url, options, contentType ="application/json", method = 'post', callFun=null) {
             var token = tool.GetSession('admin_ACCESS_TOKEN');
             var _headers = {};
             if (token !== null) {
@@ -30,28 +30,32 @@
                 };
             }
             options = method === 'get' ? options : JSON.stringify(options);
+            var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
             //console.log(_headers);
             //console.log(options);
             $.ajax(tool.httpUrl() + url, {
                 data: options,
-                contentType: 'application/json',
+                contentType: type,
                 dataType: 'json', //服务器返回json格式数据
                 type: method, //HTTP请求类型
                 timeout: 10 * 2000, //超时时间设置为50秒；
                 headers: _headers,
                 success: function (data) {
                     if (data.statusCode === 401) {
-                        tool.error(data.msg);
+                        layer.msg(data.msg);
                         setTimeout(function () {
                             window.location.href = "/sys/login";
                         }, 3000)  
                     }
-                    if (data.statusCode ===500) {
-                        tool.error(data.msg);
+                    if (data.statusCode === 500) {
+                        console.log("statusCode:" + data.statusCode);
+                        console.log("msg:" + data.msg);
+                       // tool.error(data.msg);
+                        layer.msg(data.msg);
                         return;
                     }
                     if (data.statusCode === 400) {
-                        tool.error(data.msg);
+                        layer.msg(data.msg);
                         return ;
                     }
                     callFun(data);

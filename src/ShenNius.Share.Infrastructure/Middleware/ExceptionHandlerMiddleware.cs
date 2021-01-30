@@ -54,7 +54,7 @@ namespace ShenNius.Share.Infrastructure.Middleware
         {
             context.Response.ContentType = "application/json;charset=utf-8";
 
-            var result = new ApiResult(null, statusCode:context.Response.StatusCode,  success:false, msg:message);
+            var result = new ApiResult(msg: message, statusCode:context.Response.StatusCode);
 
             await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
         }
