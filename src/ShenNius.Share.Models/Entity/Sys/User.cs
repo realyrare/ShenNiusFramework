@@ -12,26 +12,6 @@ namespace ShenNius.Share.Model.Entity.Sys
         public int Id { get; set; }
 
         /// <summary>
-        /// 归属角色
-        /// </summary>
-        public int RoleId { get; set; }
-
-        /// <summary>
-        /// 归属部门
-        /// </summary>
-        public string DepartmentName { get; set; }
-
-        /// <summary>
-        /// 归属部门
-        /// </summary>
-        public int DepartmentId { get; set; }
-
-        /// <summary>
-        /// 部门集合
-        /// </summary>
-        public string DepartmentIdList { get; set; }
-
-        /// <summary>
         /// 登录账号
         /// </summary>
         public string Name { get; set; }

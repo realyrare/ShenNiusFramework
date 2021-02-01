@@ -22,7 +22,7 @@
         /// get请求成功，直接传递数据
         /// </summary>
         /// <param name="data">数据</param>
-        public ApiResult(dynamic data = null)
+        public ApiResult(dynamic data)
         {
             Data = data;
             StatusCode = 200;

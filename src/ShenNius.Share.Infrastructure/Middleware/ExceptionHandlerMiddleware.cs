@@ -52,11 +52,12 @@ namespace ShenNius.Share.Infrastructure.Middleware
         /// <returns></returns>
         private async Task ExceptionHandlerAsync(HttpContext context, string message)
         {
-            context.Response.ContentType = "application/json;charset=utf-8";
+            //context.Response.ContentType = "application/json;charset=utf-8";
 
             var result = new ApiResult(msg: message, statusCode:context.Response.StatusCode);
 
             await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
+            return;
         }
     }
 }

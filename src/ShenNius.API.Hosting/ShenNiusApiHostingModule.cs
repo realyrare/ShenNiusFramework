@@ -55,12 +55,15 @@ namespace ShenNius.API.Hosting
             });
 
             // FluentValidation 统一请求参数验证          
-            mvcBuilder.AddFluentValidation(fv =>
+            mvcBuilder.AddFluentValidation(options =>
             {
                 var types = Assembly.Load("ShenNius.Share.Models").GetTypes()
-                 .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null).ToList();
-                types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
-                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                 .Where(e => e.Name.EndsWith("Validator"));
+                foreach (var item in types)
+                {
+                    options.RegisterValidatorsFromAssemblyContaining(item);
+                }              
+               // options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
             context.Services.AddSwaggerSetup();
             // 模型验证自定义返回格式
@@ -75,7 +78,7 @@ namespace ShenNius.API.Hosting
                         .ToList();
 
                     var result = new ApiResult(
-                        msg: errors.FirstOrDefault(),
+                        msg: string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList()),
                         statusCode: 400
                     );
                     return new BadRequestObjectResult(result);

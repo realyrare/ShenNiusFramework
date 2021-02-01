@@ -16,6 +16,8 @@ using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Sys.API.Authority;
 using ShenNiusSystem.Common;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -95,7 +97,12 @@ namespace ShenNius.Sys.API.Controllers
             result.Data.Token = token;
             return result;
         }
-
+        [HttpPost]
+        public ApiResult LogOut()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return new ApiResult(data:"/sys/login");
+        }
         private string GetJwtToken(LoginOutput loginOutput)
         {
             //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色

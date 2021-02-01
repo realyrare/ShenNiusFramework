@@ -9,9 +9,9 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 权限角色管理菜单表
     ///</summary>
     [SugarTable("Sys_Permissions")]
-    public partial class SysPermissions
+    public partial class Permissions
     {
-        public SysPermissions()
+        public Permissions()
         {
 
 
@@ -21,19 +21,19 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string RoleGuid { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
         /// 管理员编号
         /// </summary>
-        public string AdminGuid { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Desc:菜单Guid
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string MenuGuid { get; set; }
+        public int MenuId { get; set; }
 
         /// <summary>
         /// 角色-菜单-权限按钮Json
@@ -45,13 +45,5 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// 默认=1
         /// </summary>
         public int Types { get; set; } = 1;
-
-        /// <summary>
-        /// 用户授权角色 状态  和数据库字段没关系
-        /// 默认=1
-        /// </summary>
-        [SugarColumn(IsIgnore = true)]
-        public bool status { get; set; } = false;
-
     }
 }
