@@ -26,16 +26,19 @@ namespace ShenNius.Client.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             // 认证
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
-            {
-                o.Cookie.Name = "ShenNius.Client.Admin";
-                o.LoginPath = new PathString("/sys/login");
-                o.Cookie.HttpOnly = true;
-            });
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            //{
+            //    o.Cookie.Name = "ShenNius.Client.Admin";
+            //    o.LoginPath = new PathString("/sys/login");
+            //    o.Cookie.HttpOnly = true;
+            //});
 
-           
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages(options => {
+                options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
+                options.Conventions.AddPageRoute("/Sys/Login", "");
+               
+            }).AddRazorRuntimeCompilation(); 
             //性能 压缩
             services.AddResponseCompression();
         }

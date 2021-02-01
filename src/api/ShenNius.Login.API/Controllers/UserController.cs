@@ -68,7 +68,6 @@ namespace ShenNius.Sys.API.Controllers
             }
             //获得公钥和私钥
             _cache.Set("LOGINKEY" + number, rsaKey);
-          var str=  _cache.Get<List<string>>("LOGINKEY" + number);
             return new ApiResult(data:new{ RsaKey = rsaKey, Number = number });
         }
 

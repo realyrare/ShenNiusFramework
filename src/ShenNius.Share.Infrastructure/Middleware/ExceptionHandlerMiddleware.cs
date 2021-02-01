@@ -36,7 +36,8 @@ namespace ShenNius.Share.Infrastructure.Middleware
             finally
             {
                 var statusCode = context.Response.StatusCode;
-                if (statusCode != StatusCodes.Status200OK)
+                var statusList=new List<int>() { 400, 401, 200, 403 };
+                if (!statusList.Contains(statusCode))
                 {
                     Enum.TryParse(typeof(HttpStatusCode), statusCode.ToString(), out object message);
                     await ExceptionHandlerAsync(context, message.ToString());
@@ -52,12 +53,14 @@ namespace ShenNius.Share.Infrastructure.Middleware
         /// <returns></returns>
         private async Task ExceptionHandlerAsync(HttpContext context, string message)
         {
-            //context.Response.ContentType = "application/json;charset=utf-8";
+           // context.Response.ContentType = "application/json;charset=utf-8";
 
             var result = new ApiResult(msg: message, statusCode:context.Response.StatusCode);
-
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
-            return;
+            var setting = new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            };
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(result,Formatting.None,setting));
         }
     }
 }

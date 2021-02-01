@@ -38,7 +38,8 @@ namespace ShenNius.API.Hosting
             });
 
             context.Services.AddAuthorizationSetup(context.Configuration);
-            var mvcBuilder = context.Services.AddControllers();
+
+            var mvcBuilder = context.Services.AddControllers(options => options.Conventions.Add(new DashedRoutingConvention()));
 
             mvcBuilder.AddJsonOptions(options =>
             {
@@ -52,6 +53,9 @@ namespace ShenNius.API.Hosting
                 options.LowercaseUrls = true;
                 // 在生成的URL后面添加斜杠
                 options.AppendTrailingSlash = true;
+                options.LowercaseQueryStrings = true;
+
+
             });
 
             // FluentValidation 统一请求参数验证          
@@ -63,7 +67,7 @@ namespace ShenNius.API.Hosting
                 {
                     options.RegisterValidatorsFromAssemblyContaining(item);
                 }              
-               // options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
             context.Services.AddSwaggerSetup();
             // 模型验证自定义返回格式

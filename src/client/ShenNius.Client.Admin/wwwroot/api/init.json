@@ -54,8 +54,8 @@
           "target": "_self"
         },
         {
-          "title": "表格示例",
-          "href": "page/table.html",
+          "title": "用户列表",
+          "href": "sys/user",
           "icon": "fa fa-file-text",
           "target": "_self"
         },
