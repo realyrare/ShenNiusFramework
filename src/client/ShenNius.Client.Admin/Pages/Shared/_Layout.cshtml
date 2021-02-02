@@ -12,11 +12,12 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="~/lib/layui-v2.5.5/css/layui.css" media="all" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/layuimini.css?v=2.0.1" media="all" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/layuimini.css" media="all" asp-append-version="true">
     <link rel="stylesheet" href="~/css/themes/default.css" media="all" asp-append-version="true">
     <link rel="stylesheet" href="~/css/public.css" media="all" asp-append-version="true">
     @await RenderSectionAsync("css", required: false)
-  
+
+
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -112,35 +113,39 @@
             </div>
         </div>
     </div>
-    <script src="/lib/layui-v2.5.5/layui.js" charset="utf-8" asp-append-version="true"></script>
-    <script src="/js/lay-config.js?v=2.0.0" charset="utf-8" asp-append-version="true"></script>
+    <script src="~/lib/layui-v2.5.5/layui.js"></script>
+
+
+
+    <script src="~/js/lay-config.js" charset="utf-8"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
 
-    layui.use(['jquery', 'layer', 'miniAdmin'], function () {
-    var $ = layui.jquery,
-    layer = layui.layer,
-    miniAdmin = layui.miniAdmin;
+        layui.use(['jquery','layer', 'miniAdmin'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniAdmin = layui.miniAdmin;
 
-    var options = {
-    iniUrl: "https://localhost:44325/api/init.json?v=12",    // 初始化接口
-    clearUrl: "https://localhost:44325/api/clear.json", // 缓存清理接口
-    renderPageVersion: true,    // 初始化页面是否加版本号
-    bgColorDefault: false,      // 主题默认配置
-    multiModule: true,          // 是否开启多模块
-    menuChildOpen: false,       // 是否默认展开菜单
-    loadingTime: 0,             // 初始化加载时间
-    pageAnim: true,             // 切换菜单动画
-    };
-    miniAdmin.render(options);
+            var options = {
+                iniUrl: "https://localhost:44325/api/init.json?v=1235656",    // 初始化接口
+                clearUrl: "https://localhost:44325/api/clear.json", // 缓存清理接口
+                renderPageVersion: true,    // 初始化页面是否加版本号
+                bgColorDefault: false,      // 主题默认配置
+                multiModule: true,          // 是否开启多模块
+                menuChildOpen: false,       // 是否默认展开菜单
+                loadingTime: 0,             // 初始化加载时间
+                pageAnim: true,             // 切换菜单动画
+            };
+            miniAdmin.render(options);
 
-    $('.login-out').on("click", function () {
-    layer.msg('退出登录成功', function () {
-    window.location = 'page/login-3.html';
-    });
-    });
-    });
+            //$('.login-out').on("click", function () {
+            //layer.msg('退出登录成功', function () {
+            //window.location = 'page/login-3.html';
+            //});
+            //});
+        });
     </script>
 </body>
 </html>

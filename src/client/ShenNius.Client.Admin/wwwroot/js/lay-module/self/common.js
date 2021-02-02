@@ -1,4 +1,4 @@
-﻿layui.define(['layer', 'toastr'], function (exports) {
+﻿ layui.define(['layer', 'toastr'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
@@ -41,20 +41,21 @@
                 timeout: 10 * 2000, //超时时间设置为50秒；
                 headers: _headers,
                 success: function (data) {
-                    if (data.statusCode === 401) {
+                    console.log("statusCode:"+data.statusCode);
+                    if (data.statusCode == 401) {
                         layer.msg(data.msg);
                         setTimeout(function () {
                             window.location.href = "/sys/login";
-                        }, 3000)  
+                        }, 1000)  
                     }
-                    if (data.statusCode === 500) {
+                    if (data.statusCode == 500) {
                         console.log("statusCode:" + data.statusCode);
                         console.log("msg:" + data.msg);
                        // tool.error(data.msg);
                         layer.msg(data.msg);
                         return;
                     }
-                    if (data.statusCode === 400) {
+                    if (data.statusCode == 400) {
                         layer.msg(data.msg);
                         return ;
                     }

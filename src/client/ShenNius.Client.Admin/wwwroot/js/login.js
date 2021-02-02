@@ -1,6 +1,6 @@
 ﻿
 layui.config({
-    base: '/js/modules/'
+    base: '/js/lay-module/self/'
 });
 layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
@@ -14,7 +14,7 @@ layui.use(['jquery', 'form', 'common'], function () {
             lineColor: '#7ec7fd'
         });
     });
-    os.ajax('user/LoadLoginInfo', "", "application/json", "get", function (res) {
+    os.ajax('user/load-login-info', "", "application/json", "get", function (res) {
         if (res.success == true && res.statusCode === 200) {
             if (res.data.rsaKey[0] != null && res.data.rsaKey[0] != "") {
                 console.log("rsaKey:" + res.data.rsaKey[0]);
@@ -45,7 +45,7 @@ layui.use(['jquery', 'form', 'common'], function () {
         $("#password").val(enc);
         data.field.password = enc;
         //console.log(data.field);
-        os.ajax('user/signin', data.field, "application/json", "post", function (res) {
+        os.ajax('user/sign-in', data.field, "application/json", "post", function (res) {
             if (res.statusCode == 200 && res.success == true) {
                 console.log("token:" + res.data.token);
                 os.SetSession('admin_ACCESS_TOKEN', res.data.token);

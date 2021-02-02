@@ -18,7 +18,7 @@ using ShenNius.Share.Infrastructure.Middleware;
 using System.Linq;
 using System.Reflection;
 using ShenNius.Share.Infrastructure.Utils;
-using ShenNius.Share.Infrastructure.Attributes;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace ShenNius.API.Hosting
 {
@@ -39,7 +39,10 @@ namespace ShenNius.API.Hosting
 
             context.Services.AddAuthorizationSetup(context.Configuration);
 
-            var mvcBuilder = context.Services.AddControllers(options => options.Conventions.Add(new DashedRoutingConvention()));
+            var mvcBuilder = context.Services.AddControllers(options => {
+                //配置路由以减号分割
+                options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+            } );
 
             mvcBuilder.AddJsonOptions(options =>
             {

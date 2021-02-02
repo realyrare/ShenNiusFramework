@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using ShenNius.Share.Service.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Output;
-using ShenNius.Sys.API.Authority;
 using ShenNiusSystem.Common;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Authentication;

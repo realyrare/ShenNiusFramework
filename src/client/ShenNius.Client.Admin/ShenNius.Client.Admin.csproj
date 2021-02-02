@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\modules\**" />
+    <Content Remove="wwwroot\js\modules\**" />
+    <EmbeddedResource Remove="wwwroot\js\modules\**" />
+    <None Remove="wwwroot\js\modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Pages\WeChat\" />
   </ItemGroup>
 
