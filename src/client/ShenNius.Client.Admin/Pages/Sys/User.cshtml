@@ -16,24 +16,6 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户性别</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户城市</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户职业</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="classify" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                         </div>
                     </div>
@@ -63,17 +45,17 @@
     layui.config({
         base: '/js/lay-module/self/'
     });
-    layui.use(['form', 'table', 'miniPage', 'element', 'common'], function () {
+    layui.use(['form', 'layer','table', 'miniPage', 'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            os = layui.common,
+            apiUtil = layui.common,
+            layer = layui.layer,
             miniPage = layui.miniPage;
 
-        table.render({
+        apiUtil.render({
             elem: '#currentTableId',
-            headers: os.getToken(),
-            url: os.httpUrl() + 'user/get-list-pages',
+            url: 'user/get-list-pages',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -91,34 +73,17 @@
                 { field: 'createTime', title: '创建时间' },
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
-            parseData: function (res) { //res 即为原始返回的数据
-                console.log("statusCode:" + data.statusCode);
-                if (res.statusCode == 401) {
-                    layer.msg(res.msg);
-                    setTimeout(function () {
-                        window.location.href = "/sys/login";
-                    }, 1000)
-                }
-                return {
-                    "code": res.statusCode==200?0:-1, //解析接口状态   （好像必须是0 才可以）
-                    "msg": res.msg, //解析提示文本
-                    "count": res.data.count, //解析数据长度
-                    "data": res.data.items //解析数据列表
-                };
-            },
-            limits: [10, 15, 20, 25, 50, 100],
-            limit: 15,
-            page: true,
-            skin: 'line'
+            parseData: function (res) {
+                return apiUtil.parseDataFun(res);
+            }           
         });
-
+     
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
             layer.alert(result, {
                 title: '最终的搜索信息'
             });
-
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
@@ -128,7 +93,6 @@
                     searchParams: result
                 }
             }, 'data');
-
             return false;
         });
 
@@ -136,19 +100,23 @@
          * toolbar事件监听
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {   // 监听添加操作
-                var content = miniPage.getHrefContent('page/table/add.html');
-                var openWH = miniPage.getOpenWidthHeight();
-
-                var index = layer.open({
+            if (obj.event === 'add') {
+                //apiUtil.Open('编辑用户', 'Sys/User-Modify', '750px', '430px', function () {
+                //    //var tree = $.fn.zTree.getZTreeObj("tree");
+                //    //tree.reAsyncChildNodes(null, "refresh");
+                //    //active.reload();
+                //})
+                // 监听添加操作
+                var index = top.layer.open({
                     title: '添加用户',
-                    type: 1,
+                    type: 2,
                     shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: [openWH[0] + 'px', openWH[1] + 'px'],
-                    offset: [openWH[2] + 'px', openWH[3] + 'px'],
-                    content: content,
+                    //maxmin:true,
+                    shadeClose: false,
+                    area: ['850px', '500px'],
+                    zIndex: "10000",
+                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                    content: '/sys/user-modify',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -171,7 +139,6 @@
 
                 var content = miniPage.getHrefContent('page/table/add.html');
                 var openWH = miniPage.getOpenWidthHeight();
-
                 var index = layer.open({
                     title: '编辑用户',
                     type: 1,

@@ -42,10 +42,10 @@
           ]
         },
         {
-          "title": "菜单管理",
-          "href": "page/menu.html",
-          "icon": "fa fa-window-maximize",
-          "target": "_self"
+            "title": "菜单管理",
+            "href": "Sys/UserModify",
+            "icon": "fa fa-window-maximize",
+            "target": "_self"
         },
         {
             "title": "角色列表",
@@ -54,11 +54,12 @@
             "target": "_self"
         },
         {
-          "title": "用户列表",
-          "href": "sys/user",
-          "icon": "fa fa-file-text",
-          "target": "_self"
+            "title": "用户列表",
+            "href": "sys/user",
+            "icon": "fa fa-file-text",
+            "target": "_self"
         },
+
         {
           "title": "表单示例",
           "href": "",

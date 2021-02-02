@@ -1,9 +1,10 @@
-﻿ layui.define(['layer', 'toastr'], function (exports) {
+﻿layui.define(['layer', 'toastr', 'table'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
         layer = layui.layer,
-        toastr = layui.toastr;
+        toastr = layui.toastr,
+        table = layui.table;
     toastr.options = {
         "positionClass": "toast-top-right",
         "timeOut": "1500"
@@ -18,28 +19,23 @@
         success: function (msg) {
             toastr.success(msg);
         },
-        httpUrl() {
+        apiUrl() {
             return "https://localhost:5001/api/";
         },
-        ajax: function (url, options, contentType ="application/json", method = 'post', callFun=null) {
-            var token = tool.GetSession('admin_ACCESS_TOKEN');
-            var _headers = {};
-            if (token !== null) {
-                _headers = {
-                    'Authorization': 'Bearer ' + token
-                };
-            }
+        ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
+            var token = this.getToken();
             options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
-            //console.log(_headers);
             //console.log(options);
-            $.ajax(tool.httpUrl() + url, {
+            $.ajax(tool.apiUrl() + url, {
                 data: options,
                 contentType: type,
                 dataType: 'json', //服务器返回json格式数据
                 type: method, //HTTP请求类型
                 timeout: 10 * 2000, //超时时间设置为50秒；
-                headers: _headers,
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
                 success: function (data) {
                     console.log("statusCode:"+data.statusCode);
                     if (data.statusCode == 401) {
@@ -69,6 +65,46 @@
                     }
                 }
             });
+        },
+        render: function (obj) {
+            var token =this.getToken();         
+            obj.headers = {               
+                'Authorization': 'Bearer ' + token,
+                'cache-control': 'no-cache',
+                'Pragma': 'no-cache'
+            };
+            obj.url = this.apiUrl() + obj.url;
+            if (obj.limits == null || obj.limits == "") {
+                obj.limits = [10, 15, 20, 25, 50, 100];
+            } 
+            if (obj.limit == null || obj.limit == "") {
+                obj.limit = 15;
+            }
+            obj.limit = 15;
+            obj.page = true;
+            obj.skin = 'line';
+            //console.log("token:" + token);
+            table.render(obj);
+        },
+        parseDataFun : function (res) { //res 即为原始返回的数据
+            console.log("statusCode:" + res.statusCode);          
+            if (res.statusCode == 401) {
+                layer.msg(res.msg);
+                setTimeout(function () {
+                    window.location.href = "/sys/login";
+                }, 1000);
+                return;
+            }
+            if (res.statusCode == 500) {
+                layer.msg(res.msg);               
+                return;
+            }
+            return {
+                "code": res.statusCode == 200 ? 0 : -1, //解析接口状态   （好像必须是0 才可以）
+                "msg": res.msg, //解析提示文本
+                "count": res.data.count, //解析数据长度
+                "data": res.data.items //解析数据列表
+            };
         },
         Open: function (title, url, width, height, fun) {
             top.layer.open({
@@ -112,7 +148,14 @@
         },
         getToken: function () {
             var token = tool.GetSession('admin_ACCESS_TOKEN');
-            return { 'Authorization': 'Bearer ' + token};
+            if (token == "" || token == null) {
+                layer.msg("长时间未操作系统超时,即将跳入登陆页面...");
+                setTimeout(function () {
+                    window.location.href = "/sys/login";
+                }, 500)
+                return;
+            }
+            return token;
         },
         closeOpen: function () {
             layer.closeAll();
