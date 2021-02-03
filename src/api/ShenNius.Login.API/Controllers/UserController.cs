@@ -40,16 +40,40 @@ namespace ShenNius.Sys.API.Controllers
             _cache = cache;
         }
         [HttpPost]
-        public ApiResult PostTest([FromBody] LoginInput loginInput)
+        public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
-            return new ApiResult("自己定义的错误码  不知道能不能走到这来",408);
+            return await _userService.RegisterAsync(userRegisterInput);          
+        }
+        [HttpPost]
+        public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
+        {
+            return await _userService.ModfiyAsync(userModifyInput);
+        }
+        [HttpDelete]
+        public async Task<ApiResult> Deletes(List<string> ids)
+        {
+            return await _userService.DeletesAsync(ids);
+        }
+        [HttpDelete]
+        public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
+        {
+            return await _userService.ModfiyPwdAsync(modifyPwdInput);
+        }
+        [HttpGet]
+        public async Task<ApiResult> GetUser(int id)
+        {
+            if (id==0)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            return await _userService.GetUserAsync(id);
         }
         /// <summary>
         /// 查询列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+ 
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
@@ -86,7 +110,7 @@ namespace ShenNius.Sys.API.Controllers
             //Ras解密密码
             var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
             loginInput.Password = ras.Decrypt(loginInput.Password);
-            var result = await _userService.Login(loginInput);
+            var result = await _userService.LoginAsync(loginInput);
             var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))
             {

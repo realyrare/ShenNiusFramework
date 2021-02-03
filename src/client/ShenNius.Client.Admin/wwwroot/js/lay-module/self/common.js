@@ -9,7 +9,7 @@
         "positionClass": "toast-top-right",
         "timeOut": "1500"
     };
-    var tmls,tool = {
+    var tmls, tool = {
         error: function (msg) {
             toastr.error(msg);
         },
@@ -37,23 +37,23 @@
                     'Authorization': 'Bearer ' + token
                 },
                 success: function (data) {
-                    console.log("statusCode:"+data.statusCode);
+                    console.log("statusCode:" + data.statusCode);
                     if (data.statusCode == 401) {
                         layer.msg(data.msg);
                         setTimeout(function () {
                             window.location.href = "/sys/login";
-                        }, 1000)  
+                        }, 1000)
                     }
                     if (data.statusCode == 500) {
                         console.log("statusCode:" + data.statusCode);
                         console.log("msg:" + data.msg);
-                       // tool.error(data.msg);
+                        // tool.error(data.msg);
                         layer.msg(data.msg);
                         return;
                     }
                     if (data.statusCode == 400) {
                         layer.msg(data.msg);
-                        return ;
+                        return;
                     }
                     callFun(data);
                 },
@@ -67,8 +67,8 @@
             });
         },
         render: function (obj) {
-            var token =this.getToken();         
-            obj.headers = {               
+            var token = this.getToken();
+            obj.headers = {
                 'Authorization': 'Bearer ' + token,
                 'cache-control': 'no-cache',
                 'Pragma': 'no-cache'
@@ -76,7 +76,7 @@
             obj.url = this.apiUrl() + obj.url;
             if (obj.limits == null || obj.limits == "") {
                 obj.limits = [10, 15, 20, 25, 50, 100];
-            } 
+            }
             if (obj.limit == null || obj.limit == "") {
                 obj.limit = 15;
             }
@@ -86,8 +86,8 @@
             //console.log("token:" + token);
             table.render(obj);
         },
-        parseDataFun : function (res) { //res 即为原始返回的数据
-            console.log("statusCode:" + res.statusCode);          
+        parseDataFun: function (res) { //res 即为原始返回的数据
+            console.log("statusCode:" + res.statusCode);
             if (res.statusCode == 401) {
                 layer.msg(res.msg);
                 setTimeout(function () {
@@ -96,7 +96,7 @@
                 return;
             }
             if (res.statusCode == 500) {
-                layer.msg(res.msg);               
+                layer.msg(res.msg);
                 return;
             }
             return {
@@ -123,8 +123,8 @@
                 }
             });
         },
-        OpenRight: function (title, url, width, height, fun,cancelFun) {
-            var index=layer.open({
+        OpenRight: function (title, url, width, height, fun, cancelFun) {
+            var index = layer.open({
                 title: title
                 , type: 2
                 , area: [width, height]
@@ -147,15 +147,28 @@
             return index;
         },
         getToken: function () {
-            var token = tool.GetSession('admin_ACCESS_TOKEN');
-            if (token == "" || token == null) {
+            var obj = tool.GetSession('globalCurrentUserInfo');
+            console.log("obj:" + obj);
+            if (obj== "" || obj== null) {
                 layer.msg("长时间未操作系统超时,即将跳入登陆页面...");
                 setTimeout(function () {
                     window.location.href = "/sys/login";
                 }, 500)
                 return;
             }
-            return token;
+            return obj.token;
+        },
+        getCurrentUser: function () {
+            var currentUser = tool.GetSession('globalCurrentUserInfo');
+           
+            if (currentUser == "" || currentUser == null || currentUser ==0) {
+                layer.msg("长时间未操作系统超时,即将跳入登陆页面...");
+                setTimeout(function () {
+                    window.location.href = "/sys/login";
+                }, 500)
+                return;
+            }
+            return currentUser;
         },
         closeOpen: function () {
             layer.closeAll();
@@ -195,12 +208,14 @@
                 return "无信息";
             }
         },
-        SetSession: function (key, options) {
+        SetSession: function (key, options) {           
             localStorage.setItem(key, JSON.stringify(options));
         },
         GetSession: function (key) {
             var obj = localStorage.getItem(key);
+            console.log("obj:" + obj);
             if (obj != null) {
+                console.log("jsonobj:" + JSON.parse(obj));
                 return JSON.parse(obj);
             }
             return null;

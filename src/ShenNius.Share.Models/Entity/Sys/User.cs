@@ -55,6 +55,8 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// 备注
         /// </summary>
         public string Remark { get; set; }
+        public string Ip { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// 添加时间
@@ -65,7 +67,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// <summary>
         /// 当前登录时间
         /// </summary>
-        public DateTime? LoginTime { get; set; }
+        public DateTime? LastLoginTime { get; set; }
 
     }
 }

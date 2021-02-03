@@ -107,16 +107,17 @@
                 //    //active.reload();
                 //})
                 // 监听添加操作
-                var index = top.layer.open({
+                var content = miniPage.getHrefContent('/sys/user-modify');
+                var index = layer.open({
                     title: '添加用户',
-                    type: 2,
+                    type: 1,
                     shade: 0.2,
                     //maxmin:true,
                     shadeClose: false,
-                    area: ['850px', '500px'],
-                    zIndex: "10000",
+                    area: ['680px', '600px'],
+                   // zIndex: "10000",
                     //offset: [openWH[2] + 'px', openWH[3] + 'px'],
-                    content: '/sys/user-modify',
+                    content: content,
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

@@ -4,7 +4,7 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.Loginname">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.LoginName">
             <summary>
             登录账号
             </summary>
@@ -12,6 +12,106 @@
         <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.Password">
             <summary>
             登录密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.ModifyPwdInput.OldPassword">
+            <summary>
+            旧密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Password">
+            <summary>
+            登录密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Status">
+            <summary>
+            状态 1=整除 0=不允许登录
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Password">
+            <summary>
+            登录密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Status">
+            <summary>
+            状态 1=整除 0=不允许登录
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Remark">
+            <summary>
+            备注
             </summary>
         </member>
         <member name="T:ShenNius.Share.Models.Entity.Sys.R_Role_Menu">
@@ -433,79 +533,6 @@
             浏览器信息
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.Organize">
-            <summary>
-             组织表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Guid">
-            <summary>
-            Desc:唯一编号
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.SiteGuid">
-            <summary>
-            站点编码
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentGuid">
-            <summary>
-            Desc:父节点
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Name">
-            <summary>
-            Desc:组织名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentName">
-            <summary>
-            Desc:父节名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Layer">
-            <summary>
-            Desc:层级
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentGuidList">
-            <summary>
-            Desc:父节点集合
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Sort">
-            <summary>
-            Desc:排序
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Status">
-            <summary>
-            Desc:状态
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.EditTime">
-            <summary>
-            Desc:修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.Id">
             <summary>
             唯一编号
@@ -561,7 +588,7 @@
             添加时间
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.LoginTime">
+        <member name="P:ShenNius.Share.Model.Entity.Sys.User.LastLoginTime">
             <summary>
             当前登录时间
             </summary>

@@ -57,10 +57,7 @@ namespace ShenNius.API.Hosting
                 // 在生成的URL后面添加斜杠
                 options.AppendTrailingSlash = true;
                 options.LowercaseQueryStrings = true;
-
-
             });
-
             // FluentValidation 统一请求参数验证          
             mvcBuilder.AddFluentValidation(options =>
             {

@@ -9,6 +9,7 @@ namespace ShenNius.Share.Service
         public AutomapperProfile()
         {
             CreateMap<User, LoginOutput>().ForMember(d=>d.LoginName,s=>s.MapFrom(i=>i.Name));
+         
         }
     }
 }
