@@ -37,7 +37,7 @@
                     'Authorization': 'Bearer ' + token
                 },
                 success: function (data) {
-                    console.log("statusCode:" + data.statusCode);
+                    //console.log("statusCode:" + data.statusCode);
                     if (data.statusCode == 401) {
                         layer.msg(data.msg);
                         setTimeout(function () {
@@ -46,7 +46,6 @@
                     }
                     if (data.statusCode == 500) {
                         console.log("statusCode:" + data.statusCode);
-                        console.log("msg:" + data.msg);
                         // tool.error(data.msg);
                         layer.msg(data.msg);
                         return;
@@ -87,11 +86,12 @@
             table.render(obj);
         },
         parseDataFun: function (res) { //res 即为原始返回的数据
-            console.log("statusCode:" + res.statusCode);
+            console.log("parseDataFun  statusCode:" + res.statusCode);
             if (res.statusCode == 401) {
                 layer.msg(res.msg);
                 setTimeout(function () {
-                    window.location.href = "/sys/login";
+                    window.location.hash = "/";
+                   // window.location.href = "/sys/login";
                 }, 1000);
                 return;
             }
@@ -100,7 +100,7 @@
                 return;
             }
             return {
-                "code": res.statusCode == 200 ? 0 : -1, //解析接口状态   （好像必须是0 才可以）
+                "code": res.statusCode == 200 ? 0 : -1, //解析接口状态,必须是0 才可以）
                 "msg": res.msg, //解析提示文本
                 "count": res.data.count, //解析数据长度
                 "data": res.data.items //解析数据列表
@@ -147,27 +147,11 @@
             return index;
         },
         getToken: function () {
-            var obj = tool.GetSession('globalCurrentUserInfo');
-            console.log("obj:" + obj);
-            if (obj== "" || obj== null) {
-                layer.msg("长时间未操作系统超时,即将跳入登陆页面...");
-                setTimeout(function () {
-                    window.location.href = "/sys/login";
-                }, 500)
-                return;
-            }
+            var obj = tool.GetSession('globalCurrentUserInfo');           
             return obj.token;
         },
         getCurrentUser: function () {
-            var currentUser = tool.GetSession('globalCurrentUserInfo');
-           
-            if (currentUser == "" || currentUser == null || currentUser ==0) {
-                layer.msg("长时间未操作系统超时,即将跳入登陆页面...");
-                setTimeout(function () {
-                    window.location.href = "/sys/login";
-                }, 500)
-                return;
-            }
+            var currentUser = tool.GetSession('globalCurrentUserInfo');          
             return currentUser;
         },
         closeOpen: function () {
@@ -212,13 +196,20 @@
             localStorage.setItem(key, JSON.stringify(options));
         },
         GetSession: function (key) {
-            var obj = localStorage.getItem(key);
-            console.log("obj:" + obj);
-            if (obj != null) {
-                console.log("jsonobj:" + JSON.parse(obj));
-                return JSON.parse(obj);
-            }
-            return null;
+            try {
+                var obj = localStorage.getItem(key);
+                if (obj == "" || obj == null || obj == undefined) {
+                    layer.msg("token信息丢失,即将跳入登陆页面...");
+                    setTimeout(function () {
+                        window.location.href = "/sys/login";
+                    }, 500)
+                    return;
+                }
+                // console.log("jsonobj:" + JSON.parse(obj));
+                return JSON.parse(obj);     
+            } catch (e) {
+                console.log("获取session错误原因:" + e);
+            }                
         },
         /**
          * 删除键值对json

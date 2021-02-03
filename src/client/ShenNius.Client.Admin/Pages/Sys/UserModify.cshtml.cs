@@ -9,8 +9,11 @@ namespace ShenNius.Client.Admin.Pages.Sys
 {
     public class UserModifyModel : PageModel
     {
-        public void OnGet()
+        [BindProperty]
+        public int Id { get; set; }
+        public void OnGet(int id)
         {
+            Id = id;
         }
     }
 }

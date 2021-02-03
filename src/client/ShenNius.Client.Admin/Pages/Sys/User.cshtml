@@ -62,15 +62,27 @@
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
+            authorizeFields: true, // 字段权限开关
+            autoColumnWidth: true,
+            overflow: { // 默认所有表格都超出
+                type: 'tips'
+                , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                , color: 'black' // 字体颜色
+                , bgColor: 'white' // 背景色
+                , header: true, // 表头支持 overflow
+                total: true // 合计行支持 overflow
+            },
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 80, title: 'ID', sort: true},
-                {field: 'name', width: 80, title: '用户名'},
-                {field: 'sex', width: 80, title: '性别', sort: true},
-                { field: 'trueName', title: '真是姓名' },
-                { field: 'email', title: '所属部门' },
-                { field: 'mobile', title: '性别' },
+                { field: 'name', width: 80, title: '用户名' },
+                { field: 'trueName', title: '真实姓名' },
+                {field: 'ip', width: 80, title: 'IP'},
+                { field: 'address', width: 120, title: '地址' },
+                { field: 'email', width: 120,title: '邮箱' },
+                { field: 'mobile', width: 120, title: '手机号' },
                 { field: 'createTime', title: '创建时间' },
+                { field: 'lastLoginTime', title: '最后登录时间' },
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             parseData: function (res) {
@@ -100,14 +112,14 @@
          * toolbar事件监听
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
+            var query = table.checkStatus('currentTableId')
+            console.log("data:" + JSON.stringify(query))
+            console.log("kk:" + query.data[0].id)
             if (obj.event === 'add') {
-                //apiUtil.Open('编辑用户', 'Sys/User-Modify', '750px', '430px', function () {
-                //    //var tree = $.fn.zTree.getZTreeObj("tree");
-                //    //tree.reAsyncChildNodes(null, "refresh");
-                //    //active.reload();
-                //})
+               // var openWH = miniPage.getOpenWidthHeight();
                 // 监听添加操作
-                var content = miniPage.getHrefContent('/sys/user-modify');
+                $("#id").val(query.data[0].id);
+                var content = miniPage.getHrefContent('/sys/user-modify?id=' + query.data[0].id);
                 var index = layer.open({
                     title: '添加用户',
                     type: 1,
@@ -116,12 +128,12 @@
                     shadeClose: false,
                     area: ['680px', '600px'],
                    // zIndex: "10000",
-                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                   // offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
                 });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
+                //$(window).on("resize", function () {
+                //    layer.full(index);
+                //});
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
@@ -136,9 +148,10 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
+            console.log("data.id:" + data.id);
             if (obj.event === 'edit') {
 
-                var content = miniPage.getHrefContent('page/table/add.html');
+                var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);
                 var openWH = miniPage.getOpenWidthHeight();
                 var index = layer.open({
                     title: '编辑用户',
@@ -149,6 +162,7 @@
                     area: [openWH[0] + 'px', openWH[1] + 'px'],
                     offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
+                    data: data.id
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

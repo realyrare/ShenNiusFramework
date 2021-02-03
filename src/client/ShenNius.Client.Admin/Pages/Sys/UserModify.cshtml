@@ -15,36 +15,41 @@
             <div class="layuimini-main">
 
                 <div class="layui-form layuimini-form">
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" lay-verify="id" readonly autocomplete="off" placeholder="请输入账户" class="layui-input">
+                        </div>
+                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label required">账号</label>
                         <div class="layui-input-block">
-                            <input type="text" name="name" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号"  class="layui-input">
+                            <input type="text" name="name" lay-verify="required" lay-reqtext="账号不能为空" placeholder="请输入用户账号" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label required">真实姓名</label>
                         <div class="layui-input-block">
-                            <input type="text" name="truename" lay-verify="required" lay-reqtext="真实姓名不能为空" placeholder="请输入真实姓名"  class="layui-input">
+                            <input type="text" name="trueName" lay-verify="required" lay-reqtext="真实姓名不能为空" placeholder="请输入真实姓名" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label required">密码</label>
                         <div class="layui-input-block">
                             <input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入密码" value="admin" class="layui-input">
-
                         </div>
                     </div>
-                   
+
                     <div class="layui-form-item">
                         <label class="layui-form-label required">手机</label>
                         <div class="layui-input-block">
-                            <input type="text" name="mobile" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机"  class="layui-input">
+                            <input type="text" name="mobile" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">邮箱</label>
                         <div class="layui-input-block">
-                            <input type="email" name="email" placeholder="请输入邮箱"  class="layui-input">
+                            <input type="email" name="email" placeholder="请输入邮箱" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text">
@@ -67,8 +72,9 @@
             layui.config({
                 base: '/js/lay-module/self/'
             });
-            layui.use(['form', 'miniPage', 'common'], function () {
+            layui.use(['jquery','form', 'miniPage', 'common'], function () {
                 var form = layui.form,
+                    $ = layui.$,
                     layer = layui.layer,
                     apiUtil = layui.common,
                     miniPage = layui.miniPage;
@@ -76,9 +82,14 @@
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
-             
+                var parentIndex = layer.index;
+                var router = layui.router();
+                let currentId = router.search.id;
+ 
+                console.log("id:" + currentId)
+                console.log("parentIndex:" + parentIndex)
                 var user = apiUtil.getCurrentUser();
-                console.log("userId:" + user.id);
+               // console.log("userId:" + user.id);
                 apiUtil.ajax('user/get-user', { id: user.id }, "application/json", "get", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         form.val("user-edit", res.data);
