@@ -21,7 +21,7 @@ layui.define(["element", "jquery"], function (exports) {
             options.homeInfo = options.homeInfo || {};
             options.menuList = options.menuList || [];
             options.multiModule = options.multiModule || false;
-            options.renderPageVersion = options.renderPageVersion || false;
+           // options.renderPageVersion = options.renderPageVersion || false;
             options.listenSwichCallback = options.listenSwichCallback || function () {
             };
             var href = location.hash.replace(/^#\//, '');

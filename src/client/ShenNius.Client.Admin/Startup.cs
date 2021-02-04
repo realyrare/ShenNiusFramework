@@ -2,14 +2,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ShenNius.Client.Admin.Extension;
 
 namespace ShenNius.Client.Admin
 {
@@ -25,6 +22,9 @@ namespace ShenNius.Client.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddHttpClient();
+
             // 认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
@@ -33,9 +33,12 @@ namespace ShenNius.Client.Admin
                 o.LoginPath = new PathString("/sys/login");
                 o.Cookie.HttpOnly = true;
             });
+
             services.AddRazorPages(options => {
-                options.Conventions.AddPageRoute("/sys/Login", "");
-            });
+                options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
+                options.Conventions.AddPageRoute("/Sys/Login", "");
+                options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
+            }).AddRazorRuntimeCompilation(); 
             //性能 压缩
             services.AddResponseCompression();
         }
@@ -56,7 +59,7 @@ namespace ShenNius.Client.Admin
             app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseStatusCodePagesWithReExecute("/Error");
             app.UseRouting();
 
             app.UseAuthentication();

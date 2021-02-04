@@ -9,10 +9,12 @@ namespace ShenNius.Share.Models.Dtos.Input
         /// <summary>
         /// 登录账号
         /// </summary>
-        public string loginname { get; set; }
+        public string LoginName { get; set; }
         /// <summary>
         /// 登录密码
         /// </summary>
-        public string password { get; set; }
+        public string Password { get; set; }
+
+        public string NumberGuid { get; set; }
     }
 }

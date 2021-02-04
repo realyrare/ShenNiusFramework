@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Utils;
@@ -20,6 +22,7 @@ namespace ShenNius.Share.Service
             InjectHelper.AddAssembly(context.Services, "ShenNius.Share.Service");
 
             context.Services.AddAutoMapper(typeof(AutomapperProfile));
+            context.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

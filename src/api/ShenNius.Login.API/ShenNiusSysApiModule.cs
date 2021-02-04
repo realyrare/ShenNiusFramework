@@ -1,13 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using ShenNius.Share.Service;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Sys.API
 {
@@ -20,6 +16,7 @@ namespace ShenNius.Sys.API
             //JwtSetting jwtSetting = new JwtSetting();
             //context.Configuration.Bind("JwtSetting", jwtSetting);
             context.Services.Configure<JwtSetting>(context.Configuration.GetSection("JwtSetting"));
+            context.Services.AddMemoryCache();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

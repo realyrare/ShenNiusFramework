@@ -13,7 +13,10 @@ using System.Threading.Tasks;
 using ShenNius.Share.Service.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Output;
-using ShenNius.Sys.API.Authority;
+using ShenNiusSystem.Common;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -23,36 +26,91 @@ namespace ShenNius.Sys.API.Controllers
     {
         readonly IOptions<JwtSetting> _jwtSetting;
         private readonly IUserService _userService;
+        private readonly IMemoryCache _cache;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jwtSetting"></param>
         /// <param name="userService"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService)
+        /// <param name="cache"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
+            _cache = cache;
         }
-
+        [HttpPost]
+        public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
+        {
+            return await _userService.RegisterAsync(userRegisterInput);          
+        }
+        [HttpPost]
+        public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
+        {
+            return await _userService.ModfiyAsync(userModifyInput);
+        }
+        [HttpDelete]
+        public async Task<ApiResult> Deletes(List<string> ids)
+        {
+            return await _userService.DeletesAsync(ids);
+        }
+        [HttpDelete]
+        public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
+        {
+            return await _userService.ModfiyPwdAsync(modifyPwdInput);
+        }
+        [HttpGet]
+        public async Task<ApiResult> GetUser(int id)
+        {
+            if (id==0)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            return await _userService.GetUserAsync(id);
+        }
         /// <summary>
         /// 查询列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+ 
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ApiResult LoadLoginInfo()
+        {         
+            var rsaKey = RSACrypt.GetKey();
+            var number = Guid.NewGuid().ToString();            
+            if (rsaKey.Count <= 0|| rsaKey==null)
+            {
+                throw new ArgumentNullException("获取登录的公钥和私钥为空");   
+            }
+            //获得公钥和私钥
+            _cache.Set("LOGINKEY" + number, rsaKey);
+            return new ApiResult(data:new{ RsaKey = rsaKey, Number = number });
+        }
+
         /// <summary>
         /// 登录
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
+        [AllowAnonymous]
+        public async Task<ApiResult<LoginOutput>> SignIn([FromBody]LoginInput loginInput)
         {
-            var result = await _userService.Login(loginInput);
+            var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.NumberGuid);
+            if (rsaKey == null)
+            {
+                return new ApiResult<LoginOutput>("登录失败，请刷新浏览器再次登录!");
+            }
+            //Ras解密密码
+            var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
+            loginInput.Password = ras.Decrypt(loginInput.Password);
+            var result = await _userService.LoginAsync(loginInput);
             var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))
             {
@@ -61,7 +119,12 @@ namespace ShenNius.Sys.API.Controllers
             result.Data.Token = token;
             return result;
         }
-
+        [HttpPost]
+        public ApiResult LogOut()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return new ApiResult(data:"/sys/login");
+        }
         private string GetJwtToken(LoginOutput loginOutput)
         {
             //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色

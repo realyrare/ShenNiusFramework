@@ -15,9 +15,12 @@ using ShenNius.Order.API;
 using ShenNius.Product.API;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Middleware;
-using ShenNius.Share.Infrastructure.Utils;
 using System.Linq;
 using System.Reflection;
+using ShenNius.Share.Infrastructure.Utils;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ShenNius.API.Hosting
 {
@@ -30,15 +33,31 @@ namespace ShenNius.API.Hosting
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-           
             // 跨域配置
             context.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            
+
             context.Services.AddAuthorizationSetup(context.Configuration);
-            var mvcBuilder = context.Services.AddControllers();
+
+            var mvcBuilder = context.Services.AddControllers(options => {
+                //配置路由以减号分割
+                options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+            } );
+
+            //mvcBuilder.AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeConverter());
+            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeNullableConverter());
+            //});
+            mvcBuilder.AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.StringEscapeHandling = StringEscapeHandling.EscapeHtml;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;            
+            });
             // 路由配置
             context.Services.AddRouting(options =>
             {
@@ -46,15 +65,18 @@ namespace ShenNius.API.Hosting
                 options.LowercaseUrls = true;
                 // 在生成的URL后面添加斜杠
                 options.AppendTrailingSlash = true;
+                options.LowercaseQueryStrings = true;
             });
-
             // FluentValidation 统一请求参数验证          
-            mvcBuilder.AddFluentValidation(fv =>
+            mvcBuilder.AddFluentValidation(options =>
             {
-                var types = Assembly.Load("ShenNius.Share.Models").GetTypes().ToList();
-                // .Where(x => x.GetCustomAttribute(typeof(ValidatorAttribute)) != null);
-                types.ForEach(x => { fv.RegisterValidatorsFromAssemblyContaining(x); });
-                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                var types = Assembly.Load("ShenNius.Share.Models").GetTypes()
+                 .Where(e => e.Name.EndsWith("Validator"));
+                foreach (var item in types)
+                {
+                    options.RegisterValidatorsFromAssemblyContaining(item);
+                }              
+                options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
             context.Services.AddSwaggerSetup();
             // 模型验证自定义返回格式
@@ -69,10 +91,8 @@ namespace ShenNius.API.Hosting
                         .ToList();
 
                     var result = new ApiResult(
-                        null,
-                        statusCode: 400,
-                         success:false,
-                        msg: errors.FirstOrDefault()                      
+                        msg: string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList()),
+                        statusCode: 400
                     );
                     return new BadRequestObjectResult(result);
                 };

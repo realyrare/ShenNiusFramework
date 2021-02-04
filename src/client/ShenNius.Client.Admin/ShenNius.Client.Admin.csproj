@@ -1,11 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\modules\**" />
+    <Content Remove="wwwroot\js\modules\**" />
+    <EmbeddedResource Remove="wwwroot\js\modules\**" />
+    <None Remove="wwwroot\js\modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Pages\WeChat\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+
   </ItemGroup>
 
 </Project>

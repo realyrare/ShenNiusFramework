@@ -5,24 +5,39 @@
         /// <summary>
         /// 状态码
         /// </summary>
-        public int StatusCode { get; private set; }
+        public int StatusCode { get;  set; }
         /// <summary>
         /// 操作是否成功
         /// </summary>
-        public bool Success { get; private set; }
+        public bool Success { get;  set; }
         /// <summary>
         /// 返回信息
         /// </summary>
-        public string Msg { get;private set; }
+        public string Msg { get; set; }
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public dynamic Data { get; private set; } 
-        public ApiResult(dynamic data = null, int statusCode = 200, bool success = true, string msg = "操作成功")
+        public dynamic Data { get;  set; } 
+        /// <summary>
+        /// get请求成功，直接传递数据
+        /// </summary>
+        /// <param name="data">数据</param>
+        public ApiResult(dynamic data)
         {
             Data = data;
+            StatusCode = 200;
+            Success = true;
+            Msg = "操作成功";
+        }
+        /// <summary>
+        /// 响应失败
+        /// </summary>
+        /// <param name="msg">错误消息</param>
+        /// <param name="statusCode">错误码</param>
+        public ApiResult(string msg = "服务器内部错误", int statusCode = 500)
+        {
             StatusCode = statusCode;
-            Success = success;
+            Success = false;
             Msg = msg;
         }
     }
@@ -31,25 +46,25 @@
         /// <summary>
         /// 状态码
         /// </summary>
-        public int StatusCode { get; private set; }
+        public int StatusCode { get;  set; }
         /// <summary>
         /// 操作是否成功
         /// </summary>
-        public bool Success { get; private set; }
+        public bool Success { get; set; }
         /// <summary>
         /// 返回信息
         /// </summary>
-        public string Msg { get; private set; }
+        public string Msg { get;  set; }
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public T Data { get; private set; }
-        public ApiResult(T data=null, int statusCode=200,bool success=true,string msg="操作成功")
+        public T Data { get;  set; }
+        public ApiResult(T data=null)
         {
             Data = data;
-            StatusCode = statusCode;
-            Success = success;
-            Msg = msg;
+            StatusCode = 200;
+            Success = true;
+            Msg = "操作成功";
         }
         public ApiResult(string msg = "服务器内部错误",int statusCode = 500)
         {
@@ -57,13 +72,6 @@
             StatusCode = statusCode;
             Success = false;
             Msg = msg;
-        }
-        //public ApiResult(string msg =null, int statusCode = 400, bool success = false)
-        //{
-        //    Data = default;
-        //    StatusCode = statusCode;
-        //    Success = success;
-        //    Msg = msg;
-        //}
+        }     
     }
 }

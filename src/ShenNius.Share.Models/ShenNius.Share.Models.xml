@@ -4,15 +4,303 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.loginname">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.LoginName">
             <summary>
             登录账号
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.password">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.Password">
             <summary>
             登录密码
             </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.ModifyPwdInput.OldPassword">
+            <summary>
+            旧密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Password">
+            <summary>
+            登录密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserModifyInput.Status">
+            <summary>
+            状态 1=整除 0=不允许登录
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Password">
+            <summary>
+            登录密码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Status">
+            <summary>
+            状态 1=整除 0=不允许登录
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Name">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.TrueName">
+            <summary>
+            真是姓名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Entity.Sys.R_Role_Menu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_Role_Menu.Id">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_Role_Menu.RoleId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_Role_Menu.MenuId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_Role_Menu.CreateTime">
+            <summary>
+            Desc:
+            Default:DateTime.Now
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_Role_Menu.IsPass">
+            <summary>
+            Desc:
+            Default:1
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="T:ShenNius.Share.Models.Entity.Sys.R_User_Role">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_User_Role.Id">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_User_Role.CreateTime">
+            <summary>
+            Desc:
+            Default:DateTime.Now
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_User_Role.UserId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_User_Role.RoleId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Sys.R_User_Role.IsEnable">
+            <summary>
+            Desc:
+            Default:1
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="T:ShenNius.Share.Model.Entity.Sys.Menu">
+            <summary>
+             系统菜单表
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.Id">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.ParentId">
+            <summary>
+            Desc:
+            Default:0
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.Name">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.Url">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.CreateTime">
+            <summary>
+            Desc:
+            Default:DateTime.Now
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Menu.HttpMethod">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="T:ShenNius.Share.Model.Entity.Sys.Permissions">
+            <summary>
+             权限角色管理菜单表
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.RoleId">
+            <summary>
+            Desc:角色Guid
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.UserId">
+            <summary>
+            管理员编号
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.MenuId">
+            <summary>
+            Desc:菜单Guid
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.BtnFunJson">
+            <summary>
+            角色-菜单-权限按钮Json
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.Types">
+            <summary>
+            授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能
+            默认=1
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Model.Entity.Sys.Role">
+            <summary>
+             权限角色表
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Role.Id">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Role.Name">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Role.CreateTime">
+            <summary>
+            Desc:
+            Default:DateTime.Now
+            Nullable:False
+            </summary>           
         </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.SysBtnFun">
             <summary>
@@ -180,67 +468,6 @@
             Nullable:True
             </summary>           
         </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysImage">
-            <summary>
-             图片表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.Guid">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.TheGuid">
-            <summary>
-            Desc:所属栏目Guid
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.Types">
-            <summary>
-            Desc:图片类型，一个栏目可有多个图片类型
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.Title">
-            <summary>
-            Desc:图片名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.ImgBig">
-            <summary>
-            Desc:图片原图
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.ImgSmall">
-            <summary>
-            Desc:图片缩略图
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.IsCover">
-            <summary>
-            Desc:是否为封面
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysImage.Sort">
-            <summary>
-            Desc:排序字段
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.SysLog">
             <summary>
              系统操作表
@@ -306,325 +533,9 @@
             浏览器信息
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysMenu">
-            <summary>
-             系统菜单表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Guid">
-            <summary>
-            Desc:唯一标识Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.SiteGuid">
-            <summary>
-            Desc:所属站点或公司菜单
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.ParentGuid">
-            <summary>
-            Desc:菜单父级Guid
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.ParentName">
-            <summary>
-            父级名称
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Name">
-            <summary>
-            Desc:菜单名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.NameCode">
-            <summary>
-            Desc:菜单名称标识
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.ParentGuidList">
-            <summary>
-            Desc:所属父级的集合
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Layer">
-            <summary>
-            Desc:菜单深度
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Urls">
-            <summary>
-            Desc:菜单Url
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Icon">
-            <summary>
-            Desc:菜单图标Class
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Sort">
-            <summary>
-            Desc:菜单排序
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.Status">
-            <summary>
-            Desc:菜单状态 true=正常 false=不显示
-            Default:b'1'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.BtnFunJson">
-            <summary>
-            菜单按钮功能的值，关联Code
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.EditTime">
-            <summary>
-            Desc:修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.AddTIme">
-            <summary>
-            Desc:添加时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysMenu.cbks">
-            <summary>
-            授权功能  和数据库没关系
-            </summary>
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.Organize">
-            <summary>
-             组织表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Guid">
-            <summary>
-            Desc:唯一编号
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.SiteGuid">
-            <summary>
-            站点编码
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentGuid">
-            <summary>
-            Desc:父节点
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Name">
-            <summary>
-            Desc:组织名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentName">
-            <summary>
-            Desc:父节名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Layer">
-            <summary>
-            Desc:层级
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.ParentGuidList">
-            <summary>
-            Desc:父节点集合
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Sort">
-            <summary>
-            Desc:排序
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.Status">
-            <summary>
-            Desc:状态
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Organize.EditTime">
-            <summary>
-            Desc:修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysPermissions">
-            <summary>
-             权限角色管理菜单表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.RoleGuid">
-            <summary>
-            Desc:角色Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.AdminGuid">
-            <summary>
-            管理员编号
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.MenuGuid">
-            <summary>
-            Desc:菜单Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.BtnFunJson">
-            <summary>
-            角色-菜单-权限按钮Json
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.Types">
-            <summary>
-            授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能
-            默认=1
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysPermissions.status">
-            <summary>
-            用户授权角色 状态  和数据库字段没关系
-            默认=1
-            </summary>
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysRole">
-            <summary>
-             权限角色表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.Guid">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.DepartmentGuid">
-            <summary>
-            Desc:部门Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.DepartmentName">
-            <summary>
-            部门名称
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.DepartmentGroup">
-            <summary>
-            归属于角色组
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.Name">
-            <summary>
-            Desc:部门名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.Codes">
-            <summary>
-            Desc:部门编号
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.IsSystem">
-            <summary>
-            Desc:是否为超级管理员
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.Summary">
-            <summary>
-            Desc:部门描述
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.AddTime">
-            <summary>
-            Desc:添加时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysRole.EditTime">
-            <summary>
-            Desc:修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.Id">
             <summary>
             唯一编号
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.RoleId">
-            <summary>
-            归属角色
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.DepartmentName">
-            <summary>
-            归属部门
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.DepartmentId">
-            <summary>
-            归属部门
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.DepartmentIdList">
-            <summary>
-            部门集合
             </summary>
         </member>
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.Name">
@@ -677,1633 +588,10 @@
             添加时间
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.User.LoginTime">
+        <member name="P:ShenNius.Share.Model.Entity.Sys.User.LastLoginTime">
             <summary>
             当前登录时间
             </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsAdvClass">
-            <summary>
-            广告栏目管理
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Guid">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.ParentGuid">
-            <summary>
-            Desc:父ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Title">
-            <summary>
-            Desc:栏位名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Flag">
-            <summary>
-            Desc:栏位类型
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Width">
-            <summary>
-            Desc:宽度
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Height">
-            <summary>
-            Desc:高度
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Summary">
-            <summary>
-            Desc:说明
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.Status">
-            <summary>
-            Desc:状态
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.SiteGuid">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvClass.UpdateDate">
-            <summary>
-            更新时间
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsAdvList">
-            <summary>
-            广告位管理
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Guid">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.ClassGuid">
-            <summary>
-            Desc:栏目ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Title">
-            <summary>
-            Desc:广告位名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Types">
-            <summary>
-            Desc:广告位类型
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Status">
-            <summary>
-            Desc:是否启用
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.ImgUrl">
-            <summary>
-            Desc:图片地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.LinkUrl">
-            <summary>
-            Desc:链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.LinkSummary">
-            <summary>
-            Desc:链接描述
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Target">
-            <summary>
-            Desc:打开窗口类型
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.AdvCode">
-            <summary>
-            Desc:广告位说明
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.IsTimeLimit">
-            <summary>
-            Desc:是否启用时间显示
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.BeginTime">
-            <summary>
-            Desc:开始时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.EndTime">
-            <summary>
-            Desc:结束时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Sort">
-            <summary>
-            Desc:排序
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.Hits">
-            <summary>
-            Desc:点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsAdvList.UpdateDate">
-            <summary>
-            更新时间
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsArticle">
-            <summary>
-            文章表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Id">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.ColumnId">
-            <summary>
-            Desc:栏目ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Types">
-            <summary>
-            Desc:0=新闻 1=多图
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Title">
-            <summary>
-            Desc:文章标题
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.TitleColor">
-            <summary>
-            Desc:文章标题颜色
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.SubTitle">
-            <summary>
-            Desc:文章副标题
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Author">
-            <summary>
-            Desc:作者
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Source">
-            <summary>
-            Desc:来源
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsLink">
-            <summary>
-            Desc:是否外链
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.LinkUrl">
-            <summary>
-            Desc:外部链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Tag">
-            <summary>
-            Desc:文章标签
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Sort">
-            <summary>
-            Desc:权重
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.WapType">
-            <summary>
-            Desc:手机端展示形式  0=左右    1=下大图  2=下3个小图
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.ImgUrl">
-            <summary>
-            Desc:文章宣传图
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.ThumImg">
-            <summary>
-            Desc:文章缩略图
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.VideoUrl">
-            <summary>
-            Desc:视频链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsTop">
-            <summary>
-            Desc:是否置顶
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsHot">
-            <summary>
-            Desc:是否热点
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsScroll">
-            <summary>
-            Desc:是否滚动
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsSlide">
-            <summary>
-            Desc:是否幻灯
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsComment">
-            <summary>
-            Desc:是否允许评论
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsWap">
-            <summary>
-            Desc:是否手机站显示
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.IsRecyc">
-            <summary>
-            Desc:是否在回收站
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Audit">
-            <summary>
-            Desc:审核状态
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.KeyWord">
-            <summary>
-            SEO关键字
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Summary">
-            <summary>
-            文章摘要
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Content">
-            <summary>
-            文章内容
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.Hits">
-            <summary>
-            Desc:点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.DayHits">
-            <summary>
-            Desc:当日点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.WeedHits">
-            <summary>
-            Desc:星期点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.MonthHits">
-            <summary>
-            Desc:月点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.LastHitDate">
-            <summary>
-            Desc:最后点击时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.EditDate">
-            <summary>
-            Desc:编辑时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.AddDate">
-            <summary>
-            Desc:添加时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.DelDate">
-            <summary>
-            Desc:删除到回收站时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.SiteGuid">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsArticle.CommonCount">
-            <summary>
-            文章评论数
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.ArticleImageJson">
-            <summary>
-            商品图片列表
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsColumn">
-            <summary>
-            网站栏目管理
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Id">
-            <summary>
-            Desc:自动递增
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Number">
-            <summary>
-            Desc:栏目编号
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Title">
-            <summary>
-            Desc:栏目标题
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.EnTitle">
-            <summary>
-            Desc:英文栏位名称
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.SubTitle">
-            <summary>
-            Desc:栏位副标题
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.ParentId">
-            <summary>
-            Desc:父栏目
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.ClassList">
-            <summary>
-            Desc:栏位集合
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.ClassLayer">
-            <summary>
-            Desc:栏位等级
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Sort">
-            <summary>
-            Desc:排序
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.TypeID">
-            <summary>
-            Desc:栏目类型
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Attr">
-            <summary>
-            Desc:栏位属性
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.TempId">
-            <summary>
-            Desc:模板ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.TempName">
-            <summary>
-            Desc:模板名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.TempUrl">
-            <summary>
-            Desc:模板地址
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.ImgUrl">
-            <summary>
-            Desc:栏位图片
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.LinkUrl">
-            <summary>
-            Desc:外部链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.WapLinkUrl">
-            <summary>
-            Desc:移动端链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.IsTopShow">
-            <summary>
-            Desc:是否顶部显示
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.IsWapShow">
-            <summary>
-            Desc:是否手机端展示
-            Default:b'0'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.KeyWord">
-            <summary>
-            Desc:关键词
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Summary">
-            <summary>
-            Desc:描述
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.Content">
-            <summary>
-            Desc:内容
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.SiteGuid">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsColumn.UpdateDate">
-            <summary>
-            修改时间
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsComment">
-            <summary>
-             评论表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.Guid">
-            <summary>
-            Desc:唯一ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.ColumnId">
-            <summary>
-            Desc:归属栏目ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.UserId">
-            <summary>
-            Desc:评论人ID
-            Default:0
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.UserName">
-            <summary>
-            Desc:评论人昵称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.Summary">
-            <summary>
-            Desc:评论内容
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.AddDate">
-            <summary>
-            Desc:评论时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.Option">
-            <summary>
-            Desc:评论类型，如=1文章   2=下载  3=商品
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.Star">
-            <summary>
-            Desc:如果评论有星，显示星数
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.RepUserId">
-            <summary>
-            Desc:回复人ID
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.RepUserName">
-            <summary>
-            Desc:回复人昵称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.RepDate">
-            <summary>
-            Desc:回复时间
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsComment.Audit">
-            <summary>
-            Desc:是否审核通过
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsDownload">
-            <summary>
-             下载管理表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Id">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.ColumnId">
-            <summary>
-            Desc:下载所属类型
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Title">
-            <summary>
-            Desc:下载标题
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.SubTitle">
-            <summary>
-            Desc:下载副标题
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.FileUrl">
-            <summary>
-            Desc:文件地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.FileType">
-            <summary>
-            Desc:文件类型
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.FileSize">
-            <summary>
-            Desc:文件大小
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.DownSum">
-            <summary>
-            Desc:下载数量
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Hits">
-            <summary>
-            Desc:访问数
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Sort">
-            <summary>
-            Desc:权重
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.IsSystem">
-            <summary>
-            Desc:适用系统
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.IsCharge">
-            <summary>
-            Desc:软件类型
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.ImgUrl">
-            <summary>
-            Desc:图片地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.ThumImg">
-            <summary>
-            Desc:缩略图地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.IsTop">
-            <summary>
-            Desc:是否置顶
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.IsComment">
-            <summary>
-            Desc:是否评论
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Audit">
-            <summary>
-            Desc:状态
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.IsLink">
-            <summary>
-            Desc:是否有外链
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.LinkUrl">
-            <summary>
-            Desc:外链地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Tag">
-            <summary>
-            Desc:标签
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Summary">
-            <summary>
-            Desc:简介
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.Content">
-            <summary>
-            Desc:详细描述
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.EditDate">
-            <summary>
-            Desc:修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.AddDate">
-            <summary>
-            Desc:添加时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsDownload.SiteGuid">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsImage">
-            <summary>
-             图片表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.Guid">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.TheGuid">
-            <summary>
-            Desc:所属栏目Guid
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.Types">
-            <summary>
-            Desc:图片类型，一个栏目可有多个图片类型
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.Title">
-            <summary>
-            Desc:图片名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.ImgBig">
-            <summary>
-            Desc:图片原图
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.ImgSmall">
-            <summary>
-            Desc:图片缩略图
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.ImgType">
-            <summary>
-            Desc:文件类型
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.ImgSize">
-            <summary>
-            Desc:文件大小
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.IsCover">
-            <summary>
-            Desc:是否为封面
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.Sort">
-            <summary>
-            Desc:排序字段
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImage.AddDate">
-            <summary>
-            Desc:上传时间
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsImgType">
-            <summary>
-            图片列表分类
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.Guid">
-            <summary>
-            Desc:唯一ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.ParentGuid">
-            <summary>
-            Desc:所属父级
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.Type">
-            <summary>
-            Desc:图片类型分类 0=本地 1=云端
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.Level">
-            <summary>
-            Desc:级别 
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.Name">
-            <summary>
-            Desc:中文名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.EnName">
-            <summary>
-            Desc:英文名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsImgType.AddDate">
-            <summary>
-            Desc:添加时间，作为排序使用
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsMessage">
-            <summary>
-             留言管理
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Id">
-            <summary>
-            Desc:自动标识
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.ColumnId">
-            <summary>
-            Desc:栏目ID
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Types">
-            <summary>
-            Desc:类型
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Title">
-            <summary>
-            Desc:标题
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Mobile">
-            <summary>
-            Desc:电话号码
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Email">
-            <summary>
-            Desc:联系邮箱
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.QQ">
-            <summary>
-            Desc:QQ
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Status">
-            <summary>
-            Desc:是否查看
-            Default:b'0'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Summary">
-            <summary>
-            Desc:描述
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.Content">
-            <summary>
-            Desc:内容
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.UserId">
-            <summary>
-            Desc:用户ID
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.UserName">
-            <summary>
-            Desc:用户名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.IP">
-            <summary>
-            Desc:IP地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.ParentId">
-            <summary>
-            Desc:父ID
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.RepId">
-            <summary>
-            Desc:回复ID
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.RepContent">
-            <summary>
-            Desc:回复内容
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.AddDate">
-            <summary>
-            Desc:添加时间
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.RepDate">
-            <summary>
-            Desc:回复时间
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsMessage.SiteGuid">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsSite">
-            <summary>
-            站点表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.Guid">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SysId">
-            <summary>
-            Desc:系统ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteName">
-            <summary>
-            Desc:网站名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteUrl">
-            <summary>
-            Desc:网站域名
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteLogo">
-            <summary>
-            Desc:网站Logo
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.Summary">
-            <summary>
-            Desc:网站描述
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteTel">
-            <summary>
-            Desc:公司电话
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteFax">
-            <summary>
-            Desc:公司传真
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteEmail">
-            <summary>
-            Desc:公司人事邮箱
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.QQ">
-            <summary>
-            Desc:公司客服QQ
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.WeiXin">
-            <summary>
-            Desc:微信公众号图片
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.WeiBo">
-            <summary>
-            Desc:微博链接地址或者二维码
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteAddress">
-            <summary>
-            Desc:公司地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteCode">
-            <summary>
-            Desc:网站备案号其它等信息
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SeoTitle">
-            <summary>
-            Desc:网站SEO标题
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SeoKey">
-            <summary>
-            Desc:网站SEO关键字
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SeoDescribe">
-            <summary>
-            Desc:网站SEO描述
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.SiteCopyright">
-            <summary>
-            Desc:网站版权等信息
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.Status">
-            <summary>
-            Desc:网站开启关闭状态
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.CloseInfo">
-            <summary>
-            Desc:如果状态关闭，请输入关闭网站原因
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.IsDel">
-            <summary>
-            是否删除
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsSite.AddTime">
-            <summary>
-            创建站点时间
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsTags">
-            <summary>
-            标签表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.Guid">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.FirstLetter">
-            <summary>
-            Desc:首字母
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.Name">
-            <summary>
-            Desc:标签名称
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.Status">
-            <summary>
-            Desc:是否启用
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.Links">
-            <summary>
-            Desc:标签链接地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTags.TagsHits">
-            <summary>
-            Desc:标签点击量
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsTemplate">
-            <summary>
-            模板表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.Id">
-            <summary>
-            Desc:自动增长
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.Title">
-            <summary>
-            Desc:模板名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.Url">
-            <summary>
-            Desc:模板地址
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.Status">
-            <summary>
-            Desc:状态是否启用
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.Sort">
-            <summary>
-            Desc:排序
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsTemplate.AddDate">
-            <summary>
-            Desc:添加时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsVote">
-            <summary>
-             投票栏目表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.Id">
-            <summary>
-            Desc:主键自增
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.ColumnId">
-            <summary>
-            Desc:所属栏目ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.Title">
-            <summary>
-            Desc:投票标题
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.SubTitle">
-            <summary>
-            Desc:投票副标题
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.ItemSum">
-            <summary>
-            Desc:选项总数
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.VoteSum">
-            <summary>
-            Desc:投票总数
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.Options">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.VoteType">
-            <summary>
-            Desc:投票类型
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.ImgUrl">
-            <summary>
-            Desc:宣传图
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.IsTime">
-            <summary>
-            Desc:时间限制
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.BeginDate">
-            <summary>
-            Desc:开始时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.EndDate">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.Summary">
-            <summary>
-            Desc:投票简介
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVote.AddDate">
-            <summary>
-            Desc:发布时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsVoteItem">
-            <summary>
-             投票项表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.Id">
-            <summary>
-            Desc:主键自增
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.VoteId">
-            <summary>
-            Desc:投票项ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.Title">
-            <summary>
-            Desc:投票项
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.VoteSum">
-            <summary>
-            Desc:投票数
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.Scale">
-            <summary>
-            Desc:
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteItem.Sort">
-            <summary>
-            Desc:排序字段
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNiusSystem.Core.Model.Cms.CmsVoteLog">
-            <summary>
-             投票记录表
-            </summary>
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.Guid">
-            <summary>
-            Desc:唯一ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.VoteId">
-            <summary>
-            Desc:投票ID
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.ItemId">
-            <summary>
-            Desc:投票项ID
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.UserId">
-            <summary>
-            Desc:投票人ID
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.UserName">
-            <summary>
-            Desc:投票人昵称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.Ip">
-            <summary>
-            Desc:IP地址
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.AddDate">
-            <summary>
-            Desc:投票时间
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNiusSystem.Core.Model.Cms.CmsVoteLog.Summary">
-            <summary>
-            Desc:投票详情
-            Default:
-            Nullable:True
-            </summary>           
         </member>
     </members>
 </doc>

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Output
 {
-   public class LoginOutput
+    public class LoginOutput
     {
         public int Id { get; set; }
         public string  LoginName { get; set; }
