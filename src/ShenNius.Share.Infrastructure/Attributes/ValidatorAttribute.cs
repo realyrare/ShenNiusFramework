@@ -6,5 +6,6 @@ namespace ShenNius.Share.Infrastructure.Attributes
 {
    public class ValidatorAttribute : System.Attribute
     {
+
     }
 }

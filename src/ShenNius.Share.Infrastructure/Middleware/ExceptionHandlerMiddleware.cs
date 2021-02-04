@@ -35,13 +35,13 @@ namespace ShenNius.Share.Infrastructure.Middleware
             }
             finally
             {
-                var statusCode = context.Response.StatusCode;
-                var statusList=new List<int>() { 400, 401, 200, 403 };
-                if (!statusList.Contains(statusCode))
-                {
-                    Enum.TryParse(typeof(HttpStatusCode), statusCode.ToString(), out object message);
-                    await ExceptionHandlerAsync(context, message.ToString());
-                }
+                //var statusCode = context.Response.StatusCode;
+                //var statusList=new List<int>() { 400, 401, 200, 403 };
+                //if (!statusList.Contains(statusCode))
+                //{
+                //    Enum.TryParse(typeof(HttpStatusCode), statusCode.ToString(), out object message);
+                //    await ExceptionHandlerAsync(context, message.ToString());
+                //}
             }
         }
 

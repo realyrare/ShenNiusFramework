@@ -45,7 +45,7 @@
     layui.config({
         base: '/js/lay-module/self/'
     });
-    layui.use(['form', 'layer','table', 'miniPage', 'element', 'common'], function () {
+    layui.use(['form', 'layer', 'table', 'miniPage', 'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
@@ -53,7 +53,7 @@
             layer = layui.layer,
             miniPage = layui.miniPage;
 
-        apiUtil.render({
+        var tableIns = apiUtil.render({
             elem: '#currentTableId',
             url: 'user/get-list-pages',
             toolbar: '#toolbarDemo',
@@ -73,23 +73,23 @@
                 total: true // 合计行支持 overflow
             },
             cols: [[
-                {type: "checkbox", width: 50},
-                {field: 'id', width: 80, title: 'ID', sort: true},
+                { type: "checkbox", width: 50 },
+                { field: 'id', width: 80, title: 'ID', sort: true },
                 { field: 'name', width: 80, title: '用户名' },
                 { field: 'trueName', title: '真实姓名' },
-                {field: 'ip', width: 80, title: 'IP'},
+                { field: 'ip', width: 80, title: 'IP' },
                 { field: 'address', width: 120, title: '地址' },
-                { field: 'email', width: 120,title: '邮箱' },
+                { field: 'email', width: 120, title: '邮箱' },
                 { field: 'mobile', width: 120, title: '手机号' },
                 { field: 'createTime', title: '创建时间' },
                 { field: 'lastLoginTime', title: '最后登录时间' },
-                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
             ]],
             parseData: function (res) {
                 return apiUtil.parseDataFun(res);
-            }           
+            }
         });
-     
+
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
@@ -112,32 +112,45 @@
          * toolbar事件监听
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            var query = table.checkStatus('currentTableId')
-            console.log("data:" + JSON.stringify(query))
-            console.log("kk:" + query.data[0].id)
             if (obj.event === 'add') {
-               // var openWH = miniPage.getOpenWidthHeight();
-                // 监听添加操作
-                $("#id").val(query.data[0].id);
-                var content = miniPage.getHrefContent('/sys/user-modify?id=' + query.data[0].id);
+                var content = miniPage.getHrefContent('/sys/user-modify');
                 var index = layer.open({
                     title: '添加用户',
                     type: 1,
                     shade: 0.2,
                     //maxmin:true,
                     shadeClose: false,
-                    area: ['680px', '600px'],
-                   // zIndex: "10000",
-                   // offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                    area: ['660px', '580px'],
+                    zIndex: "10000",
                     content: content,
+                    end: function () {
+                        parent.location.reload();
+                    }
                 });
-                //$(window).on("resize", function () {
-                //    layer.full(index);
-                //});
+
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                strIds = "";
+                if (data.length > 0) {
+                    for (var i in data) {
+                        strIds += data[i].Id + ',';
+                    }
+                    strIds = strIds.substr(0, strIds.lastIndexOf(','));
+                    layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
+                        apiUtil.ajax('user/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.msg(res.msg);
+                                layer.close(index);
+                                parent.location.reload();
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    })
+                } else {
+                    layer.msg("请选择需要删除的数据");
+                }
             }
         });
 
@@ -148,30 +161,35 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            console.log("data.id:" + data.id);
             if (obj.event === 'edit') {
-
                 var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);
-                var openWH = miniPage.getOpenWidthHeight();
+                // var openWH = miniPage.getOpenWidthHeight();
                 var index = layer.open({
                     title: '编辑用户',
+                    // tips: [1, '#c00'],
                     type: 1,
                     shade: 0.2,
-                    maxmin:true,
+                    maxmin: true,
                     shadeClose: true,
-                    area: [openWH[0] + 'px', openWH[1] + 'px'],
-                    offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                    area: ['680px', '600px'],
+                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
-                    data: data.id
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
+                    end: function () {
+                        parent.location.reload();
+                    }
                 });
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                    apiUtil.ajax('user/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            layer.msg(res.msg);
+                            layer.close(index);
+                            parent.location.reload();
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    });
                 });
             }
         });

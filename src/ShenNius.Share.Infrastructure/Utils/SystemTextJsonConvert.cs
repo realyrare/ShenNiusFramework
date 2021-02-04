@@ -6,7 +6,10 @@ using System.Text.Json.Serialization;
 
 namespace ShenNius.Share.Infrastructure.Utils
 {
-  public  class SystemTextJsonConvert
+    /// <summary>
+    /// System.Text.Json
+    /// </summary>
+    public class SystemTextJsonConvert
     {
         public class DateTimeConverter : JsonConverter<DateTime>
         {

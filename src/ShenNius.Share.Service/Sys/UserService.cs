@@ -36,8 +36,9 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult<LoginOutput>> LoginAsync(LoginInput loginInput)
         {
+            loginInput.Password = Md5Crypt.Encrypt(loginInput.Password);
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
-            if (loginModel == null)
+            if (loginModel.Id == 0)
             {
                 throw new ArgumentNullException("用户名或密码错误");
             }

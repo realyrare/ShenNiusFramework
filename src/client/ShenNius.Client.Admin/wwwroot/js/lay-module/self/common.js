@@ -37,23 +37,23 @@
                     'Authorization': 'Bearer ' + token
                 },
                 success: function (data) {
-                    //console.log("statusCode:" + data.statusCode);
-                    if (data.statusCode == 401) {
-                        layer.msg(data.msg);
-                        setTimeout(function () {
-                            window.location.href = "/sys/login";
-                        }, 1000)
-                    }
-                    if (data.statusCode == 500) {
-                        console.log("statusCode:" + data.statusCode);
-                        // tool.error(data.msg);
-                        layer.msg(data.msg);
-                        return;
-                    }
-                    if (data.statusCode == 400) {
-                        layer.msg(data.msg);
-                        return;
-                    }
+                    console.log("statusCode:" + data.statusCode);
+                    //if (data.statusCode == 401) {
+                    //    layer.msg(data.msg);
+                    //    setTimeout(function () {
+                    //        window.location.href = "/sys/login";
+                    //    }, 1000)
+                    //}
+                    //if (data.statusCode == 500) {
+                    //    console.log("statusCode:" + data.statusCode);
+                    //    // tool.error(data.msg);
+                    //    layer.msg(data.msg);
+                    //    return;
+                    //}
+                    //if (data.statusCode == 400) {
+                    //    layer.msg(data.msg);
+                    //    return;
+                    //}
                     callFun(data);
                 },
                 error: function (xhr, type, errorThrown) {
@@ -91,7 +91,7 @@
                 layer.msg(res.msg);
                 setTimeout(function () {
                     window.location.hash = "/";
-                   // window.location.href = "/sys/login";
+                    // window.location.href = "/sys/login";
                 }, 1000);
                 return;
             }
@@ -106,23 +106,7 @@
                 "data": res.data.items //解析数据列表
             };
         },
-        Open: function (title, url, width, height, fun) {
-            top.layer.open({
-                type: 2,
-                title: title,
-                shadeClose: false,
-                shade: 0.2,
-                //move:false,
-                skin: 'layer-cur-open',
-                maxmin: false, //开启最大化最小化按钮
-                area: [width, height],
-                content: url,
-                zIndex: "10000",
-                end: function () {
-                    if (fun) fun();
-                }
-            });
-        },
+
         OpenRight: function (title, url, width, height, fun, cancelFun) {
             var index = layer.open({
                 title: title
@@ -147,18 +131,18 @@
             return index;
         },
         getToken: function () {
-            var obj = tool.GetSession('globalCurrentUserInfo');           
+            var obj = tool.GetSession('globalCurrentUserInfo');
             return obj.token;
         },
         getCurrentUser: function () {
-            var currentUser = tool.GetSession('globalCurrentUserInfo');          
+            var currentUser = tool.GetSession('globalCurrentUserInfo');
             return currentUser;
         },
         closeOpen: function () {
             layer.closeAll();
         },
         tableLoading: function () {
-            tmls = layer.msg('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在加载...', { time: 20000});
+            tmls = layer.msg('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在加载...', { time: 20000 });
         },
         tableLoadingClose: function () {
             setTimeout(function () {
@@ -192,7 +176,7 @@
                 return "无信息";
             }
         },
-        SetSession: function (key, options) {           
+        SetSession: function (key, options) {
             localStorage.setItem(key, JSON.stringify(options));
         },
         GetSession: function (key) {
@@ -206,10 +190,10 @@
                     return;
                 }
                 // console.log("jsonobj:" + JSON.parse(obj));
-                return JSON.parse(obj);     
+                return JSON.parse(obj);
             } catch (e) {
                 console.log("获取session错误原因:" + e);
-            }                
+            }
         },
         /**
          * 删除键值对json
@@ -225,7 +209,7 @@
         log: function (data) {
             console.log(JSON.stringify(data));
         },
-        isExtImage: function(name){
+        isExtImage: function (name) {
             var imgExt = new Array(".png", ".jpg", ".jpeg", ".bmp", ".gif");
             name = name.toLowerCase();
             var i = name.lastIndexOf(".");

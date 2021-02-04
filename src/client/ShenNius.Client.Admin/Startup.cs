@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,20 +22,22 @@ namespace ShenNius.Client.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddHttpClient();
+
             // 认证
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
-            //{
-            //    o.Cookie.Name = "ShenNius.Client.Admin";
-            //    o.LoginPath = new PathString("/sys/login");
-            //    o.Cookie.HttpOnly = true;
-            //});
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.Cookie.Name = "ShenNius.Client.Admin";
+                o.LoginPath = new PathString("/sys/login");
+                o.Cookie.HttpOnly = true;
+            });
 
             services.AddRazorPages(options => {
                 options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
                 options.Conventions.AddPageRoute("/Sys/Login", "");
                 options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
-
             }).AddRazorRuntimeCompilation(); 
             //性能 压缩
             services.AddResponseCompression();

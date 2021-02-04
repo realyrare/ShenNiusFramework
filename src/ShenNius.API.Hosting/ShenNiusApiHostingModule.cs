@@ -19,6 +19,8 @@ using System.Linq;
 using System.Reflection;
 using ShenNius.Share.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ShenNius.API.Hosting
 {
@@ -44,10 +46,17 @@ namespace ShenNius.API.Hosting
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             } );
 
-            mvcBuilder.AddJsonOptions(options =>
+            //mvcBuilder.AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeConverter());
+            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeNullableConverter());
+            //});
+            mvcBuilder.AddNewtonsoftJson(options =>
             {
-                options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeConverter());
-                options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeNullableConverter());
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.StringEscapeHandling = StringEscapeHandling.EscapeHtml;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;            
             });
             // 路由配置
             context.Services.AddRouting(options =>
