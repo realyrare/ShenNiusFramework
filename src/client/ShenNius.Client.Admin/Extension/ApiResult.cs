@@ -59,19 +59,6 @@
         /// 返回数据集合
         /// </summary>
         public T Data { get;  set; }
-        public ApiResult(T data=null)
-        {
-            Data = data;
-            StatusCode = 200;
-            Success = true;
-            Msg = "操作成功";
-        }
-        public ApiResult(string msg = "服务器内部错误",int statusCode = 500)
-        {
-            Data = default;
-            StatusCode = statusCode;
-            Success = false;
-            Msg = msg;
-        }     
+          
     }
 }

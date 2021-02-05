@@ -121,7 +121,7 @@
     <div class="layui-container">
         <div class="admin-login-background">
             <div class="layui-form login-form">
-                <form class="layui-form" d="forms" method="post">
+                <form class="layui-form" d="forms" method="post" >
                     @Html.AntiForgeryToken()
                     <div class="layui-form-item logo-title">
                         <h1>LayuiMini后台登录</h1>
@@ -134,8 +134,8 @@
                         <label class="layui-icon layui-icon-password" for="password"></label>
                         <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
 
-                        <input type="hidden" name="numberguid" id="numberguid" lay-verify="numberguid" />
-                        <input type="hidden" name="privateKey" id="privateKey" lay-verify="privateKey" />
+                        @*<input type="hidden" name="numberguid" id="numberguid" lay-verify="numberguid" />
+                            <input type="hidden" name="privateKey" id="privateKey" lay-verify="privateKey" />*@
                     </div>
                     @*<div class="layui-form-item">
                             <label class="layui-icon layui-icon-vercode" for="captcha"></label>
@@ -144,9 +144,17 @@
                                 <img id="captchaPic" src="../images/captcha.jpg">
                             </div>
                         </div>*@
-
+                    @{
+                        string rsaKey = string.Empty;
+                        if (Model.RsaKey != null)
+                        {
+                            rsaKey = Model.RsaKey[0];
+                        }
+                    }
+                    <input type="hidden" name="privateKey" value="@rsaKey" />
+                    <input type="hidden" name="numberguid" value="@(Model.Number)" />
                     <div class="layui-form-item">
-                        <button type="button" class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login">登 入</button>
+                        <button type="button" class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login">登陆</button>
                     </div>
                 </form>
             </div>
@@ -156,7 +164,8 @@
     <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
     <script src="~/js/jsencrypt.js"></script>
-    <script src="~/js/login.js" asp-append-version="true"></script>  
     @*<script src="~/js/lay-module/self/common.js"></script>*@
+    @*<script src="~/js/login.js" asp-append-version="true"></script>*@
+    <script src="~/js/page-login.js" asp-append-version="true"></script>
 </body>
 </html>

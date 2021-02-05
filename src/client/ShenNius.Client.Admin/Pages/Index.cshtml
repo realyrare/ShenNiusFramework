@@ -134,11 +134,17 @@
             };
             miniAdmin.render(options);
 
-            //$('.login-out').on("click", function () {
-            //layer.msg('退出登录成功', function () {
-            //window.location = 'page/login-3.html';
-            //});
-            //});
+            $('.login-out').on("click", function () {
+                $.ajax({
+                    url: "/sys/login?handler=Logout",
+                    type: "get",
+                    success: function (res) {
+                        layer.msg('正在处理,即将退出...', function () {
+                            window.location = '/sys/login';
+                        }); 
+                    }
+                });           
+            });
         });
     </script>
 </body>

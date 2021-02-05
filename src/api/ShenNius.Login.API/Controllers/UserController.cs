@@ -98,7 +98,7 @@ namespace ShenNius.Sys.API.Controllers
         /// 登录
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("v1/sign-in")]
         [AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> SignIn([FromBody]LoginInput loginInput)
         {
@@ -119,6 +119,25 @@ namespace ShenNius.Sys.API.Controllers
             result.Data.Token = token;
             return result;
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ApiResult<LoginOutput>> PageSignIn([FromBody] LoginInput loginInput)
+        {        
+            var result = await _userService.LoginAsync(loginInput);
+            if (result.StatusCode==500)
+            {
+                result.Data = new LoginOutput();
+                return result;
+            }
+            var token = GetJwtToken(result.Data);
+            if (string.IsNullOrEmpty(token))
+            {
+                return new ApiResult<LoginOutput>("生成的token字符串为空!");
+            }
+            result.Data.Token = token;
+            return result;
+        }
+
         [HttpPost]
         public ApiResult LogOut()
         {

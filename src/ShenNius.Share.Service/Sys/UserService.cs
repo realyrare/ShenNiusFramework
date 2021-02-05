@@ -40,7 +40,7 @@ namespace ShenNius.Share.Service.Sys
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
             if (loginModel.Id == 0)
             {
-                throw new ArgumentNullException("用户名或密码错误");
+                return new ApiResult<LoginOutput>("用户名或密码错误",500);
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParse.GetAddressByIP(ip);

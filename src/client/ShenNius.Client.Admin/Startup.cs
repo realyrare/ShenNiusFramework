@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShenNius.Client.Admin.Common;
 using ShenNius.Client.Admin.Extension;
 
 namespace ShenNius.Client.Admin
@@ -24,7 +25,10 @@ namespace ShenNius.Client.Admin
         {
             services.AddHttpContextAccessor();
             services.AddHttpClient();
-
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddScoped<HttpHelper>();
             // 认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
@@ -34,11 +38,12 @@ namespace ShenNius.Client.Admin
                 o.Cookie.HttpOnly = true;
             });
 
-            services.AddRazorPages(options => {
+            services.AddRazorPages(options =>
+            {
                 options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
                 options.Conventions.AddPageRoute("/Sys/Login", "");
                 options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
-            }).AddRazorRuntimeCompilation(); 
+            }).AddRazorRuntimeCompilation();
             //性能 压缩
             services.AddResponseCompression();
         }
@@ -55,6 +60,7 @@ namespace ShenNius.Client.Admin
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseSession();
             //性能压缩
             app.UseResponseCompression();
             app.UseHttpsRedirection();

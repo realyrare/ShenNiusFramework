@@ -50,7 +50,7 @@ namespace ShenNius.Client.Admin.Common
             }
            
         }
-        public async Task<string> PostAsync(string url, string postData = null, string contentType = null, int timeOut = 30, Dictionary<string, string> headers = null)
+        public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, int timeOut = 30, Dictionary<string, string> headers = null)
         {
             url = _domainConfig.ApiHost + url;
             postData = postData ?? "";
@@ -70,7 +70,13 @@ namespace ShenNius.Client.Admin.Common
                 {
                     throw new ArgumentNullException(nameof(response));
                 }
-                return await response.Content.ReadAsStringAsync();
+                var json= await response.Content.ReadAsStringAsync();
+                T model = JsonConvert.DeserializeObject<T>(json);
+                if (model == null)
+                {
+                    throw new ArgumentNullException(nameof(model));
+                }
+                return model ?? default;
             }
 
         }
