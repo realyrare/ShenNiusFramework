@@ -38,7 +38,7 @@ namespace ShenNius.Share.Model.Entity.Sys
             /// Nullable:False
             /// </summary>           
             public DateTime CreateTime { get; set; }
-            public DateTime ModifyTime { get; set; } = DateTime.Now;
+            public DateTime ModifyTime { get; set; } 
             public string Description { get; set; }
         }
 }

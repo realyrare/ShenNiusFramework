@@ -13,6 +13,9 @@ namespace ShenNius.Share.Service
             CreateMap<User, UserOutput>();
             CreateMap<UserRegisterInput,User>();
 
+            CreateMap< Role, RoleInput>();
+            CreateMap<Role, RoleModifyInput>();
+
         }
     }
 }

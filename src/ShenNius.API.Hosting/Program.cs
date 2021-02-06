@@ -16,6 +16,7 @@ namespace ShenNius.API.Hosting
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseNLog();//加入nlog日志;
+                })
+            .UseNLog();//加入nlog日志;
     }
 }

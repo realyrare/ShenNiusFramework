@@ -20,9 +20,9 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Common\" />
+    <Folder Include="Dtos\Input\Sys\" />
     <Folder Include="Entity\Product\" />
     <Folder Include="Entity\Order\" />
-    <Folder Include="Enums\" />
     <Folder Include="Configs\" />
   </ItemGroup>
 	<ItemGroup>

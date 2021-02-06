@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ShenNius.Share.Infrastructure.Utils
+namespace ShenNius.Share.Infrastructure.Extension
 {
     /// <summary>
     /// System.Text.Json

@@ -1,6 +1,7 @@
 ﻿@page
-@model ShenNius.Client.Admin.Pages.Sys.RoleModel
-
+@model ShenNius.Client.Admin.Pages.Sys.LogModel
+@{
+}
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
@@ -10,9 +11,9 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">角色名</label>
+                            <label class="layui-form-label">内容</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="rolename" autocomplete="off" class="layui-input">
+                                <input type="text" name="username" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -25,7 +26,7 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+               
                 <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
             </div>
         </script>
@@ -55,7 +56,7 @@
 
         var tableIns = apiUtil.render({
             elem: '#currentTableId',
-            url: 'role/get-list-pages',
+            url: 'log/get-list-pages',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -74,11 +75,14 @@
             },
             cols: [[
                 { type: "checkbox", width: 50 },
-                { field: 'id', width: 80, title: 'ID', sort: true },
-                { field: 'name', width: 80, title: '角色名' },
-                { field: 'description', title: '备注' },             
-                { field: 'createTime', title: '创建时间' },
-                { field: 'modifyTime', title: '修改时间' },
+                { field: 'id',  title: 'ID', sort: true },
+                { field: 'application',  title: '应用程序' },
+                { field: 'level', title: '日志等级' },
+                { field: 'callsite',  title: 'url' },
+                { field: 'iP', title: 'IP' },
+                { field: 'userName',  title: '邮箱' },
+                { field: 'Logged', title: '创建时间' },
+
                 { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
             ]],
             parseData: function (res) {
@@ -108,23 +112,7 @@
          * toolbar事件监听
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {
-                var content = miniPage.getHrefContent('/sys/role-modify');
-                var index = layer.open({
-                    title: '添加角色',
-                    type: 1,
-                    shade: 0.2,
-                    //maxmin:true,
-                    shadeClose: false,
-                    area: ['460px', '400px'],
-                    zIndex: "10000",
-                    content: content,
-                    end: function () {
-                        parent.location.reload();
-                    }
-                });
-
-            } else if (obj.event === 'delete') {  // 监听删除操作
+             if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 strIds = "";
@@ -134,7 +122,7 @@
                     }
                     strIds = strIds.substr(0, strIds.lastIndexOf(','));
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('role/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('log/deletes', { ids: strIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
@@ -158,16 +146,15 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-                var content = miniPage.getHrefContent('/sys/role-modify?id=' + data.id);
+                var content = miniPage.getHrefContent('/sys/log-detail?id=' + data.id);
                 // var openWH = miniPage.getOpenWidthHeight();
                 var index = layer.open({
                     title: '编辑用户',
-                    // tips: [1, '#c00'],
                     type: 1,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
-                    area: ['480px', '400px'],
+                    area: ['680px', '600px'],
                     //offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
                     end: function () {
@@ -177,7 +164,7 @@
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('role/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                    apiUtil.ajax('log/deletes', { ids: data.id }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);

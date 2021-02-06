@@ -17,6 +17,7 @@ using ShenNiusSystem.Common;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -39,30 +40,30 @@ namespace ShenNius.Sys.API.Controllers
             _userService = userService;
             _cache = cache;
         }
-        [HttpPost]
+        [HttpPost, Log("用户注册")]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
-            return await _userService.RegisterAsync(userRegisterInput);          
+            return await _userService.RegisterAsync(userRegisterInput);
         }
-        [HttpPost]
+        [HttpPost, Log("用户修改")]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
-        [HttpDelete]
+        [HttpDelete, Log("删除用户")]
         public async Task<ApiResult> Deletes(List<string> ids)
         {
             return await _userService.DeletesAsync(ids);
         }
-        [HttpDelete]
+        [HttpPost, Log("修改密码")]
         public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
         {
             return await _userService.ModfiyPwdAsync(modifyPwdInput);
         }
-        [HttpGet]
+        [HttpGet, Log("查询用户信息")]
         public async Task<ApiResult> GetUser(int id)
         {
-            if (id==0)
+            if (id == 0)
             {
                 throw new ArgumentNullException(nameof(id));
             }
@@ -72,8 +73,7 @@ namespace ShenNius.Sys.API.Controllers
         /// 查询列表
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
- 
+        [HttpGet, Log("查询用户列表")]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
@@ -82,25 +82,25 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         [AllowAnonymous]
         public ApiResult LoadLoginInfo()
-        {         
+        {
             var rsaKey = RSACrypt.GetKey();
-            var number = Guid.NewGuid().ToString();            
-            if (rsaKey.Count <= 0|| rsaKey==null)
+            var number = Guid.NewGuid().ToString();
+            if (rsaKey.Count <= 0 || rsaKey == null)
             {
-                throw new ArgumentNullException("获取登录的公钥和私钥为空");   
+                throw new ArgumentNullException("获取登录的公钥和私钥为空");
             }
             //获得公钥和私钥
             _cache.Set("LOGINKEY" + number, rsaKey);
-            return new ApiResult(data:new{ RsaKey = rsaKey, Number = number });
+            return new ApiResult(data: new { RsaKey = rsaKey, Number = number });
         }
 
         /// <summary>
-        /// 登录
+        ///用户前后端分离的登录
         /// </summary>
         /// <returns></returns>
         [HttpPost("v1/sign-in")]
         [AllowAnonymous]
-        public async Task<ApiResult<LoginOutput>> SignIn([FromBody]LoginInput loginInput)
+        public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
         {
             var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.NumberGuid);
             if (rsaKey == null)
@@ -119,12 +119,17 @@ namespace ShenNius.Sys.API.Controllers
             result.Data.Token = token;
             return result;
         }
-        [HttpPost]
+        /// <summary>
+        /// asp.net core page私有定制登陆
+        /// </summary>
+        /// <param name="loginInput">登陆实体</param>
+        /// <returns></returns>
+        [HttpPost, Log("用户登录")]
         [AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> PageSignIn([FromBody] LoginInput loginInput)
-        {        
+        {
             var result = await _userService.LoginAsync(loginInput);
-            if (result.StatusCode==500)
+            if (result.StatusCode == 500)
             {
                 result.Data = new LoginOutput();
                 return result;
@@ -138,11 +143,11 @@ namespace ShenNius.Sys.API.Controllers
             return result;
         }
 
-        [HttpPost]
+        [HttpPost, Log("用户退出")]
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new ApiResult(data:"/user/login");
+            return new ApiResult(data: "/user/login");
         }
         private string GetJwtToken(LoginOutput loginOutput)
         {
