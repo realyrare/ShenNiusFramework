@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Blog.ShenNius.Client.Admin.Model;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using ShenNius.Client.Admin.Common;
 using ShenNius.Client.Admin.Model;
@@ -22,7 +24,6 @@ namespace ShenNius.Client.Admin.Pages.Sys
     {
         private readonly IMemoryCache _cache;
         private readonly HttpHelper _httpHelper;
-
         public LoginModel(IMemoryCache memoryCache, HttpHelper httpHelper)
         {
             _cache = memoryCache;
@@ -53,7 +54,17 @@ namespace ShenNius.Client.Admin.Pages.Sys
             //return new JsonResult(new ApiResult<string>() { data = "/admin/login/" });
         }
 
-        public FileResult OnVCode()
+        public async Task<IActionResult> OnPostLogoutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var result = await _httpHelper.PostAsync<ApiResult>("user/log-out", null, "application/json");
+            if (result.StatusCode != 200)
+            {
+                return new JsonResult(new ApiResult<string>() { Data = "/sys/login/", StatusCode = 500, Msg = "ÍË³öÊ§°ÜÁË" });
+            }
+            return new JsonResult(new ApiResult<string>() { Data = "/sys/login/", StatusCode = 200, Msg = "³É¹¦ÍË³ö" });
+        }
+        public FileResult OnGetVCode()
         {
             var vcode = VerifyCode.CreateRandomCode(4);
             HttpContext.Session.SetString("vcode", vcode);
@@ -65,11 +76,27 @@ namespace ShenNius.Client.Admin.Pages.Sys
         {
             try
             {
-                var apiResult = new ApiResult<LoginOutput>() { StatusCode = 500,Success=false };
+                var apiResult = new ApiResult<LoginOutput>() { StatusCode = 500, Success = false };
+                if (string.IsNullOrEmpty(loginInput.Captcha))
+                {
+                    apiResult.Msg = "ÑéÖ¤Âë´íÎó!";
+                    return new JsonResult(apiResult);
+                }
+               var vcode=HttpContext.Session.GetString("vcode");
+                if (string.IsNullOrEmpty(vcode))
+                {
+                    apiResult.Msg = "·þÎñ¶ËÑéÖ¤Âë´íÎó!";
+                    return new JsonResult(apiResult);
+                }
+                if (!vcode.ToLower().Equals(loginInput.Captcha.ToLower()))
+                {
+                    apiResult.Msg = "ÑéÖ¤Âë´íÎó!";
+                    return new JsonResult(apiResult);
+                }
                 var rsaKey = _cache.Get<List<string>>(LoginKey + loginInput.NumberGuid);
                 if (rsaKey == null)
                 {
-                    apiResult.Msg="µÇÂ¼Ê§°Ü£¬ÇëË¢ÐÂä¯ÀÀÆ÷ÔÙ´ÎµÇÂ¼!";
+                    apiResult.Msg = "µÇÂ¼Ê§°Ü£¬ÇëË¢ÐÂä¯ÀÀÆ÷ÔÙ´ÎµÇÂ¼!";
                     return new JsonResult(apiResult);
                 }
                 if (string.IsNullOrEmpty(loginInput.LoginName) || string.IsNullOrEmpty(loginInput.Password))
@@ -80,9 +107,9 @@ namespace ShenNius.Client.Admin.Pages.Sys
                 //Ras½âÃÜÃÜÂë
                 var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
                 loginInput.Password = ras.Decrypt(loginInput.Password);
-                var api = "https://localhost:5001/api/";
-                var result = await _httpHelper.PostAsync<ApiResult<LoginOutput>>(api + "user/page-sign-in", JsonConvert.SerializeObject(loginInput), "application/json");
-                if (result.StatusCode==500)
+
+                var result = await _httpHelper.PostAsync<ApiResult<LoginOutput>>("user/page-sign-in", JsonConvert.SerializeObject(loginInput), "application/json");
+                if (result.StatusCode == 500)
                 {
                     return new JsonResult(result);
                 }
@@ -111,14 +138,4 @@ namespace ShenNius.Client.Admin.Pages.Sys
             }
         }
     }
-    /// <summary>
-    /// ÍË³öµÇÂ¼
-    /// </summary>
-    /// <returns></returns>
-    //public async Task<IActionResult> OnPostLogoutAsync()
-    //{
-    //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    //    return new JsonResult(new ApiResult<string>() { Data = "/admin/login/" });
-    //}
-
 }

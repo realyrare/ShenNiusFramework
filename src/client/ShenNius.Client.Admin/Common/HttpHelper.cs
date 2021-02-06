@@ -1,4 +1,4 @@
-﻿using Blog.HuoChong.Common;
+﻿using Blog.ShenNius.Client.Admin.Model;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;

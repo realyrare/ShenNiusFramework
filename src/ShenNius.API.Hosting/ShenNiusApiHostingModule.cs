@@ -21,6 +21,7 @@ using ShenNius.Share.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace ShenNius.API.Hosting
 {
@@ -103,6 +104,9 @@ namespace ShenNius.API.Hosting
         {
             var app = context.GetApplicationBuilder();
             var env = ServiceProviderServiceExtensions.GetRequiredService<IWebHostEnvironment>(context.ServiceProvider);
+            NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
+            NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
             // 环境变量，开发环境
             if (env.IsDevelopment())
             {

@@ -17,5 +17,9 @@ namespace ShenNius.Client.Admin.Model
         public string Password { get; set; }
 
         public string NumberGuid { get; set; }
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        public string Captcha { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 系统操作表
     ///</summary>
     [SugarTable("Sys_Log")]
-    public partial class SysLog
+    public partial class Log
     {
-        public SysLog()
+        public Log()
         {
 
 
@@ -19,7 +19,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// <summary>
         /// Desc:唯一标号Guid
         /// </summary>           
-        public string Guid { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 应用程序

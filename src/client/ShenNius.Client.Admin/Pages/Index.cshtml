@@ -137,11 +137,15 @@
             $('.login-out').on("click", function () {
                 $.ajax({
                     url: "/sys/login?handler=Logout",
-                    type: "get",
+                    type: "post",
                     success: function (res) {
-                        layer.msg('正在处理,即将退出...', function () {
-                            window.location = '/sys/login';
-                        }); 
+                        if (res.statusCode == 200) {
+                            layer.msg('正在处理,即将退出...', function () {
+                                window.location = '/sys/login';
+                            });
+                        } else {
+                            ayer.msg('服务器异常，退出失败了...');
+                        }                       
                     }
                 });           
             });

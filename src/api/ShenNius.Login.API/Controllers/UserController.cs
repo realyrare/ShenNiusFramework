@@ -142,7 +142,7 @@ namespace ShenNius.Sys.API.Controllers
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new ApiResult(data:"/sys/login");
+            return new ApiResult(data:"/user/login");
         }
         private string GetJwtToken(LoginOutput loginOutput)
         {
