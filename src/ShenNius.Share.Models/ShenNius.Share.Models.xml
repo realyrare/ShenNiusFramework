@@ -194,6 +194,56 @@
             Nullable:False
             </summary>           
         </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Add">
+            <summary>
+            保存或添加
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Update">
+            <summary>
+            更新
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Audit">
+            <summary>
+            更新
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Delete">
+            <summary>
+            删除
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Read">
+            <summary>
+            读取/查询
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Login">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Look">
+            <summary>
+            查看
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Status">
+            <summary>
+            更改状态
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Authorize">
+            <summary>
+            授权
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Logout">
+            <summary>
+            退出登录
+            </summary>
+        </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.Log">
             <summary>
              系统操作表

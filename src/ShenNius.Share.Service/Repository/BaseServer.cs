@@ -385,7 +385,7 @@ namespace ShenNius.Share.Service.Repository
         /// </summary>
         /// <param name="param">string</param>
         /// <returns></returns>
-        public async Task<int> DeleteAsync(List<string> param)
+        public async Task<int> DeleteAsync(List<int> param)
         {
             return await Db.Deleteable<T>().In(param.ToArray()).ExecuteCommandAsync();
         }

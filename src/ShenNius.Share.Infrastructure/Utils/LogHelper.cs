@@ -9,7 +9,7 @@ namespace ShenNius.Share.Infrastructure.Utils
     public class LogHelper
     {
         readonly Logger _logger;
-        private LogHelper(NLog.Logger logger)
+        private LogHelper(Logger logger)
         {
             _logger = logger;
         }

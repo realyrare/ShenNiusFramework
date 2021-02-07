@@ -272,7 +272,7 @@ namespace ShenNius.Share.Service.Repository
         /// </summary>
         /// <param name="param">string</param>
         /// <returns></returns>
-        Task<int> DeleteAsync(List<string> param);
+        Task<int> DeleteAsync(List<int> param);
 
         /// <summary>
         /// 删除一条或多条数据

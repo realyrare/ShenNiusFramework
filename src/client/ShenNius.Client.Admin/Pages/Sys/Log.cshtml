@@ -1,7 +1,5 @@
 ﻿@page
 @model ShenNius.Client.Admin.Pages.Sys.LogModel
-@{
-}
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
@@ -34,7 +32,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-detail" lay-event="detail">详情</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -80,8 +78,9 @@
                 { field: 'level', title: '日志等级' },
                 { field: 'callsite',  title: 'url' },
                 { field: 'iP', title: 'IP' },
-                { field: 'userName',  title: '邮箱' },
-                { field: 'Logged', title: '创建时间' },
+                { field: 'userName', title: '用户名' },
+                { field: 'logger', title: '操作内容' },
+                { field: 'logged', title: '创建时间' },
 
                 { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
             ]],
@@ -114,15 +113,16 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
              if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                strIds = "";
+                    , data = checkStatus.data,
+                  listIds = [];
                 if (data.length > 0) {
-                    for (var i in data) {
-                        strIds += data[i].Id + ',';
+                    for (var i in data) {                     
+                        listIds.push(data[i].id)
                     }
-                    strIds = strIds.substr(0, strIds.lastIndexOf(','));
+                    console.log("listIds:" + listIds);
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('log/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('log/deletes', {  deletesInput: listIds }, "application/json", "delete", function (res) {
+                            console.log(res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
@@ -131,7 +131,7 @@
                                 layer.msg(res.msg);
                             }
                         });
-                    })
+                    });
                 } else {
                     layer.msg("请选择需要删除的数据");
                 }
@@ -145,26 +145,21 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'edit') {
+            if (obj.event === 'detail') {
                 var content = miniPage.getHrefContent('/sys/log-detail?id=' + data.id);
-                // var openWH = miniPage.getOpenWidthHeight();
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '详情',
                     type: 1,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['680px', '600px'],
-                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
-                    content: content,
-                    end: function () {
-                        parent.location.reload();
-                    }
+                    content: content
                 });
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('log/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                    apiUtil.ajax('log/deletes', { deletesInput: data.id }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);

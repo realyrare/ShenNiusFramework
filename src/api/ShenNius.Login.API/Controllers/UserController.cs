@@ -18,6 +18,8 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -51,9 +53,9 @@ namespace ShenNius.Sys.API.Controllers
             return await _userService.ModfiyAsync(userModifyInput);
         }
         [HttpDelete, Log("删除用户")]
-        public async Task<ApiResult> Deletes(List<string> ids)
+        public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
-            return await _userService.DeletesAsync(ids);
+            return await _userService.DeletesAsync(commonDeleteInput.Ids);
         }
         [HttpPost, Log("修改密码")]
         public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
@@ -65,7 +67,7 @@ namespace ShenNius.Sys.API.Controllers
         {
             if (id == 0)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new FriendlyException(nameof(id));
             }
             return await _userService.GetUserAsync(id);
         }

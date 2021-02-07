@@ -20,7 +20,7 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput);
         Task<ApiResult> ModfiyAsync(UserModifyInput userModifyInput);
         Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput);
-        Task<ApiResult> DeletesAsync(List<string> ids);
+        Task<ApiResult> DeletesAsync(List<int> ids);
         Task<ApiResult> GetUserAsync(int id);
 
     }
@@ -98,7 +98,7 @@ namespace ShenNius.Share.Service.Sys
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);
             return new ApiResult(i);
         }
-        public async Task<ApiResult> DeletesAsync(List<string> ids)
+        public async Task<ApiResult> DeletesAsync(List<int> ids)
         {
             if (ids.Count == 0 || ids == null)
             {

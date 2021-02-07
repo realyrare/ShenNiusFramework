@@ -40,9 +40,16 @@
             <returns></returns>
         </member>
         <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
+             <summary>
+            用户前后端分离的登录
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.PageSignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
             <summary>
-            登录
+            asp.net core page私有定制登陆
             </summary>
+            <param name="loginInput">登陆实体</param>
             <returns></returns>
         </member>
     </members>

@@ -36,13 +36,14 @@ namespace ShenNius.API.Hosting
         {
             // 跨域配置
             context.Services.AddCors(options =>
-            {
+            {               
                 options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
             context.Services.AddAuthorizationSetup(context.Configuration);
 
             var mvcBuilder = context.Services.AddControllers(options => {
+                options.Filters.Add(typeof(GlobalExceptionFilter));
                 //配置路由以减号分割
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             } );
@@ -124,7 +125,7 @@ namespace ShenNius.API.Hosting
             // 跨域
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             // 异常处理中间件
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            //app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseSwaggerMiddle();
             // HTTP => HTTPS
             app.UseHttpsRedirection();

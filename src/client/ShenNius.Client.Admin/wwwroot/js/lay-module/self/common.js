@@ -24,7 +24,8 @@
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
             var token = this.getToken();
-            options = method === 'get' ? options : JSON.stringify(options);
+           
+             options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
             //console.log(options);
             $.ajax(tool.apiUrl() + url, {

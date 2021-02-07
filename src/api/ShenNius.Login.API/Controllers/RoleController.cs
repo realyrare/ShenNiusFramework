@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
 using System;
 using System.Collections.Generic;
@@ -20,18 +21,14 @@ namespace ShenNius.Sys.API.Controllers
             _mapper = mapper;
         }
         [HttpDelete]
-        public async Task<ApiResult> Deletes(List<string> ids)
-        {
-            if (ids.Count <= 0 || ids == null)
-            {
-                throw new ArgumentException(nameof(ids));
-            }
-            return new ApiResult(await _roleService.DeleteAsync(ids));
+        public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
+        {          
+            return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
         }
         [HttpGet]
-        public async Task<ApiResult> GetListPages(int page, string key)
+        public async Task<ApiResult> GetListPages(int page, string key=null)
         {
-            var res = await _roleService.GetPagesAsync(page, 15, d => d.Name.Contains(key), d => d.Id, false);
+            var res = await _roleService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpGet]

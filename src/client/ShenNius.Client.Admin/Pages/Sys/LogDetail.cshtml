@@ -24,31 +24,36 @@
                             <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">创建时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="logged" lay-verify="logged" disabled class="layui-input">
+                        </div>
+                    </div>
                 }
                 <div class="layui-form-item">
                     <label class="layui-form-label required">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="userName" class="layui-input">
+                        <input type="text" name="userName" disabled="disabled" class="layui-input">
                     </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">操作内容</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="logger" disabled="disabled" class="layui-input">
+                    </div>
+                </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">浏览器信息</label>
                     <div class="layui-input-block">
-                        <textarea name="browser" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="browser" readonly lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
 
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">异常信息</label>
                     <div class="layui-input-block">
-                        <textarea name="exception" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                        <textarea name="exception" readonly lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
             </div>
@@ -69,7 +74,7 @@
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
                 // 当前弹出层，防止ID被覆盖
-                var parentIndex = layer.index;
+
                 var id=@Model.Id;
                 if (id > 0) {
                     apiUtil.ajax('log/detail', { id: id }, "application/json", "get", function (res) {
