@@ -130,15 +130,14 @@
 
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                strIds = "";
+                    , data = checkStatus.data,
+                listIds = [];
                 if (data.length > 0) {
                     for (var i in data) {
-                        strIds += data[i].Id + ',';
-                    }
-                    strIds = strIds.substr(0, strIds.lastIndexOf(','));
+                        listIds.push(data[i].id);
+                    }                 
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('user/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
@@ -181,7 +180,9 @@
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('user/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                    var listIds = new Array();
+                    listIds[0] = data.id;
+                    apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);

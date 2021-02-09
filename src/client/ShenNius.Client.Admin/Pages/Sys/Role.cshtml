@@ -126,15 +126,14 @@
 
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                strIds = "";
+                    , data = checkStatus.data,
+                listIds =[];
                 if (data.length > 0) {
                     for (var i in data) {
-                        strIds += data[i].Id + ',';
-                    }
-                    strIds = strIds.substr(0, strIds.lastIndexOf(','));
+                        listIds.push(data[i].id);
+                    }                   
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('role/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('role/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
@@ -159,16 +158,13 @@
             var data = obj.data;
             if (obj.event === 'edit') {
                 var content = miniPage.getHrefContent('/sys/role-modify?id=' + data.id);
-                // var openWH = miniPage.getOpenWidthHeight();
                 var index = layer.open({
                     title: '编辑用户',
                     // tips: [1, '#c00'],
                     type: 1,
-                    shade: 0.2,
-                    maxmin: true,
+                    shade: 0.2,                 
                     shadeClose: true,
                     area: ['600px', '400px'],
-                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
                     end: function () {
                         parent.location.reload();
@@ -177,7 +173,9 @@
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('role/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                    var listIds = new Array();
+                    listIds[0] = data.id;
+                    apiUtil.ajax('role/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);

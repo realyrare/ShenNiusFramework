@@ -1,23 +1,11 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace ShenNius.Share.Model.Entity.Sys
+namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-    ///<summary>
-    /// 系统菜单表
-    ///</summary>
-    [SugarTable("Sys_Menu")]
-    public partial class Menu
+   public class MenuModifyInput
     {
-        /// <summary>
-        /// Desc:
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
 
         /// <summary>
@@ -40,14 +28,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Nullable:True
         /// </summary>           
         public string Url { get; set; }
-
-        /// <summary>
-        /// Desc:
-        /// Default:DateTime.Now
-        /// Nullable:False
-        /// </summary>           
-        public DateTime CreateTime { get; set; }
-
+  
         /// <summary>
         /// Desc:
         /// Default:
@@ -55,11 +36,10 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// </summary>           
         public string HttpMethod { get; set; }
 
-        public DateTime ModifyTime { get; set; } 
+        public DateTime ModifyTime { get; set; } = DateTime.Now;
         public bool IsHasChildren { get; set; }
         public bool Status { get; set; }
         public int Sort { get; set; }
-        public string  Icon { get; set; }
-
+        public string Icon { get; set; }
     }
 }

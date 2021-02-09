@@ -43,19 +43,19 @@
         },
         {
             "title": "菜单管理",
-            "href": "Sys/UserModify",
+            "href": "Sys/UserModify1",
             "icon": "fa fa-window-maximize",
             "target": "_self"
         },
         {
             "title": "角色列表",
-            "href": "sys/role",
+            "href": "sys/role1",
             "icon": "fa fa-gears",
             "target": "_self"
         },
         {
             "title": "用户列表",
-            "href": "sys/user",
+            "href": "sys/user1",
             "icon": "fa fa-file-text",
             "target": "_self"
         },

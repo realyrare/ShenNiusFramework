@@ -29,13 +29,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="createTime" readonly class="layui-input">
                         </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">修改时间</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="modifyTime" class="layui-input">
-                        </div>
-                    </div>
+                    </div>                   
                 }
                 <div class="layui-form-item">
                     <label class="layui-form-label required">角色名</label>
@@ -78,7 +72,7 @@
                 var parentIndex = layer.index;
                 var id=@Model.Id;
                 if (id > 0) {
-                    apiUtil.ajax('role/get-role', { id: id }, "application/json", "get", function (res) {
+                    apiUtil.ajax('role/detail', { id: id }, "application/json", "get", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             form.val("role-edit", res.data);
                         }
@@ -88,7 +82,7 @@
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('role/modify', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('role/modify', data.field, "application/json", "put", function (res) {
                             console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);

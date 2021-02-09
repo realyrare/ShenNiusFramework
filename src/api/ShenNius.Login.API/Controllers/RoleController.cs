@@ -51,7 +51,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {
-            var role = _mapper.Map<Role>(roleModifyInput);
+            //var role = _mapper.Map<Role>(roleModifyInput);
             return new ApiResult(await _roleService.UpdateAsync(d => new Role()
             {
                 Name = roleModifyInput.Name,

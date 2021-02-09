@@ -119,9 +119,9 @@
                     for (var i in data) {                     
                         listIds.push(data[i].id)
                     }
-                    console.log("listIds:" + listIds);
+                   // console.log("listIds:" + listIds);
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('log/deletes', {  deletesInput: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('log/deletes', {  ids: listIds }, "application/json", "delete", function (res) {
                             console.log(res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
@@ -159,7 +159,9 @@
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('log/deletes', { deletesInput: data.id }, "application/json", "delete", function (res) {
+                    var listIds = new Array();
+                    listIds[0] = data.id;
+                    apiUtil.ajax('log/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);

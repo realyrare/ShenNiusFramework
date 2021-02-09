@@ -14,9 +14,10 @@ namespace ShenNius.Sys.API.Controllers
     [Authorize]
     public abstract class ApiControllerBase : ControllerBase
     {
-        public async virtual Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
-        {
-            return new ApiResult();
-        }
+        //public async virtual Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
+        //{
+        //    return new ApiResult();
+
+        //}
     }
 }
