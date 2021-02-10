@@ -42,9 +42,9 @@
 
 
 <script>
-    layui.config({
-        base: '/js/lay-module/self/'
-    });
+    //layui.config({
+    //    base: '/js/lay-module/self/'
+    //});
     layui.use(['form', 'layer', 'table', 'miniPage', 'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
@@ -108,6 +108,14 @@
             return false;
         });
 
+        function refeshTable() {
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+            }, 'data');
+        };
+        /**
         /**
          * toolbar事件监听
          */
@@ -124,7 +132,7 @@
                     zIndex: "10000",
                     content: content,
                     end: function () {
-                        parent.location.reload();
+                        refeshTable();
                     }
                 });
 
@@ -141,7 +149,7 @@
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
-                                parent.location.reload();
+                                refeshTable();
                             } else {
                                 layer.msg(res.msg);
                             }
@@ -161,8 +169,7 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-                var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);
-                // var openWH = miniPage.getOpenWidthHeight();
+                var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);            
                 var index = layer.open({
                     title: '编辑用户',
                     // tips: [1, '#c00'],
@@ -171,10 +178,9 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['680px', '600px'],
-                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
                     end: function () {
-                        parent.location.reload();
+                        refeshTable();
                     }
                 });
                 return false;
@@ -186,7 +192,7 @@
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);
-                            parent.location.reload();
+                            refeshTable();
                         } else {
                             layer.msg(res.msg);
                         }

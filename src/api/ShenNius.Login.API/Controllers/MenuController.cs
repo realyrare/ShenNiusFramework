@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -37,7 +35,7 @@ namespace ShenNius.Sys.API.Controllers
         {
             if (id == 0)
             {
-                throw new ArgumentException(nameof(id));
+                throw new FriendlyException(nameof(id));
             }
             var res = await _menuService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
@@ -45,8 +43,8 @@ namespace ShenNius.Sys.API.Controllers
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
         {
-            var role = _mapper.Map<Menu>(menuInput);
-            return new ApiResult(await _menuService.AddAsync(role));
+            var menu = _mapper.Map<Menu>(menuInput);
+            return new ApiResult(await _menuService.AddAsync(menu));
         }
 
         [HttpPut]
@@ -56,7 +54,12 @@ namespace ShenNius.Sys.API.Controllers
             {
                 Name = menuModifyInput.Name,
                 Url = menuModifyInput.Url,
-                ModifyTime = menuModifyInput.ModifyTime
+                ModifyTime = menuModifyInput.ModifyTime,
+                HttpMethod=menuModifyInput.HttpMethod,
+                Status=menuModifyInput.Status,
+                ParentId=menuModifyInput.ParentId,
+                Icon=menuModifyInput.Icon,
+                Sort=menuModifyInput.Sort
             }, d => d.Id == menuModifyInput.Id));
         }
 

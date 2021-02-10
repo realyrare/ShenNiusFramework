@@ -1,6 +1,6 @@
 /**
- * fa图标选择器 根据开源项目https://gitee.com/wujiawei0926/iconpicker修改而来
- * @author wujiawei0926@yeah.net chung@99php.cn
+ * Layui图标选择器
+ * @author wujiawei0926@yeah.net
  * @version 1.1
  */
 
@@ -8,8 +8,8 @@ layui.define(['laypage', 'form'], function (exports) {
     "use strict";
 
     var IconPicker = function () {
-            this.v = '1.1';
-        }, _MOD = 'iconPickerFa',
+        this.v = '1.1';
+    }, _MOD = 'iconPicker',
         _this = this,
         $ = layui.jquery,
         laypage = layui.laypage,
@@ -25,7 +25,7 @@ layui.define(['laypage', 'form'], function (exports) {
             // DOM选择器
             elem = opts.elem,
             // 数据类型：fontClass/unicode
-            url = opts.url,
+            type = opts.type == null ? 'fontClass' : opts.type,
             // 是否分页：true/false
             page = opts.page == null ? true : opts.page,
             // 每页显示数量
@@ -42,6 +42,8 @@ layui.define(['laypage', 'form'], function (exports) {
             data = {},
             // 唯一标识
             tmp = new Date().getTime(),
+            // 是否使用的class数据
+            isFontClass = opts.type === 'fontClass',
             // 初始化时input的值
             ORIGINAL_ELEM_VALUE = $(elem).val(),
             TITLE = 'layui-select-title',
@@ -55,7 +57,7 @@ layui.define(['laypage', 'form'], function (exports) {
 
         var a = {
             init: function () {
-                data = common.getData(url);
+                data = common.getData[type]();
 
                 a.hideElem().createSelect().createBody().toggleSelect();
                 a.preventEvent().inputListen();
@@ -87,17 +89,22 @@ layui.define(['laypage', 'form'], function (exports) {
              * 绘制select下拉选择框
              */
             createSelect: function () {
-                var oriIcon = '<i class="fa">';
+                var oriIcon = '<i class="layui-icon">';
 
                 // 默认图标
                 if (ORIGINAL_ELEM_VALUE === '') {
-                    ORIGINAL_ELEM_VALUE = 'fa-adjust';
-
+                    if (isFontClass) {
+                        ORIGINAL_ELEM_VALUE = 'layui-icon-circle-dot';
+                    } else {
+                        ORIGINAL_ELEM_VALUE = '&#xe617;';
+                    }
                 }
 
-
-                oriIcon = '<i class="fa ' + ORIGINAL_ELEM_VALUE + '">';
-
+                if (isFontClass) {
+                    oriIcon = '<i class="layui-icon ' + ORIGINAL_ELEM_VALUE + '">';
+                } else {
+                    oriIcon += ORIGINAL_ELEM_VALUE;
+                }
                 oriIcon += '</i>';
 
                 var selectHtml = '<div class="layui-iconpicker layui-unselect layui-form-select" id="' + ICON_BODY + '">' +
@@ -193,9 +200,11 @@ layui.define(['laypage', 'form'], function (exports) {
 
                     // 每个图标dom
                     var icon = '<div class="layui-iconpicker-icon-item" title="' + obj + '" ' + style + '>';
-
-                    icon += '<i class="fa ' + obj + '"></i>';
-
+                    if (isFontClass) {
+                        icon += '<i class="layui-icon ' + obj + '"></i>';
+                    } else {
+                        icon += '<i class="layui-icon">' + obj.replace('amp;', '') + '</i>';
+                    }
                     icon += '</div>';
 
                     icons.push(icon);
@@ -298,14 +307,18 @@ layui.define(['laypage', 'form'], function (exports) {
             check: function () {
                 var item = '#' + PICKER_BODY + ' .layui-iconpicker-icon-item';
                 a.event('click', item, function (e) {
-                    var el = $(e.currentTarget).find('.fa'),
+                    var el = $(e.currentTarget).find('.layui-icon'),
                         icon = '';
-
-                    var clsArr = el.attr('class').split(/[\s\n]/),
-                        cls = clsArr[1],
-                        icon = cls;
-                    $('#' + TITLE_ID).find('.layui-iconpicker-item .fa').html('').attr('class', clsArr.join(' '));
-
+                    if (isFontClass) {
+                        var clsArr = el.attr('class').split(/[\s\n]/),
+                            cls = clsArr[1],
+                            icon = cls;
+                        $('#' + TITLE_ID).find('.layui-iconpicker-item .layui-icon').html('').attr('class', clsArr.join(' '));
+                    } else {
+                        var cls = el.html(),
+                            icon = cls;
+                        $('#' + TITLE_ID).find('.layui-iconpicker-item .layui-icon').html(icon);
+                    }
 
                     $('#' + ICON_BODY).removeClass(selected).addClass(unselect);
                     $(elem).val(icon).attr('value', icon);
@@ -346,29 +359,17 @@ layui.define(['laypage', 'form'], function (exports) {
                     $('head').append('<style rel="stylesheet" iconpicker>' + css + '</style>');
                 }
             },
-
             /**
              * 获取数据
              */
-            getData: function (url) {
-                var iconlist = [];
-                $.ajax({
-                    url: url,
-                    type: 'get',
-                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                    async: false,
-                    success: function (ret) {
-                        var exp = /fa-var-(.*):/ig;
-                        var result;
-                        while ((result = exp.exec(ret)) != null) {
-                            iconlist.push('fa-' + result[1]);
-                        }
-                    },
-                    error: function (xhr, textstatus, thrown) {
-                        layer.msg('fa图标接口有误');
-                    }
-                });
-                return iconlist;
+            getData: {
+                fontClass: function () {
+                    var arr = ["layui-icon-rate-half", "layui-icon-rate", "layui-icon-rate-solid", "layui-icon-cellphone", "layui-icon-vercode", "layui-icon-login-wechat", "layui-icon-login-qq", "layui-icon-login-weibo", "layui-icon-password", "layui-icon-username", "layui-icon-refresh-3", "layui-icon-auz", "layui-icon-spread-left", "layui-icon-shrink-right", "layui-icon-snowflake", "layui-icon-tips", "layui-icon-note", "layui-icon-home", "layui-icon-senior", "layui-icon-refresh", "layui-icon-refresh-1", "layui-icon-flag", "layui-icon-theme", "layui-icon-notice", "layui-icon-website", "layui-icon-console", "layui-icon-face-surprised", "layui-icon-set", "layui-icon-template-1", "layui-icon-app", "layui-icon-template", "layui-icon-praise", "layui-icon-tread", "layui-icon-male", "layui-icon-female", "layui-icon-camera", "layui-icon-camera-fill", "layui-icon-more", "layui-icon-more-vertical", "layui-icon-rmb", "layui-icon-dollar", "layui-icon-diamond", "layui-icon-fire", "layui-icon-return", "layui-icon-location", "layui-icon-read", "layui-icon-survey", "layui-icon-face-smile", "layui-icon-face-cry", "layui-icon-cart-simple", "layui-icon-cart", "layui-icon-next", "layui-icon-prev", "layui-icon-upload-drag", "layui-icon-upload", "layui-icon-download-circle", "layui-icon-component", "layui-icon-file-b", "layui-icon-user", "layui-icon-find-fill", "layui-icon-loading", "layui-icon-loading-1", "layui-icon-add-1", "layui-icon-play", "layui-icon-pause", "layui-icon-headset", "layui-icon-video", "layui-icon-voice", "layui-icon-speaker", "layui-icon-fonts-del", "layui-icon-fonts-code", "layui-icon-fonts-html", "layui-icon-fonts-strong", "layui-icon-unlink", "layui-icon-picture", "layui-icon-link", "layui-icon-face-smile-b", "layui-icon-align-left", "layui-icon-align-right", "layui-icon-align-center", "layui-icon-fonts-u", "layui-icon-fonts-i", "layui-icon-tabs", "layui-icon-radio", "layui-icon-circle", "layui-icon-edit", "layui-icon-share", "layui-icon-delete", "layui-icon-form", "layui-icon-cellphone-fine", "layui-icon-dialogue", "layui-icon-fonts-clear", "layui-icon-layer", "layui-icon-date", "layui-icon-water", "layui-icon-code-circle", "layui-icon-carousel", "layui-icon-prev-circle", "layui-icon-layouts", "layui-icon-util", "layui-icon-templeate-1", "layui-icon-upload-circle", "layui-icon-tree", "layui-icon-table", "layui-icon-chart", "layui-icon-chart-screen", "layui-icon-engine", "layui-icon-triangle-d", "layui-icon-triangle-r", "layui-icon-file", "layui-icon-set-sm", "layui-icon-add-circle", "layui-icon-404", "layui-icon-about", "layui-icon-up", "layui-icon-down", "layui-icon-left", "layui-icon-right", "layui-icon-circle-dot", "layui-icon-search", "layui-icon-set-fill", "layui-icon-group", "layui-icon-friends", "layui-icon-reply-fill", "layui-icon-menu-fill", "layui-icon-log", "layui-icon-picture-fine", "layui-icon-face-smile-fine", "layui-icon-list", "layui-icon-release", "layui-icon-ok", "layui-icon-help", "layui-icon-chat", "layui-icon-top", "layui-icon-star", "layui-icon-star-fill", "layui-icon-close-fill", "layui-icon-close", "layui-icon-ok-circle", "layui-icon-add-circle-fine"];
+                    return arr;
+                },
+                unicode: function () {
+                    return ["&amp;#xe6c9;", "&amp;#xe67b;", "&amp;#xe67a;", "&amp;#xe678;", "&amp;#xe679;", "&amp;#xe677;", "&amp;#xe676;", "&amp;#xe675;", "&amp;#xe673;", "&amp;#xe66f;", "&amp;#xe9aa;", "&amp;#xe672;", "&amp;#xe66b;", "&amp;#xe668;", "&amp;#xe6b1;", "&amp;#xe702;", "&amp;#xe66e;", "&amp;#xe68e;", "&amp;#xe674;", "&amp;#xe669;", "&amp;#xe666;", "&amp;#xe66c;", "&amp;#xe66a;", "&amp;#xe667;", "&amp;#xe7ae;", "&amp;#xe665;", "&amp;#xe664;", "&amp;#xe716;", "&amp;#xe656;", "&amp;#xe653;", "&amp;#xe663;", "&amp;#xe6c6;", "&amp;#xe6c5;", "&amp;#xe662;", "&amp;#xe661;", "&amp;#xe660;", "&amp;#xe65d;", "&amp;#xe65f;", "&amp;#xe671;", "&amp;#xe65e;", "&amp;#xe659;", "&amp;#xe735;", "&amp;#xe756;", "&amp;#xe65c;", "&amp;#xe715;", "&amp;#xe705;", "&amp;#xe6b2;", "&amp;#xe6af;", "&amp;#xe69c;", "&amp;#xe698;", "&amp;#xe657;", "&amp;#xe65b;", "&amp;#xe65a;", "&amp;#xe681;", "&amp;#xe67c;", "&amp;#xe601;", "&amp;#xe857;", "&amp;#xe655;", "&amp;#xe770;", "&amp;#xe670;", "&amp;#xe63d;", "&amp;#xe63e;", "&amp;#xe654;", "&amp;#xe652;", "&amp;#xe651;", "&amp;#xe6fc;", "&amp;#xe6ed;", "&amp;#xe688;", "&amp;#xe645;", "&amp;#xe64f;", "&amp;#xe64e;", "&amp;#xe64b;", "&amp;#xe62b;", "&amp;#xe64d;", "&amp;#xe64a;", "&amp;#xe64c;", "&amp;#xe650;", "&amp;#xe649;", "&amp;#xe648;", "&amp;#xe647;", "&amp;#xe646;", "&amp;#xe644;", "&amp;#xe62a;", "&amp;#xe643;", "&amp;#xe63f;", "&amp;#xe642;", "&amp;#xe641;", "&amp;#xe640;", "&amp;#xe63c;", "&amp;#xe63b;", "&amp;#xe63a;", "&amp;#xe639;", "&amp;#xe638;", "&amp;#xe637;", "&amp;#xe636;", "&amp;#xe635;", "&amp;#xe634;", "&amp;#xe633;", "&amp;#xe632;", "&amp;#xe631;", "&amp;#xe630;", "&amp;#xe62f;", "&amp;#xe62e;", "&amp;#xe62d;", "&amp;#xe62c;", "&amp;#xe629;", "&amp;#xe628;", "&amp;#xe625;", "&amp;#xe623;", "&amp;#xe621;", "&amp;#xe620;", "&amp;#xe61f;", "&amp;#xe61c;", "&amp;#xe60b;", "&amp;#xe619;", "&amp;#xe61a;", "&amp;#xe603;", "&amp;#xe602;", "&amp;#xe617;", "&amp;#xe615;", "&amp;#xe614;", "&amp;#xe613;", "&amp;#xe612;", "&amp;#xe611;", "&amp;#xe60f;", "&amp;#xe60e;", "&amp;#xe60d;", "&amp;#xe60c;", "&amp;#xe60a;", "&amp;#xe609;", "&amp;#xe605;", "&amp;#xe607;", "&amp;#xe606;", "&amp;#xe604;", "&amp;#xe600;", "&amp;#xe658;", "&amp;#x1007;", "&amp;#x1006;", "&amp;#x1005;", "&amp;#xe608;"];
+                }
             }
         };
 
@@ -383,13 +384,13 @@ layui.define(['laypage', 'form'], function (exports) {
      */
     IconPicker.prototype.checkIcon = function (filter, iconName) {
         var el = $('*[lay-filter=' + filter + ']'),
-            p = el.next().find('.layui-iconpicker-item .fa'),
+            p = el.next().find('.layui-iconpicker-item .layui-icon'),
             c = iconName;
 
         if (c.indexOf('#xe') > 0) {
             p.html(c);
         } else {
-            p.html('').attr('class', 'fa ' + c);
+            p.html('').attr('class', 'layui-icon ' + c);
         }
         el.attr('value', c).val(c);
     };

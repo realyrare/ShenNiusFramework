@@ -1,8 +1,8 @@
 {
-  "homeInfo": {
-    "title": "首页",
-    "href": "sys/role"
-  },
+    "homeInfo": {
+        "title": "首页",
+        "href": "page/menu.html"
+    },
   "logoInfo": {
     "title": "LAYUI MINI",
     "image": "images/logo.png",
@@ -36,6 +36,12 @@
             {
                 "title": "用户列表",
                 "href": "sys/user",
+                "icon": "fa fa-tachometer",
+                "target": "_self"
+            },
+            {
+                "title": "菜单列表",
+                "href": "sys/menu",
                 "icon": "fa fa-tachometer",
                 "target": "_self"
             }

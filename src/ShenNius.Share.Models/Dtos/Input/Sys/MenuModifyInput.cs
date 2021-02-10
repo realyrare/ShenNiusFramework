@@ -37,7 +37,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         public string HttpMethod { get; set; }
 
         public DateTime ModifyTime { get; set; } = DateTime.Now;
-        public bool IsHasChildren { get; set; }
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string Icon { get; set; }

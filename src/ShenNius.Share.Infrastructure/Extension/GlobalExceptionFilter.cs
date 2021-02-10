@@ -8,6 +8,8 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 
 using NLog;
 using Microsoft.Extensions.Logging;
+using ShenNius.Share.Infrastructure.Utils;
+using Newtonsoft.Json;
 
 namespace ShenNius.Share.Infrastructure.Extension
 {
@@ -36,12 +38,23 @@ namespace ShenNius.Share.Infrastructure.Extension
             }
 
             if (_webHostEnvironment.IsDevelopment())
-                json.Msg = context.Exception.StackTrace;//显示堆栈信息
+            {
+                json.Msg = context.Exception.StackTrace;//显示堆栈信息  
+                _logger.LogError(json.Msg + "\r\n" + context.Exception.StackTrace);
+                LogHelper.Default.Debug(json.Msg);
+            }
+            else
+            {
+                LogHelper.Default.Error(json.Msg + "\r\n" + context.Exception.StackTrace);
+            }
+            json.StatusCode = StatusCodes.Status500InternalServerError;
+            var setting = new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            context.Result = new InternalServerErrorObjectResult(JsonConvert.SerializeObject(json, Formatting.None, setting));
 
-            context.Result = new InternalServerErrorObjectResult(json);
-
-            //采用NLog 记录错误日志
-            _logger.LogError(json.Msg + "\r\n" + context.Exception.StackTrace);
         }
     }
 

@@ -30,9 +30,12 @@ layui.use(['jquery', 'form', 'common'], function () {
         var crypt = new JSEncrypt();
         crypt.setPrivateKey(data.field.privateKey);
         var enc = crypt.encrypt(data.field.password);
-        $("#password").val(enc);
+       // $("#password").val(enc);
         data.field.password = enc;
-        console.log("password:" + data.field.password)
+        //console.log("password:" + data.field.password)
+       
+        $("#btnlogin").text("正在登陆中...");
+        $("#btnlogin").attr('disabled', 'disabled');
         $.ajax({
             url: "/sys/login?handler=submit",
             type: "post",
@@ -41,8 +44,8 @@ layui.use(['jquery', 'form', 'common'], function () {
             success: function (res) {
                 console.log("resmsg:" + res.msg);
                 if (res.statusCode == 200 && res.success == true) {
-                    console.log("token:" + res.data.token);
-                    console.log("data:" + res.data);
+                    //console.log("token:" + res.data.token);
+                    //console.log("data:" + res.data);
                     os.SetSession('globalCurrentUserInfo', res.data);
                     setTimeout(function () {
                         var rurl = os.getUrlParam('ReturnUrl');
@@ -57,7 +60,9 @@ layui.use(['jquery', 'form', 'common'], function () {
                     }, 1000);
                 } else {
                     console.log(res.msg);
-                    layer.msg(res.msg);
+                    $("#btnlogin").text("登陆");
+                    $("#btnlogin").attr('disabled', false);
+                    layer.msg(res.msg);                  
                 }
             }
         });

@@ -49,21 +49,11 @@ namespace ShenNius.Client.Admin.Pages.Sys
         public async void OnGetLogoutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            //确保安全一定要去清除api的token
+            var result = await _httpHelper.PostAsync<ApiResult>("user/log-out", null, "application/json");
             Response.Redirect("/sys/login/");
-            //return new JsonResult(new ApiResult<string>() { data = "/admin/login/" });
         }
 
-        public async Task<IActionResult> OnPostLogoutAsync()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var result = await _httpHelper.PostAsync<ApiResult>("user/log-out", null, "application/json");
-            if (result.StatusCode != 200)
-            {
-                return new JsonResult(new ApiResult<string>() { Data = "/sys/login/", StatusCode = 500, Msg = "退出失败了" });
-            }
-            return new JsonResult(new ApiResult<string>() { Data = "/sys/login/", StatusCode = 200, Msg = "成功退出" });
-        }
+      
         public FileResult OnGetVCode()
         {
             var vcode = VerifyCode.CreateRandomCode(4);

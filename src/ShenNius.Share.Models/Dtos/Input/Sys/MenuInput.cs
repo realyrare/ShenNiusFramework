@@ -39,8 +39,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         /// Nullable:True
         /// </summary>           
         public string HttpMethod { get; set; }
-
-        public bool IsHasChildren { get; set; }
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string Icon { get; set; }

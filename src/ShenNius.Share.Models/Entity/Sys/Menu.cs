@@ -26,7 +26,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Nullable:False
         /// </summary>           
         public int ParentId { get; set; }
-
+        public string NameCode { get; set; }
         /// <summary>
         /// Desc:
         /// Default:
@@ -56,7 +56,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         public string HttpMethod { get; set; }
 
         public DateTime ModifyTime { get; set; } 
-        public bool IsHasChildren { get; set; }
+
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string  Icon { get; set; }
