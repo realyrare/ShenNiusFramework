@@ -14,10 +14,18 @@
         /// 返回信息
         /// </summary>
         public string Msg { get; set; }
+
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public dynamic Data { get;  set; } 
+        public dynamic Data { get;  set; }
+
+        public ApiResult()
+        {
+            StatusCode = 200;
+            Success = true;
+            Msg = "操作成功";
+        }
         /// <summary>
         /// get请求成功，直接传递数据
         /// </summary>

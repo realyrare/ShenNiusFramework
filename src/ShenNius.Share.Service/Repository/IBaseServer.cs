@@ -195,6 +195,8 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
         Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression);
 
+     
+
         /// <summary>
         /// 获得列表
         /// </summary>

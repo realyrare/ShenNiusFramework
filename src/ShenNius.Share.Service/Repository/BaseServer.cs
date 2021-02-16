@@ -325,6 +325,17 @@ namespace ShenNius.Share.Service.Repository
         {
             return await Db.Queryable<T>().WhereIF(whereExpression != null, whereExpression).ToListAsync();
         }
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <param name="whereExpression">查询条件</param>
+        /// <param name="selectExpression">投影</param>
+        /// <returns></returns>
+        
+        public async Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression, Expression<Func<T, T>> selectExpression)
+        {
+            return await Db.Queryable<T>().WhereIF(whereExpression != null, whereExpression).Select(selectExpression).ToListAsync();
+        }
 
         /// <summary>
         /// 获得列表
@@ -334,7 +345,7 @@ namespace ShenNius.Share.Service.Repository
         {
             return await Db.Queryable<T>().ToListAsync();
         }
-
+       
 
         /// <summary>
         /// 修改一条数据

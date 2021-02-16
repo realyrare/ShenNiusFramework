@@ -62,6 +62,11 @@ namespace ShenNius.Sys.API.Controllers
                 Sort=menuModifyInput.Sort
             }, d => d.Id == menuModifyInput.Id));
         }
-
+        [HttpGet]
+        public async Task<ApiResult> GetAllParentMenu()
+        {
+          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
+            return new ApiResult(data);
+        }
     }
 }

@@ -4,6 +4,7 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Share.Service.Repository;
 using ShenNiusSystem.Common;
@@ -22,6 +23,7 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput);
         Task<ApiResult> DeletesAsync(List<int> ids);
         Task<ApiResult> GetUserAsync(int id);
+
 
     }
     public partial class UserService : BaseServer<User>, IUserService
@@ -112,6 +114,6 @@ namespace ShenNius.Share.Service.Sys
            var data= _mapper.Map<UserOutput>(model);
             return new ApiResult(data);
         }
-
+       
     }
 }

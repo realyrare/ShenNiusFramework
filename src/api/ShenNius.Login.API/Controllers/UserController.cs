@@ -30,17 +30,21 @@ namespace ShenNius.Sys.API.Controllers
         readonly IOptions<JwtSetting> _jwtSetting;
         private readonly IUserService _userService;
         private readonly IMemoryCache _cache;
+        private readonly IR_User_RoleService _r_User_RoleService;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jwtSetting"></param>
         /// <param name="userService"></param>
         /// <param name="cache"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache)
+        /// <param name="r_User_RoleService"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache, IR_User_RoleService r_User_RoleService)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
             _cache = cache;
+            _r_User_RoleService = r_User_RoleService;
         }
         [HttpPost, Log("用户注册")]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
@@ -81,6 +85,12 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _userService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
+        [HttpPost, Log("设置角色")]
+        public async Task<ApiResult> SetRole(SetUserRoleInput setUserRoleInput)
+        {
+            return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);          
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public ApiResult LoadLoginInfo()

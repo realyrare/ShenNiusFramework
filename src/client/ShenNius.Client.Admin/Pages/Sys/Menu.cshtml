@@ -164,12 +164,12 @@
             if (obj.event === 'edit') {
                 var content = miniPage.getHrefContent('/sys/menu-modify?id=' + data.id);
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '编辑菜单',
                     // tips: [1, '#c00'],
                     type: 1,
                     shade: 0.2,
                     shadeClose: true,
-                    area: ['650px', '550px'],
+                    area: ['650px', '650px'],
                     content: content,
                     end: function () {
                         refeshTable();

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -15,18 +15,21 @@ namespace ShenNius.Sys.API.Controllers
     {
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
-        public RoleController(IRoleService roleService, IMapper mapper)
+        private readonly IR_Role_MenuService _r_Role_MenuService;
+
+        public RoleController(IRoleService roleService, IMapper mapper, IR_Role_MenuService r_Role_MenuService)
         {
             _roleService = roleService;
             _mapper = mapper;
+            _r_Role_MenuService = r_Role_MenuService;
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
-        {          
+        {
             return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
         }
         [HttpGet]
-        public async Task<ApiResult> GetListPages(int page, string key=null)
+        public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             var res = await _roleService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
@@ -47,7 +50,11 @@ namespace ShenNius.Sys.API.Controllers
             var role = _mapper.Map<Role>(roleInput);
             return new ApiResult(await _roleService.AddAsync(role));
         }
-
+        [HttpPost, Log("设置权限")]
+        public async Task<ApiResult> SetMenu(SetRoleMenuInput setRoleMenuInput)
+        {
+            return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
+        }
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {
