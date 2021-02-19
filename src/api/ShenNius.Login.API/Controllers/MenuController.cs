@@ -4,6 +4,7 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
+using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Service.Sys;
 using System.Threading.Tasks;
 
@@ -29,6 +30,12 @@ namespace ShenNius.Sys.API.Controllers
         {
             var res = await _menuService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+        }
+        [HttpGet]
+        public async Task<ApiResult> List()
+        {
+            var data = await _menuService.GetListAsync(d=>d.Status);
+            return new ApiResult(data);
         }
         [HttpGet]
         public async Task<ApiResult> Detail(int id)
@@ -65,8 +72,8 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetAllParentMenu()
         {
-          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
-            return new ApiResult(data);
+          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);           
+            return new ApiResult(_mapper.Map<ParentMenuOutput>(data));
         }
     }
 }

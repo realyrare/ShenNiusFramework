@@ -44,6 +44,12 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _roleService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
         }
+        [HttpGet]
+        public async Task<ApiResult> List()
+        {            
+            var data = await _roleService.GetListAsync();
+            return new ApiResult(data: data);
+        }
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] RoleInput roleInput)
         {
