@@ -3,26 +3,6 @@
 
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
-
-        <fieldset class="table-search-fieldset">
-            <legend>搜索信息</legend>
-            <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">角色名</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="rolename" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </fieldset>
-
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
@@ -42,10 +22,7 @@
 </div>
 
 
-<script>
-    //layui.config({
-    //    base: '/js/lay-module/self/'
-    //});
+<script>  
     layui.use(['form', 'layer', 'table', 'miniPage', 'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
