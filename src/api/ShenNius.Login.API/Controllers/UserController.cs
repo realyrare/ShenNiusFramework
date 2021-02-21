@@ -86,7 +86,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpPost, Log("设置角色")]
-        public async Task<ApiResult> SetRole(SetUserRoleInput setUserRoleInput)
+        public async Task<ApiResult> SetRole([FromBody]SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);          
         }

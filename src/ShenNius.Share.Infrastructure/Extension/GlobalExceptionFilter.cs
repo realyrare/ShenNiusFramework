@@ -36,15 +36,16 @@ namespace ShenNius.Share.Infrastructure.Extension
             {
                 json.Msg = json.Msg.Replace(errorAudit, $"（若新添加服务，需要重新编译项目）{errorAudit}");
             }
-
+            
             if (_webHostEnvironment.IsDevelopment())
             {
-                json.Msg = context.Exception.StackTrace;//显示堆栈信息  
+                json.Msg = context.Exception.ToString();//显示堆栈信息  
                 _logger.LogError(json.Msg + "\r\n" + context.Exception.StackTrace);
                 LogHelper.Default.Debug(json.Msg);
             }
             else
             {
+                json.Msg = context.Exception.Message;
                 LogHelper.Default.Error(json.Msg + "\r\n" + context.Exception.StackTrace);
             }
             json.StatusCode = StatusCodes.Status500InternalServerError;
