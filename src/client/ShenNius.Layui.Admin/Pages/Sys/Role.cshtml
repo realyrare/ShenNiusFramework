@@ -91,6 +91,8 @@
              * toolbar事件监听
              */
             table.on('toolbar(currentTableFilter)', function (obj) {
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/sys/role-modify';
                     var index = layer.open({
@@ -108,9 +110,8 @@
                     });
 
                 } else if (obj.event === 'delete') {  // 监听删除操作
-                    var checkStatus = table.checkStatus('currentTableId')
-                        , data = checkStatus.data,
-                        listIds = [];
+                  
+                      var  listIds = [];
                     if (data.length > 0) {
                         for (var i in data) {
                             listIds.push(data[i].id);
@@ -129,6 +130,29 @@
                     } else {
                         layer.msg("请选择需要删除的数据");
                     }
+                } else if (obj.event === 'setMenu') {
+                    if (data.length <= 0) {
+                        layer.msg("请选择需要操作的数据");
+                        return;
+                    }
+                    if (data.length >= 2) {
+                        layer.msg("请选择一个角色分配权限");
+                        return;
+                    }
+                    var content = '/sys/set-role?id=' + data[0].id;
+                    var index = layer.open({
+                        title: '设置权限',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['660px', '650px'],
+                        content: content,
+                        end: function () {
+                            refeshTable();
+                        },
+                        btn: ['确定', '关闭']
+                    });
                 }
             });
 

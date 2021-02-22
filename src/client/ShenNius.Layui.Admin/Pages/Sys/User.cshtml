@@ -160,7 +160,10 @@
                         layer.msg("请选择需要操作的数据");
                         return;
                     }
-                    //'/sys/set-role?id=' + data[0].id
+                    if (data.length>=2) {
+                        layer.msg("请选择一位用户进行角色分配");
+                        return;
+                    }
                     var content = '/sys/set-role?id=' + data[0].id;                   
                     var index = layer.open({
                         title: '设置角色',
@@ -169,7 +172,10 @@
                         maxmin: true,
                         shadeClose: true,
                         area: ['660px', '580px'],
-                        content: content,                        
+                        content: content, 
+                        end: function () {
+                            refeshTable();
+                        },
                         btn: ['确定', '关闭']
                     });
                 }
@@ -199,7 +205,7 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行吗', function (index) {
+                    layer.confirm('真的删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
                         apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {

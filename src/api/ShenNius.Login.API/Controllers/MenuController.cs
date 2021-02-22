@@ -14,11 +14,18 @@ namespace ShenNius.Sys.API.Controllers
     {
         private readonly IMenuService _menuService;
         private readonly IMapper _mapper;
+        private readonly IConfigService _configService;
 
-        public MenuController(IMenuService menuService,IMapper mapper)
+        public MenuController(IMenuService menuService,IMapper mapper,IConfigService configService)
         {
             _menuService = menuService;
             _mapper = mapper;
+            _configService = configService;
+        }
+        [HttpGet]
+        public async Task<ApiResult> GetBtnCodeList()
+        {
+            return new ApiResult(await _configService.GetListAsync());
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)

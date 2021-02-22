@@ -85,7 +85,12 @@
                         <input type="checkbox" checked name="status" value="true" lay-skin="switch">
                     </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label">按钮分配</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="status" value="true" lay-skin="switch">
+                    </div>
+                </div>
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -135,6 +140,11 @@
             });
         } else {
             BindParentMenu();
+            apiUtil.ajax('menu/get-btn-code-list', {}, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                   // form.val("menu-edit", res.data);
+                }
+            });
         }
              form.render();
                 //监听提交

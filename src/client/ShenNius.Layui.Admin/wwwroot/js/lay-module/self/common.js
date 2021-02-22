@@ -7,7 +7,7 @@
     var tmls, tool = {
        
         apiUrl() {
-            return "https://localhost:5001/api/";
+            return "https://localhost:44377/api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
             var token = this.getToken();
@@ -26,22 +26,22 @@
                 },
                 success: function (data) {
                     console.log("statusCode:" + data.statusCode);
-                    //if (data.statusCode == 401) {
-                    //    layer.msg(data.msg);
-                    //    setTimeout(function () {
-                    //        window.location.href = "/sys/login";
-                    //    }, 1000)
-                    //}
-                    //if (data.statusCode == 500) {
-                    //    console.log("statusCode:" + data.statusCode);
-                    //    // tool.error(data.msg);
-                    //    layer.msg(data.msg);
-                    //    return;
-                    //}
-                    //if (data.statusCode == 400) {
-                    //    layer.msg(data.msg);
-                    //    return;
-                    //}
+                    if (data.statusCode == 401) {
+                        layer.msg(data.msg);
+                        setTimeout(function () {
+                            window.location.href = "/sys/login";
+                        }, 1000)
+                    }
+                    if (data.statusCode == 500) {
+                        console.log("statusCode:" + data.statusCode);
+                        // tool.error(data.msg);
+                        layer.msg(data.msg);
+                        return;
+                    }
+                    if (data.statusCode == 400) {
+                        layer.msg(data.msg);
+                        return;
+                    }
                     callFun(data);
                 },
                 error: function (xhr, type, errorThrown) {
