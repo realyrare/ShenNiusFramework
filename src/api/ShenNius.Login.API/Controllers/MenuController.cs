@@ -39,10 +39,16 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _menuService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
+
+        /// <summary>
+        /// 获取菜单按钮
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> List()
+        public async Task<ApiResult> BtnCode(int menuId)
         {
-            var data = await _menuService.GetListAsync(d=>d.Status);
+            var data = await _menuService.BtnCodeByMenuIdAsync(menuId);
             return new ApiResult(data);
         }
 

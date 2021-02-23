@@ -3,67 +3,198 @@
 @model ShenNius.Client.Admin.Pages.Sys.SetMenuModel
 @{
 }
-<form class="layui-form" action="" lay-filter="role-edit">
-    <div class="layuimini-container layuimini-page-anim">
-        <div class="layuimini-main">
-            <div class="layui-form layuimini-form">
-                @if (Model.RoleId > 0)
-                {
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户编号</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="id" lay-verify="id" value="@Model.RoleId" disabled class="layui-input">
-                        </div>
-                    </div>
-                }
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">角色名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
-                    </div>
-                </div>
-            </div>
+<style>
+    .layui-table-view {
+        margin-top: 0px;
+    }
+
+    .layui-col-220 {
+        width: 300px;
+    }
+
+    .right-col-body {
+        left: 300px;
+    }
+
+    .list-wall {
+        padding-top: 0px;
+    }
+
+    .fyt-center {
+        padding-top: 6px;
+        text-align: center;
+    }
+
+    #tree {
+        height: 550px;
+        overflow: auto;
+    }
+
+    .layui-layer-loading {
+        box-shadow: 0 0px 0px rgba(0, 0, 0, .3) !important;
+    }
+
+    #open-form {
+        display: none;
+    }
+
+    .layui-form-select dl {
+        max-height: 150px;
+    }
+
+    .tips {
+        background-color: #fdf6ec;
+        color: #e6a23c;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+        .tips i {
+            margin-right: 5px;
+            position: relative;
+            top: 1px;
+        }
+</style>
+<div class="layui-col-220 fyt-wall">
+    <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
+    <div class="fyt-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
+</div>
+<div class="right-col-body fyt-wall">
+    <div class="list-wall" style="padding-top:10px;">
+        <div class="tips">
+            <i class="layui-icon layui-icon-tips"></i>只有被授权的菜单权限，才能查看具体的按钮功能。
         </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
-</form>
+</div>
 @section js{
     <script>
-        layui.use(['form', 'common'], function () {
-            var form = layui.form,
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['table', 'layer', 'jquery', 'tree', 'common'],
+        function () {
+            var table = layui.table,
                 layer = layui.layer,
-                apiUtil = layui.common;
-            /**
-             * 初始化表单，要加上，不然刷新部分组件可能会不加载
-             */
-            // 当前弹出层，防止ID被覆盖
-            var parentIndex = layer.index;
-            apiUtil.ajax('menu/list', {}, "application/json", "get", function (res) {
-                if (res.statusCode == 200 && res.success == true) {
-                    form.val("role-edit", res.data);
-                }
+                $ = layui.jquery,
+                tree = layui.tree,
+                apiUtil = layui.common,
+                form = layui.form;
+            table.render({
+                elem: '#tablist',
+                headers: { 'Authorization': 'Bearer ' + apiUtil.getToken() },
+                url: apiUtil.apiUrl()+'api/menu/btn-code',
+                cols: [
+                    [
+                        { field: 'id', title: 'Id' },
+                        { field: 'name', title: '功能', sort: true, fixed: 'left' },                       
+                        { width: 100, title: '操作', templet: '#tool' }
+                    ]
+                ],
+                page: false,
+                id: 'tables'
             });
-
-            form.render();
-            //监听提交
-            form.on('submit(saveBtn)', function (data) {
-                if (data.field.id > 0) {
-                    apiUtil.ajax('role/modify', data.field, "application/json", "put", function (res) {
-                        console.log("msg:" + res.msg);
-                        if (res.statusCode == 200 && res.success == true) {
-                            layer.msg(res.msg);
-                            layer.close(parentIndex);
+            var guid = '', selectIds = '', active = {
+                initTree() {
+                    apiUtil.ajax('api/menu/menubyrole/', { roleGuid: '' }, "application/json", "post", function (res) {
+                        tree.render({
+                            elem: '#tree'
+                            , data: res.menu
+                            , id: "treeId"
+                            , showCheckbox: true
+                            , onlyIconControl: true
+                            , click: function (obj) {
+                                guid = obj.data.id;
+                                active.reload();
+                            }
+                        });
+                    });
+                },
+                reload: function () {
+                    table.reload('tables',
+                        {
+                            where: {
+                                role: '',
+                                menu: guid
+                            }
+                        });
+                },
+                saveMenu: function () {
+                    var checkedData = tree.getChecked('treeId');
+                    if (checkedData.length == 0) {
+                        os.warning('请选择授权的功能模块~');
+                        return;
+                    }
+                    selectIds = '';
+                    var strMenu = active.serverArray(checkedData);
+                    //console.log(active.serverArray(checkedData)); return;
+                    //开始提交信息
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff']
+                    });
+                    os.ajax("api/rolemenu/add", { RoleGuid: "@Model.", MenuGuid: strMenu, Types: 1 }, function (res) {
+                        layer.close(index);
+                        if (res.statusCode === 200) {
+                            os.success('授权成功~');
                         } else {
-                            layer.msg(res.msg);
+                            os.error(res.message);
                         }
                     });
+                },
+                serverArray(arr) {
+                    for (var item = 0; item < arr.length; item++) {
+                        selectIds += arr[item].id + ",";
+                        if (arr[item].children) {
+                            active.serverArray(arr[item].children)
+                        }
+                    }
+                    return selectIds
                 }
-                return false;
+            };
+            active.initTree();
+            $('.fyt-wall .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            //监听授权操作
+            form.on('switch(torole)', function (obj) {
+                var strRole = this.value;
+                //开始提交信息
+                var index = layer.load(1, {
+                    shade: [0.1, '#fff']
+                });
+                var data = {
+                    role: '@Model',
+                    menu: guid,
+                    btnfun: strRole,
+                    status: obj.elem.checked ? 1 : 0
+                };
+                os.ajax("api/rolemenu/tubtnfun", data, function (res) {
+                    layer.close(index);
+                    if (res.statusCode === 200) {
+                        if (obj.elem.checked) {
+                            os.success('授权成功~');
+                        }
+                        else {
+                            os.success('取消授权~');
+                        }
+                    } else {
+                        os.error(res.message);
+                        if (obj.elem.checked) {
+                            obj.elem.checked = false;
+                        } else {
+                            obj.elem.checked = true;
+                        }
+                    }
+                });
             });
         });
+    </script>
+
+    <script type="text/html" id="tool">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
     </script>
 }

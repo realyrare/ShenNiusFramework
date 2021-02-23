@@ -47,10 +47,10 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">选择图标</label>
+                    <label class="layui-form-label required">图标</label>
                     <div class="layui-input-block">
-                        <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
-                        <input type="hidden" name="Icon" id="Icon" />
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" name="icon" class="layui-input">
+                        @*<input type="hidden" name="icon" id="Icon" />*@
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -103,7 +103,7 @@
 @section js{
     <script id="demo" type="text/html">       
             {{# layui.each(d.data, function(index, item){ }}           
-            <input type="checkbox" name="cbk{{ index }}"  value="{{ item.id }}" checked="cbkIsExist({{ item }})" title="{{ item.name }}"  lay-skin="primary" lay-filter="cbk">
+            <input type="checkbox" name="cbk{{ index }}"  value="{{ item.id }}" checked="cbkIsExist({{ item.id }})" title="{{ item.name }}"  lay-skin="primary" lay-filter="cbk">
             {{# }); }}
     </script>
     <script>
@@ -122,7 +122,7 @@
                          page: false,
                          click: function (data) {
                              console.log("Icon:"+data);
-                             $("#Icon").val(data.icon);
+                             $("#iconPicker").val(data.icon);
                          },
                           // 渲染成功后的回调
                         success: function (d) {
@@ -136,11 +136,13 @@
                  */
                 // 当前弹出层，防止ID被覆盖
             var index = parent.layer.getFrameIndex(window.name);   
-            var id =@Model.Id; var checkList = [];
-        if (id > 0) {
-            BindParentMenu(id);
+            var id =@Model.Id; var checkList = [], btnCodeList=[];
+        if (id > 0) {          
             apiUtil.ajax('menu/detail', { id: id }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
+                    BindParentMenu(res.data.parentId);
+                    btnCodeList = res.data.btnCodeIds;
+                    console.log("btnCodeList:" + btnCodeList);  
                     form.val("menu-edit", res.data);
                 }
             });
@@ -157,7 +159,7 @@
                         for (var i = 0; i < res.data.length; i++) {
                             checkList.push(res.data[i].id)
                         }
-                        console.log("checkList:" + checkList);  
+                       // console.log("checkList:" + checkList);  
                         form.render();
                     });
                 }
@@ -207,11 +209,10 @@
                     return false;
                 });
 
-        function cbkIsExist(m) {
-                //var that = this;
-                var cbkJson = '';
-                if (cbkJson === '') { return false; }
-                if (cbkJson.indexOf(m.id) > -1) {
+        function cbkIsExist(id) {
+                //var that = this;            
+            if (btnCodeList === '') { return false; }
+            if (btnCodeList.indexOf(id) > -1) {
                     return true;
                 }
             }; 
