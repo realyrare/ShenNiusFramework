@@ -26,22 +26,22 @@
                 },
                 success: function (data) {
                     console.log("statusCode:" + data.statusCode);
-                    if (data.statusCode == 401) {
-                        layer.msg(data.msg);
-                        setTimeout(function () {
-                            window.location.href = "/sys/login";
-                        }, 1000)
-                    }
-                    if (data.statusCode == 500) {
-                        console.log("statusCode:" + data.statusCode);
-                        // tool.error(data.msg);
-                        layer.msg(data.msg);
-                        return;
-                    }
-                    if (data.statusCode == 400) {
-                        layer.msg(data.msg);
-                        return;
-                    }
+                    //if (data.statusCode == 401) {
+                    //    layer.msg(data.msg);
+                    //    setTimeout(function () {
+                    //        window.location.href = "/sys/login";
+                    //    }, 1000)
+                    //}
+                    //if (data.statusCode == 500) {
+                    //    console.log("statusCode:" + data.statusCode);
+                    //    // tool.error(data.msg);
+                    //    layer.msg(data.msg);
+                    //    return;
+                    //}
+                    //if (data.statusCode == 400) {
+                    //    layer.msg(data.msg);
+                    //    return;
+                    //}
                     callFun(data);
                 },
                 error: function (xhr, type, errorThrown) {
@@ -74,7 +74,7 @@
             table.render(obj);
         },
         parseDataFun: function (res) { //res 即为原始返回的数据
-            console.log("parseDataFun  statusCode:" + res.statusCode);
+            //console.log("parseDataFun  statusCode:" + res.statusCode);
             if (res.statusCode == 401) {
                 layer.msg(res.msg);
                 setTimeout(function () {

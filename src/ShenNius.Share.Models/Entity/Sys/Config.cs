@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿
+using SqlSugar;
 using System;
 
 namespace ShenNius.Share.Model.Entity.Sys
@@ -17,7 +18,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string ParentId { get; set; }
+        public int ParentId { get; set; }
 
         /// <summary>
         /// Desc:字典值——名称

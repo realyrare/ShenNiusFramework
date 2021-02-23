@@ -48,7 +48,7 @@ layui.use(['jquery', 'form', 'common'], function () {
                     //console.log("data:" + res.data);
                     os.SetSession('globalCurrentUserInfo', res.data);
                     setTimeout(function () {
-                        var rurl = os.getUrlParam('ReturnUrl');
+                        var rurl = os.getUrlParam('returnUrl');
                         if (!rurl) {
                             layer.msg('登录成功', function () {
                                 window.location.href = '/index';

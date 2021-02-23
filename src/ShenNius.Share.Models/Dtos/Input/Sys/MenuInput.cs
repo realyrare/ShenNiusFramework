@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
@@ -42,5 +43,9 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string Icon { get; set; }
+        /// <summary>
+        /// 按钮选择框
+        /// </summary>
+        public string[] BtnCodeIds { get; set; }
     }
 }

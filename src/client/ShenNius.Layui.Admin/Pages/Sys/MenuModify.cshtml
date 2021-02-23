@@ -5,11 +5,9 @@
         .layui-form-item .layui-input {
             width: 350px;
         }
-
         .layui-iconpicker {
             max-width: 100%;
         }
-
         .layui-form-select {
             width: 350px;
         }
@@ -83,13 +81,13 @@
                     <label class="layui-form-label">是否启用</label>
                     <div class="layui-input-block">
                         <input type="checkbox" checked name="status" value="true" lay-skin="switch">
+                        @*<input type="hidden" name="btnCodeIds" class="layui-input">*@
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">按钮分配</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" checked name="status" value="true" lay-skin="switch">
-                    </div>
+                   
+                    <div class="layui-input-block" id="view"></div>
                 </div>
 
                 <div class="layui-form-item">
@@ -101,16 +99,24 @@
         </div>
     </div>
 </form>
+
 @section js{
+    <script id="demo" type="text/html">       
+            {{# layui.each(d.data, function(index, item){ }}           
+            <input type="checkbox" name="cbk{{ index }}"  value="{{ item.id }}" checked="cbkIsExist({{ item }})" title="{{ item.name }}"  lay-skin="primary" lay-filter="cbk">
+            {{# }); }}
+    </script>
     <script>
-    layui.use(['form', 'iconPicker',  'common'], function () {
+
+        layui.use(['form', 'laytpl', 'iconPicker',  'common'], function () {
             var form = layui.form,
                      $ = layui.$,
                     layer = layui.layer,
-                    apiUtil = layui.common,
+                apiUtil = layui.common,
+                laytpl = layui.laytpl,
                     iconPicker = layui.iconPicker;
                     iconPicker.render({
-                         elem: '#iconPicker',
+                        elem: '#iconPicker',
                         type: 'fontClass',
                          search: true,
                          page: false,
@@ -123,51 +129,76 @@
                            // console.log("渲染成功后的回调:"+d);
                          }
                     });
-        iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
+                iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
 
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
                 // 当前弹出层，防止ID被覆盖
-                var parentIndex = layer.index;
-                var id=@Model.Id;
+            var index = parent.layer.getFrameIndex(window.name);   
+            var id =@Model.Id; var checkList = [];
         if (id > 0) {
             BindParentMenu(id);
-            apiUtil.ajax('menu/get-all-parent-menu', {}, "application/json", "get", function (res) {
+            apiUtil.ajax('menu/detail', { id: id }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
                     form.val("menu-edit", res.data);
                 }
             });
         } else {
-            BindParentMenu();
+            BindParentMenu();            
+            }
+            //加载权限按钮
             apiUtil.ajax('menu/get-btn-code-list', {}, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
-                   // form.val("menu-edit", res.data);
+                    var getTpl = demo.innerHTML
+                        , view = document.getElementById('view');
+                    laytpl(getTpl).render(res, function (html) {
+                        view.innerHTML = html;
+                        for (var i = 0; i < res.data.length; i++) {
+                            checkList.push(res.data[i].id)
+                        }
+                        console.log("checkList:" + checkList);  
+                        form.render();
+                    });
                 }
             });
-        }
-             form.render();
+            form.render();
+         
+            //拿到选中的所有checkbox
+            form.on('checkbox(cbk)', function (data) {
+                console.log("value:" + data.value);
+                if (data.elem.checked) {
+                    checkList.push(data.value);
+                } else {
+                    var index = checkList.findIndex(item => {
+                        if (item == data.value) {
+                            return true
+                        }
+                    })
+                    checkList.splice(index, 1);
+                }
+            });
+            
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id > 0) {
+                        data.field.btnCodeIds = checkList;
                         apiUtil.ajax('menu/modify', data.field, "application/json", "put", function (res) {
                             console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
-                                layer.close(parentIndex);
+                                parent.layer.close(index);
                             } else {
                                 layer.msg(res.msg);
                             }
                         });
                     } else {
-                        var status = data.field.status == "true" ? 1 : 0;
-                        console.log("status:" + status);
-                        data.field.status = status;
+                        data.field.btnCodeIds = checkList;
+                        console.log("btnCodeIds:" + data.field.btnCodeIds);  
                         apiUtil.ajax('menu/add', data.field, "application/json", "post", function (res) {
-                            console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
-                                layer.close(parentIndex);
+                                parent.layer.close(index);
                             } else {
                                 layer.msg(res.msg);
                             }
@@ -175,17 +206,26 @@
                     }
                     return false;
                 });
+
+        function cbkIsExist(m) {
+                //var that = this;
+                var cbkJson = '';
+                if (cbkJson === '') { return false; }
+                if (cbkJson.indexOf(m.id) > -1) {
+                    return true;
+                }
+            }; 
         function BindParentMenu(value) {
-            apiUtil.ajax('menu/detail', { id: id }, "application/json", "get", function (res) {
+            apiUtil.ajax('menu/get-all-parent-menu', { }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
                     if (res.data !== null) {
                         var select = $("#parentId");
                         for (var i = 0; i < res.data.length; i++) {
-                            var val = res.data[i].Id;
+                            var val = res.data[i].id;
                             if (val === value)
-                                select.append("<option value='" + val + "' selected>" + res.data[i].Name + "</option>");  //添加option
+                                select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
                             else
-                                select.append("<option value='" + val + "'>" + res.data[i].Name + "</option>");  //添加option
+                                select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
                         }
                         layui.form.render('select');
                     }

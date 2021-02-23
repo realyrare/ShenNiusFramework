@@ -21,7 +21,7 @@ namespace ShenNius.Share.Service
             CreateMap<MenuModifyInput, Menu>();
             CreateMap<MenuInput, Menu>();
             //ParentMenuOutput
-            CreateMap< Menu, ParentMenuOutput>();
+            CreateMap<Menu, ParentMenuOutput>();
         }
     }
 }

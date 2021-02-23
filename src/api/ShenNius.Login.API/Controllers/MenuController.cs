@@ -6,6 +6,7 @@ using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Service.Sys;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -44,6 +45,7 @@ namespace ShenNius.Sys.API.Controllers
             var data = await _menuService.GetListAsync(d=>d.Status);
             return new ApiResult(data);
         }
+
         [HttpGet]
         public async Task<ApiResult> Detail(int id)
         {
@@ -73,14 +75,15 @@ namespace ShenNius.Sys.API.Controllers
                 Status=menuModifyInput.Status,
                 ParentId=menuModifyInput.ParentId,
                 Icon=menuModifyInput.Icon,
-                Sort=menuModifyInput.Sort
+                Sort=menuModifyInput.Sort,
+                BtnCodeIds= menuModifyInput.BtnCodeIds
             }, d => d.Id == menuModifyInput.Id));
         }
         [HttpGet]
         public async Task<ApiResult> GetAllParentMenu()
         {
-          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);           
-            return new ApiResult(_mapper.Map<ParentMenuOutput>(data));
+          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
+            return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
         }
     }
 }

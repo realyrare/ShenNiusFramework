@@ -57,6 +57,8 @@ namespace ShenNius.Share.Model.Entity.Sys
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string  Icon { get; set; }
+        [SugarColumn(IsJson =true)]
+        public string[]  BtnCodeIds { get; set; }
 
     }
 }
