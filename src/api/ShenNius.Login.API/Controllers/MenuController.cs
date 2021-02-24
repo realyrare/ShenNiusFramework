@@ -46,10 +46,19 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="menuId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> BtnCode(int menuId)
+        public async Task<ApiResult> BtnCode(int menuId=0)
         {
-            var data = await _menuService.BtnCodeByMenuIdAsync(menuId);
-            return new ApiResult(data);
+            return await _menuService.BtnCodeByMenuIdAsync(menuId);
+        }
+        /// <summary>
+        /// 树形菜单
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ApiResult> TreeByRole(int roleId)
+        {
+            return await _menuService.TreeRoleIdAsync(roleId);
         }
 
         [HttpGet]

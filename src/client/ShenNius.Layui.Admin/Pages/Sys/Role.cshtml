@@ -139,14 +139,14 @@
                         layer.msg("请选择一个角色分配权限");
                         return;
                     }
-                    var content = '/sys/set-role?id=' + data[0].id;
+                    var content = '/sys/set-menu?id=' + data[0].id;
                     var index = layer.open({
                         title: '设置权限',
                         type: 2,
                         shade: 0.2,
                         maxmin: true,
                         shadeClose: true,
-                        area: ['660px', '650px'],
+                        area: ['760px', '650px'],
                         content: content,
                         end: function () {
                             refeshTable();
