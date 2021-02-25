@@ -1,8 +1,7 @@
 ﻿
 @page
 @model ShenNius.Client.Admin.Pages.Sys.SetMenuModel
-@{
-}
+
 @section css{
     <link href="~/css/site.min.css" rel="stylesheet" />
     <style>
@@ -13,7 +12,7 @@
             width: 250px;
         }
         .right-col-body {
-            left: 300px;
+            left: 260px;
         }
         .list-wall {
             padding-top: 0px;
@@ -80,18 +79,18 @@
                     cols: [
                         [
                             { field: 'id', title: 'Id' },
-                            { field: 'name', title: '功能', sort: true, fixed: 'left' },
+                            { field: 'name', title: '功能' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: false,
+                    page: true,
                     id: 'tables',
                     parseData: function (res) {
                         return {
                             "code": res.statusCode == 200 ? 0 : -1, //解析接口状态,必须是0 才可以）
                             "msg": res.msg, //解析提示文本
-                            "count": res.data.count, //解析数据长度
-                            "data": res.data.items //解析数据列表
+                            "count": res.data.length, //解析数据长度
+                            "data": res.data //解析数据列表
                         };
                     }
                 });
@@ -106,12 +105,19 @@
                                     , data: res.data
                                     , id: "treeId"
                                     , showCheckbox: true
-                                    , onlyIconControl: true
-                                    , click: function (obj) {
+                                    , onlyIconControl: true,
+                                    accordion: true,
+                                    showLine: true,
+                                    oncheck: function (obj) {
                                         menuId = obj.data.id;
-                                        console.log("menuId:" + obj.data);
                                         active.reload();
+                                        console.log("当前menuId:" + obj.data.id);
                                     }
+                                    //, click: function (obj) {
+                                    //    menuId = obj.data.id;
+                                    //    console.log("menuId:" + obj.data);
+                                    //    active.reload();
+                                    //}
                                 });
                             }
                         });
@@ -120,14 +126,15 @@
                         table.reload('tables',
                             {
                                 where: {
-                                    menuId: menuId
+                                    menuId: menuId,
+                                    roleId:@Model.RoleId
                                 }
                             });
                     },
                     saveMenu: function () {
                         var checkedData = tree.getChecked('treeId');
                         if (checkedData.length == 0) {
-                            os.warning('请选择授权的功能模块~');
+                            layer.msg('请选择授权的功能模块~');
                             return;
                         }
                         selectIds = '';
@@ -137,12 +144,12 @@
                         var index = layer.load(1, {
                             shade: [0.1, '#fff']
                         });
-                        os.ajax("api/rolemenu/add", { RoleGuid: "@Model.", MenuGuid: strMenu, Types: 1 }, function (res) {
+                        apiUtil.ajax("menu/add-permissions", { roleId: @Model.RoleId, menuId: menuId }, "application/json", "post", function (res) {
                             layer.close(index);
-                            if (res.statusCode === 200) {
-                                os.success('授权成功~');
+                            if (res.statusCode === 200 && res.success == true) {
+                                layer.msg('菜单保存成功~');
                             } else {
-                                os.error(res.message);
+                                layer.msg(res.message);
                             }
                         });
                     },
@@ -163,36 +170,67 @@
                 });
 
                 //监听授权操作
-                form.on('switch(torole)', function (obj) {
-                    var strRole = this.value;
+                form.on('switch(torole)', function (obj) {                   
+                    var btnCode = this.value;
+                  
                     //开始提交信息
                     var index = layer.load(1, {
                         shade: [0.1, '#fff']
                     });
                     var data = {
-                        role: '@Model',
-                        menu: guid,
-                        btnfun: strRole,
-                        status: obj.elem.checked ? 1 : 0
+                        roleId: @Model.RoleId,
+                        menuId: menuId,
+                        btnCodeId: btnCode,
+                        status: obj.elem.checked //? true : false
                     };
-                    os.ajax("api/rolemenu/tubtnfun", data, function (res) {
-                        layer.close(index);
-                        if (res.statusCode === 200) {
-                            if (obj.elem.checked) {
-                                os.success('授权成功~');
-                            }
-                            else {
-                                os.success('取消授权~');
-                            }
-                        } else {
-                            os.error(res.message);
-                            if (obj.elem.checked) {
-                                obj.elem.checked = false;
+                    $.ajax({                        
+                        url: apiUtil.apiUrl()+'menu/set-btn-permissions',
+                        type: "post",
+                        headers: {
+                            'Authorization': 'Bearer ' + apiUtil.getToken()
+                        },
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: 'json', //服务器返回json格式数据
+                        success: function (res) {
+                            console.log("status" + res.statusCode);
+                            console.log("success" + res.success);
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.close(index);
+                                if (obj.elem.checked) {
+                                    layer.msg("授权成功~");
+                                }
+                                else {
+                                    layer.msg('取消授权~');
+                                }                                
                             } else {
-                                obj.elem.checked = true;
+                                layer.msg(res.msg);
+                                if (obj.elem.checked) {
+                                    obj.elem.checked = false;
+                                } else {
+                                    obj.elem.checked = true;
+                                }
                             }
                         }
                     });
+                    //os.ajax("api/rolemenu/tubtnfun", data, function (res) {
+                    //    layer.close(index);
+                    //    if (res.statusCode === 200) {
+                    //        if (obj.elem.checked) {
+                    //            os.success('授权成功~');
+                    //        }
+                    //        else {
+                    //            os.success('取消授权~');
+                    //        }
+                    //    } else {
+                    //        os.error(res.message);
+                    //        if (obj.elem.checked) {
+                    //            obj.elem.checked = false;
+                    //        } else {
+                    //            obj.elem.checked = true;
+                    //        }
+                    //    }
+                    //});
                 });
             });
     </script>

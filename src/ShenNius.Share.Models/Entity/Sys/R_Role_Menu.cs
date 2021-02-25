@@ -49,6 +49,8 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// Nullable:False
         /// </summary>           
         public bool IsPass { get; set; } = true;
+        [SugarColumn(IsJson = true)]
+        public string[] BtnCodeIds { get; set; }
 
     }
 }

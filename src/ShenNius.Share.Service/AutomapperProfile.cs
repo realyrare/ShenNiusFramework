@@ -4,6 +4,7 @@ using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Share.Models.Dtos.Output.Sys;
+using ShenNius.Share.Models.Entity.Sys;
 
 namespace ShenNius.Share.Service
 {
@@ -22,6 +23,7 @@ namespace ShenNius.Share.Service
             CreateMap<MenuInput, Menu>();
             //ParentMenuOutput
             CreateMap<Menu, ParentMenuOutput>();
+
         }
     }
 }

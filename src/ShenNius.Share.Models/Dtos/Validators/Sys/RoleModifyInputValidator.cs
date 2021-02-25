@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using ShenNius.Share.Models.Dtos.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Validators.Sys
 {
-   public class RoleModifyInputValidator : AbstractValidator<RoleModifyInput>
+    public class RoleModifyInputValidator : AbstractValidator<RoleModifyInput>
     {
         public RoleModifyInputValidator()
         {

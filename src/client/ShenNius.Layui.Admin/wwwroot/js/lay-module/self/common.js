@@ -25,7 +25,7 @@
                     'Authorization': 'Bearer ' + token
                 },
                 success: function (data) {
-                    console.log("statusCode:" + data.statusCode);
+                    //console.log("statusCode:" + data.statusCode);
                     //if (data.statusCode == 401) {
                     //    layer.msg(data.msg);
                     //    setTimeout(function () {
