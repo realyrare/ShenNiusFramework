@@ -1,17 +1,30 @@
-﻿layui.define(['layer',  'table'], function (exports) {
+﻿layui.define(['layer',  'table','toastr'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
-        layer = layui.layer,      
-        table = layui.table;  
+        layer = layui.layer, 
+        toastr = layui.toastr,
+        table = layui.table; 
+    toastr.options = {
+        //toast-top-center  中间
+        "positionClass": "toast-top-right",
+        "timeOut": "1500"
+    };
     var tmls, tool = {
-       
+        error: function (msg) {
+            toastr.error(msg);
+        },
+        warning: function (msg) {
+            toastr.warning(msg);
+        },
+        success: function (msg) {
+            toastr.success(msg);
+        },
         apiUrl() {
             return "https://localhost:44377/api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
-            var token = this.getToken();
-           
+            var token = this.getToken();           
              options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
             //console.log(options);
@@ -24,33 +37,40 @@
                 headers: {
                     'Authorization': 'Bearer ' + token
                 },
-                success: function (data) {
-                    //console.log("statusCode:" + data.statusCode);
-                    //if (data.statusCode == 401) {
-                    //    layer.msg(data.msg);
-                    //    setTimeout(function () {
-                    //        window.location.href = "/sys/login";
-                    //    }, 1000)
-                    //}
-                    //if (data.statusCode == 500) {
-                    //    console.log("statusCode:" + data.statusCode);
-                    //    // tool.error(data.msg);
-                    //    layer.msg(data.msg);
-                    //    return;
-                    //}
-                    //if (data.statusCode == 400) {
-                    //    layer.msg(data.msg);
-                    //    return;
-                    //}
+                success: function (data) {                   
                     callFun(data);
                 },
-                error: function (xhr, type, errorThrown) {
-                    if (type === 'timeout') {
-                        layer.msg('连接超时，请稍后重试！');
-                    } else if (type === 'error') {
-                        layer.msg('连接异常，请稍后重试！');
+                error: function (e) {
+                    //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
+                    //$.parseJSON 进行转译    res.msg 是自己组装的错误信息通用变量 
+                    var res = JSON.parse(e.responseText);
+                    console.log("erro object:" + e.responseText);
+                    if (res.statusCode == 401) {
+                        this.warning(res.msg);
+                        setTimeout(function () {
+                            window.location.href = "/sys/login";
+                        }, 500)
+                        return;
                     }
-                }
+                    if (res.statusCode == 500) {
+                        // tool.error(data.msg);
+                        this.error(res.msg);
+                        return;
+                    }
+                    if (res.statusCode == 400) {
+                        this.error(res.msg);
+                        return;
+                    }
+                    this.error('连接异常，请稍后重试！');
+                    return;
+                },
+                //error: function (xhr, type, errorThrown) {
+                //    if (type === 'timeout') {
+                //        layer.msg('连接超时，请稍后重试！');
+                //    } else if (type === 'error') {
+                //        layer.msg('连接异常，请稍后重试！');
+                //    }
+                //}
             });
         },
         render: function (obj) {
@@ -73,8 +93,7 @@
             //console.log("token:" + token);
             table.render(obj);
         },
-        parseDataFun: function (res) { //res 即为原始返回的数据
-            //console.log("parseDataFun  statusCode:" + res.statusCode);
+        parseDataFun: function (res) { //res 即为原始返回的数据         
             if (res.statusCode == 401) {
                 layer.msg(res.msg);
                 setTimeout(function () {
@@ -95,29 +114,6 @@
             };
         },
 
-        OpenRight: function (title, url, width, height, fun, cancelFun) {
-            var index = layer.open({
-                title: title
-                , type: 2
-                , area: [width, height]
-                , shade: [0.1, '#333']
-                , resize: false
-                , move: false
-                , anim: -1
-                , offset: 'rb'
-                , zIndex: "1000"
-                , shadeClose: false
-                , skin: 'layer-anim-07'
-                , content: url
-                , end: function () {
-                    if (fun) fun();
-                }
-                , cancel: function (index) {
-                    if (cancelFun) cancelFun(index);
-                }
-            });
-            return index;
-        },
         getToken: function () {
             var obj = tool.GetSession('globalCurrentUserInfo');
             return obj.token;
@@ -190,13 +186,13 @@
         SessionRemove: function (key) {
             localStorage.removeItem(key);
         },
-        /**
-         * 打印日志到控制台
-         * @param {data} data : Json
-         */
-        log: function (data) {
-            console.log(JSON.stringify(data));
-        },
+        ///**
+        // * 打印日志到控制台
+        // * @param {data} data : Json
+        // */
+        //log: function (data) {
+        //    console.log(JSON.stringify(data));
+        //},
         isExtImage: function (name) {
             var imgExt = new Array(".png", ".jpg", ".jpeg", ".bmp", ".gif");
             name = name.toLowerCase();

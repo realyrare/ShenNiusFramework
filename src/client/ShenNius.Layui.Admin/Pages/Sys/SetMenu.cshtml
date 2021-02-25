@@ -8,32 +8,41 @@
         .layui-table-view {
             margin-top: 0px;
         }
+
         .layui-col-220 {
             width: 250px;
         }
+
         .right-col-body {
             left: 260px;
         }
+
         .list-wall {
             padding-top: 0px;
         }
+
         .fyt-center {
             padding-top: 6px;
             text-align: center;
         }
+
         #tree {
             height: 550px;
             overflow: auto;
         }
+
         .layui-layer-loading {
             box-shadow: 0 0px 0px rgba(0, 0, 0, .3) !important;
         }
+
         #open-form {
             display: none;
         }
+
         .layui-form-select dl {
             max-height: 150px;
         }
+
         .tips {
             background-color: #fdf6ec;
             color: #e6a23c;
@@ -43,6 +52,7 @@
             border-radius: 4px;
             font-size: 13px;
         }
+
             .tips i {
                 margin-right: 5px;
                 position: relative;
@@ -98,7 +108,7 @@
                 var menuId = '', selectIds = '', active = {
                     initTree() {
                         apiUtil.ajax('menu/tree-by-role', { roleId: @Model.RoleId }, "application/json", "post", function (res) {
-                            
+
                             if (res.statusCode == 200 && res.success == true) {
                                 tree.render({
                                     elem: '#tree'
@@ -147,9 +157,9 @@
                         apiUtil.ajax("menu/add-permissions", { roleId: @Model.RoleId, menuId: menuId }, "application/json", "post", function (res) {
                             layer.close(index);
                             if (res.statusCode === 200 && res.success == true) {
-                                layer.msg('菜单保存成功~');
+                                apiUtil.success('菜单保存成功~');
                             } else {
-                                layer.msg(res.message);
+                                apiUtil.error(res.message);
                             }
                         });
                     },
@@ -170,9 +180,9 @@
                 });
 
                 //监听授权操作
-                form.on('switch(torole)', function (obj) {                   
+                form.on('switch(torole)', function (obj) {
                     var btnCode = this.value;
-                  
+
                     //开始提交信息
                     var index = layer.load(1, {
                         shade: [0.1, '#fff']
@@ -183,7 +193,7 @@
                         btnCodeId: btnCode,
                         status: obj.elem.checked //? true : false
                     };
-                    $.ajax({                        
+                    $.ajax({
                         url: apiUtil.apiUrl()+'menu/set-btn-permissions',
                         type: "post",
                         headers: {
@@ -191,18 +201,18 @@
                         },
                         data: JSON.stringify(data),
                         contentType: "application/json",
-                        dataType: 'json', //服务器返回json格式数据
+                       dataType: 'json', //服务器返回json格式数据
                         success: function (res) {
                             console.log("status" + res.statusCode);
                             console.log("success" + res.success);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.close(index);
                                 if (obj.elem.checked) {
-                                    layer.msg("授权成功~");
+                                    apiUtil.success("授权成功~");
                                 }
                                 else {
-                                    layer.msg('取消授权~');
-                                }                                
+                                    apiUtil.error('取消授权~');
+                                }
                             } else {
                                 layer.msg(res.msg);
                                 if (obj.elem.checked) {
@@ -211,26 +221,14 @@
                                     obj.elem.checked = true;
                                 }
                             }
+                        },
+                        error: function (e) {
+                            var res = JSON.parse(e.responseText);
+                            console.log(res.statusCode)
+                            apiUtil.error(res.msg);
+                            return;
                         }
                     });
-                    //os.ajax("api/rolemenu/tubtnfun", data, function (res) {
-                    //    layer.close(index);
-                    //    if (res.statusCode === 200) {
-                    //        if (obj.elem.checked) {
-                    //            os.success('授权成功~');
-                    //        }
-                    //        else {
-                    //            os.success('取消授权~');
-                    //        }
-                    //    } else {
-                    //        os.error(res.message);
-                    //        if (obj.elem.checked) {
-                    //            obj.elem.checked = false;
-                    //        } else {
-                    //            obj.elem.checked = true;
-                    //        }
-                    //    }
-                    //});
                 });
             });
     </script>

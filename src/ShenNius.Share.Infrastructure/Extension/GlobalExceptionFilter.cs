@@ -39,8 +39,9 @@ namespace ShenNius.Share.Infrastructure.Extension
             
             if (_webHostEnvironment.IsDevelopment())
             {
-                json.Msg = context.Exception.ToString();//显示堆栈信息  
-                _logger.LogError(json.Msg + "\r\n" + context.Exception.StackTrace);
+                json.Msg = context.Exception.Message;//显示堆栈信息  
+                string msg = json.Msg + "\r\n" + context.Exception.StackTrace;
+                _logger.LogError(msg);
                 LogHelper.Default.Debug(json.Msg);
             }
             else

@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace ShenNius.API.Hosting
 {
