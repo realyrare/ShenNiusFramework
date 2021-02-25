@@ -1,30 +1,18 @@
-﻿layui.define(['layer', 'toastr', 'table'], function (exports) {
+﻿layui.define(['layer',  'table'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
-        layer = layui.layer,
-        toastr = layui.toastr,
-        table = layui.table;
-    toastr.options = {
-        "positionClass": "toast-top-right",
-        "timeOut": "1500"
-    };
+        layer = layui.layer,      
+        table = layui.table;  
     var tmls, tool = {
-        error: function (msg) {
-            toastr.error(msg);
-        },
-        warning: function (msg) {
-            toastr.warning(msg);
-        },
-        success: function (msg) {
-            toastr.success(msg);
-        },
+       
         apiUrl() {
             return "https://localhost:5001/api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
             var token = this.getToken();
-            options = method === 'get' ? options : JSON.stringify(options);
+           
+             options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
             //console.log(options);
             $.ajax(tool.apiUrl() + url, {
@@ -58,9 +46,9 @@
                 },
                 error: function (xhr, type, errorThrown) {
                     if (type === 'timeout') {
-                        tool.error('连接超时，请稍后重试！');
+                        layer.msg('连接超时，请稍后重试！');
                     } else if (type === 'error') {
-                        tool.error('连接异常，请稍后重试！');
+                        layer.msg('连接异常，请稍后重试！');
                     }
                 }
             });

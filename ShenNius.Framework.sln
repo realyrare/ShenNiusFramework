@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{1DC9C5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Client.Admin", "src\client\ShenNius.Client.Admin\ShenNius.Client.Admin.csproj", "{DF266027-CEE4-4C03-942D-2FEADCA4291E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Layui.Admin", "src\client\ShenNius.Layui.Admin\ShenNius.Layui.Admin.csproj", "{976DC134-27A5-4711-9B25-4D315AB5956C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{DF266027-CEE4-4C03-942D-2FEADCA4291E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF266027-CEE4-4C03-942D-2FEADCA4291E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF266027-CEE4-4C03-942D-2FEADCA4291E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976DC134-27A5-4711-9B25-4D315AB5956C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976DC134-27A5-4711-9B25-4D315AB5956C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976DC134-27A5-4711-9B25-4D315AB5956C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976DC134-27A5-4711-9B25-4D315AB5956C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{60AD76BC-4874-473F-9FB1-2F5D4D44A5E0} = {C20E2599-74E7-40E5-8F81-23F6B368C117}
 		{1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3} = {96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}
 		{DF266027-CEE4-4C03-942D-2FEADCA4291E} = {1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}
+		{976DC134-27A5-4711-9B25-4D315AB5956C} = {1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}

@@ -41,14 +41,16 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// Default:DateTime.Now
         /// Nullable:False
         /// </summary>           
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public bool IsPass { get; set; }
+        public bool IsPass { get; set; } = true;
+        [SugarColumn(IsJson = true)]
+        public string[] BtnCodeIds { get; set; }
 
     }
 }

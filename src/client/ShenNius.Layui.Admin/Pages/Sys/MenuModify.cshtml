@@ -1,0 +1,239 @@
+﻿@page
+@model ShenNius.Client.Admin.Pages.Sys.MenuModifyModel
+@section css{
+    <style>
+        .layui-form-item .layui-input {
+            width: 350px;
+        }
+        .layui-iconpicker {
+            max-width: 100%;
+        }
+        .layui-form-select {
+            width: 350px;
+        }
+    </style>
+}
+<form class="layui-form" action="" lay-filter="menu-edit">
+    <div class="layuimini-container layuimini-page-anim">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                @if (Model.Id > 0)
+                {
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">添加时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="createTime" readonly class="layui-input">
+                        </div>
+                    </div>
+                }
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">所属父级</label>
+                    <div class="layui-input-block">
+                        <select name="parentId" id="parentId" lay-verify="parentId" lay-filter="parentId">
+                            <option value="0">请选择父级菜单</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">菜单名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required" lay-reqtext="菜单名不能为空" placeholder="请输入菜单名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">图标</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" name="icon" class="layui-input">
+                        @*<input type="hidden" name="icon" id="Icon" />*@
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">Url</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="url" lay-verify="required" lay-reqtext="url不能为空" placeholder="请输入url" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">httpMethod</label>
+                    <div class="layui-input-block">
+                        <select name="httpMethod" lay-filter="aihao">
+                            <option value="get">get</option>
+                            <option value="delete">delete</option>
+                            <option value="put">put</option>
+                            <option value="post">post</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">排序</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="sort" lay-verify="required" lay-reqtext="排序不能为空" placeholder="请输入排序号" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否启用</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="status" value="true" lay-skin="switch">
+                        @*<input type="hidden" name="btnCodeIds" class="layui-input">*@
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">按钮分配</label>
+                   
+                    <div class="layui-input-block" id="view"></div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section js{
+    <script id="demo" type="text/html">       
+            {{# layui.each(d.data, function(index, item){ }}           
+            <input type="checkbox" name="cbk{{ index }}"  value="{{ item.id }}" checked="cbkIsExist({{ item.id }})" title="{{ item.name }}"  lay-skin="primary" lay-filter="cbk">
+            {{# }); }}
+    </script>
+    <script>
+
+        layui.use(['form', 'laytpl', 'iconPicker',  'common'], function () {
+            var form = layui.form,
+                     $ = layui.$,
+                    layer = layui.layer,
+                apiUtil = layui.common,
+                laytpl = layui.laytpl,
+                    iconPicker = layui.iconPicker;
+                    iconPicker.render({
+                        elem: '#iconPicker',
+                        type: 'fontClass',
+                         search: true,
+                         page: false,
+                         click: function (data) {
+                             console.log("Icon:"+data);
+                             $("#iconPicker").val(data.icon);
+                         },
+                          // 渲染成功后的回调
+                        success: function (d) {
+                           // console.log("渲染成功后的回调:"+d);
+                         }
+                    });
+                iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
+
+                /**
+                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
+                 */
+                // 当前弹出层，防止ID被覆盖
+            var index = parent.layer.getFrameIndex(window.name);   
+            var id =@Model.Id; var checkList = [], btnCodeList=[];
+        if (id > 0) {          
+            apiUtil.ajax('menu/detail', { id: id }, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    BindParentMenu(res.data.parentId);
+                    btnCodeList = res.data.btnCodeIds;
+                    console.log("btnCodeList:" + btnCodeList);  
+                    form.val("menu-edit", res.data);
+                }
+            });
+        } else {
+            BindParentMenu();            
+            }
+            //加载权限按钮
+            apiUtil.ajax('menu/get-btn-code-list', {}, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    var getTpl = demo.innerHTML
+                        , view = document.getElementById('view');
+                    laytpl(getTpl).render(res, function (html) {
+                        view.innerHTML = html;
+                        for (var i = 0; i < res.data.length; i++) {
+                            checkList.push(res.data[i].id)
+                        }
+                       // console.log("checkList:" + checkList);  
+                        form.render();
+                    });
+                }
+            });
+            form.render();
+         
+            //拿到选中的所有checkbox
+            form.on('checkbox(cbk)', function (data) {
+                console.log("value:" + data.value);
+                if (data.elem.checked) {
+                    checkList.push(data.value);
+                } else {
+                    var index = checkList.findIndex(item => {
+                        if (item == data.value) {
+                            return true
+                        }
+                    })
+                    checkList.splice(index, 1);
+                }
+            });
+            
+                //监听提交
+                form.on('submit(saveBtn)', function (data) {
+                    if (data.field.id > 0) {
+                        data.field.btnCodeIds = checkList;
+                        apiUtil.ajax('menu/modify', data.field, "application/json", "put", function (res) {
+                            console.log("msg:" + res.msg);
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.msg(res.msg);
+                                parent.layer.close(index);
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    } else {
+                        data.field.btnCodeIds = checkList;
+                        console.log("btnCodeIds:" + data.field.btnCodeIds);  
+                        apiUtil.ajax('menu/add', data.field, "application/json", "post", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.msg(res.msg);
+                                parent.layer.close(index);
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    }
+                    return false;
+                });
+
+        function cbkIsExist(id) {
+                //var that = this;            
+            if (btnCodeList === '') { return false; }
+            if (btnCodeList.indexOf(id) > -1) {
+                    return true;
+                }
+            }; 
+        function BindParentMenu(value) {
+            apiUtil.ajax('menu/get-all-parent-menu', { }, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    if (res.data !== null) {
+                        var select = $("#parentId");
+                        for (var i = 0; i < res.data.length; i++) {
+                            var val = res.data[i].id;
+                            if (val === value)
+                                select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
+                            else
+                                select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
+                        }
+                        layui.form.render('select');
+                    }
+                }
+            });
+        }
+    });
+
+    </script>
+}

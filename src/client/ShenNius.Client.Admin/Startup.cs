@@ -1,3 +1,4 @@
+using Blog.ShenNius.Client.Admin.Model;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
+using ShenNius.Client.Admin.Common;
 using ShenNius.Client.Admin.Extension;
 
 namespace ShenNius.Client.Admin
@@ -18,13 +21,15 @@ namespace ShenNius.Client.Admin
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
             services.AddHttpClient();
-
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddScoped<HttpHelper>();
+            services.Configure<DomainConfig>(Configuration.GetSection("Domain"));
             // 认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
@@ -34,16 +39,16 @@ namespace ShenNius.Client.Admin
                 o.Cookie.HttpOnly = true;
             });
 
-            services.AddRazorPages(options => {
+            services.AddRazorPages(options =>
+            {
                 options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
                 options.Conventions.AddPageRoute("/Sys/Login", "");
                 options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
-            }).AddRazorRuntimeCompilation(); 
+            }).AddRazorRuntimeCompilation();
             //性能 压缩
             services.AddResponseCompression();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -55,8 +60,20 @@ namespace ShenNius.Client.Admin
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseSession();
             //性能压缩
             app.UseResponseCompression();
+            //静态文件缓存(css,js)
+            app.UseStaticFiles(
+                new StaticFileOptions
+                {
+                    OnPrepareResponse = ctx =>
+                    {
+                        const int durationInSeconds = 60 * 60 * 24;
+                        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                            "public,max-age=" + durationInSeconds;
+                    }
+                });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error");
@@ -67,7 +84,7 @@ namespace ShenNius.Client.Admin
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapRazorPages().RequireAuthorization();
             });
         }
     }

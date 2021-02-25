@@ -1,8 +1,5 @@
 ﻿using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ShenNius.Share.Model.Entity.Sys
 {
@@ -12,11 +9,6 @@ namespace ShenNius.Share.Model.Entity.Sys
     [SugarTable("Sys_Menu")]
     public partial class Menu
     {
-        public Menu()
-        {
-
-
-        }
         /// <summary>
         /// Desc:
         /// Default:
@@ -31,7 +23,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Nullable:False
         /// </summary>           
         public int ParentId { get; set; }
-
+        public string NameCode { get; set; }
         /// <summary>
         /// Desc:
         /// Default:
@@ -60,11 +52,13 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// </summary>           
         public string HttpMethod { get; set; }
 
-        public DateTime ModifyTime { get; set; } = DateTime.Now;
-        public bool IsHasChildren { get; set; }
+        public DateTime ModifyTime { get; set; } 
+
         public bool Status { get; set; }
         public int Sort { get; set; }
         public string  Icon { get; set; }
+        [SugarColumn(IsJson =true)]
+        public string[]  BtnCodeIds { get; set; }
 
     }
 }

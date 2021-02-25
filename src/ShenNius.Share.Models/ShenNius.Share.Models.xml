@@ -194,6 +194,121 @@
             Nullable:False
             </summary>           
         </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Add">
+            <summary>
+            保存或添加
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Update">
+            <summary>
+            更新
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Audit">
+            <summary>
+            更新
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Delete">
+            <summary>
+            删除
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Read">
+            <summary>
+            读取/查询
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Login">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Look">
+            <summary>
+            查看
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Status">
+            <summary>
+            更改状态
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Authorize">
+            <summary>
+            授权
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.LogEnum.Logout">
+            <summary>
+            退出登录
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Model.Entity.Sys.Log">
+            <summary>
+             系统操作表
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Id">
+            <summary>
+            Desc:唯一标号Guid
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Application">
+            <summary>
+            应用程序
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Logged">
+            <summary>
+            时间
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Level">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Callsite">
+            <summary>
+            请求Url
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.IP">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.User">
+            <summary>
+            认证用户名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.UserName">
+            <summary>
+            认证用户名
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Browser">
+            <summary>
+            浏览器信息
+            </summary>
+        </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.Menu">
             <summary>
              系统菜单表
@@ -467,71 +582,6 @@
             Default:
             Nullable:True
             </summary>           
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysLog">
-            <summary>
-             系统操作表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Guid">
-            <summary>
-            Desc:唯一标号Guid
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Application">
-            <summary>
-            应用程序
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Logged">
-            <summary>
-            时间
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Level">
-            <summary>
-            日志等级
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Message">
-            <summary>
-            消息内容
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Logger">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Callsite">
-            <summary>
-            请求Url
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Exception">
-            <summary>
-            异常信息
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.IP">
-            <summary>
-            IP地址
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.User">
-            <summary>
-            认证用户名
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.UserName">
-            <summary>
-            认证用户名
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysLog.Browser">
-            <summary>
-            浏览器信息
-            </summary>
         </member>
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.Id">
             <summary>

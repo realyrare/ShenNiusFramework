@@ -1,8 +1,8 @@
 {
-  "homeInfo": {
-    "title": "首页",
-    "href": "sys/role"
-  },
+    "homeInfo": {
+        "title": "首页",
+        "href": "page/menu.html"
+    },
   "logoInfo": {
     "title": "LAYUI MINI",
     "image": "images/logo.png",
@@ -16,46 +16,52 @@
       "target": "_self",
       "child": [
         {
-          "title": "主页模板",
+          "title": "系统设置",
           "href": "",
           "icon": "fa fa-home",
           "target": "_self",
           "child": [
             {
-              "title": "主页一",
-              "href": "page/welcome-1.html",
+              "title": "系统日志",
+              "href": "sys/log",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "主页二",
-              "href": "page/welcome-2.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
+                "title": "角色列表",
+                "href": "sys/role",
+                "icon": "fa fa-tachometer",
+                "target": "_self"
             },
             {
-              "title": "主页三",
-              "href": "page/welcome-3.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
+                "title": "用户列表",
+                "href": "sys/user",
+                "icon": "fa fa-tachometer",
+                "target": "_self"
+            },
+            {
+                "title": "菜单列表",
+                "href": "sys/menu",
+                "icon": "fa fa-tachometer",
+                "target": "_self"
             }
           ]
         },
         {
             "title": "菜单管理",
-            "href": "Sys/UserModify",
+            "href": "Sys/UserModify1",
             "icon": "fa fa-window-maximize",
             "target": "_self"
         },
         {
             "title": "角色列表",
-            "href": "sys/role",
+            "href": "sys/role1",
             "icon": "fa fa-gears",
             "target": "_self"
         },
         {
             "title": "用户列表",
-            "href": "sys/user",
+            "href": "sys/user1",
             "icon": "fa fa-file-text",
             "target": "_self"
         },

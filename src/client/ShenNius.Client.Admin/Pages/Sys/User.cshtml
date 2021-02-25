@@ -26,6 +26,7 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="setRole"> 设置角色 </button>
                 <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
             </div>
         </script>
@@ -42,9 +43,6 @@
 
 
 <script>
-    layui.config({
-        base: '/js/lay-module/self/'
-    });
     layui.use(['form', 'layer', 'table', 'miniPage', 'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
@@ -108,10 +106,19 @@
             return false;
         });
 
+        function refeshTable() {
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+            }, 'data');
+        };
+        /**
         /**
          * toolbar事件监听
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
+            var checkStatus = table.checkStatus('currentTableId'), data = checkStatus.data;
             if (obj.event === 'add') {
                 var content = miniPage.getHrefContent('/sys/user-modify');
                 var index = layer.open({
@@ -124,25 +131,23 @@
                     zIndex: "10000",
                     content: content,
                     end: function () {
-                        parent.location.reload();
+                        refeshTable();
                     }
                 });
 
             } else if (obj.event === 'delete') {  // 监听删除操作
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                strIds = "";
+
+                var listIds = [];
                 if (data.length > 0) {
                     for (var i in data) {
-                        strIds += data[i].Id + ',';
-                    }
-                    strIds = strIds.substr(0, strIds.lastIndexOf(','));
+                        listIds.push(data[i].id);
+                    }                 
                     layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                        apiUtil.ajax('user/deletes', { ids: strIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
-                                parent.location.reload();
+                                refeshTable();
                             } else {
                                 layer.msg(res.msg);
                             }
@@ -151,6 +156,55 @@
                 } else {
                     layer.msg("请选择需要删除的数据");
                 }
+            } else if (obj.event === 'setRole') {
+                if (data.length <= 0) {
+                    layer.msg("请选择需要操作的数据");
+                    return;
+                }
+                //'/sys/set-role?id=' + data[0].id
+                var content = miniPage.getHrefContent('/page/table.html');
+                var openWH = miniPage.getOpenWidthHeight();
+                var index = layer.open({
+                    title: '设置角色',
+                    type: 1,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['660px', '580px'],
+                    content: '<div> <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table></div>',
+                    success: function (index, layero) {
+                        table.render({
+                            elem: '#currentTableId',
+                            url: 'api/table.json',
+                            toolbar: '#toolbarDemo',
+                            defaultToolbar: ['filter', 'exports', 'print', {
+                                title: '提示',
+                                layEvent: 'LAYTABLE_TIPS',
+                                icon: 'layui-icon-tips'
+                            }],
+                            cols: [[
+                                { type: "checkbox", width: 50 },
+                                { field: 'id', width: 80, title: 'ID', sort: true },
+                                { field: 'username', width: 80, title: '用户名' },
+                                { field: 'sex', width: 80, title: '性别', sort: true },
+                                { field: 'city', width: 80, title: '城市' },
+                                { field: 'sign', title: '签名', minWidth: 150 },
+                                { field: 'experience', width: 80, title: '积分', sort: true },
+                                { field: 'score', width: 80, title: '评分', sort: true },
+                                { field: 'classify', width: 80, title: '职业' },
+                                { field: 'wealth', width: 135, title: '财富', sort: true },
+                            ]],
+                            limits: [10, 15, 20, 25, 50, 100],
+                            limit: 15,
+                            page: true,
+                            skin: 'line'
+                        });
+                    },
+                     btn: ['确定', '关闭'],
+                    //end: function () {
+                    //    refeshTable();
+                    //}
+                });
             }
         });
 
@@ -162,8 +216,7 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-                var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);
-                // var openWH = miniPage.getOpenWidthHeight();
+                var content = miniPage.getHrefContent('/sys/user-modify?id=' + data.id);            
                 var index = layer.open({
                     title: '编辑用户',
                     // tips: [1, '#c00'],
@@ -172,26 +225,27 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['680px', '600px'],
-                    //offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
                     end: function () {
-                        parent.location.reload();
+                        refeshTable();
                     }
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    apiUtil.ajax('user/deletes', { ids: data.id }, "application/json", "delete", function (res) {
+                layer.confirm('真的删除行吗', function (index) {
+                    var listIds = new Array();
+                    listIds[0] = data.id;
+                    apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             layer.msg(res.msg);
                             layer.close(index);
-                            parent.location.reload();
+                            refeshTable();
                         } else {
                             layer.msg(res.msg);
                         }
                     });
                 });
-            }
+            } 
         });
 
     });

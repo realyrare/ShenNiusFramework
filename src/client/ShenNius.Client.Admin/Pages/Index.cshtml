@@ -123,7 +123,7 @@
                 miniAdmin = layui.miniAdmin;
 
             var options = {
-                iniUrl: "https://localhost:44325/api/init.json?v=123565644",    // 初始化接口
+                iniUrl: "https://localhost:44325/api/init.json?v=115",    // 初始化接口
                 clearUrl: "https://localhost:44325/api/clear.json", // 缓存清理接口
                 renderPageVersion: true,    // 初始化页面是否加版本号
                 bgColorDefault: false,      // 主题默认配置
@@ -134,11 +134,17 @@
             };
             miniAdmin.render(options);
 
-            //$('.login-out').on("click", function () {
-            //layer.msg('退出登录成功', function () {
-            //window.location = 'page/login-3.html';
-            //});
-            //});
+            $('.login-out').on("click", function () {
+                $.ajax({
+                    url: "/sys/login?handler=Logout",
+                    type: "get",                  
+                    success: function (res) {                       
+                            layer.msg('正在处理,即将退出...', function () {
+                                window.location = '/sys/login';
+                            });                                        
+                    }
+                });           
+            });
         });
     </script>
 </body>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 
 namespace ShenNius.API.Hosting
 {
@@ -15,6 +16,7 @@ namespace ShenNius.API.Hosting
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .UseNLog();//加入nlog日志;
     }
 }

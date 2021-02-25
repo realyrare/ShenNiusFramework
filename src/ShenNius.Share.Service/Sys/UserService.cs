@@ -4,6 +4,7 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Share.Service.Repository;
 using ShenNiusSystem.Common;
@@ -20,8 +21,9 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput);
         Task<ApiResult> ModfiyAsync(UserModifyInput userModifyInput);
         Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput);
-        Task<ApiResult> DeletesAsync(List<string> ids);
+        Task<ApiResult> DeletesAsync(List<int> ids);
         Task<ApiResult> GetUserAsync(int id);
+
 
     }
     public partial class UserService : BaseServer<User>, IUserService
@@ -40,7 +42,7 @@ namespace ShenNius.Share.Service.Sys
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
             if (loginModel.Id == 0)
             {
-                throw new ArgumentNullException("用户名或密码错误");
+                return new ApiResult<LoginOutput>("用户名或密码错误",500);
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParse.GetAddressByIP(ip);
@@ -98,7 +100,7 @@ namespace ShenNius.Share.Service.Sys
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);
             return new ApiResult(i);
         }
-        public async Task<ApiResult> DeletesAsync(List<string> ids)
+        public async Task<ApiResult> DeletesAsync(List<int> ids)
         {
             if (ids.Count == 0 || ids == null)
             {
@@ -112,6 +114,6 @@ namespace ShenNius.Share.Service.Sys
            var data= _mapper.Map<UserOutput>(model);
             return new ApiResult(data);
         }
-
+       
     }
 }
