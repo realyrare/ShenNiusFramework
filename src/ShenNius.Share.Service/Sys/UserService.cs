@@ -24,7 +24,6 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> DeletesAsync(List<int> ids);
         Task<ApiResult> GetUserAsync(int id);
 
-
     }
     public partial class UserService : BaseServer<User>, IUserService
     {
@@ -36,6 +35,9 @@ namespace ShenNius.Share.Service.Sys
             _mapper = mapper;
             _accessor = httpContextAccessor;
         }
+
+
+
         public async Task<ApiResult<LoginOutput>> LoginAsync(LoginInput loginInput)
         {
             loginInput.Password = Md5Crypt.Encrypt(loginInput.Password);

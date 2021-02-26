@@ -60,5 +60,11 @@ namespace ShenNius.Share.Model.Entity.Sys
         [SugarColumn(IsJson =true)]
         public string[]  BtnCodeIds { get; set; }
 
+        public string  ParentIdList { get; set; }
+        public int  Layer { get; set; }
+
+        [SugarColumn(IsIgnore = true)]
+        public string BtnCodeName { get; set; }
+
     }
 }

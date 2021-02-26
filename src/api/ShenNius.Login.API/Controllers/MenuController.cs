@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
@@ -31,18 +32,18 @@ namespace ShenNius.Sys.API.Controllers
         {
             return new ApiResult(await _configService.GetListAsync());
         }
+
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
             return new ApiResult(await _menuService.DeleteAsync(commonDeleteInput.Ids));
         }
+
         [HttpGet]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            var res = await _menuService.GetPagesAsync(page, 15);
-            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+            return await _menuService.GetListPages(page, key);
         }
-
         /// <summary>
         /// 获取菜单按钮
         /// </summary>
@@ -109,9 +110,8 @@ namespace ShenNius.Sys.API.Controllers
         }
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
-        {
-            var menu = _mapper.Map<Menu>(menuInput);
-            return new ApiResult(await _menuService.AddAsync(menu));
+        {         
+            return await _menuService.AddToUpdateAsync(menuInput);
         }
 
         [HttpPut]

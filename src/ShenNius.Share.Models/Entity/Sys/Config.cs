@@ -55,5 +55,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// </summary>           
         public DateTime UpdateTime { get; set; } = DateTime.Now;
 
+        public string  Type { get; set; }
+
     }
 }
