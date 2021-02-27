@@ -2,9 +2,9 @@
 
     $("#captchaPic").attr("src", $("#captchaPic").attr("src") + 1);// 取得img属性 得到src地址给它+1 是为了每次变换验证码
 };
-layui.config({
-    base: '/js/lay-module/self/'
-});
+//layui.config({
+//    base: '/js/lay-module/self/'
+//});
 layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,

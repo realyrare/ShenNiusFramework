@@ -7,7 +7,6 @@
             padding-right: 10px;
             line-height: 38px;
         }
-
         .layui-form-item .layui-textarea {
             width: 350px;
         }
@@ -84,7 +83,8 @@
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
                 // 当前弹出层，防止ID被覆盖
-                var parentIndex = layer.index;
+                var parentIndex = parent.layer.getFrameIndex(window.name);
+
                 var id=@Model.Id;
                 if (id > 0) {
                     apiUtil.ajax('user/get-user', { id: id }, "application/json", "get", function (res) {
@@ -102,7 +102,7 @@
                             console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
-                                layer.close(parentIndex);
+                                parent.layer.close(parentIndex);
                             } else {
                                 layer.msg(res.msg);
                             }
@@ -111,7 +111,9 @@
                         apiUtil.ajax('user/register', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
-                                layer.close(parentIndex);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                layer.msg(res.msg);
                             }
                         });
                     }

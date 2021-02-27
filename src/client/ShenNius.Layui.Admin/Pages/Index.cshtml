@@ -66,13 +66,13 @@
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                     </li>
                     <li class="layui-nav-item layuimini-setting">
-                        <a href="javascript:;">admin</a>
+                        <a href="javascript:;">@Model.CurrentUserName</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                                <a href="javascript:;" id="baseUserInfo" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                                <a href="javascript:;"  data-title="修改密码" data-icon="fa fa-gears" id="modifyPwd">修改密码</a>
                             </dd>
                             <dd>
                                 <hr>
@@ -155,20 +155,37 @@
             };
             miniAdmin.render(options);
 
-            // 百度统计代码，只统计指定域名
-            miniTongji.render({
-                specific: true,
-                domains: [
-                    '99php.cn',
-                    'layuimini.99php.cn',
-                    'layuimini-onepage.99php.cn',
-                ],
-            });
-
-            $('.login-out').on("click", function () {
-                layer.msg('退出登录成功', function () {
-                    window.location = 'page/login-3.html';
+             
+            $('#modifyPwd').on("click", function () {
+                layer.open({
+                    title: '修改密码',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '400px'],
+                    content: '/sys/user-modify-pwd',
                 });
+            });
+            $('#baseUserInfo').on("click", function () {
+                layer.open({
+                    title: '基本资料',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '450px'],
+                    content: 'page/user-setting.html',
+                });
+            });
+            $('.login-out').on("click", function () {
+                $.ajax({
+                    url: "/sys/login?handler=Logout",
+                    type: "get",
+                    success: function (res) {
+                        layer.msg('正在处理,即将退出...', function () {
+                            window.location = '/sys/login';
+                        });
+                    }
+                });                 
             });
         });
     </script>
