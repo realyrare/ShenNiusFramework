@@ -80,7 +80,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否启用</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" checked name="status" value="true" lay-skin="switch">
+                        <input type="checkbox" checked name="status" value="true"  lay-skin="switch">
                         @*<input type="hidden" name="btnCodeIds" class="layui-input">*@
                     </div>
                 </div>
@@ -136,17 +136,19 @@
                  */
                 // 当前弹出层，防止ID被覆盖
             var index = parent.layer.getFrameIndex(window.name);   
-            var id =@Model.Id; var checkList = [], btnCodeList=[];
-        if (id > 0) {          
+            var id =@Model.Id; var checkList = [], btnCodeList = [];                    
+            if (id > 0)
+            {          
             apiUtil.ajax('menu/detail', { id: id }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
-                    BindParentMenu(res.data.parentId);
-                    btnCodeList = res.data.btnCodeIds;
+                    BindParentMenu(res.data.parentId);                  
+                    btnCodeList = res.data.btnCodeIds;                   
                     console.log("btnCodeList:" + btnCodeList);  
                     form.val("menu-edit", res.data);
                 }
             });
-        } else {
+            } else
+            {
             BindParentMenu();            
             }
             //加载权限按钮
@@ -155,21 +157,21 @@
                     //var getTpl = demo.innerHTML
                     //    , view = document.getElementById('view');
                     //laytpl(getTpl).render(res, function (html) {
-                    //    view.innerHTML = html;
-                       
+                    //    view.innerHTML = html;                       
                     //});
-                    var html = $("#view"); var checkFlg;
+                    var html = $("#view"); var btnCodeList2 = [1, 2, 5, 8];
+                    console.log("btnCodeList2:" + btnCodeList2);
                     for (var i = 0; i < res.data.length; i++) {
-                        checkList.push(res.data[i].id)
-                        //var checkFlg = cbkIsExist(res.data[i].id);
-                        if (btnCodeList.length == 0 || btnCodeList == null)
-                        {
-                            html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + " checked='false' title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
-                        }
-                        if (btnCodeList.indexOf(id) > -1) {
-                            html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + " checked='true' title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
-                        }                    
-                        console.log("btnCodeList2:" + btnCodeList);                     
+                        if (btnCodeList2.length>0) {
+                            for (var i = 0; i < btnCodeList2.length; i++) {
+                                if (res.data[i].id == btnCodeList2[i]) {
+                                    html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + " checked title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
+                                }
+                            }
+                        }                       
+                        else {
+                            html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + "  title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
+                        }                                               
                     }
                     form.render();
                     //layui.form.render('html');
@@ -219,15 +221,8 @@
                     }
                     return false;
                 });
-
-            function cbkIsExist(id) {
-                console.log("id:" + id);
-                //var that = this;            
-            if (btnCodeList.length == 0 || btnCodeList == null) { return false; }
-            if (btnCodeList.indexOf(id) > -1) {
-                    return true;
-                }
-            }; 
+         
+           
         function BindParentMenu(value) {
             apiUtil.ajax('menu/get-all-parent-menu', { }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
