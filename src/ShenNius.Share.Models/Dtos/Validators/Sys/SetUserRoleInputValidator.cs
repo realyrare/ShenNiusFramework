@@ -8,7 +8,7 @@ namespace ShenNius.Share.Models.Dtos.Validators.Sys
         public SetUserRoleInputValidator()
         {
             RuleFor(x => x.UserId).NotEmpty().WithMessage("用户id必须填写");
-            RuleFor(x => x.RoleIds).NotEmpty().WithMessage("角色id至少填写一个");
+            RuleFor(x => x.RoleId).NotEmpty().WithMessage("角色id必须填写一个");
            
         }
     }

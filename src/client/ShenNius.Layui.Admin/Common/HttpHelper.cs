@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,7 +54,7 @@ namespace ShenNius.Client.Admin.Common
         public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, int timeOut = 30, Dictionary<string, string> headers = null)
         {
             url = _domainConfig.ApiHost + url;
-            postData = postData ?? "";
+            postData ??= "";
             var client = _httpClientFactory.CreateClient();
             client.Timeout = new TimeSpan(0, 0, timeOut);
             if (headers != null)
@@ -64,7 +65,7 @@ namespace ShenNius.Client.Admin.Common
             using (HttpContent httpContent = new StringContent(postData, Encoding.UTF8))
             {
                 if (contentType != null)
-                    httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+                    httpContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 var response = await client.PostAsync(url, httpContent);
                 if (!response.IsSuccessStatusCode)
                 {

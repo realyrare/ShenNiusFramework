@@ -22,56 +22,36 @@
 
         <div class="layui-form layuimini-form">
             <div class="layui-form-item">
-                <label class="layui-form-label required">管理账号</label>
+                <label class="layui-form-label required">用户Id</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required" lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="admin" class="layui-input">
-                    <tip>填写自己管理账号的名称。</tip>
+                    <input type="text" name="currentUserId" readonly value="@Model.CurrentUserId" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.CurrentUserName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">真实姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.TrueName" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">手机</label>
                 <div class="layui-input-block">
-                    <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
+                    <input type="number" name="phone" readonly lay-reqtext="手机不能为空" placeholder="请输入手机" value="@Model.Mobile" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="email" name="email" placeholder="请输入邮箱" value="" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">备注信息</label>
-                <div class="layui-input-block">
-                    <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                    <input type="email" name="email" readonly placeholder="请输入邮箱" value="@Model.Email" class="layui-input">
                 </div>
             </div>
         </div>
     </div>
 </div>
-@section js{
-    <script>
-        layui.use(['form', 'common', 'miniTab'], function () {
-            var form = layui.form,
-                apiUtil = layui.common;
-            //监听提交
-            form.on('submit(saveBtn)', function (data) {             
-                apiUtil.ajax('user/modfiy-pwd', data.field, "application/json", "post", function (res) {
-                    if (res.statusCode == 200 && res.success == true) {
-                        var iframeIndex = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(iframeIndex);
-                        setTimeout(function () {
-                                layer.msg('密码修改成功，即将退出,重新登陆...', function () {
-                                    window.location.href = "/sys/login";
-                                });
-                        }, 1000);
-                    } else {
-                        apiUtil.error(res.msg);
-                    }
-                });
-                return false;
-            });
 
-        });
-    </script>
-}

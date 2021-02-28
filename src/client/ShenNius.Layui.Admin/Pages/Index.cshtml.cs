@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
-
 namespace ShenNius.Layui.Admin.Pages
 {
     public class IndexModel : PageModel
@@ -26,8 +21,10 @@ namespace ShenNius.Layui.Admin.Pages
                 CurrentUserName = HttpContext.User.Identity.Name;
                 CurrentUserId = HttpContext.User.Claims.Where(d => d.Type == ClaimTypes.Sid).Select(d => d.Value).FirstOrDefault();
             }
-            
-           
+            else
+            {
+                Redirect("/sys/login");
+            }
         }
     }
 }

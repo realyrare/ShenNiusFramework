@@ -24,7 +24,7 @@ namespace ShenNius.Share.Service.Sys
 
         Task<ApiResult> AddToUpdateAsync(MenuInput menuInput);
         Task<ApiResult> GetListPages(int page, string key = null);
-
+        Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput);
     }
     public class MenuService : BaseServer<Menu>, IMenuService
     {
@@ -70,10 +70,6 @@ namespace ShenNius.Share.Service.Sys
                 ChildModule(res.Items, result, 0);
             }
 
-            //foreach (var item in res.Items)
-            //{
-            //    ChildModule(res.Items, result, item.ParentId);
-            //}
             if (result?.Count > 0)
             {
                 foreach (var item in result)
@@ -119,6 +115,42 @@ namespace ShenNius.Share.Service.Sys
             var i = await UpdateAsync(d => new Menu() { ParentIdList = parentIdList, Layer = layer }, d => d.Id == menuId);
             return new ApiResult(i);
         }
+
+        public async Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput)
+        {
+            string parentIdList = ""; int layer = 0;
+            if (!string.IsNullOrEmpty(menuModifyInput.ParentId.ToString()))
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = await GetModelAsync(d => d.Id == menuModifyInput.ParentId);
+                if (model.Id > 0)
+                {
+                    parentIdList = model.ParentIdList + menuModifyInput.Id + ",";
+                    layer = model.Layer + 1;
+                }
+            }
+            else
+            {
+                parentIdList = "," + menuModifyInput.Id + ",";
+                layer = 1;
+            }
+            await UpdateAsync(d => new Menu()
+                   {
+                       Name = menuModifyInput.Name,
+                       Url = menuModifyInput.Url,
+                       ModifyTime = menuModifyInput.ModifyTime,
+                       HttpMethod = menuModifyInput.HttpMethod,
+                       Status = menuModifyInput.Status,
+                       ParentId = menuModifyInput.ParentId,
+                       Icon = menuModifyInput.Icon,
+                       Sort = menuModifyInput.Sort,
+                       BtnCodeIds = menuModifyInput.BtnCodeIds,
+                       Layer=layer,
+                       ParentIdList=parentIdList
+                   }, d => d.Id == menuModifyInput.Id);
+            return new ApiResult();
+        }
+
         public async Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId)
         {
             if (menuId == 0)

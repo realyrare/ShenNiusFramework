@@ -49,7 +49,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">图标</label>
                     <div class="layui-input-block">
-                        <input type="text" id="iconPicker" lay-filter="iconPicker" name="icon" class="layui-input">
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" name="icon" class="layui-input" style="display:none;">
                         @*<input type="hidden" name="icon" id="Icon" />*@
                     </div>
                 </div>
@@ -101,11 +101,11 @@
 </form>
 
 @section js{
-    <script id="demo" type="text/html">       
+    @*<script id="demo" type="text/html">       
             {{# layui.each(d.data, function(index, item){ }}           
             <input type="checkbox" name="cbk{{ index }}"  value="{{ item.id }}" checked="cbkIsExist({{ item.id }})" title="{{ item.name }}"  lay-skin="primary" lay-filter="cbk">
             {{# }); }}
-    </script>
+    </script>*@
     <script>
 
         layui.use(['form', 'laytpl', 'iconPicker',  'common'], function () {
@@ -129,7 +129,7 @@
                            // console.log("渲染成功后的回调:"+d);
                          }
                     });
-                iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
+               // iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
 
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
@@ -152,16 +152,27 @@
             //加载权限按钮
             apiUtil.ajax('menu/get-btn-code-list', {}, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
-                    var getTpl = demo.innerHTML
-                        , view = document.getElementById('view');
-                    laytpl(getTpl).render(res, function (html) {
-                        view.innerHTML = html;
-                        for (var i = 0; i < res.data.length; i++) {
-                            checkList.push(res.data[i].id)
+                    //var getTpl = demo.innerHTML
+                    //    , view = document.getElementById('view');
+                    //laytpl(getTpl).render(res, function (html) {
+                    //    view.innerHTML = html;
+                       
+                    //});
+                    var html = $("#view"); var checkFlg;
+                    for (var i = 0; i < res.data.length; i++) {
+                        checkList.push(res.data[i].id)
+                        //var checkFlg = cbkIsExist(res.data[i].id);
+                        if (btnCodeList.length == 0 || btnCodeList == null)
+                        {
+                            html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + " checked='false' title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
                         }
-                       // console.log("checkList:" + checkList);  
-                        form.render();
-                    });
+                        if (btnCodeList.indexOf(id) > -1) {
+                            html.append("<input type='checkbox' name='" + index + "'  value=" + res.data[i].id + " checked='true' title=" + res.data[i].name + "  lay-skin='primary' lay-filter='cbk'>");
+                        }                    
+                        console.log("btnCodeList2:" + btnCodeList);                     
+                    }
+                    form.render();
+                    //layui.form.render('html');
                 }
             });
             form.render();
@@ -209,9 +220,10 @@
                     return false;
                 });
 
-        function cbkIsExist(id) {
+            function cbkIsExist(id) {
+                console.log("id:" + id);
                 //var that = this;            
-            if (btnCodeList === '') { return false; }
+            if (btnCodeList.length == 0 || btnCodeList == null) { return false; }
             if (btnCodeList.indexOf(id) > -1) {
                     return true;
                 }
