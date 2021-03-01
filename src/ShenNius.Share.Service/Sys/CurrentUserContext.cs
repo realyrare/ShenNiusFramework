@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace ShenNius.Share.Service.Sys
 {
@@ -42,7 +41,7 @@ namespace ShenNius.Share.Service.Sys
     /// <summary>
     /// 用户上下文
     /// </summary>
-    public class CurrentUserContext
+    public class CurrentUserContext: ICurrentUserContext
     {
         private readonly IHttpContextAccessor _accessor;
 
@@ -72,7 +71,7 @@ namespace ShenNius.Share.Service.Sys
 
         public string Mobile => GetClaimValueByType("mobile").FirstOrDefault()?.ToString();
 
-        public int Id => Convert.ToInt32(GetClaimValueByType("jti").FirstOrDefault());
+        public int Id => Convert.ToInt32(GetClaimValueByType(JwtRegisteredClaimNames.Sid).FirstOrDefault());
 
         public bool IsAuthenticated()
         {

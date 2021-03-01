@@ -139,10 +139,11 @@
         layui.use(['jquery', 'layer', 'miniAdmin'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
+              
                 miniAdmin = layui.miniAdmin;
 
             var options = {
-                iniUrl: "api/init.json?v=12",    // 初始化接口
+                iniUrl: "menu/load-left-menu-trees",//"api/init.json?v=12",    // 初始化接口"menu/load-left-menu-trees",//
                 clearUrl: "api/clear.json", // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
                 bgColorDefault: false,      // 主题默认配置

@@ -44,7 +44,7 @@
 
                     apiUtil.ajax('user/set-role', data, "application/json", "post", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
-                            apiUtil.success(res.msg);                           
+                           // apiUtil.success(res.msg);                           
                             if (obj.elem.checked) {
                                 apiUtil.success("授权成功~");
                             }

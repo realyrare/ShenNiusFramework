@@ -14,15 +14,13 @@ using ShenNius.ModuleCore.Extensions;
 using ShenNius.Order.API;
 using ShenNius.Product.API;
 using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.Middleware;
 using System.Linq;
 using System.Reflection;
-using ShenNius.Share.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Http;
 
 namespace ShenNius.API.Hosting
 {
@@ -49,11 +47,7 @@ namespace ShenNius.API.Hosting
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             } );
 
-            //mvcBuilder.AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeConverter());
-            //    options.JsonSerializerOptions.Converters.Add(new SystemTextJsonConvert.DateTimeNullableConverter());
-            //});
+
             mvcBuilder.AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -70,6 +64,7 @@ namespace ShenNius.API.Hosting
                 options.AppendTrailingSlash = true;
                 options.LowercaseQueryStrings = true;
             });
+
             // FluentValidation 统一请求参数验证          
             mvcBuilder.AddFluentValidation(options =>
             {

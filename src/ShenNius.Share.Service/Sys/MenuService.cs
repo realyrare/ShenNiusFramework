@@ -25,11 +25,12 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> AddToUpdateAsync(MenuInput menuInput);
         Task<ApiResult> GetListPages(int page, string key = null);
         Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput);
+
+        Task<ApiResult> LoadLeftMenuTreesAsync(int userId);
     }
     public class MenuService : BaseServer<Menu>, IMenuService
     {
         private readonly IMapper _mapper;
-
         public MenuService(IMapper mapper)
         {
             _mapper = mapper;
@@ -135,19 +136,19 @@ namespace ShenNius.Share.Service.Sys
                 layer = 1;
             }
             await UpdateAsync(d => new Menu()
-                   {
-                       Name = menuModifyInput.Name,
-                       Url = menuModifyInput.Url,
-                       ModifyTime = menuModifyInput.ModifyTime,
-                       HttpMethod = menuModifyInput.HttpMethod,
-                       Status = menuModifyInput.Status,
-                       ParentId = menuModifyInput.ParentId,
-                       Icon = menuModifyInput.Icon,
-                       Sort = menuModifyInput.Sort,
-                       BtnCodeIds = menuModifyInput.BtnCodeIds,
-                       Layer=layer,
-                       ParentIdList=parentIdList
-                   }, d => d.Id == menuModifyInput.Id);
+            {
+                Name = menuModifyInput.Name,
+                Url = menuModifyInput.Url,
+                ModifyTime = menuModifyInput.ModifyTime,
+                HttpMethod = menuModifyInput.HttpMethod,
+                Status = menuModifyInput.Status,
+                ParentId = menuModifyInput.ParentId,
+                Icon = menuModifyInput.Icon,
+                Sort = menuModifyInput.Sort,
+                BtnCodeIds = menuModifyInput.BtnCodeIds,
+                Layer = layer,
+                ParentIdList = parentIdList
+            }, d => d.Id == menuModifyInput.Id);
             return new ApiResult();
         }
 
@@ -231,6 +232,61 @@ namespace ShenNius.Share.Service.Sys
                     Title = item.Name,
                     Checked = existMenuId.FirstOrDefault(d => d == item.Id) != 0,
                     Children = AddChildNode(data, item.Id, existMenuId)
+                };
+                list.Add(menuTreeOutput);
+            }
+            return list;
+        }
+
+        public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
+        {           
+            var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
+            if (allRoleIds == null || allRoleIds.Count == 0)
+            {
+                return new ApiResult("当前用户没有角色授权", 500);
+            }
+            var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
+            if (allMenuIds == null|| allMenuIds.Count==0)
+            {
+                return new ApiResult("当前角色没有菜单授权", 500);
+            }
+            var allMenus = await GetListAsync(d => d.Status&&allMenuIds.Contains(d.Id));
+            var model = new MenuTreeInitOutput()
+            {
+                HomeInfo = new HomeInfo() { Title = "首页", Href = "page/welcome-1.html" },
+               LogoInfo=new LogoInfo() { Title="一起牛",Image= "images/logo.png", Href="" },
+            };
+            List<MenuInfo> menuInfos = new List<MenuInfo>();
+            foreach (var item in allMenus)
+            {
+                if (item.ParentId != 0)
+                {
+                    continue;
+                }
+               var menuInfo = new MenuInfo()
+                {
+                    Title=item.Name,
+                    Icon=item.Icon,
+                    Target= "_self",
+                    Href=item.Url,
+                    Child= AddMenuChildNode(allMenus,item.Id)
+                };
+                menuInfos.Add(menuInfo);
+            }
+            model.MenuInfo = menuInfos;
+            return new ApiResult(model);
+        }
+        private List<MenuInfo> AddMenuChildNode(List<Menu> data, int parentId)
+        {
+            var list = new List<MenuInfo>();
+            var data2 = data.Where(d => d.ParentId == parentId).ToList();
+            foreach (var item in data2)
+            {
+                var menuTreeOutput = new MenuInfo()
+                {
+                    Title = item.Name,
+                    Icon = item.Icon,                
+                    Child = AddMenuChildNode(data, item.Id)
                 };
                 list.Add(menuTreeOutput);
             }

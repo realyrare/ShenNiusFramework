@@ -59,7 +59,8 @@
                 if (data.field.newPassword !== data.field.confirmPassword) {
                     layer.msg('新密码两次输入不一样');
                     return false;
-                }              
+                }
+                data.field.id=@Model.CurrentUserId;
                 apiUtil.ajax('user/modfiy-pwd', data.field, "application/json", "post", function (res) {
                     if (res.statusCode == 200 && res.success == true) {                       
                         var iframeIndex = parent.layer.getFrameIndex(window.name);

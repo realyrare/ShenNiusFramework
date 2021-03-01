@@ -29,11 +29,13 @@ namespace ShenNius.Share.Service.Sys
     {
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _accessor;
+        private readonly ICurrentUserContext _currentUserContext;
 
-        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
             _accessor = httpContextAccessor;
+            _currentUserContext = currentUserContext;
         }
 
 
@@ -88,6 +90,10 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput)
         {
+            if (modifyPwdInput.Id==0)
+            {
+                modifyPwdInput.Id = _currentUserContext.Id;
+            }
             if (!modifyPwdInput.ConfirmPassword.Equals(modifyPwdInput.NewPassword))
             {
                 throw new ArgumentNullException("两次输入的密码不一致");

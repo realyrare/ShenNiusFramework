@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
@@ -6,7 +7,11 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Service.Sys;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -28,7 +33,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetBtnCodeList()
         {
-            return new ApiResult(await _configService.GetListAsync());
+            return new ApiResult(await _configService.GetListAsync(d=>d.Type=="按钮"));
         }
 
         [HttpDelete]
@@ -83,7 +88,7 @@ namespace ShenNius.Sys.API.Controllers
         public async Task<ApiResult> AddPermissions([FromBody]PermissionsInput input)
         {
             var model = await _r_Role_MenuService.GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
-            if (model!=null)
+            if (model.Id>0)
             {
                 return new ApiResult("已经存在该菜单权限了", 400);
             }
@@ -119,6 +124,17 @@ namespace ShenNius.Sys.API.Controllers
         {
           var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
             return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
+        }
+        /// <summary>
+        /// 左侧树形菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ApiResult> LoadLeftMenuTrees()
+        {
+          
+           var userId=Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
+               return  await _menuService.LoadLeftMenuTreesAsync(userId);
         }
     }
 }

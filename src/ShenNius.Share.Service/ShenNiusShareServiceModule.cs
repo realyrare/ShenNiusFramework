@@ -5,6 +5,7 @@ using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Service.Sys;
 using System;
 
 namespace ShenNius.Share.Service
@@ -23,6 +24,7 @@ namespace ShenNius.Share.Service
 
             context.Services.AddAutoMapper(typeof(AutomapperProfile));
             context.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //context.Services.AddScoped<ICurrentUserContext, CurrentUserContext>();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
