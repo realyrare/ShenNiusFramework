@@ -44,7 +44,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
             options.maxTabNum = options.maxTabNum || 20;
 
             util.ajax(options.iniUrl, {}, "application/json", "get", function (res) {
-                if (res.status != 200 || res.success) {
+                if (res.statusCode != 200 || res.success!=true) {
                     miniAdmin.error(res.msg);
                 }
                 var data = res.data;

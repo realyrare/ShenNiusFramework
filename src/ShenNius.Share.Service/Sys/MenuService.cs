@@ -23,10 +23,12 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> TreeRoleIdAsync(int roleId);
 
         Task<ApiResult> AddToUpdateAsync(MenuInput menuInput);
-        Task<ApiResult> GetListPages(int page, string key = null);
+        Task<ApiResult> GetListPagesAsync(int page, string key = null);
         Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput);
 
         Task<ApiResult> LoadLeftMenuTreesAsync(int userId);
+
+        Task<ApiResult> GetAllParentMenuAsync();
     }
     public class MenuService : BaseServer<Menu>, IMenuService
     {
@@ -36,7 +38,7 @@ namespace ShenNius.Share.Service.Sys
             _mapper = mapper;
         }
 
-        public async Task<ApiResult> GetListPages(int page, string key = null)
+        public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
         {
             var res = await Db.Queryable<Menu>().WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
                       .OrderBy(m => m.Sort)
@@ -93,12 +95,32 @@ namespace ShenNius.Share.Service.Sys
                 ChildModule(list, newlist, result[i].Id);
             }
         }
+
+        public async Task<ApiResult> GetAllParentMenuAsync()
+        {
+          var list= await GetListAsync(d => d.Status);
+          var data = new List<Menu>();
+            ChildModule(list, data, 0);
+            //foreach (var item in list)
+            //{
+               
+            //}
+            if (data?.Count > 0)
+            {
+                foreach (var item in data)
+                {
+                    item.Name = WebHelper.LevelName(item.Name, item.Layer);
+                }
+            }
+            return new ApiResult(data);
+        }
+
         public async Task<ApiResult> AddToUpdateAsync(MenuInput menuInput)
         {
             var menu = _mapper.Map<Menu>(menuInput);
             var menuId = await AddAsync(menu);
             string parentIdList = ""; int layer = 0;
-            if (!string.IsNullOrEmpty(menuInput.ParentId.ToString()))
+            if (menuInput.ParentId>0)
             {
                 // 说明有父级  根据父级，查询对应的模型
                 var model = await GetModelAsync(d => d.Id == menuInput.ParentId);
@@ -120,7 +142,7 @@ namespace ShenNius.Share.Service.Sys
         public async Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput)
         {
             string parentIdList = ""; int layer = 0;
-            if (!string.IsNullOrEmpty(menuModifyInput.ParentId.ToString()))
+            if (menuModifyInput.ParentId > 0)
             {
                 // 说明有父级  根据父级，查询对应的模型
                 var model = await GetModelAsync(d => d.Id == menuModifyInput.ParentId);
@@ -263,7 +285,7 @@ namespace ShenNius.Share.Service.Sys
                 {
                     continue;
                 }
-               var menuInfo = new MenuInfo()
+                var menuInfo = new MenuInfo()
                 {
                     Title=item.Name,
                     Icon=item.Icon,
@@ -285,7 +307,9 @@ namespace ShenNius.Share.Service.Sys
                 var menuTreeOutput = new MenuInfo()
                 {
                     Title = item.Name,
-                    Icon = item.Icon,                
+                    Icon = item.Icon,
+                    Target = "_self",
+                    Href = item.Url,
                     Child = AddMenuChildNode(data, item.Id)
                 };
                 list.Add(menuTreeOutput);

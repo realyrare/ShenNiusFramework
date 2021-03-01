@@ -45,7 +45,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            return await _menuService.GetListPages(page, key);
+            return await _menuService.GetListPagesAsync(page, key);
         }
         /// <summary>
         /// 获取菜单按钮
@@ -122,8 +122,9 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetAllParentMenu()
         {
-          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
-            return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
+            //var data= await _menuService.GetListAsync(d => d.Status && (d.ParentIdList ==""|| d.ParentIdList==null));
+            //  return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
+            return await _menuService.GetAllParentMenuAsync();
         }
         /// <summary>
         /// 左侧树形菜单
