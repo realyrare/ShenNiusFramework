@@ -167,7 +167,7 @@ namespace ShenNius.Sys.API.Controllers
             var claims = new List<Claim>
             {
                     new Claim(ClaimTypes.Name, loginOutput.LoginName),
-                    new Claim(JwtRegisteredClaimNames.Jti, loginOutput.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sid, loginOutput.Id.ToString()),
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_jwtSetting.Value.ExpireSeconds).ToString(CultureInfo.InvariantCulture)),
                     new Claim(ClaimTypes.Role,"Type"),
                     new Claim("mobile",loginOutput.Mobile)

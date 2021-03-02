@@ -34,6 +34,17 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _roleService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
+        /// <summary>
+        /// 根据角色获取当前已授权或未授权的所有角色
+        /// </summary>
+        /// <param name="page">当前页</param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ApiResult> GetListPagesByUser(int page, int userId)
+        {
+          return  await _roleService.GetListPagesAsync(page, userId);           
+        }
         [HttpGet]
         public async Task<ApiResult> Detail(int id)
         {

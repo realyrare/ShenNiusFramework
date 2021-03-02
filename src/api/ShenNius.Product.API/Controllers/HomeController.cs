@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShenNius.Product.API.Controllers
+namespace ShenNius.Cms.API.Controllers
 {
     /// <summary>
     /// 产品控制器

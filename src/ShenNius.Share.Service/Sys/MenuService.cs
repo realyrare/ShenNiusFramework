@@ -1,10 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Service.Repository.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +21,156 @@ namespace ShenNius.Share.Service.Sys
     {
         Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId);
         Task<ApiResult> TreeRoleIdAsync(int roleId);
+
+        Task<ApiResult> AddToUpdateAsync(MenuInput menuInput);
+        Task<ApiResult> GetListPagesAsync(int page, string key = null);
+        Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput);
+
+        Task<ApiResult> LoadLeftMenuTreesAsync(int userId);
+
+        Task<ApiResult> GetAllParentMenuAsync();
     }
     public class MenuService : BaseServer<Menu>, IMenuService
     {
-        public MenuService(IConfigService configService)
+        private readonly IMapper _mapper;
+        public MenuService(IMapper mapper)
         {
-           
+            _mapper = mapper;
         }
+
+        public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
+        {
+            var res = await Db.Queryable<Menu>().WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
+                      .OrderBy(m => m.Sort)
+                          .Mapper((it, cache) =>
+                          {
+                              var codeList = cache.Get(t =>
+                              {
+                                  return Db.Queryable<Config>().Where(m => m.Type == "按钮").ToList();
+                              });
+                              var list = new List<string>();
+                              if (it.BtnCodeIds != null)
+                              {
+                                  if (it.BtnCodeIds.Length > 0)
+                                  {
+                                      list = it.BtnCodeIds.ToList();
+                                  }
+                              }
+                              if (list.Count > 0)
+                              {
+                                  it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.Name).ToList());
+                              }
+                          })
+                   .ToPageAsync(page, 15);
+            var result = new List<Menu>();
+            if (!string.IsNullOrEmpty(key))
+            {
+                var menuModel = await GetModelAsync(m => m.Name.Contains(key));
+                ChildModule(res.Items, result, menuModel.ParentId);
+            }
+            else
+            {
+                ChildModule(res.Items, result, 0);
+            }
+
+            if (result?.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    item.Name = WebHelper.LevelName(item.Name, item.Layer);
+                }
+            }
+            return new ApiResult(data: new { count = res.TotalItems, items = result });
+        }
+        /// <summary>
+        /// 递归模块列表
+        /// </summary>
+        private void ChildModule(List<Menu> list, List<Menu> newlist, int parentId)
+        {
+            var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ThenBy(p => p.Sort).ToList();
+            if (!result.Any()) return;
+            for (int i = 0; i < result.Count(); i++)
+            {
+                newlist.Add(result[i]);
+                ChildModule(list, newlist, result[i].Id);
+            }
+        }
+
+        public async Task<ApiResult> GetAllParentMenuAsync()
+        {
+          var list= await GetListAsync(d => d.Status);
+          var data = new List<Menu>();
+            ChildModule(list, data, 0);
+  
+            if (data?.Count > 0)
+            {
+                foreach (var item in data)
+                {
+                    item.Name = WebHelper.LevelName(item.Name, item.Layer);
+                }
+            }
+            return new ApiResult(data);
+        }
+
+        public async Task<ApiResult> AddToUpdateAsync(MenuInput menuInput)
+        {
+            var menu = _mapper.Map<Menu>(menuInput);
+            var menuId = await AddAsync(menu);
+            string parentIdList = ""; int layer = 0;
+            if (menuInput.ParentId>0)
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = await GetModelAsync(d => d.Id == menuInput.ParentId);
+                if (model.Id > 0)
+                {
+                    parentIdList = model.ParentIdList + menuId + ",";
+                    layer = model.Layer + 1;
+                }
+            }
+            else
+            {
+                parentIdList = "," + menuId + ",";
+                layer = 1;
+            }
+            var i = await UpdateAsync(d => new Menu() { ParentIdList = parentIdList, Layer = layer }, d => d.Id == menuId);
+            return new ApiResult(i);
+        }
+
+        public async Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput)
+        {
+            string parentIdList = ""; int layer = 0;
+            if (menuModifyInput.ParentId > 0)
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = await GetModelAsync(d => d.Id == menuModifyInput.ParentId);
+                if (model.Id > 0)
+                {
+                    parentIdList = model.ParentIdList + menuModifyInput.Id + ",";
+                    layer = model.Layer + 1;
+                }
+            }
+            else
+            {
+                parentIdList = "," + menuModifyInput.Id + ",";
+                layer = 1;
+            }
+            await UpdateAsync(d => new Menu()
+            {
+                Name = menuModifyInput.Name,
+                Url = menuModifyInput.Url,
+                ModifyTime = menuModifyInput.ModifyTime,
+                HttpMethod = menuModifyInput.HttpMethod,
+                Status = menuModifyInput.Status,
+                ParentId = menuModifyInput.ParentId,
+                Icon = menuModifyInput.Icon,
+                Sort = menuModifyInput.Sort,
+                BtnCodeIds = menuModifyInput.BtnCodeIds,
+                Layer = layer,
+                ParentIdList = parentIdList
+            }, d => d.Id == menuModifyInput.Id);
+            return new ApiResult();
+        }
+
         public async Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId)
         {
             if (menuId == 0)
@@ -35,7 +182,7 @@ namespace ShenNius.Share.Service.Sys
             {
                 throw new FriendlyException(nameof(menuModel));
             }
-            if (menuModel.BtnCodeIds.Length <= 0|| menuModel.BtnCodeIds==null)
+            if (menuModel.BtnCodeIds.Length <= 0 || menuModel.BtnCodeIds == null)
             {
                 return new ApiResult(menuId);
             }
@@ -48,7 +195,7 @@ namespace ShenNius.Share.Service.Sys
 
             var permissionsModel = await Db.Queryable<R_Role_Menu>().Where(d => d.RoleId == roleId && d.MenuId == menuId).FirstAsync();
 
-            if (permissionsModel != null &&  permissionsModel.BtnCodeIds!= null)
+            if (permissionsModel != null && permissionsModel.BtnCodeIds != null)
             {
                 if (permissionsModel.BtnCodeIds.Length > 0)
                 {
@@ -59,10 +206,11 @@ namespace ShenNius.Share.Service.Sys
                             item.Status = true;
                         }
                     }
-                }                
+                }
             }
             return new ApiResult(containsBtnList);
         }
+
         public async Task<ApiResult> TreeRoleIdAsync(int roleId)
         {
             var list = new List<MenuTreeOutput>();
@@ -103,6 +251,63 @@ namespace ShenNius.Share.Service.Sys
                     Title = item.Name,
                     Checked = existMenuId.FirstOrDefault(d => d == item.Id) != 0,
                     Children = AddChildNode(data, item.Id, existMenuId)
+                };
+                list.Add(menuTreeOutput);
+            }
+            return list;
+        }
+
+        public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
+        {           
+            var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
+            if (allRoleIds == null || allRoleIds.Count == 0)
+            {
+                return new ApiResult("当前用户没有角色授权", 500);
+            }
+            var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
+            if (allMenuIds == null|| allMenuIds.Count==0)
+            {
+                return new ApiResult("当前角色没有菜单授权", 500);
+            }
+            var allMenus = await GetListAsync(d => d.Status&&allMenuIds.Contains(d.Id));
+            var model = new MenuTreeInitOutput()
+            {
+                HomeInfo = new HomeInfo() { Title = "首页", Href = "page/welcome-1.html" },
+               LogoInfo=new LogoInfo() { Title="神牛系统平台",Image= "images/logo.jpg?v=99", Href="" },
+            };
+            List<MenuInfo> menuInfos = new List<MenuInfo>();
+            foreach (var item in allMenus)
+            {
+                if (item.ParentId != 0)
+                {
+                    continue;
+                }
+                var menuInfo = new MenuInfo()
+                {
+                    Title=item.Name,
+                    Icon=item.Icon,
+                    Target= "_self",
+                    Href=item.Url,
+                    Child= AddMenuChildNode(allMenus,item.Id)
+                };
+                menuInfos.Add(menuInfo);
+            }
+            model.MenuInfo = menuInfos;
+            return new ApiResult(model);
+        }
+        private List<MenuInfo> AddMenuChildNode(List<Menu> data, int parentId)
+        {
+            var list = new List<MenuInfo>();
+            var data2 = data.Where(d => d.ParentId == parentId).ToList();
+            foreach (var item in data2)
+            {
+                var menuTreeOutput = new MenuInfo()
+                {
+                    Title = item.Name,
+                    Icon = item.Icon,
+                    Target = "_self",
+                    Href = item.Url,
+                    Child = AddMenuChildNode(data, item.Id)
                 };
                 list.Add(menuTreeOutput);
             }

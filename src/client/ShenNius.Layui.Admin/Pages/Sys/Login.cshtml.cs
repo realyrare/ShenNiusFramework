@@ -111,7 +111,8 @@ namespace ShenNius.Client.Admin.Pages.Sys
                               new Claim(ClaimTypes.Name,result.Data.LoginName),
                               new Claim(ClaimTypes.WindowsAccountName,result.Data.LoginName),
                               new Claim(ClaimTypes.UserData,result.Data.LoginTime),
-                              new Claim("mobile",result.Data.Mobile)
+                              new Claim("mobile",result.Data.Mobile),
+                              new Claim("trueName",result.Data.TrueName)
                        }, CookieAuthenticationDefaults.AuthenticationScheme)
                   );
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties

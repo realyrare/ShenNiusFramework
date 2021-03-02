@@ -4,12 +4,13 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function (exports) {
+layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common'], function (exports) {
     var $ = layui.$,
         layer = layui.layer,
         miniMenu = layui.miniMenu,
         miniTheme = layui.miniTheme,
-        element = layui.element ,
+        element = layui.element,
+        util = layui.common,
         miniTab = layui.miniTab;
 
     if (!/http(s*):\/\//.test(location.href)) {
@@ -41,7 +42,12 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
             options.loadingTime = options.loadingTime || 1;
             options.pageAnim = options.pageAnim || false;
             options.maxTabNum = options.maxTabNum || 20;
-            $.getJSON(options.iniUrl, function (data) {
+
+            util.ajax(options.iniUrl, {}, "application/json", "get", function (res) {
+                if (res.statusCode != 200 || res.success!=true) {
+                    miniAdmin.error(res.msg);
+                }
+                var data = res.data;
                 if (data == null) {
                     miniAdmin.error('暂无菜单信息')
                 } else {
@@ -73,9 +79,46 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                     });
                     miniAdmin.deleteLoader(options.loadingTime);
                 }
-            }).fail(function () {
-                miniAdmin.error('菜单接口有误');
             });
+
+            //$.getJSON(options.iniUrl, function (data) {
+               
+            //    if (data == null) {
+            //        miniAdmin.error('暂无菜单信息')
+            //    } else {
+            //        miniAdmin.renderLogo(data.logoInfo);
+            //        miniAdmin.renderClear(options.clearUrl);
+            //        miniAdmin.renderHome(data.homeInfo);
+            //        miniAdmin.renderAnim(options.pageAnim);
+            //        miniAdmin.listen();
+            //        miniMenu.render({
+            //            menuList: data.menuInfo,
+            //            multiModule: options.multiModule,
+            //            menuChildOpen: options.menuChildOpen
+            //        });
+            //        miniTab.render({
+            //            filter: 'layuiminiTab',
+            //            urlHashLocation: options.urlHashLocation,
+            //            multiModule: options.multiModule,
+            //            menuChildOpen: options.menuChildOpen,
+            //            maxTabNum: options.maxTabNum,
+            //            menuList: data.menuInfo,
+            //            homeInfo: data.homeInfo,
+            //            listenSwichCallback: function () {
+            //                miniAdmin.renderDevice();
+            //            }
+            //        });
+            //        miniTheme.render({
+            //            bgColorDefault: options.bgColorDefault,
+            //            listen: true,
+            //        });
+            //        miniAdmin.deleteLoader(options.loadingTime);
+            //    }
+            //}).fail(function () {
+            //    miniAdmin.error('菜单接口有误');
+            //});
+
+
         },
 
         /**

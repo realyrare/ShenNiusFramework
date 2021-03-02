@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Order.API.Controllers
+namespace ShenNius.Shop.API.Controllers
 {
     /// <summary>
     /// 订单控制器

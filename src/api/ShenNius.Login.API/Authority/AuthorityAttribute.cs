@@ -31,6 +31,7 @@ namespace ShenNius.Sys.API.Authority
                 context.Result = new JsonResult(new ApiResult("很抱歉,您未登录", StatusCodes.Status401Unauthorized));               
                 return;
             }
+            //从缓存获得权限
 
             //if (currentUser.AuthorityMenu.TrueForAll(e => e.UniName?.Trim() + e.BtnName?.Trim() != name))
             //{
@@ -41,6 +42,11 @@ namespace ShenNius.Sys.API.Authority
             //    });
             //    return;
             //}
+
+            //var res = new ApiResult<string>() { statusCode = enumValue, message = "您没有操作权限，请联系系统管理员！" };
+            //context.HttpContext.Response.ContentType = "application/json;charset=utf-8";
+            //context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(res));
+            //context.Result = new EmptyResult();
         }
     }
 }

@@ -4,10 +4,11 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Service.Sys;
-using System.Collections.Generic;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -29,20 +30,25 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetBtnCodeList()
         {
-            return new ApiResult(await _configService.GetListAsync());
+            return new ApiResult(await _configService.GetListAsync(d=>d.Type=="按钮"));
         }
+
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
-            return new ApiResult(await _menuService.DeleteAsync(commonDeleteInput.Ids));
+            foreach (var item in commonDeleteInput.Ids)
+            {
+                await _menuService.UpdateAsync(d=>new Menu() {Status=false },d=>d.Id==item);
+            }
+            //await _menuService.DeleteAsync(commonDeleteInput.Ids)
+            return new ApiResult();
         }
+
         [HttpGet]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            var res = await _menuService.GetPagesAsync(page, 15);
-            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+            return await _menuService.GetListPagesAsync(page, key);
         }
-
         /// <summary>
         /// 获取菜单按钮
         /// </summary>
@@ -72,10 +78,6 @@ namespace ShenNius.Sys.API.Controllers
         [HttpPost]
         public async Task<ApiResult> SetBtnPermissions([FromBody]RoleMenuBtnInput roleMenuInput)
         {
-            if (roleMenuInput!=null)
-            {
-                throw new FriendlyException("test");
-            }
            
             return await _r_Role_MenuService.SetBtnPermissionsAsync(roleMenuInput);
         }
@@ -88,7 +90,7 @@ namespace ShenNius.Sys.API.Controllers
         public async Task<ApiResult> AddPermissions([FromBody]PermissionsInput input)
         {
             var model = await _r_Role_MenuService.GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
-            if (model!=null)
+            if (model.Id>0)
             {
                 return new ApiResult("已经存在该菜单权限了", 400);
             }
@@ -109,32 +111,33 @@ namespace ShenNius.Sys.API.Controllers
         }
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
-        {
-            var menu = _mapper.Map<Menu>(menuInput);
-            return new ApiResult(await _menuService.AddAsync(menu));
+        {         
+            return await _menuService.AddToUpdateAsync(menuInput);
         }
 
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] MenuModifyInput menuModifyInput)
         {
-            return new ApiResult(await _menuService.UpdateAsync(d => new Menu()
-            {
-                Name = menuModifyInput.Name,
-                Url = menuModifyInput.Url,
-                ModifyTime = menuModifyInput.ModifyTime,
-                HttpMethod=menuModifyInput.HttpMethod,
-                Status=menuModifyInput.Status,
-                ParentId=menuModifyInput.ParentId,
-                Icon=menuModifyInput.Icon,
-                Sort=menuModifyInput.Sort,
-                BtnCodeIds= menuModifyInput.BtnCodeIds
-            }, d => d.Id == menuModifyInput.Id));
+            return await _menuService.ModifyAsync(menuModifyInput);
         }
+
         [HttpGet]
         public async Task<ApiResult> GetAllParentMenu()
         {
-          var data= await _menuService.GetListAsync(d => d.Status && d.ParentId == 0);
-            return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
+            //var data= await _menuService.GetListAsync(d => d.Status && (d.ParentIdList ==""|| d.ParentIdList==null));
+            //  return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
+            return await _menuService.GetAllParentMenuAsync();
+        }
+        /// <summary>
+        /// 左侧树形菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ApiResult> LoadLeftMenuTrees()
+        {
+          
+           var userId=Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
+               return  await _menuService.LoadLeftMenuTreesAsync(userId);
         }
     }
 }

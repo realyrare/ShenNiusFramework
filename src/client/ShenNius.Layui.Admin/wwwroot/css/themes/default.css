@@ -46,13 +46,13 @@
 
 /*logo背景颜色 headerLogoBg */
 .layui-layout-admin .layuimini-logo {
-    background-color: #192027 !important;
+    background-color: #000 !important;
 }
 
 /*logo字体颜色 headerLogoColor */
-.layui-layout-admin .layuimini-logo h1 {
-    color: rgb(191, 187, 187);
-}
+    .layui-layout-admin .layuimini-logo h1 {
+        color: #f8f8f8;
+    }
 
 /*左侧菜单更多下拉样式 leftMenuNavMore */
 .layuimini-menu-left .layui-nav .layui-nav-more, .layuimini-menu-left-zoom.layui-nav .layui-nav-more {
@@ -66,7 +66,7 @@
 
 /*左侧菜单背景 leftMenuBg */
 .layui-side.layui-bg-black, .layui-side.layui-bg-black > .layuimini-menu-left > ul, .layuimini-menu-left-zoom > ul {
-    background-color: #28333E !important;
+    background-color: #20222A !important;
 }
 
 /*左侧菜单选中背景 leftMenuBgThis */
@@ -81,7 +81,7 @@
 
 /*左侧菜单字体颜色 leftMenuColor */
 .layuimini-menu-left .layui-nav .layui-nav-item a, .layuimini-menu-left-zoom.layui-nav .layui-nav-item a {
-    color: rgb(191, 187, 187) !important;
+    color: #e2e2e2 !important; /*rgb(191, 187, 187) !important;*/
 }
 
 /*左侧菜单选中字体颜色 leftMenuColorThis */

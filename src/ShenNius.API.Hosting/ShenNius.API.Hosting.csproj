@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\api\ShenNius.Login.API\ShenNius.Sys.API.csproj" />
-    <ProjectReference Include="..\api\ShenNius.Order.API\ShenNius.Order.API.csproj" />
-    <ProjectReference Include="..\api\ShenNius.Product.API\ShenNius.Product.API.csproj" />
+    <ProjectReference Include="..\api\ShenNius.Order.API\ShenNius.Shop.API.csproj" />
+    <ProjectReference Include="..\api\ShenNius.Product.API\ShenNius.Cms.API.csproj" />
     <ProjectReference Include="..\module\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
     <ProjectReference Include="..\ShenNius.Share.Models\ShenNius.Share.Models.csproj" />

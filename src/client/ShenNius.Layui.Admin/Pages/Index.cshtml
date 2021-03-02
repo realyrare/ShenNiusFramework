@@ -8,9 +8,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layuimini-iframe版 v2 - 基于Layui的后台管理系统前端模板</title>
-    <meta name="keywords" content="layuimini,layui,layui模板,layui后台,后台模板,admin,admin模板,layui mini">
-    <meta name="description" content="layuimini基于layui的轻量级前端后台管理框架，最简洁、易用的后台框架模板，面向所有层次的前后端程序,只需提供一个接口就直接初始化整个框架，无需复杂操作。">
+    <title>一起牛管理系统</title>   
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -20,8 +18,8 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="/css/layuimini.css?v=2.0.4.2" media="all">
-    <link rel="stylesheet" href="/css/themes/default.css" media="all">
+    <link rel="stylesheet" href="/css/layuimini.css?v=2.0.4.2" media="all" asp-append-version="true">
+    <link rel="stylesheet" href="/css/themes/default.css" media="all" asp-append-version="true">
     <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -66,13 +64,13 @@
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                     </li>
                     <li class="layui-nav-item layuimini-setting">
-                        <a href="javascript:;">admin</a>
+                        <a href="javascript:;">@Model.CurrentUserName</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                                <a href="javascript:;" id="baseUserInfo" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                                <a href="javascript:;"  data-title="修改密码" data-icon="fa fa-gears" id="modifyPwd">修改密码</a>
                             </dd>
                             <dd>
                                 <hr>
@@ -136,39 +134,55 @@
     <script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
     <script>
-        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji'], function () {
+        layui.use(['jquery', 'layer', 'miniAdmin'], function () {
             var $ = layui.jquery,
-                layer = layui.layer,
-                miniAdmin = layui.miniAdmin,
-                miniTongji = layui.miniTongji;
-
+                layer = layui.layer,              
+                miniAdmin = layui.miniAdmin;
+            //"api/init.json?v=12",
             var options = {
-                iniUrl: "api/init.json?v=12",    // 初始化接口
+                iniUrl: "menu/load-left-menu-trees",   // 初始化接口"menu/load-left-menu-trees",//
                 clearUrl: "api/clear.json", // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
                 bgColorDefault: false,      // 主题默认配置
                 multiModule: true,          // 是否开启多模块
-                menuChildOpen: false,       // 是否默认展开菜单
+                menuChildOpen: true,       // 是否默认展开菜单
                 loadingTime: 0,             // 初始化加载时间
                 pageAnim: true,             // iframe窗口动画
                 maxTabNum: 20,              // 最大的tab打开数量
             };
             miniAdmin.render(options);
 
-            // 百度统计代码，只统计指定域名
-            miniTongji.render({
-                specific: true,
-                domains: [
-                    '99php.cn',
-                    'layuimini.99php.cn',
-                    'layuimini-onepage.99php.cn',
-                ],
-            });
-
-            $('.login-out').on("click", function () {
-                layer.msg('退出登录成功', function () {
-                    window.location = 'page/login-3.html';
+             
+            $('#modifyPwd').on("click", function () {
+                layer.open({
+                    title: '修改密码',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '400px'],
+                    content: '/sys/user-modify-pwd',
                 });
+            });
+            $('#baseUserInfo').on("click", function () {
+                layer.open({
+                    title: '基本资料',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '400px'],
+                    content: '/sys/current-user-info',
+                });
+            });
+            $('.login-out').on("click", function () {
+                $.ajax({
+                    url: "/sys/login?handler=Logout",
+                    type: "get",
+                    success: function (res) {
+                        layer.msg('正在处理,即将退出...', function () {
+                            window.location = '/sys/login';
+                        });
+                    }
+                });                 
             });
         });
     </script>
