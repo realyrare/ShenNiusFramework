@@ -101,10 +101,7 @@ namespace ShenNius.Share.Service.Sys
           var list= await GetListAsync(d => d.Status);
           var data = new List<Menu>();
             ChildModule(list, data, 0);
-            //foreach (var item in list)
-            //{
-               
-            //}
+  
             if (data?.Count > 0)
             {
                 foreach (var item in data)

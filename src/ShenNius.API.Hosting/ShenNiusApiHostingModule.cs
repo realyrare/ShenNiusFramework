@@ -11,8 +11,8 @@ using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Sys.API;
 using ShenNius.ModuleCore.Extensions;
-using ShenNius.Order.API;
-using ShenNius.Product.API;
+using ShenNius.Shop.API;
+using ShenNius.Cms.API;
 using ShenNius.Share.Infrastructure.Extension;
 using System.Linq;
 using System.Reflection;
@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Http;
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
-        typeof(ShenNiusOrderApiModule),
+        typeof(ShenNiusShopApiModule),
         typeof(ShenNiusProductApiModule),
         typeof(ShenNiusSysApiModule)
         )]

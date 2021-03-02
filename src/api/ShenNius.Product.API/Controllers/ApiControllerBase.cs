@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Product.API.Controllers
+namespace ShenNius.Cms.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

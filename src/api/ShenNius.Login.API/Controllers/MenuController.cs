@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Service.Sys;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -39,7 +36,12 @@ namespace ShenNius.Sys.API.Controllers
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
-            return new ApiResult(await _menuService.DeleteAsync(commonDeleteInput.Ids));
+            foreach (var item in commonDeleteInput.Ids)
+            {
+                await _menuService.UpdateAsync(d=>new Menu() {Status=false },d=>d.Id==item);
+            }
+            //await _menuService.DeleteAsync(commonDeleteInput.Ids)
+            return new ApiResult();
         }
 
         [HttpGet]
