@@ -46,13 +46,13 @@
 
 /*logo背景颜色 headerLogoBg */
 .layui-layout-admin .layuimini-logo {
-    background-color: #192027 !important;
+    background-color: #000 !important;
 }
 
 /*logo字体颜色 headerLogoColor */
-.layui-layout-admin .layuimini-logo h1 {
-    color: rgb(191, 187, 187);
-}
+    .layui-layout-admin .layuimini-logo h1 {
+        color: #f8f8f8;
+    }
 
 /*左侧菜单更多下拉样式 leftMenuNavMore */
 .layuimini-menu-left .layui-nav .layui-nav-more, .layuimini-menu-left-zoom.layui-nav .layui-nav-more {

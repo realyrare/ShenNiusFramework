@@ -1,7 +1,7 @@
 # ShenNius.Framework
 
 #### 介绍
-一筐基于Asp.net core3.1的模块化开发框架
+一款基于Asp.net core3.1的模块化开发框架
 
 #### 软件架构
 软件架构说明

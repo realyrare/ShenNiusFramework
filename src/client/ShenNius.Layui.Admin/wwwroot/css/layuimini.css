@@ -85,15 +85,15 @@
     vertical-align: middle;
 }
 
-.layui-layout-admin .layuimini-logo h1 {
-    display: inline-block;
-    margin: 0 0 0 12px;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 20px;
-    font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-    vertical-align: middle;
-}
+    .layui-layout-admin .layuimini-logo h1 {
+        display: inline-block;
+        margin: 0 0 0 12px;
+        color: #f8f8f8;
+        font-weight: 600;
+        font-size: 18px;
+        font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+        vertical-align: middle;
+    }
 
 /**缩放工具（通用） */
 .layuimini-tool {

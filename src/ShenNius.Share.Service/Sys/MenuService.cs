@@ -273,7 +273,7 @@ namespace ShenNius.Share.Service.Sys
             var model = new MenuTreeInitOutput()
             {
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "page/welcome-1.html" },
-               LogoInfo=new LogoInfo() { Title="一起牛",Image= "images/logo.png", Href="" },
+               LogoInfo=new LogoInfo() { Title="神牛系统平台",Image= "images/logo.jpg?v=99", Href="" },
             };
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)

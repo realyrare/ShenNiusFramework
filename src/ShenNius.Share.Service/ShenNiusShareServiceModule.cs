@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Service.Repository;
-using ShenNius.Share.Service.Sys;
 using System;
 
 namespace ShenNius.Share.Service
@@ -23,8 +21,7 @@ namespace ShenNius.Share.Service
             InjectHelper.AddAssembly(context.Services, "ShenNius.Share.Service");
 
             context.Services.AddAutoMapper(typeof(AutomapperProfile));
-            context.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //context.Services.AddScoped<ICurrentUserContext, CurrentUserContext>();
+            context.Services.AddHttpContextAccessor();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

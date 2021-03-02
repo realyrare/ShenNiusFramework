@@ -11,8 +11,6 @@ using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Sys.API;
 using ShenNius.ModuleCore.Extensions;
-using ShenNius.Shop.API;
-using ShenNius.Cms.API;
 using ShenNius.Share.Infrastructure.Extension;
 using System.Linq;
 using System.Reflection;
@@ -20,13 +18,14 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
-using Microsoft.AspNetCore.Http;
+using ShenNius.Shop.API;
+using ShenNius.Cms.API;
 
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
         typeof(ShenNiusShopApiModule),
-        typeof(ShenNiusProductApiModule),
+        typeof(ShenNiusCmsApiModule),
         typeof(ShenNiusSysApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
