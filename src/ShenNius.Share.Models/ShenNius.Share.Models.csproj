@@ -11,10 +11,16 @@
 
   <ItemGroup>
     <Compile Remove="Dtos\Configs\**" />
+    <Compile Remove="Entity\Order\**" />
+    <Compile Remove="Entity\Product\**" />
     <Compile Remove="Maps\**" />
     <EmbeddedResource Remove="Dtos\Configs\**" />
+    <EmbeddedResource Remove="Entity\Order\**" />
+    <EmbeddedResource Remove="Entity\Product\**" />
     <EmbeddedResource Remove="Maps\**" />
     <None Remove="Dtos\Configs\**" />
+    <None Remove="Entity\Order\**" />
+    <None Remove="Entity\Product\**" />
     <None Remove="Maps\**" />
   </ItemGroup>
 
@@ -24,9 +30,8 @@
     <Folder Include="Dtos\Input\Cms\" />
     <Folder Include="Dtos\Validators\Cms\" />
     <Folder Include="Dtos\Validators\Shop\" />
-    <Folder Include="Entity\Product\" />
-    <Folder Include="Entity\Order\" />
     <Folder Include="Configs\" />
+    <Folder Include="Entity\Shop\" />
   </ItemGroup>
 	<ItemGroup>
 	
