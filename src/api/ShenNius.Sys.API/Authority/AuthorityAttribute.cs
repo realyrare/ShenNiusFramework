@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Service.Sys;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ShenNius.Sys.API.Authority
 {
@@ -25,28 +26,36 @@ namespace ShenNius.Sys.API.Authority
         }
 
         void IAuthorizationFilter.OnAuthorization(AuthorizationFilterContext context)
-        {          
+        {
+            context.HttpContext.Response.ContentType = "application/json;charset=utf-8";
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 context.Result = new JsonResult(new ApiResult("很抱歉,您未登录", StatusCodes.Status401Unauthorized));               
                 return;
             }
+            IMenuService menuService =context.HttpContext.RequestServices.GetRequiredService(typeof(IMenuService)) as IMenuService;
+
             //从缓存获得权限
-
-            //if (currentUser.AuthorityMenu.TrueForAll(e => e.UniName?.Trim() + e.BtnName?.Trim() != name))
-            //{
-            //    context.Result = new JsonResult(new ApiResultModel()
-            //    {
-            //        StatusCode = System.Net.HttpStatusCode.Forbidden,
-            //        Msg = "当前用户无权限"
-            //    });
-            //    return;
-            //}
-
-            //var res = new ApiResult<string>() { statusCode = enumValue, message = "您没有操作权限，请联系系统管理员！" };
-            //context.HttpContext.Response.ContentType = "application/json;charset=utf-8";
-            //context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(res));
-            //context.Result = new EmptyResult();
+            var list= menuService.GetCurrentAuthMenus().Result;
+            var model= list.FirstOrDefault(d => d.Name == name);
+            if (model==null)
+            {
+               
+                context.Result = new JsonResult(new ApiResult("您没有操作权限，请联系系统管理员！", StatusCodes.Status403Forbidden));
+                return;
+            }
+            if (!string.IsNullOrEmpty(model.BtnCodeName))
+            {
+                var arryBtn= model.BtnCodeName.Split(',');
+                if (arryBtn.Length>0)
+                {
+                    if (arryBtn.FirstOrDefault(d => d != name)!=null)
+                    {
+                        context.Result = new JsonResult(new ApiResult("不好意思，您没有该按钮操作权限", StatusCodes.Status403Forbidden));
+                        return;
+                    }
+                }
+            }
         }
     }
 }

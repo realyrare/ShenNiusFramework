@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
@@ -27,17 +28,63 @@ namespace ShenNius.Share.Service.Sys
         Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput);
 
         Task<ApiResult> LoadLeftMenuTreesAsync(int userId);
-
+        /// <summary>
+        /// 根据当前用户Id获取所有角色关联的菜单id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<int>> GetCurrentMenuByUser(int userId);
+        /// <summary>
+        /// 当前用户所有的权限集合
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Menu>> GetCurrentAuthMenus();
         Task<ApiResult> GetAllParentMenuAsync();
     }
     public class MenuService : BaseServer<Menu>, IMenuService
     {
         private readonly IMapper _mapper;
-        public MenuService(IMapper mapper)
+        private readonly IMemoryCache _cache;
+        private readonly ICurrentUserContext _currentUserContext;
+
+        public MenuService(IMapper mapper, IMemoryCache cache, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
+            _cache = cache;
+            _currentUserContext = currentUserContext;
         }
-
+        public async Task<List<Menu>> GetCurrentAuthMenus()
+        {
+           var data= _cache.Get<List<Menu>>($"authMenu:{_currentUserContext.Id}");
+            if (data==null)
+            {
+                var allMenus = await GetCurrentMenuByUser(_currentUserContext.Id);
+                data = await Db.Queryable<Menu>().WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
+                              .Mapper((it, cache) =>
+                              {
+                                  var codeList = cache.Get(t =>
+                                  {
+                                      return Db.Queryable<Config>().Where(m => m.Type == "按钮").ToList();
+                                  });
+                                  var list = new List<string>();
+                                  if (it.BtnCodeIds != null)
+                                  {
+                                      if (it.BtnCodeIds.Length > 0)
+                                      {
+                                          list = it.BtnCodeIds.ToList();
+                                      }
+                                  }
+                                  if (list.Count > 0)
+                                  {
+                                      it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.Name).ToList());
+                                  }
+                              })
+                       .ToListAsync();
+                //把当前用户拥有的权限存入到缓存里面
+                _cache.Set($"authMenu:{_currentUserContext.Id}", allMenus);
+            }                    
+            return data;
+        }
         public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
         {
             var res = await Db.Queryable<Menu>().WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
@@ -171,6 +218,12 @@ namespace ShenNius.Share.Service.Sys
             return new ApiResult();
         }
 
+        /// <summary>
+        /// 根据菜单id获取关联按钮
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         public async Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId)
         {
             if (menuId == 0)
@@ -257,19 +310,35 @@ namespace ShenNius.Share.Service.Sys
             return list;
         }
 
-        public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
-        {           
+        public async Task<List<int>> GetCurrentMenuByUser(int userId)
+        {
             var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
             if (allRoleIds == null || allRoleIds.Count == 0)
             {
-                return new ApiResult("当前用户没有角色授权", 500);
+                throw new FriendlyException("当前用户没有角色授权");
             }
             var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
-            if (allMenuIds == null|| allMenuIds.Count==0)
+            if (allMenuIds == null || allMenuIds.Count == 0)
             {
-                return new ApiResult("当前角色没有菜单授权", 500);
+                throw new FriendlyException("当前角色没有菜单授权");
             }
+            return allMenuIds;
+        }
+        public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
+        {
+            //var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
+            //if (allRoleIds == null || allRoleIds.Count == 0)
+            //{
+            //    return new ApiResult("当前用户没有角色授权", 500);
+            //}
+            //var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
+            //if (allMenuIds == null|| allMenuIds.Count==0)
+            //{
+            //    return new ApiResult("当前角色没有菜单授权", 500);
+            //}
+            var allMenuIds=  await GetCurrentMenuByUser(userId);
             var allMenus = await GetListAsync(d => d.Status&&allMenuIds.Contains(d.Id));
+           
             var model = new MenuTreeInitOutput()
             {
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "page/welcome-1.html" },

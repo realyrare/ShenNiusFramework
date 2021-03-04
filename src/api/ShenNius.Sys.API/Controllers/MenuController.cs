@@ -134,8 +134,7 @@ namespace ShenNius.Sys.API.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ApiResult> LoadLeftMenuTrees()
-        {
-          
+        {         
            var userId=Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
                return  await _menuService.LoadLeftMenuTreesAsync(userId);
         }

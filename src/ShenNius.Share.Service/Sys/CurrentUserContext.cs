@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
+using ShenNius.Share.Model.Entity.Sys;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ShenNius.Share.Service.Sys
 {
@@ -41,15 +44,19 @@ namespace ShenNius.Share.Service.Sys
     /// <summary>
     /// 用户上下文
     /// </summary>
-    public class CurrentUserContext: ICurrentUserContext
+    public class CurrentUserContext : ICurrentUserContext
     {
         private readonly IHttpContextAccessor _accessor;
+        private readonly IMemoryCache _cache;
+        private readonly IMenuService _menuService;
 
-        public CurrentUserContext(IHttpContextAccessor accessor)
+        public CurrentUserContext(IHttpContextAccessor accessor, IMemoryCache  
+            cache, IMenuService menuService)
         {
             _accessor = accessor;
+            _cache = cache;
+            _menuService = menuService;
         }
-
         public string Name => GetName();
 
         private string GetName()
