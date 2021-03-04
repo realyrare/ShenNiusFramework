@@ -2,19 +2,21 @@
 
 #### 介绍
 
-一款基于Asp.net core3.1的模块化开发框架,提取了ABP VNext的模块核心，适合中小型项目快速开发，取名为神牛(ShenNius),意为大神大牛多提意见，一起参与，神牛云集，为dotnet社区贡献一份自己的力量，百花齐放，百家争鸣。
-所有的业务代码可以按照类库划分，使用宿主托管。所有的代码坚持"Don't repeat yourself"。坚决反对"简单的事情复杂干"，"大量代码在应用层过度层层封装"，反对"过度设计"的原则下进行开发。如果你有这个习惯，并且也想找一款迷你型、
-上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本，除了ABP VNext的模块化核心代码。
+ **一款基于Asp.net core3.1的模块化开发框架,提取了ABP VNext的模块核心，适合中小型项目快速开发，取名为神牛(ShenNius),意为大神大牛多提意见，一起参与，神牛云集，为dotnet社区贡献一份自己的力量，百花齐放，百家争鸣。** 
+
+所有的业务代码可以按照类库划分，使用宿主托管。所有的代码坚持"Don't repeat yourself"。坚决反对"简单的事情复杂干"，"大量代码在应用层过度层层封装"，反对"过度设计"的原则下进行开发。
+
+如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本，除了ABP VNext的模块化核心代码。
 
 #### 软件架构
- API框架：.NetCore 
- ORM：SqlSugarCore 
- 缓存：MemoryCache（后期会上redis，看项目业务需求） 
- 日志管理：Nlog
- 工具类：Aes加密、Md5加密、RSA加密、Des加密  
- token:Json Web Token
- 实体验证：FluentValidation
- 实体映射：AutoMapper
+1. API框架：dotNetCore 
+2. ORM：SqlSugarCore 
+3. 缓存：MemoryCache（后期会上redis，看项目业务需求） 
+4. 日志管理：Nlog
+5. 工具类：Aes加密、Md5加密、RSA加密、Des加密  
+6. token:Json Web Token
+7. 实体验证：FluentValidation
+8. 实体映射：AutoMapper
 #### 安装教程
 
 1.  git clone  xxxx
@@ -41,6 +43,12 @@
 4.  新建 Pull Request
 
 
-#### 后台管理效果图
-
+#### 效果图
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png "1.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164910_4917a1c1_1173871.png "2.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164921_d6dff912_1173871.png "3.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164934_1b63bf8f_1173871.png "4.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164943_44d2dacd_1173871.png "5.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165019_be2d1343_1173871.png "api-1.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165031_41b05a14_1173871.png "api-2.PNG")
 
