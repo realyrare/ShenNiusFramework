@@ -4,52 +4,27 @@
         <name>ShenNius.Sys.API</name>
     </assembly>
     <members>
-        <member name="T:ShenNius.Sys.API.Authority.AuthorityAttribute">
-            <summary>
-            权限验证
-            </summary>
-        </member>
-        <member name="M:ShenNius.Sys.API.Authority.AuthorityAttribute.#ctor(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name">菜单名+按钮名，如 菜单列表新增</param>
-        </member>
-        <member name="T:ShenNius.Sys.API.Authority.CurrentUserContext">
-            <summary>
-            当前用户
-            </summary>
-        </member>
         <member name="T:ShenNius.Sys.API.Controllers.UserController">
             <summary>
             用户控制器
             </summary>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Infrastructure.JsonWebToken.Model.JwtSetting})">
             <summary>
             
             </summary>
             <param name="jwtSetting"></param>
-            <param name="userService"></param>
-            <param name="cache"></param>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.GetListPages(System.Int32,System.String)">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn">
             <summary>
-            查询列表
+            登录
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
-             <summary>
-            用户前后端分离的登录
-             </summary>
-             <returns></returns>
-        </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.PageSignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.GetUser">
             <summary>
-            asp.net core page私有定制登陆
+            请求用户信息
             </summary>
-            <param name="loginInput">登陆实体</param>
             <returns></returns>
         </member>
     </members>
