@@ -4,27 +4,91 @@
         <name>ShenNius.Sys.API</name>
     </assembly>
     <members>
+        <member name="T:ShenNius.Sys.API.Authority.AuthorityAttribute">
+            <summary>
+            权限验证
+            </summary>
+        </member>
+        <member name="M:ShenNius.Sys.API.Authority.AuthorityAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name">菜单名+按钮名，如 菜单列表新增</param>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.MenuController.BtnCode(System.Int32,System.Int32)">
+            <summary>
+            获取菜单按钮
+            </summary>
+            <param name="menuId"></param>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.MenuController.TreeByRole(System.Int32)">
+            <summary>
+            树形菜单
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.MenuController.SetBtnPermissions(ShenNius.Share.Models.Dtos.Input.Sys.RoleMenuBtnInput)">
+            <summary>
+            菜单按钮授权
+            </summary>
+            <param name="roleMenuInput"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.MenuController.AddPermissions(ShenNius.Share.Models.Dtos.Input.Sys.PermissionsInput)">
+            <summary>
+            授权菜单
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.MenuController.LoadLeftMenuTrees">
+            <summary>
+            左侧树形菜单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.RoleController.GetListPagesByUser(System.Int32,System.Int32)">
+            <summary>
+            根据角色获取当前已授权或未授权的所有角色
+            </summary>
+            <param name="page">当前页</param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
         <member name="T:ShenNius.Sys.API.Controllers.UserController">
             <summary>
             用户控制器
             </summary>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Infrastructure.JsonWebToken.Model.JwtSetting})">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService,Microsoft.Extensions.Caching.Memory.IMemoryCache,ShenNius.Share.Service.Sys.IR_User_RoleService)">
             <summary>
             
             </summary>
             <param name="jwtSetting"></param>
+            <param name="userService"></param>
+            <param name="cache"></param>
+            <param name="r_User_RoleService"></param>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.GetListPages(System.Int32,System.String)">
             <summary>
-            登录
+            查询列表
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.GetUser">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
+             <summary>
+            用户前后端分离的登录
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.PageSignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">
             <summary>
-            请求用户信息
+            asp.net core page私有定制登陆
             </summary>
+            <param name="loginInput">登陆实体</param>
             <returns></returns>
         </member>
     </members>

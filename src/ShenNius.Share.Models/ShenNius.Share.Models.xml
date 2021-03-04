@@ -4,6 +4,121 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.ConfigInput.EnName">
+            <summary>
+            Desc:字典值——英文名称
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.ConfigInput.Summary">
+            <summary>
+            Desc:字典值——描述
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.ConfigModifyInput.EnName">
+            <summary>
+            Desc:字典值——英文名称
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.ConfigModifyInput.Summary">
+            <summary>
+            Desc:字典值——描述
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.ParentId">
+            <summary>
+            Desc:
+            Default:0
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.Name">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.Url">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.CreateTime">
+            <summary>
+            Desc:
+            Default:DateTime.Now
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.HttpMethod">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuInput.BtnCodeIds">
+            <summary>
+            按钮选择框
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuModifyInput.ParentId">
+            <summary>
+            Desc:
+            Default:0
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuModifyInput.Name">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuModifyInput.Url">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuModifyInput.HttpMethod">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.MenuModifyInput.BtnCodeIds">
+            <summary>
+            按钮选择框
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.PermissionsInput.MenuId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.RoleMenuBtnInput.MenuId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.LoginName">
             <summary>
             登录账号
@@ -87,6 +202,11 @@
         <member name="P:ShenNius.Share.Models.Dtos.Input.UserRegisterInput.Status">
             <summary>
             状态 1=整除 0=不允许登录
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Output.Sys.MenuTreeInitOutput">
+            <summary>
+            左侧树形菜单
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Name">
@@ -244,6 +364,53 @@
             退出登录
             </summary>
         </member>
+        <member name="T:ShenNius.Share.Model.Entity.Sys.Config">
+            <summary>
+             字典表
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.ParentId">
+            <summary>
+            Desc:字典类型标识
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.Name">
+            <summary>
+            Desc:字典值——名称
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.EnName">
+            <summary>
+            Desc:字典值——英文名称
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.Summary">
+            <summary>
+            Desc:字典值——描述
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.CreateTime">
+            <summary>
+            Desc:字典值——添加时间
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Config.UpdateTime">
+            <summary>
+            Desc:字典值——修改时间
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.Log">
             <summary>
              系统操作表
@@ -356,41 +523,6 @@
             Nullable:True
             </summary>           
         </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.Permissions">
-            <summary>
-             权限角色管理菜单表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.RoleId">
-            <summary>
-            Desc:角色Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.UserId">
-            <summary>
-            管理员编号
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.MenuId">
-            <summary>
-            Desc:菜单Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.BtnFunJson">
-            <summary>
-            角色-菜单-权限按钮Json
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Permissions.Types">
-            <summary>
-            授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能
-            默认=1
-            </summary>
-        </member>
         <member name="T:ShenNius.Share.Model.Entity.Sys.Role">
             <summary>
              权限角色表
@@ -415,172 +547,6 @@
             Desc:
             Default:DateTime.Now
             Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysBtnFun">
-            <summary>
-            权限-菜单对应的功能列表
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysBtnFun.Guid">
-            <summary>
-            唯一ID
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysBtnFun.MenuGuid">
-            <summary>
-            归属菜单功能
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysBtnFun.Name">
-            <summary>
-            菜单名称
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysBtnFun.FunType">
-            <summary>
-            菜单功能类型
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysBtnFun.Summary">
-            <summary>
-            描述，可为空
-            </summary>
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysCode">
-            <summary>
-             字典值
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.Guid">
-            <summary>
-            Desc:唯一标号Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.ParentGuid">
-            <summary>
-            Desc:字典类型标识
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.CodeType">
-            <summary>
-            Desc:字典值——类型
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.Name">
-            <summary>
-            Desc:字典值——名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.EnName">
-            <summary>
-            Desc:字典值——英文名称
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.Sort">
-            <summary>
-            Desc:字典值——排序
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.Status">
-            <summary>
-            Desc:字典值——状态
-            Default:b'1'
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.Summary">
-            <summary>
-            Desc:字典值——描述
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.AddTime">
-            <summary>
-            Desc:字典值——添加时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCode.EditTime">
-            <summary>
-            Desc:字典值——修改时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="T:ShenNius.Share.Model.Entity.Sys.SysCodeType">
-            <summary>
-             字典类型
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.Guid">
-            <summary>
-            Desc:唯一标号Guid
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.ParentGuid">
-            <summary>
-            Desc:字典类型父级
-            Default:
-            Nullable:True
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.Layer">
-            <summary>
-            Desc:深度
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.Name">
-            <summary>
-            Desc:字典类型名称
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.Sort">
-            <summary>
-            Desc:字典类型排序
-            Default:0
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.AddTime">
-            <summary>
-            Desc:
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.EditTime">
-            <summary>
-            Desc:添加时间
-            Default:
-            Nullable:False
-            </summary>           
-        </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.SysCodeType.SiteGuid">
-            <summary>
-            Desc:归属公司或站点
-            Default:
-            Nullable:True
             </summary>           
         </member>
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.Id">

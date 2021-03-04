@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>一起牛管理系统</title>   
+    <title>神牛系统平台</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -70,7 +70,7 @@
                                 <a href="javascript:;" id="baseUserInfo" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;"  data-title="修改密码" data-icon="fa fa-gears" id="modifyPwd">修改密码</a>
+                                <a href="javascript:;" data-title="修改密码" data-icon="fa fa-gears" id="modifyPwd">修改密码</a>
                             </dd>
                             <dd>
                                 <hr>
@@ -136,7 +136,7 @@
     <script>
         layui.use(['jquery', 'layer', 'miniAdmin'], function () {
             var $ = layui.jquery,
-                layer = layui.layer,              
+                layer = layui.layer,
                 miniAdmin = layui.miniAdmin;
             //"api/init.json?v=12",
             var options = {
@@ -152,7 +152,7 @@
             };
             miniAdmin.render(options);
 
-             
+
             $('#modifyPwd').on("click", function () {
                 layer.open({
                     title: '修改密码',
@@ -182,7 +182,7 @@
                             window.location = '/sys/login';
                         });
                     }
-                });                 
+                });
             });
         });
     </script>

@@ -33,7 +33,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:ShenNius.Cms.API.ShenNiusProductApiModule">
+        <member name="T:ShenNius.Cms.API.ShenNiusCmsApiModule">
             <summary>
             
             </summary>

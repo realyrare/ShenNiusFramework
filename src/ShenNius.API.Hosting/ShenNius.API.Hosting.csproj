@@ -21,7 +21,6 @@
     <ProjectReference Include="..\api\ShenNius.Sys.API\ShenNius.Sys.API.csproj" />
     <ProjectReference Include="..\module\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
-    <ProjectReference Include="..\ShenNius.Share.Models\ShenNius.Share.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

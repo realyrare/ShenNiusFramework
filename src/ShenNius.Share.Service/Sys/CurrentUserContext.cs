@@ -47,15 +47,12 @@ namespace ShenNius.Share.Service.Sys
     public class CurrentUserContext : ICurrentUserContext
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IMemoryCache _cache;
-        private readonly IMenuService _menuService;
-
-        public CurrentUserContext(IHttpContextAccessor accessor, IMemoryCache  
-            cache, IMenuService menuService)
+     
+        public CurrentUserContext(IHttpContextAccessor accessor)
         {
             _accessor = accessor;
-            _cache = cache;
-            _menuService = menuService;
+            
+    
         }
         public string Name => GetName();
 
