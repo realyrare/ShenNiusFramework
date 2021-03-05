@@ -46,7 +46,6 @@ namespace ShenNius.Layui.Admin.Pages.Sys
         public async void OnGetLogoutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var result = await _httpHelper.PostAsync<ApiResult>("user/log-out", null, "application/json");
             Response.Redirect("/sys/login/");
         }
 

@@ -1,10 +1,7 @@
 ﻿function changeSrcCode() {
-
     $("#captchaPic").attr("src", $("#captchaPic").attr("src") + 1);// 取得img属性 得到src地址给它+1 是为了每次变换验证码
 };
-//layui.config({
-//    base: '/js/lay-module/self/'
-//});
+
 layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,
@@ -48,21 +45,22 @@ layui.use(['jquery', 'form', 'common'], function () {
                     //console.log("data:" + res.data);
                     os.SetSession('globalCurrentUserInfo', res.data);
                     setTimeout(function () {
+                        os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
-                        if (!rurl) {
-                            layer.msg('登录成功', function () {
-                                window.location.href = '/index';
-                            });
+                        if (!rurl) {                           
+                            window.location.href = '/index';
+                            //layer.msg('登录成功', function () {
+                               
+                            //});
                         }
                         else {
-                            window.location.href = rurl;
+                            window.location.href ="/index#"+rurl;
                         }
                     }, 1000);
                 } else {
-                    console.log(res.msg);
                     $("#btnlogin").text("登陆");
                     $("#btnlogin").attr('disabled', false);
-                    layer.msg(res.msg);                  
+                    os.error(res.msg);
                 }
             }
         });

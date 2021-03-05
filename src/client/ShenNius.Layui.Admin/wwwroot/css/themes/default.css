@@ -1,6 +1,7 @@
 /*头部右侧背景色 headerRightBg */
 .layui-layout-admin .layui-header {
-    background-color: #ffffff !important;
+/*    background-color: #ffffff !important;*/
+    background-color: #ffb800 !important;
 }
 
 /*头部右侧选中背景色 headerRightBgThis */
@@ -93,3 +94,6 @@
 .layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
     background-color: #1e9fff;
 }
+
+/**提示框*/
+

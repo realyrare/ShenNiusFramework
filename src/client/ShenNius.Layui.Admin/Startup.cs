@@ -60,6 +60,10 @@ namespace ShenNius.Layui.Admin
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = new CustomerFileExtensionContentTypeProvider()
+            });
             app.UseSession();
             //ÐÔÄÜÑ¹Ëõ
             app.UseResponseCompression();

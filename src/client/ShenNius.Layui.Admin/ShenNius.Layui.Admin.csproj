@@ -13,7 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="wwwroot\js\lay-module\iconPicker\iconPickerFa.js">
+	  <Content Update="wwwroot\js\lay-module\iconPickerFa\iconPickerFa.js">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>

@@ -367,9 +367,9 @@
 
 
 /**左侧菜单栏 (正常) */
-.layui-layout-body .layui-nav-itemed .layui-nav-child a, .layui-layout-body .layuimini-menu-left .layui-nav .layui-nav-child a {
+/*.layui-layout-body .layui-nav-itemed .layui-nav-child a, .layui-layout-body .layuimini-menu-left .layui-nav .layui-nav-child a {
     padding-left: 35px;
-}
+}*/
 
 .layui-layout-body .layuimini-menu-left .layui-nav .layui-nav-child .layui-nav-child a {
     padding-left: 45px;

@@ -7,7 +7,7 @@
         table = layui.table; 
     toastr.options = {
         //toast-top-center  中间
-        "positionClass": "toast-top-right",
+        "positionClass": "toast-top-center",
         "timeOut": "1500"
     };
     var tmls, tool = {

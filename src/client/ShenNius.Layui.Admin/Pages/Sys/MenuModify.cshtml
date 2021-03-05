@@ -1,6 +1,7 @@
 ﻿@page
 @model ShenNius.Layui.Admin.Pages.Sys.MenuModifyModel
 @section css{
+    <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <style>
         .layui-form-item .layui-input {
             width: 350px;
@@ -12,6 +13,9 @@
 
         .layui-form-select {
             width: 350px;
+        }
+        .layui-iconpicker-body.layui-iconpicker-body-page .hide {
+            display: none;
         }
     </style>
 }
@@ -51,7 +55,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">图标</label>
                     <div class="layui-input-block">
-                        <input type="text" id="iconPicker" lay-filter="iconPicker" name="icon" class="layui-input" style="display:none;">
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="icon" >
                         @*<input type="hidden" name="icon" id="Icon" />*@
                     </div>
                 </div>
@@ -110,29 +114,37 @@
         </script>*@
     <script>
 
-        layui.use(['form', 'laytpl', 'iconPicker',  'common'], function () {
+        layui.use(['form', 'laytpl', 'iconPickerFa',  'common'], function () {
             var form = layui.form,
                      $ = layui.$,
                     layer = layui.layer,
                 apiUtil = layui.common,
                 laytpl = layui.laytpl,
-                    iconPicker = layui.iconPicker;
-                    iconPicker.render({
-                        elem: '#iconPicker',
-                        type: 'fontClass',
-                         search: true,
-                         page: false,
-                         click: function (data) {
-                             console.log("Icon:"+data);
-                             $("#iconPicker").val(data.icon);
-                         },
-                          // 渲染成功后的回调
-                        success: function (d) {
-                           // console.log("渲染成功后的回调:"+d);
-                         }
-                    });
-               // iconPicker.checkIcon('iconPicker', 'layui-icon-star-fill');
+                iconPickerFa = layui.iconPickerFa;
 
+            iconPickerFa.render({
+                // 选择器，推荐使用input
+                elem: '#iconPicker',
+                // fa 图标接口
+                url: "/lib/font-awesome-4.7.0/less/variables.less",
+                // 是否开启搜索：true/false，默认true
+                search: true,
+                // 是否开启分页：true/false，默认true
+                page: true,
+                // 每页显示数量，默认12
+                limit: 12,
+                // 点击回调
+                click: function (data) {
+                    console.log(data);
+                    $("#iconPicker").val(data.icon);
+                },
+                // 渲染成功后的回调
+                success: function (d) {
+                    console.log(d);
+                    $("#iconPicker").val(d.icon);
+                }
+            });
+                   
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
