@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Blog.ShenNius.Client.Admin.Model;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using ShenNius.Client.Admin.Common;
-using ShenNius.Client.Admin.Model;
+using ShenNius.Layui.Admin.Common;
+using ShenNius.Layui.Admin.Model;
 
-namespace ShenNius.Client.Admin.Pages.Sys
+namespace ShenNius.Layui.Admin.Pages.Sys
 {
     [AllowAnonymous]
     public class LoginModel : PageModel

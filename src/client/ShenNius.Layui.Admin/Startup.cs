@@ -1,4 +1,4 @@
-using Blog.ShenNius.Client.Admin.Model;
+using Blog.ShenNius.Layui.Admin.Model;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,13 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using ShenNius.Client.Admin;
-using ShenNius.Client.Admin.Common;
-using ShenNius.Client.Admin.Extension;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ShenNius.Layui.Admin.Common;
+using ShenNius.Layui.Admin.Extension;
 
 namespace ShenNius.Layui.Admin
 {
@@ -39,7 +34,7 @@ namespace ShenNius.Layui.Admin
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
             {
-                o.Cookie.Name = "ShenNius.Client.Admin";
+                o.Cookie.Name = "ShenNius.Layui.Admin";
                 o.LoginPath = new PathString("/sys/login");
                 o.Cookie.HttpOnly = true;
             });

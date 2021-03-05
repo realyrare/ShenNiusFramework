@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-namespace ShenNius.Client.Admin.Common
+namespace ShenNius.Layui.Admin.Common
 {
     public class VerifyCode
     {

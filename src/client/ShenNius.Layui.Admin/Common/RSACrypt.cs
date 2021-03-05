@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using XC.Framework.Security.RSAUtil;
 
-namespace ShenNius.Client.Admin.Common
+namespace ShenNius.Layui.Admin.Common
 {
     /// <summary>
     /// RSA加密解密

@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ShenNius.Client.Admin
+namespace ShenNius.Layui.Admin
 {
     public class DefaultRouteRemovalPageRouteModelConvention : IPageRouteModelConvention
     {

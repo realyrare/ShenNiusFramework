@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShenNius.Client.Admin.Model
+namespace ShenNius.Layui.Admin.Model
 {
     public class LoginOutput
     {

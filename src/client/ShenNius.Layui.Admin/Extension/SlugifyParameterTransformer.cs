@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Routing;
 using System.Text.RegularExpressions;
 
-namespace ShenNius.Client.Admin.Extension
+namespace ShenNius.Layui.Admin.Extension
 {
     public class SlugifyParameterTransformer : IOutboundParameterTransformer
     {

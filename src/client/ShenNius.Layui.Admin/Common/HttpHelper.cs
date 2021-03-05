@@ -1,4 +1,4 @@
-﻿using Blog.ShenNius.Client.Admin.Model;
+﻿using Blog.ShenNius.Layui.Admin.Model;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ShenNius.Client.Admin.Common
+namespace ShenNius.Layui.Admin.Common
 {
     public class HttpHelper
     {

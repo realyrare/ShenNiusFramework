@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShenNius.Client.Admin.Common;
-using ShenNius.Client.Admin.Model;
+using ShenNius.Layui.Admin.Common;
+using ShenNius.Layui.Admin.Model;
 using ShenNius.Layui.Admin.Model;
 
-namespace ShenNius.Client.Admin.Pages.Sys
+namespace ShenNius.Layui.Admin.Pages.Sys
 {
     public class MenuModifyModel : PageModel
     {
