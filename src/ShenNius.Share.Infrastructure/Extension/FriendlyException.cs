@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Infrastructure.Extension
 {
-   public class FriendlyException : Exception
+    public class FriendlyException : Exception
     {
         /// <summary>
         /// Status code<br/>

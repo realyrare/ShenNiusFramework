@@ -38,7 +38,7 @@ namespace ShenNius.Share.Service.Sys
         /// 当前用户所有的权限集合
         /// </summary>
         /// <returns></returns>
-        Task<List<Menu>> GetCurrentAuthMenus();
+        Task<List<Menu>> GetCurrentAuthMenus(int userId);
         Task<ApiResult> GetAllParentMenuAsync();
     }
     public class MenuService : BaseServer<Menu>, IMenuService
@@ -53,12 +53,12 @@ namespace ShenNius.Share.Service.Sys
             _cache = cache;
             _currentUserContext = currentUserContext;
         }
-        public async Task<List<Menu>> GetCurrentAuthMenus()
+        public async Task<List<Menu>> GetCurrentAuthMenus(int userId)
         {
-           var data= _cache.Get<List<Menu>>($"authMenu:{_currentUserContext.Id}");
+           var data= _cache.Get<List<Menu>>($"authMenu:{userId}");
             if (data==null)
             {
-                var allMenus = await GetCurrentMenuByUser(_currentUserContext.Id);
+                var allMenus = await GetCurrentMenuByUser(userId);
                 data = await Db.Queryable<Menu>().WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
                               .Mapper((it, cache) =>
                               {
@@ -81,7 +81,7 @@ namespace ShenNius.Share.Service.Sys
                               })
                        .ToListAsync();
                 //把当前用户拥有的权限存入到缓存里面
-                _cache.Set($"authMenu:{_currentUserContext.Id}", allMenus);
+                _cache.Set($"authMenu:{userId}", data);
             }                    
             return data;
         }

@@ -6,14 +6,9 @@ namespace ShenNius.Share.Infrastructure.Attributes
 {
     public class LogAttribute : ActionFilterAttribute
     {
-        private string LogType { get; set; }
         private string ActionArguments { get; set; }
         private Stopwatch Stopwatch { get; set; }
 
-        public LogAttribute(string type)
-        {
-            LogType = type;
-        }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
@@ -47,7 +42,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"参数：{qs}\n " +
                 //$"结果：{res}\n " +
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
-            LogHelper.Default.Process(userName, LogType, str);
+            LogHelper.Default.Process(userName, "", str);
         }
     }
 }

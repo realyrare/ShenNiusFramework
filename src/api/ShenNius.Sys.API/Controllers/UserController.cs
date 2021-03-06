@@ -31,6 +31,7 @@ namespace ShenNius.Sys.API.Controllers
         private readonly IUserService _userService;
         private readonly IMemoryCache _cache;
         private readonly IR_User_RoleService _r_User_RoleService;
+        private readonly IMenuService _menuService;
 
         /// <summary>
         /// 
@@ -39,34 +40,36 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="userService"></param>
         /// <param name="cache"></param>
         /// <param name="r_User_RoleService"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache, IR_User_RoleService r_User_RoleService)
+        /// <param name="menuService"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache, IR_User_RoleService r_User_RoleService, IMenuService menuService)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
             _cache = cache;
             _r_User_RoleService = r_User_RoleService;
+            _menuService = menuService;
         }
-        [HttpPost, Log("用户注册")]
+        [HttpPost]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
-        [HttpPost, Log("用户修改")]
+        [HttpPost]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
-        [HttpDelete, Log("删除用户")]
+        [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
             return await _userService.DeletesAsync(commonDeleteInput.Ids);
         }
-        [HttpPost, Log("修改密码")]
+        [HttpPost]
         public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
         {
             return await _userService.ModfiyPwdAsync(modifyPwdInput);
         }
-        [HttpGet, Log("查询用户信息")]
+        [HttpGet]
         public async Task<ApiResult> GetUser(int id)
         {
             if (id == 0)
@@ -79,13 +82,13 @@ namespace ShenNius.Sys.API.Controllers
         /// 查询列表
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Log("查询用户列表")]
+        [HttpGet, Authority(Module ="user")]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             var res = await _userService.GetPagesAsync(page, 15);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-        [HttpPost, Log("设置角色")]
+        [HttpPost]
         public async Task<ApiResult> SetRole([FromBody]SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);          
@@ -136,7 +139,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="loginInput">登陆实体</param>
         /// <returns></returns>
-        [HttpPost, Log("用户登录")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> PageSignIn([FromBody] LoginInput loginInput)
         {
@@ -151,11 +154,13 @@ namespace ShenNius.Sys.API.Controllers
             {
                 return new ApiResult<LoginOutput>("生成的token字符串为空!");
             }
+            //请求当前用户的所有权限并存到缓存里面 准备后面鉴权使用
+            await _menuService.GetCurrentAuthMenus(result.Data.Id);
             result.Data.Token = token;
             return result;
         }
 
-        [HttpPost, Log("用户退出")]
+        [HttpPost]
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

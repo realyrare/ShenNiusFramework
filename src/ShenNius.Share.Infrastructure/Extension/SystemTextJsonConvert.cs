@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ShenNius.Share.Infrastructure.Extension
 {
     /// <summary>
-    /// System.Text.Json
+    /// System.Text.Json（.net core自带json库），目前支持尚不完善
     /// </summary>
     public class SystemTextJsonConvert
     {

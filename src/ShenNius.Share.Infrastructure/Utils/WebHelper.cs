@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Infrastructure.Utils
+﻿namespace ShenNius.Share.Infrastructure.Utils
 {
-   public class WebHelper
+    public class WebHelper
     {
        
         /// <summary>

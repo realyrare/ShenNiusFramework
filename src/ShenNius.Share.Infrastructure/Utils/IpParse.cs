@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 
 namespace ShenNius.Share.Infrastructure.Utils
 {
-   public class IpParse
+    public class IpParse
     {
         public static string GetAddressByIP(string IP)
         {

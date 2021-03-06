@@ -28,7 +28,7 @@ namespace ShenNius.Sys.API.Controllers
         {
             return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
         }
-        [HttpGet]
+        [HttpGet,Authority(Module = "role")]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             var res = await _roleService.GetPagesAsync(page, 15);
@@ -67,7 +67,7 @@ namespace ShenNius.Sys.API.Controllers
             var role = _mapper.Map<Role>(roleInput);
             return new ApiResult(await _roleService.AddAsync(role));
         }
-        [HttpPost, Log("设置权限")]
+        [HttpPost]
         public async Task<ApiResult> SetMenu(SetRoleMenuInput setRoleMenuInput)
         {
             return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
