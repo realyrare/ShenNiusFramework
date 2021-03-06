@@ -99,10 +99,14 @@ namespace ShenNius.Share.Service.Sys
                 throw new ArgumentNullException("两次输入的密码不一致");
             }
             modifyPwdInput.OldPassword = Md5Crypt.Encrypt(modifyPwdInput.OldPassword);
-            var model = await GetModelAsync(d => d.Id == modifyPwdInput.Id && d.Password == modifyPwdInput.OldPassword);
-            if (model == null)
+            var model = await GetModelAsync(d => d.Id == modifyPwdInput.Id);
+            if (model.Id<=0)
             {
                 throw new ArgumentNullException("用户信息为空");
+            }
+            if (model.Password == modifyPwdInput.OldPassword)
+            {
+                throw new ArgumentNullException("旧密码错误!");
             }
             modifyPwdInput.ConfirmPassword = Md5Crypt.Encrypt(modifyPwdInput.ConfirmPassword);
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);

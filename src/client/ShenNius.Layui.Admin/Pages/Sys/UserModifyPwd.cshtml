@@ -49,10 +49,10 @@
 </div>
 @section js{
     <script>
-        layui.use(['form', 'common', 'miniTab'], function () {
+        layui.use(['form', 'common', 'layer','jquery'], function () {
             var form = layui.form,
                 layer = layui.layer,
-                miniTab = layui.miniTab,
+                $ = layui.jquery,
                 apiUtil = layui.common;
             //监听提交
             form.on('submit(saveBtn)', function (data) {
@@ -62,13 +62,17 @@
                 }
                 data.field.id=@Model.CurrentUserId;
                 apiUtil.ajax('user/modfiy-pwd', data.field, "application/json", "post", function (res) {
-                    if (res.statusCode == 200 && res.success == true) {                       
-                        var iframeIndex = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(iframeIndex);
-                        setTimeout(function () {                           
-                                layer.msg('密码修改成功，即将退出,重新登陆...', function () {
-                                    window.location.href = "/sys/login";
-                                });                            
+                    if (res.statusCode == 200 && res.success == true) {                    
+                        setTimeout(function () { 
+                            $.ajax({
+                                url: "/sys/login?handler=Logout",
+                                type: "get",
+                                success: function (res) {
+                                    layer.msg('密码修改成功，即将退出,重新登陆...', function () {
+                                        window.location = '/sys/login';
+                                    });
+                                }
+                            });                                                          
                         }, 1000);
                     } else {
                         apiUtil.error(res.msg);

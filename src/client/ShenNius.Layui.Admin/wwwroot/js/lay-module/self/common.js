@@ -40,14 +40,13 @@
                 success: function (data) {                   
                     callFun(data);
                 },
-                error: function (e) {
-                    console.log("erro :" + e);
+                error: function (e) {                 
                     //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
                     //$.parseJSON 进行转译    res.msg 是自己组装的错误信息通用变量 
-                    var res = $.parseJSON(e.responseText);
+                    var res = JSON.parse(e.responseText);
                     console.log("erro object:" + e.responseText);
                     if (res.statusCode == 401) {
-                        this.warning(res.msg);
+                        toastr.warning(res.msg);
                         setTimeout(function () {
                             window.location.href = "/sys/login";
                         }, 500)
@@ -55,11 +54,11 @@
                     }
                     if (res.statusCode == 500) {
                         // tool.error(data.msg);
-                        this.error(res.msg);
+                        toastr.error(res.msg);
                         return;
                     }
                     if (res.statusCode == 400) {
-                        this.error(res.msg);
+                        toastr.error(res.msg);
                         return;
                     }
                     this.error('连接异常，请稍后重试！');

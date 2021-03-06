@@ -63,8 +63,7 @@ layui.use(['jquery', 'form', 'common'], function () {
                     os.error(res.msg);
                 }
             },
-            error: function (e) {
-                console.log("erro :" + e);               
+            error: function (e) {              
                 var res = $.parseJSON(e.responseText);
                 console.log("erro object:" + e.responseText);
                 os.error(res.msg);
@@ -73,4 +72,11 @@ layui.use(['jquery', 'form', 'common'], function () {
         });
         return false;
     });
+    $(window).resize(
+        bodysize
+    );
+    bodysize();
+    function bodysize() {
+        $("body").height($(window).height());
+    }
 });

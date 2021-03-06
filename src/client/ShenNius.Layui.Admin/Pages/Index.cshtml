@@ -139,8 +139,11 @@
                         type: 2,
                         shade: 0.2,
                         shadeClose: true,
-                        area: ['600px', '400px'],
+                        area: ['600px', '360px'],
                         content: '/sys/user-modify-pwd',
+                        btn2: function () {
+                            layer.closeAll();
+                        }
                     });
                 });
                 $('#baseUserInfo').on("click", function () {

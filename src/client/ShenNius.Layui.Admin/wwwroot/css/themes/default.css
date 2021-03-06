@@ -67,7 +67,7 @@
 
 /*左侧菜单背景 leftMenuBg */
 .layui-side.layui-bg-black, .layui-side.layui-bg-black > .layuimini-menu-left > ul, .layuimini-menu-left-zoom > ul {
-    background-color: #20222A !important;
+    background-color: #16171f !important;
 }
 
 /*左侧菜单选中背景 leftMenuBgThis */
