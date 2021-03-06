@@ -30,7 +30,7 @@ namespace ShenNius.Layui.Admin.Pages.Sys
         [BindProperty]
         public List<string> RsaKey { get; set; }
         public string Number { get; set; }
-        public void OnGet()
+        private void LoadKey()
         {
             var rsaKey = RSACrypt.GetKey();
             var number = Guid.NewGuid().ToString();
@@ -43,13 +43,18 @@ namespace ShenNius.Layui.Admin.Pages.Sys
             //获得公钥和私钥
             _cache.Set(LoginKey + number, rsaKey);
         }
+        public void OnGet()
+        {
+            LoadKey();
+        }
         public async void OnGetLogoutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            LoadKey();
             Response.Redirect("/sys/login/");
         }
 
-      
+
         public FileResult OnGetVCode()
         {
             var vcode = VerifyCode.CreateRandomCode(4);
@@ -63,13 +68,13 @@ namespace ShenNius.Layui.Admin.Pages.Sys
             var apiResult = new ApiResult<LoginOutput>() { StatusCode = 500, Success = false };
             try
             {
-              
+
                 if (string.IsNullOrEmpty(loginInput.Captcha))
                 {
                     apiResult.Msg = "验证码错误!";
                     return new JsonResult(apiResult);
                 }
-               var vcode=HttpContext.Session.GetString("vcode");
+                var vcode = HttpContext.Session.GetString("vcode");
                 if (string.IsNullOrEmpty(vcode))
                 {
                     apiResult.Msg = "服务端验证码错误!";

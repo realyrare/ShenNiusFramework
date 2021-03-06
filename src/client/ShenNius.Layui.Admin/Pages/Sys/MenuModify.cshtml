@@ -1,12 +1,12 @@
 ﻿@page
 @model ShenNius.Layui.Admin.Pages.Sys.MenuModifyModel
 @section css{
+    @*<link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">*@
     <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <style>
         .layui-form-item .layui-input {
             width: 350px;
-        }
-
+        }        
         .layui-iconpicker {
             max-width: 100%;
         }
@@ -14,6 +14,7 @@
         .layui-form-select {
             width: 350px;
         }
+
         .layui-iconpicker-body.layui-iconpicker-body-page .hide {
             display: none;
         }
@@ -55,7 +56,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">图标</label>
                     <div class="layui-input-block">
-                        <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="icon" >
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="icon">
                         @*<input type="hidden" name="icon" id="Icon" />*@
                     </div>
                 </div>
@@ -98,7 +99,7 @@
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" style="">确认保存</button>
                     </div>
                 </div>
             </div>
@@ -144,7 +145,7 @@
                     $("#iconPicker").val(d.icon);
                 }
             });
-                   
+
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */

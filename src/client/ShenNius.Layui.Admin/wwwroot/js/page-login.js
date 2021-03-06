@@ -58,11 +58,18 @@ layui.use(['jquery', 'form', 'common'], function () {
                         }
                     }, 1000);
                 } else {
-                    $("#btnlogin").text("登陆");
+                    $("#btnlogin").text("立即登录");
                     $("#btnlogin").attr('disabled', false);
                     os.error(res.msg);
                 }
-            }
+            },
+            error: function (e) {
+                console.log("erro :" + e);               
+                var res = $.parseJSON(e.responseText);
+                console.log("erro object:" + e.responseText);
+                os.error(res.msg);
+                return;
+            },
         });
         return false;
     });

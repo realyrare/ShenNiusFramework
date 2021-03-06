@@ -3,7 +3,6 @@
 @model ShenNius.Layui.Admin.Pages.Sys.SetMenuModel
 
 @section css{
-    <link href="~/css/site.min.css" rel="stylesheet" />
     <style>
         .layui-table-view {
             margin-top: 0px;
@@ -20,8 +19,10 @@
         .list-wall {
             padding-top: 0px;
         }
-
-        .fyt-center {
+        .layui-btn {
+            background-color: #409eff;
+        }
+        .shenius-center {
             padding-top: 6px;
             text-align: center;
         }
@@ -62,7 +63,7 @@
 }
 <div class="layui-col-220 fyt-wall">
     <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
-    <div class="fyt-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
+    <div class="shenius-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
 </div>
 <div class="right-col-body fyt-wall">
     <div class="list-wall" style="padding-top:10px;">

@@ -24,7 +24,14 @@ body {
         bottom: 0;
         z-index: -1;
     }
-
+/**按钮框*/
+.layui-btn {
+    background-color: #409eff;
+    border-color: #409eff;
+    color: #fff;
+    height: 33px;
+    border-radius: 100px !important;
+}
 .logo-title em {
     display: block;
     margin-top: 8px;

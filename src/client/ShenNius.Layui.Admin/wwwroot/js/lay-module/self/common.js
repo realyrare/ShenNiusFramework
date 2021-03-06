@@ -186,14 +186,7 @@
          */
         SessionRemove: function (key) {
             localStorage.removeItem(key);
-        },
-        ///**
-        // * 打印日志到控制台
-        // * @param {data} data : Json
-        // */
-        //log: function (data) {
-        //    console.log(JSON.stringify(data));
-        //},
+        },      
         isExtImage: function (name) {
             var imgExt = new Array(".png", ".jpg", ".jpeg", ".bmp", ".gif");
             name = name.toLowerCase();
