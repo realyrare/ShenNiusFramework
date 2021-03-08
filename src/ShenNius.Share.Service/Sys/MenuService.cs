@@ -76,7 +76,8 @@ namespace ShenNius.Share.Service.Sys
                                   }
                                   if (list.Count > 0)
                                   {
-                                      it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.Name).ToList());
+                                      //拿取英文名  因为中文名称可能会变，英文名称很少变，出于这个考虑，鉴于还是使用英文名称
+                                      it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.EnName).ToList());
                                   }
                               })
                        .ToListAsync();

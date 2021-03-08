@@ -53,7 +53,7 @@
                     { field: 'type', width: 150, title: '类型' },
                     { field: 'summary', title: '备注' },
                     { field: 'createTime', title: '创建时间' },
-                    { field: 'modifyTime', title: '修改时间' },
+                    { field: 'updateTime', title: '修改时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
                 ]],
                 parseData: function (res) {
@@ -100,7 +100,7 @@
                         shade: 0.2,
                         //maxmin:true,
                         shadeClose: false,
-                        area: ['600px', '350px'],
+                        area: ['600px', '450px'],
                         zIndex: "10000",
                         content: content,
                         end: function () {
@@ -144,11 +144,10 @@
                     var content = '/sys/config-modify?id=' + data.id;
                     var index = layer.open({
                         title: '编辑字典',
-                        // tips: [1, '#c00'],
                         type: 2,
                         shade: 0.2,
                         shadeClose: true,
-                        area: ['600px', '500px'],
+                        area: ['600px', '550px'],
                         content: content,
                         end: function () {
                             refeshTable();

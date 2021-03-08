@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -44,7 +45,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult();
         }
 
-        [HttpGet]
+        [HttpGet, Authority(Module = "menu")]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             return await _menuService.GetListPagesAsync(page, key);

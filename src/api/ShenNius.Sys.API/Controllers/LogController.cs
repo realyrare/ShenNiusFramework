@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace ShenNius.Sys.API.Controllers
           return new ApiResult( await _logService.DeleteAsync(commonDeleteInput.Ids));
         }
 
-        [HttpGet]
+        [HttpGet, Authority(Module = "log")]
         public async Task<ApiResult> GetListPages(int page, string key=null)
         {            
             var res = await _logService.GetPagesAsync(page, 15);

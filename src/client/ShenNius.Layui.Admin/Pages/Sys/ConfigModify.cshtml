@@ -11,9 +11,12 @@
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+        .layui-form-select {
+            width: 350px;
+        }
     </style>
 }
-<form class="layui-form" action="" lay-filter="role-edit">
+<form class="layui-form" action="" lay-filter="config-edit">
     <div class="layuimini-container layuimini-page-anim">
         <div class="layuimini-main">
             <div class="layui-form layuimini-form">
@@ -45,7 +48,14 @@
                         <input type="text" name="enName" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
                     </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">类型</label>
+                    <div class="layui-input-block">
+                        <select name="type" id="type" lay-verify="type" lay-filter="type">                           
+                            <option value="按钮">按钮</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">备注信息</label>
@@ -79,9 +89,9 @@
 
                 var id=@Model.Id;
                 if (id > 0) {
-                    apiUtil.ajax('role/detail', { id: id }, "application/json", "get", function (res) {
+                    apiUtil.ajax('config/detail', { id: id }, "application/json", "get", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
-                            form.val("role-edit", res.data);
+                            form.val("config-edit", res.data);
                         }
                     });
                 }
@@ -89,7 +99,7 @@
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('role/modify', data.field, "application/json", "put", function (res) {
+                        apiUtil.ajax('config/modify', data.field, "application/json", "put", function (res) {
                             //console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
@@ -99,7 +109,7 @@
                             }
                         });
                     } else {
-                        apiUtil.ajax('role/add', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('config/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 parent.layer.close(parentIndex);

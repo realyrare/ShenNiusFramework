@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
@@ -19,13 +21,13 @@ namespace ShenNius.Sys.API.Controllers
             _configService = configService;
             _mapper = mapper;
         }
-        [HttpDelete]
+        [HttpDelete,Authority(Module = "config",Method = "delete")]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
             return new ApiResult(await _configService.DeleteAsync(commonDeleteInput.Ids));
         }
 
-        [HttpGet]
+        [HttpGet, Authority(Module = "config")]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             var res = await _configService.GetPagesAsync(page, 15);
@@ -38,16 +40,26 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: res);
         }
 
-        [HttpPost]
+        [HttpPost, Authority(Module = "config", Method = "add")]
         public async Task<ApiResult> Add([FromBody] ConfigInput input)
         {
-            var model = _mapper.Map<Config>(input);
-            var res = await _configService.AddAsync(model);
+            var model= await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
+            if (model.Id>0)
+            {
+                throw new FriendlyException("英文名称已存在");
+            }
+            var modelInput = _mapper.Map<Config>(input);
+            var res = await _configService.AddAsync(modelInput);
             return new ApiResult(data: res);
         }
-        [HttpPut]
+        [HttpPut, Authority(Module = "config", Method = "edit")]
         public async Task<ApiResult> Modify([FromBody] ConfigModifyInput input)
-        {           
+        {
+            var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
+            if (model.Id > 0)
+            {
+                throw new FriendlyException("英文名称已存在");
+            }
             var res = await _configService.UpdateAsync(d=>new Config() {Name=input.Name,EnName=input.EnName,Type=input.Type,
                 UpdateTime=DateTime.Now,
                 Summary=input.Summary
