@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-   public class MenuModifyInput
+    public class MenuModifyInput
     {
         public int Id { get; set; }
 
@@ -21,6 +19,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         /// Nullable:True
         /// </summary>           
         public string Name { get; set; }
+        public string NameCode { get; set; }
 
         /// <summary>
         /// Desc:

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShenNius.Layui.Admin.Model
 {
@@ -36,14 +33,6 @@ namespace ShenNius.Layui.Admin.Model
         /// Nullable:True
         /// </summary>           
         public string Summary { get; set; }
-
-        /// <summary>
-        /// Desc:字典值——添加时间
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public DateTime CreateTime { get; set; } = DateTime.Now;
-
 
         public string Type { get; set; }
     }

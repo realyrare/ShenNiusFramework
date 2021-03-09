@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
@@ -19,7 +18,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         /// Nullable:True
         /// </summary>           
         public string Name { get; set; }
-
+        public string NameCode { get; set; }
         /// <summary>
         /// Desc:
         /// Default:

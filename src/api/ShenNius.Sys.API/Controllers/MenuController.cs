@@ -112,13 +112,14 @@ namespace ShenNius.Sys.API.Controllers
         }
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
-        {         
+        {
+            menuInput.Icon = $"fa {menuInput.Icon}";
             return await _menuService.AddToUpdateAsync(menuInput);
         }
 
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] MenuModifyInput menuModifyInput)
-        {
+        {            
             return await _menuService.ModifyAsync(menuModifyInput);
         }
 

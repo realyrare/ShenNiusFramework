@@ -8,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ShenNius.Layui.Admin.Common
 {
     public class HttpHelper
@@ -20,12 +19,17 @@ namespace ShenNius.Layui.Admin.Common
             _httpClientFactory = httpClientFactory;
             _domainConfig = domainConfig.CurrentValue;
         }
-        public async Task<T> GetAsync<T>(string queryString) where T : class
+        public async Task<T> GetAsync<T>(string queryString,string token=null) where T : class
         {
             try
             {
                 var client = _httpClientFactory.CreateClient();
                 string url = _domainConfig.ApiHost + queryString;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    // 'Authorization': 'Bearer ' + token
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }               
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -51,12 +55,12 @@ namespace ShenNius.Layui.Admin.Common
             }
            
         }
-        public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, int timeOut = 30, Dictionary<string, string> headers = null)
+        public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, Dictionary<string, string> headers = null)
         {
             url = _domainConfig.ApiHost + url;
             postData ??= "";
             var client = _httpClientFactory.CreateClient();
-            client.Timeout = new TimeSpan(0, 0, timeOut);
+            client.Timeout = new TimeSpan(0, 0, 30);
             if (headers != null)
             {
                 foreach (var header in headers)

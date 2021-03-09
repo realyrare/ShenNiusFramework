@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Utils;
@@ -13,7 +12,6 @@ using ShenNius.Share.Service.Repository.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShenNius.Share.Service.Sys
@@ -59,7 +57,7 @@ namespace ShenNius.Share.Service.Sys
             if (data==null)
             {
                 var allMenus = await GetCurrentMenuByUser(userId);
-                data = await Db.Queryable<Menu>().WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
+                data = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
                               .Mapper((it, cache) =>
                               {
                                   var codeList = cache.Get(t =>
@@ -88,7 +86,7 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
         {
-            var res = await Db.Queryable<Menu>().WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
+            var res = await Db.Queryable<Menu>().Where(d=>d.Status).WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
                       .OrderBy(m => m.Sort)
                           .Mapper((it, cache) =>
                           {
@@ -162,6 +160,11 @@ namespace ShenNius.Share.Service.Sys
 
         public async Task<ApiResult> AddToUpdateAsync(MenuInput menuInput)
         {
+          var menuModel= await GetModelAsync(d => d.NameCode.Equals(menuInput.NameCode));
+            if (menuModel?.Id>0)
+            {
+                throw new FriendlyException("已经存在该权限码了");
+            }
             var menu = _mapper.Map<Menu>(menuInput);
             var menuId = await AddAsync(menu);
             string parentIdList = ""; int layer = 0;
@@ -186,6 +189,11 @@ namespace ShenNius.Share.Service.Sys
 
         public async Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput)
         {
+            var menuModel = await GetModelAsync(d => d.NameCode.Equals(menuModifyInput.NameCode)&&d.Id!= menuModifyInput.Id);
+            if (menuModel?.Id > 0)
+            {
+                throw new FriendlyException("已经存在该权限码了");
+            }
             string parentIdList = ""; int layer = 0;
             if (menuModifyInput.ParentId > 0)
             {
@@ -247,7 +255,7 @@ namespace ShenNius.Share.Service.Sys
                 Status = false
             }).ToListAsync();
 
-            var permissionsModel = await Db.Queryable<R_Role_Menu>().Where(d => d.RoleId == roleId && d.MenuId == menuId).FirstAsync();
+            var permissionsModel = await Db.Queryable<R_Role_Menu>().Where(d => d.RoleId == roleId && d.MenuId == menuId&&d.IsPass).FirstAsync();
 
             if (permissionsModel != null && permissionsModel.BtnCodeIds != null)
             {
@@ -268,7 +276,7 @@ namespace ShenNius.Share.Service.Sys
         public async Task<ApiResult> TreeRoleIdAsync(int roleId)
         {
             var list = new List<MenuTreeOutput>();
-            var existMenuId = await Db.Queryable<R_Role_Menu>().Where(d => d.IsPass && d.RoleId == roleId).Select(d => d.MenuId).ToListAsync();
+            var existMenuId = await Db.Queryable<R_Role_Menu>().Where(d => d.IsPass && d.RoleId == roleId&&d.IsPass).Select(d => d.MenuId).ToListAsync();
 
             var allMenus = await GetListAsync(d => d.Status);
             if (allMenus.Count <= 0 || allMenus == null)
@@ -326,17 +334,7 @@ namespace ShenNius.Share.Service.Sys
             return allMenuIds;
         }
         public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
-        {
-            //var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
-            //if (allRoleIds == null || allRoleIds.Count == 0)
-            //{
-            //    return new ApiResult("当前用户没有角色授权", 500);
-            //}
-            //var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
-            //if (allMenuIds == null|| allMenuIds.Count==0)
-            //{
-            //    return new ApiResult("当前角色没有菜单授权", 500);
-            //}
+        {          
             var allMenuIds=  await GetCurrentMenuByUser(userId);
             var allMenus = await GetListAsync(d => d.Status&&allMenuIds.Contains(d.Id));
            

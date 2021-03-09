@@ -4,17 +4,6 @@
         <name>ShenNius.Sys.API</name>
     </assembly>
     <members>
-        <member name="T:ShenNius.Sys.API.Authority.AuthorityAttribute">
-            <summary>
-            权限验证
-            </summary>
-        </member>
-        <member name="M:ShenNius.Sys.API.Authority.AuthorityAttribute.#ctor(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name">菜单名+按钮名，如 菜单列表新增</param>
-        </member>
         <member name="M:ShenNius.Sys.API.Controllers.MenuController.BtnCode(System.Int32,System.Int32)">
             <summary>
             获取菜单按钮
@@ -63,7 +52,7 @@
             用户控制器
             </summary>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService,Microsoft.Extensions.Caching.Memory.IMemoryCache,ShenNius.Share.Service.Sys.IR_User_RoleService)">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService,Microsoft.Extensions.Caching.Memory.IMemoryCache,ShenNius.Share.Service.Sys.IR_User_RoleService,ShenNius.Share.Service.Sys.IMenuService)">
             <summary>
             
             </summary>
@@ -71,6 +60,7 @@
             <param name="userService"></param>
             <param name="cache"></param>
             <param name="r_User_RoleService"></param>
+            <param name="menuService"></param>
         </member>
         <member name="M:ShenNius.Sys.API.Controllers.UserController.GetListPages(System.Int32,System.String)">
             <summary>
