@@ -87,7 +87,7 @@ namespace ShenNius.Share.Service.Sys
         public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
         {
             var res = await Db.Queryable<Menu>().Where(d=>d.Status).WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
-                      .OrderBy(m => m.Sort)
+                      .OrderBy(m => m.CreateTime,SqlSugar.OrderByType.Desc)
                           .Mapper((it, cache) =>
                           {
                               var codeList = cache.Get(t =>

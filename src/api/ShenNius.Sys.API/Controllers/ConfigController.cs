@@ -7,6 +7,7 @@ using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -30,7 +31,12 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet, Authority(Module = "config")]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            var res = await _configService.GetPagesAsync(page, 15);
+            Expression<Func<Config, bool>> whereExpression = null;
+            if (!string.IsNullOrEmpty(key))
+            {
+                whereExpression = d => d.Name.Contains(key);
+            }
+            var res = await _configService.GetPagesAsync(page, 15, whereExpression,d=>d.Id,false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpGet]
@@ -55,7 +61,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpPut, Authority(Module = "config", Method = "edit")]
         public async Task<ApiResult> Modify([FromBody] ConfigModifyInput input)
         {
-            var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
+            var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName)&&d.Id!=input.Id);
             if (model.Id > 0)
             {
                 throw new FriendlyException("英文名称已存在");

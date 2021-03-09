@@ -13,7 +13,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">菜单名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="menuname" autocomplete="off" class="layui-input">
+                                <input type="text" name="menuName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -92,18 +92,18 @@
                 }, 'data');
             };
             // 监听搜索操作
-            form.on('submit(data-search-btn)', function (data) {
-                var result = JSON.stringify(data.field);
-                layer.alert(result, {
-                    title: '最终的搜索信息'
-                });
+            form.on('submit(data-search-btn)', function (data) {              
+                if (data.field.menuName == "") {
+                    layer.msg("您懂搜索吗？");
+                    return;
+                }
                 //执行搜索重载
                 table.reload('currentTableId', {
                     page: {
                         curr: 1
                     }
                     , where: {
-                        searchParams: result
+                        key: data.field.menuName
                     }
                 }, 'data');
                 return false;

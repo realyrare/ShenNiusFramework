@@ -113,6 +113,10 @@
                                     string flag = "";
                                     for (int i = 0; i < Model.MenuOutput.BtnCodeIds.Length; i++)
                                     {
+                                        if (string.IsNullOrEmpty(Model.MenuOutput.BtnCodeIds[i]))
+                                        {
+                                            continue;
+                                        }
                                         var id = Convert.ToInt32(Model.MenuOutput.BtnCodeIds[i]);
                                         if (item.Id == id)
                                         {
@@ -183,6 +187,7 @@
             if (id> 0)
             {
                 BindParentMenu(@Model.MenuOutput.ParentId);
+                //将已经存在的按钮集合赋值
                 var jsonStr = '@Html.Raw(Model.AlreadyBtns)';
                 if (jsonStr != null) {
                     var arry = jsonStr.split(',');
@@ -213,13 +218,19 @@
                     checkList.splice(index, 1);
                 }
             });
-
+            if (checkList.length > 0 && checkList != null) {
+                //移除数组里面的空字符
+                let newArr = checkList.filter(i => i && i.trim());
+                checkList = newArr;
+                }
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id > 0) {
                         data.field.btnCodeIds = checkList;
+                        //layuimini bug
+                        data.field.icon = "fa " + data.field.icon;
                         apiUtil.ajax('menu/modify', data.field, "application/json", "put", function (res) {
-                            console.log("msg:" + res.msg);
+                           // console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 parent.layer.close(index);
@@ -229,7 +240,8 @@
                         });
                     } else {
                         data.field.btnCodeIds = checkList;
-                        console.log("btnCodeIds:" + data.field.btnCodeIds);
+                        //layuimini bug
+                        data.field.icon = "fa " + data.field.icon;
                         apiUtil.ajax('menu/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);

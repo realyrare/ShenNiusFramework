@@ -7,6 +7,7 @@ using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Service.Sys;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
@@ -31,7 +32,12 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet,Authority(Module = "role")]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            var res = await _roleService.GetPagesAsync(page, 15);
+            Expression<Func<Role, bool>> whereExpression = null;
+            if (!string.IsNullOrEmpty(key))
+            {
+                whereExpression = d => d.Name.Contains(key);
+            }
+            var res = await _roleService.GetPagesAsync(page, 15, whereExpression, d=>d.Id,false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         /// <summary>

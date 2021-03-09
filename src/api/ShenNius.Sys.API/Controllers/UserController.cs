@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Sys;
+using ShenNius.Share.Model.Entity.Sys;
+using System.Linq.Expressions;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -49,17 +51,22 @@ namespace ShenNius.Sys.API.Controllers
             _r_User_RoleService = r_User_RoleService;
             _menuService = menuService;
         }
-        [HttpPost]
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <param name="userRegisterInput"></param>
+        /// <returns></returns>
+        [HttpPost, Authority(Module = "user",Method ="add")]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
-        [HttpPost]
+        [HttpPost, Authority(Module = "user", Method = "edit")]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
-        [HttpDelete]
+        [HttpDelete, Authority(Module = "user", Method = "delete")]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
             return await _userService.DeletesAsync(commonDeleteInput.Ids);
@@ -85,10 +92,20 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet, Authority(Module ="user")]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
-            var res = await _userService.GetPagesAsync(page, 15);
+            Expression<Func<User, bool>> whereExpression = null;
+            if (!string.IsNullOrEmpty(key))
+            {
+                whereExpression = d => d.Name.Contains(key);
+            }
+            var res = await _userService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-        [HttpPost]
+        /// <summary>
+        /// 设置角色（授权）
+        /// </summary>
+        /// <param name="setUserRoleInput"></param>
+        /// <returns></returns>
+        [HttpPost, Authority(Module = "user",Method ="auth")]
         public async Task<ApiResult> SetRole([FromBody]SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);          
