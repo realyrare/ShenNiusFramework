@@ -19,14 +19,16 @@
 6. token:Json Web Token
 7. 实体验证：FluentValidation
 8. 实体映射：AutoMapper
-
+9. 数据库使用mysql（后面会做sqlserver等其他数据库的兼容）
+10.支持跨平台部署 linux/windows
 
 #### 安装教程
 
 1.  git clone  xxxx
-2.  多项启动ShenNius.API.Hosting  和ShenNius.Layui.Admin
-3.  ShenNius.API.Hosting 可以配置你要启动的API项目
-
+2.  在mysql上创建数据库shenniusdb，然后执行源码db文件下的sql语句，以最近日期为准。
+3.  更改appsettings.json中的数据库链接字符串
+4.  ShenNius.API.Hosting 可以配置你要启动的API项目
+5.  如果要启动后台管理，请多项启动ShenNius.API.Hosting  和ShenNius.Layui.Admin。如果只是想启动api swagger ,启动ShenNius.API.Hosting即可。
 
 #### 使用说明
 
