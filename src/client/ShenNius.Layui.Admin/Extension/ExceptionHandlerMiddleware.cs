@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Layui.Admin.Common;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShenNius.Share.Infrastructure.Middleware
+namespace ShenNius.Layui.Admin.Extension
 {
     public class ExceptionHandlerMiddleware
     {
@@ -23,18 +18,19 @@ namespace ShenNius.Share.Infrastructure.Middleware
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public async Task Invoke(HttpContext context)
+        public void Invoke(HttpContext context)
         {
             try
             {
-                await _next(context);
+                 _next(context);
             }
             catch (Exception ex)
             {
-                await ExceptionHandlerAsync(context, ex.Message);
+                 ExceptionHandler(context, ex.Message);
             }
             finally
             {
+
                 //var statusCode = context.Response.StatusCode;
                 //var statusList=new List<int>() { 400, 401, 200, 403 };
                 //if (!statusList.Contains(statusCode))
@@ -51,16 +47,11 @@ namespace ShenNius.Share.Infrastructure.Middleware
         /// <param name="context"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        private async Task ExceptionHandlerAsync(HttpContext context, string message)
+        private void ExceptionHandler(HttpContext context, string message)
         {
-           // context.Response.ContentType = "application/json;charset=utf-8";
-
-            var result = new ApiResult(msg: message, statusCode:context.Response.StatusCode);
-            var setting = new JsonSerializerSettings
-            {
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
-            };
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(result,Formatting.None,setting));
+            // context.Response.ContentType = "application/json;charset=utf-8";
+            LogHelper.WriteLog(message);
+             context.Response.Redirect("/error");
         }
     }
 }

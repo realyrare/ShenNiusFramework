@@ -78,6 +78,7 @@ namespace ShenNius.Layui.Admin
                             "public,max-age=" + durationInSeconds;
                     }
                 });
+            //app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error");

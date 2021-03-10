@@ -1,4 +1,4 @@
-﻿namespace ShenNius.Layui.Admin.Model
+﻿namespace ShenNius.Layui.Admin.Extension
 {
     public class ApiResult
     {

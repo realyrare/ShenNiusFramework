@@ -209,6 +209,11 @@
             左侧树形菜单
             </summary>
         </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Output.LoginOutput.MenuAuthOutputs">
+            <summary>
+            权限
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Name">
             <summary>
             登录账号

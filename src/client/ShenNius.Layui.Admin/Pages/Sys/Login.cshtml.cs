@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using ShenNius.Layui.Admin.Common;
+using ShenNius.Layui.Admin.Extension;
 using ShenNius.Layui.Admin.Model;
 
 namespace ShenNius.Layui.Admin.Pages.Sys
@@ -105,6 +106,8 @@ namespace ShenNius.Layui.Admin.Pages.Sys
                 {
                     return new JsonResult(result);
                 }
+                //¥Ê»®œﬁ
+                _cache.Set($"frontAuthMenu:{result.Data.Id}",result.Data.MenuAuthOutputs);
                 var identity = new ClaimsPrincipal(
                    new ClaimsIdentity(new[]
                        {

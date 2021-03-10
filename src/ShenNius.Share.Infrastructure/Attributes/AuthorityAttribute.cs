@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Utils;
-using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Dtos.Output.Sys;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
@@ -58,7 +58,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
             //从缓存获得权限
 
-            var list = memoryCache.Get<List<Menu>>($"authMenu:{userId}");
+            var list = memoryCache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
             if (list == null || list.Count <= 0)
             {
                 ReturnResult(context, "不好意思，您没有该按钮操作权限，请联系系统管理员！", StatusCodes.Status403Forbidden);

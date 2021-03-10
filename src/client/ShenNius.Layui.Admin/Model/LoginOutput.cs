@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ShenNius.Layui.Admin.Model
 {
@@ -13,5 +10,9 @@ namespace ShenNius.Layui.Admin.Model
         public string LoginTime { get; set; }
         public string TrueName { get; set; }
         public string Token { get; set; }
+        /// <summary>
+        /// 权限
+        /// </summary>
+        public List<MenuAuthOutput> MenuAuthOutputs { get; set; } = new List<MenuAuthOutput>();
     }
 }

@@ -36,7 +36,7 @@ namespace ShenNius.Share.Service.Sys
         /// 当前用户所有的权限集合
         /// </summary>
         /// <returns></returns>
-        Task<List<Menu>> GetCurrentAuthMenus(int userId);
+        Task<List<MenuAuthOutput>> GetCurrentAuthMenus(int userId);
         Task<ApiResult> GetAllParentMenuAsync();
     }
     public class MenuService : BaseServer<Menu>, IMenuService
@@ -51,13 +51,13 @@ namespace ShenNius.Share.Service.Sys
             _cache = cache;
             _currentUserContext = currentUserContext;
         }
-        public async Task<List<Menu>> GetCurrentAuthMenus(int userId)
+        public async Task<List<MenuAuthOutput>> GetCurrentAuthMenus(int userId)
         {
-           var data= _cache.Get<List<Menu>>($"authMenu:{userId}");
+           var data= _cache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
             if (data==null)
             {
                 var allMenus = await GetCurrentMenuByUser(userId);
-                data = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
+               var  query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
                               .Mapper((it, cache) =>
                               {
                                   var codeList = cache.Get(t =>
@@ -80,6 +80,7 @@ namespace ShenNius.Share.Service.Sys
                               })
                        .ToListAsync();
                 //把当前用户拥有的权限存入到缓存里面
+                data=  _mapper.Map<List<MenuAuthOutput>>(query);
                 _cache.Set($"authMenu:{userId}", data);
             }                    
             return data;
@@ -340,7 +341,7 @@ namespace ShenNius.Share.Service.Sys
            
             var model = new MenuTreeInitOutput()
             {
-                HomeInfo = new HomeInfo() { Title = "首页", Href = "page/welcome-1.html" },
+                HomeInfo = new HomeInfo() { Title = "首页", Href = "sys/log-echarts" },
                LogoInfo=new LogoInfo() { Title="神牛系统平台",Image= "images/logo.jpg?v=99", Href="" },
             };
             List<MenuInfo> menuInfos = new List<MenuInfo>();

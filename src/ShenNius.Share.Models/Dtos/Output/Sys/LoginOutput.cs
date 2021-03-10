@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShenNius.Share.Models.Dtos.Output.Sys;
+using System;
+using System.Collections.Generic;
 
 namespace ShenNius.Share.Models.Dtos.Output
 {
@@ -10,5 +12,9 @@ namespace ShenNius.Share.Models.Dtos.Output
         public DateTime LoginTime { get; set; }
         public string  TrueName { get; set; }
         public string  Token { get; set; }
+        /// <summary>
+        /// 权限
+        /// </summary>
+        public List<MenuAuthOutput> MenuAuthOutputs { get; set; } = new List<MenuAuthOutput>();
     }
 }

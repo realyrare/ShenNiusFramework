@@ -62,10 +62,24 @@
             <param name="r_User_RoleService"></param>
             <param name="menuService"></param>
         </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.Register(ShenNius.Share.Models.Dtos.Input.UserRegisterInput)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="userRegisterInput"></param>
+            <returns></returns>
+        </member>
         <member name="M:ShenNius.Sys.API.Controllers.UserController.GetListPages(System.Int32,System.String)">
             <summary>
             查询列表
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.SetRole(ShenNius.Share.Models.Dtos.Input.Sys.SetUserRoleInput)">
+            <summary>
+            设置角色（授权）
+            </summary>
+            <param name="setUserRoleInput"></param>
             <returns></returns>
         </member>
         <member name="M:ShenNius.Sys.API.Controllers.UserController.SignIn(ShenNius.Share.Models.Dtos.Input.LoginInput)">

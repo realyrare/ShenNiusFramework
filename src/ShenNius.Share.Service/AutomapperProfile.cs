@@ -23,6 +23,7 @@ namespace ShenNius.Share.Service
             CreateMap<MenuInput, Menu>();
             //ParentMenuOutput
             CreateMap<Menu, ParentMenuOutput>();
+            CreateMap<Menu, MenuAuthOutput>();
 
             CreateMap<ConfigInput, Config>();
             //cms
