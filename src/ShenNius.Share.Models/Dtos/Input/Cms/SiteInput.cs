@@ -1,26 +1,21 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web;
 
 /*************************************
-* 类名：Site
+* 类名：SiteInput
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
-* 时间：2021/3/11 17:10:38
+* 时间：2021/3/11 18:13:07
 *┌───────────────────────────────────┐　    
 *│　   版权所有：一起牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Entity.Cms
+namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    [SugarTable("Cms_Site")]
-    public class Site
+    public class SiteInput
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
-
         /// <summary>
         /// Desc:系统ID
         /// Default:0
@@ -157,14 +152,12 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// <summary>
         /// 是否删除
         /// </summary>
-        public bool IsDel { get; set; }
+        public bool IsDel { get; set; } = false;
 
         /// <summary>
         /// 创建站点时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
-        public DateTime? ModifyTime { get; set; }
-
-        public bool IsCurrent { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public bool IsCurrent { get; set; } = false;
     }
 }

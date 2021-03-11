@@ -27,8 +27,6 @@
   <ItemGroup>
     <Folder Include="Dtos\Common\" />
     <Folder Include="Dtos\Input\Shop\" />
-    <Folder Include="Dtos\Input\Cms\" />
-    <Folder Include="Dtos\Validators\Cms\" />
     <Folder Include="Dtos\Validators\Shop\" />
     <Folder Include="Configs\" />
     <Folder Include="Entity\Shop\" />
