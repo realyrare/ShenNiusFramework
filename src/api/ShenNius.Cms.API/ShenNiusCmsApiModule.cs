@@ -1,11 +1,12 @@
 ﻿using ModuleCore.AppModule.Impl;
+using ModuleCore.Attribute;
 using ModuleCore.Context;
-using ShenNius.ModuleCore.Extensions;
+using ShenNius.Share.Service;
 
 namespace ShenNius.Cms.API
-{/// <summary>
- /// 
- /// </summary>
+{
+    [DependsOn(typeof(ShenNiusShareServiceModule)
+      )]
     public class ShenNiusCmsApiModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)

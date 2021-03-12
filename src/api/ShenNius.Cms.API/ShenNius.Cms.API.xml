@@ -11,10 +11,5 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:ShenNius.Cms.API.ShenNiusCmsApiModule">
-            <summary>
-            
-            </summary>
-        </member>
     </members>
 </doc>
