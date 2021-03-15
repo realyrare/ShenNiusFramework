@@ -1,31 +1,23 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web;
 
 /*************************************
-* 类名：Column
-* 作者：realyrare
-* 邮箱：mhg215@yeah.net
-* 时间：2021/3/11 16:57:35
+* 类 名： ColumnModifyInput
+* 作 者： realyrare
+* 邮 箱： mhg215@yeah.net
+* 时 间： 2021/3/15 19:05:45
+* .netV： 3.1
 *┌───────────────────────────────────┐　    
 *│　   版权所有：一起牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Entity.Cms
+namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    [SugarTable("Cms_Column")]
-    public class Column
+    public class ColumnModifyInput
     {
-        /// <summary>
-        /// Desc:自动递增
-        /// Default:-
-        /// Nullable:False
-        /// </summary>
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
-
         /// <summary>
         /// Desc:站点ID
         /// Default:0
@@ -73,7 +65,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public int Layer { get; set; } 
+        public int Layer { get; set; }
 
 
         /// <summary>
@@ -106,7 +98,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime? ModifyTime { get; set; }
-        public DateTime CreateTime { get; set; }
+        public DateTime? ModifyTime { get; set; } = DateTime.Now;
+
     }
 }

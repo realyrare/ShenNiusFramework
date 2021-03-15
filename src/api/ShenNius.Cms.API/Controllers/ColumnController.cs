@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Service.Cms;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web;
 
 /*************************************
 * 类名：ColumnController
@@ -24,10 +24,12 @@ namespace ShenNius.Cms.API.Controllers
     public class ColumnController : ApiControllerBase
     {
         private readonly IColumnService _columnService;
+        private readonly IMapper _mapper;
 
-        public ColumnController(IColumnService columnService)
+        public ColumnController(IColumnService columnService, IMapper mapper)
         {
             _columnService = columnService;
+            this._mapper = mapper;
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
@@ -52,6 +54,27 @@ namespace ShenNius.Cms.API.Controllers
         {
             var res = await _columnService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
+        }
+        [HttpPost]
+        public async Task<ApiResult> Add([FromBody] ColumnInput columnInput )
+        {
+         return await _columnService.AddToUpdateAsync(columnInput);
+        }
+        [HttpPut]
+        public async Task<ApiResult> Modify([FromBody] ColumnModifyInput columnModifyInput)
+        {
+            return await _columnService.ModifyAsync(columnModifyInput);     
+        }
+
+        /// <summary>
+        /// 所有父栏目
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ApiResult> GetAllParentColumn()
+        {
+            var data= await _columnService.GetListAsync(d =>d.ParentId==0);
+            return new ApiResult(data);
         }
     }
 }

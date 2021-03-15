@@ -10,12 +10,14 @@
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Cms;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Service.Cms;
+using ShenNius.Share.Service.Sys;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -26,11 +28,14 @@ namespace ShenNius.Cms.API.Controllers
     {
         private readonly ISiteService _siteService;
         private readonly IMapper _mapper;
-
-        public SiteController(ISiteService siteService, IMapper mapper)
+        private readonly ICurrentUserContext _currentUserContext;
+        private readonly IMemoryCache _cache;
+        public SiteController(ISiteService siteService, IMapper mapper, ICurrentUserContext currentUserContext, IMemoryCache memoryCache)
         {
             _siteService = siteService;
             this._mapper = mapper;
+            this._currentUserContext = currentUserContext;
+            _cache = memoryCache;
         }
 
         [HttpDelete]
@@ -51,7 +56,21 @@ namespace ShenNius.Cms.API.Controllers
        
         public async Task<ApiResult> SetCurrent([FromBody] int id)
         {
-            
+            if (id <=0)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            //把之前缓存存储的站点拿出来设置为不是当前的。
+            //var overSite = SiteTool.CurrentSite;
+            //if (overSite != null)
+            //{
+            //    overSite.IsCurrent = false;
+            //    await _siteService.UpdateAsync(overSite);
+            //}
+            //MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, parm);
+            //parm.IsCurrent = true;
+            //await _siteService.UpdateAsync(parm);
+            //return Ok(new ApiResult<string>() { Data = parm.SiteName });
             await _siteService.UpdateAsync(d => new Site() { IsCurrent = true }, d => d.Id == id);            
             return new ApiResult();
         }
@@ -78,6 +97,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] SiteInput siteInput)
         {
+            siteInput.UserId = _currentUserContext.Id;
             var model = _mapper.Map<Site>(siteInput);
             var res = await _siteService.AddAsync(model);
             return new ApiResult(data: res);
@@ -85,7 +105,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] SiteModifyInput siteModifyInput)
         {
-            var model = _mapper.Map<Site>(siteModifyInput);
+           
             var res = await _siteService.UpdateAsync(d => new Site()
             {
                 Id = siteModifyInput.Id,
