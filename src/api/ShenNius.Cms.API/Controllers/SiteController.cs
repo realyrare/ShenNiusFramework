@@ -12,6 +12,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Cms;
@@ -61,20 +63,36 @@ namespace ShenNius.Cms.API.Controllers
                 throw new ArgumentNullException(nameof(id));
             }
             //把之前缓存存储的站点拿出来设置为不是当前的。
-            //var overSite = SiteTool.CurrentSite;
-            //if (overSite != null)
-            //{
-            //    overSite.IsCurrent = false;
-            //    await _siteService.UpdateAsync(overSite);
-            //}
-            //MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, parm);
-            //parm.IsCurrent = true;
-            //await _siteService.UpdateAsync(parm);
-            //return Ok(new ApiResult<string>() { Data = parm.SiteName });
-            await _siteService.UpdateAsync(d => new Site() { IsCurrent = true }, d => d.Id == id);            
+
+           var currentSite= _cache.Get<Site>(KeyHelper.Cms.CurrentSite);
+            if (currentSite != null)
+            {
+                currentSite.IsCurrent = false;
+                await _siteService.UpdateAsync(currentSite);
+            }
+            var model = await _siteService.GetModelAsync(d => d.Id == id);
+            if (model==null)
+            {
+                throw new FriendlyException("当前站点实体信息为空!");
+            }
+            model.IsCurrent = true;
+            await _siteService.UpdateAsync(model);           
             return new ApiResult();
         }
-
+        [HttpGet]
+        public async Task<ApiResult> GetList()
+        {
+            
+            var res = await _siteService.GetListAsync(d=>d.IsDel==false);
+            foreach (var item in res)
+            {
+                if (item.IsCurrent)
+                {
+                    _cache.Set<Site>(KeyHelper.Cms.CurrentSite, item);
+                }  
+            }
+            return new ApiResult(data: res);
+        }
         [HttpGet]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
