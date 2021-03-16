@@ -31,6 +31,8 @@ namespace ShenNius.Share.Service
             //cms
             CreateMap<SiteInput, Site>();
             CreateMap<ColumnInput, Column>();
+            CreateMap<ArticleInput, Article>();
+            CreateMap<ArticleModifyInput, Article>();
         }
     }
 }

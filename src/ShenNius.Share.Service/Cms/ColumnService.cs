@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
@@ -28,13 +30,16 @@ namespace ShenNius.Share.Service.Cms
     public class ColumnService : BaseServer<Column>, IColumnService
     {
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
 
-        public ColumnService(IMapper mapper)
+        public ColumnService(IMapper mapper, IMemoryCache memoryCache)
         {
             _mapper = mapper;
+            this._memoryCache = memoryCache;
         }
         public async Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput)
         {
+            columnModifyInput.SiteId = _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var columnModel = await GetModelAsync(d => d.Title.Equals(columnModifyInput.Title)&&d.Id!= columnModifyInput.Id);
             if (columnModel?.Id > 0)
             {
@@ -59,6 +64,7 @@ namespace ShenNius.Share.Service.Cms
         }
         public async Task<ApiResult> AddToUpdateAsync(ColumnInput columnInput)
         {
+            columnInput.SiteId= _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var columnModel = await GetModelAsync(d => d.Title.Equals(columnInput.Title));
             if (columnModel?.Id > 0)
             {

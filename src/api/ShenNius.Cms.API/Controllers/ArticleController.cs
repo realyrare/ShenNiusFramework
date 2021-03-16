@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Service.Cms;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web;
 
 /*************************************
 * 类名：ArticleController
@@ -25,18 +25,20 @@ namespace ShenNius.Cms.API.Controllers
 {
     public class ArticleController : ApiControllerBase
     {
-        private readonly IArticleService _ArticleService;
+        private readonly IArticleService _articleService;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
 
-        public ArticleController(IArticleService ArticleService, IMapper mapper)
+        public ArticleController(IArticleService articleService, IMapper mapper, IMemoryCache cache)
         {
-            _ArticleService = ArticleService;
+            _articleService = articleService;
             this._mapper = mapper;
+            this._cache = cache;
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
         {
-            return new ApiResult(await _ArticleService.DeleteAsync(commonDeleteInput.Ids));
+            return new ApiResult(await _articleService.DeleteAsync(commonDeleteInput.Ids));
         }
 
         [HttpGet]
@@ -47,28 +49,33 @@ namespace ShenNius.Cms.API.Controllers
             {
                 whereExpression = d => d.Title.Contains(key);
             }
-            var res = await _ArticleService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
+            var res = await _articleService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
         [HttpGet]
         public async Task<ApiResult> Detail(int id)
         {
-            var res = await _ArticleService.GetModelAsync(d => d.Id == id);
+            var res = await _articleService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
         }
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] ArticleInput articleInput)
         {
-             var model= _mapper.Map<Article>(articleInput);
-            var i= await _ArticleService.AddAsync(model);
+            articleInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
+            var model= _mapper.Map<Article>(articleInput);
+            var i= await _articleService.AddAsync(model);
             return new ApiResult(i);
         }
-        //[HttpPut]
-        //public async Task<ApiResult> Modify([FromBody] ArticleModifyInput ArticleModifyInput)
-        //{
-        //    return await _ArticleService.ModifyAsync(ArticleModifyInput);
-        //}
+
+        [HttpPut]
+        public async Task<ApiResult> Modify([FromBody] ArticleModifyInput articleModifyInput)
+        {
+            articleModifyInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
+            var model = _mapper.Map<Article>(articleModifyInput);
+            var i= await _articleService.UpdateAsync(model,d=>new  { d.CreateTime});
+            return new ApiResult(i);
+        }
 
     }
 }
