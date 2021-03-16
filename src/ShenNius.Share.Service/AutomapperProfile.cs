@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FytSoa.Core.Model.Cms;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Cms;
@@ -33,6 +34,9 @@ namespace ShenNius.Share.Service
             CreateMap<ColumnInput, Column>();
             CreateMap<ArticleInput, Article>();
             CreateMap<ArticleModifyInput, Article>();
+
+            CreateMap<AdvListInput, AdvList>();
+            CreateMap<AdvListModifyInput, AdvList>();
         }
     }
 }

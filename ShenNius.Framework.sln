@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Share.Service", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApi", "test\TestApi\TestApi.csproj", "{0108712E-7876-4FF8-AFB2-CE80CA49843C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Upload.API", "src\api\ShenNius.Upload.API\ShenNius.Upload.API.csproj", "{F5BA9248-2A88-46F6-B1FE-494620000E9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Upload.API", "src\api\ShenNius.Upload.API\ShenNius.Upload.API.csproj", "{F5BA9248-2A88-46F6-B1FE-494620000E9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
