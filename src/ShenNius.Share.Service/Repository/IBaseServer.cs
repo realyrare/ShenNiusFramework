@@ -121,6 +121,13 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
         int Update(Expression<Func<T, bool>> columnsExpression,
             Expression<Func<T, bool>> whereExpression);
+        /// <summary>
+        /// 更新整体，指定忽略个别字段
+        /// </summary>
+        /// <param name="param">实体</param>
+        /// <param name="ignoreExpression">指定忽略个别字段</param>
+        /// <returns></returns>
+        int Update(T param, Expression<Func<T, object>> ignoreExpression);
 
         /// <summary>
         /// 删除一条或多条数据
@@ -268,7 +275,13 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
         Task<int> UpdateAsync(Expression<Func<T, bool>> columnsExpression,
             Expression<Func<T, bool>> whereExpression);
-
+        /// <summary>
+        /// 更新整体，指定忽略个别字段
+        /// </summary>
+        /// <param name="param">实体</param>
+        /// <param name="ignoreExpression">指定忽略个别字段</param>
+        /// <returns></returns>
+        Task<int> UpdateAsync(T param, Expression<Func<T, object>> ignoreExpression);
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>

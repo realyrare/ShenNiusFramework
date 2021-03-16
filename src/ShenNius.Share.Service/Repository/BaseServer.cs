@@ -171,7 +171,16 @@ namespace ShenNius.Share.Service.Repository
         {
             return Db.Updateable<T>().SetColumns(columnsExpression).Where(whereExpression).ExecuteCommand();
         }
-
+        /// <summary>
+        /// 更新整体，指定忽略个别字段
+        /// </summary>
+        /// <param name="param">实体</param>
+        /// <param name="ignoreExpression">指定忽略个别字段</param>
+        /// <returns></returns>
+        public  int Update(T param, Expression<Func<T, object>> ignoreExpression)
+        {
+            return  Db.Updateable(param).IgnoreColumns(ignoreExpression).ExecuteCommand();
+        }
         /// <summary>
         /// 删除一条或多条数据
         /// </summary>
@@ -389,6 +398,16 @@ namespace ShenNius.Share.Service.Repository
             Expression<Func<T, bool>> whereExpression)
         {
             return await Db.Updateable<T>().SetColumns(columnsExpression).Where(whereExpression).ExecuteCommandAsync();
+        }
+        /// <summary>
+        /// 更新整体，指定忽略个别字段
+        /// </summary>
+        /// <param name="param">实体</param>
+        /// <param name="ignoreExpression">指定忽略个别字段</param>
+        /// <returns></returns>
+        public async Task<int> UpdateAsync(T param, Expression<Func<T, object>> ignoreExpression)
+        {
+            return await Db.Updateable(param).IgnoreColumns(ignoreExpression).ExecuteCommandAsync();
         }
 
         /// <summary>
