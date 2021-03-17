@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\module\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
+    <ProjectReference Include="..\..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
   </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
