@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
@@ -76,6 +77,11 @@ namespace ShenNius.Cms.API.Controllers
             var i= await _articleService.UpdateAsync(model,d=>new  { d.CreateTime});
             return new ApiResult(i);
         }
-
+        [HttpPost]
+        public ApiResult QiniuFile([FromBody] string filePath)
+        {
+            var i = QiniuCloud.UploadFile(filePath);
+            return new ApiResult(i);
+        }
     }
 }

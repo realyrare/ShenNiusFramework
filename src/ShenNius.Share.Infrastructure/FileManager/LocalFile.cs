@@ -1,60 +1,58 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNiusSystem.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Web;
 
-namespace ShenNius.Upload.API.Controllers
+/*************************************
+* 类 名： LocalFile
+* 作 者： realyrare
+* 邮 箱： mhg215@yeah.net
+* 时 间： 2021/3/18 14:19:38
+* .netV： 3.1
+*┌───────────────────────────────────┐　    
+*│　   版权所有：一起牛软件　　　　	 │
+*└───────────────────────────────────┘
+**************************************/
+
+namespace ShenNius.Share.Infrastructure.ImgUpload
 {
     /// <summary>
-    /// 图片上传控制器
+    /// 使用的时候单独把类注入
     /// </summary>
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    [Authorize]
-    public class UploadController : ControllerBase
+    public class LocalFile
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UploadController(IWebHostEnvironment webHostEnvironment )
+        public LocalFile(IWebHostEnvironment webHostEnvironment)
         {
             this._webHostEnvironment = webHostEnvironment;
         }
-        public ApiResult QiniuFile([FromBody]string filePath)
+
+        public string Upload(IFormFile file)
         {
-          var i=  QiniuCloud.UploadFile(filePath);
-            return new ApiResult(i);
-        }
-        public ApiResult LocalFile()
-        {
-            string path=string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
+            string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            var file = Request.Form.Files[0];
+            //var file = Request.Form.Files[0];
             ImgDealwith(file);
             string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             //string filename = Guid.NewGuid().ToString() + "." + fileExt;
             //计算文件的MD5值
             string filename2 = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
             string fileFullName = path + "\\" + filename2;
-          
-            using (FileStream fs = System.IO.File.Create(fileFullName))
+
+            using (FileStream fs = File.Create(fileFullName))
             {
                 file.CopyTo(fs);
                 fs.Flush();
             }
-            //添加到数据库
-            return new ApiResult(filename2);
+            return filename2;
         }
         private void ImgDealwith(IFormFile file)
         {
@@ -74,6 +72,6 @@ namespace ShenNius.Upload.API.Controllers
             {
                 throw new FriendlyException("上传的文件不是图片");
             }
-        }
+        }    
     }
 }

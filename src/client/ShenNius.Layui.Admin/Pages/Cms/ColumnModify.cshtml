@@ -11,6 +11,9 @@
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+        .layui-form-select {
+            width: 350px;
+        }
     </style>
 }
 <form class="layui-form" action="" lay-filter="column-edit">
@@ -42,9 +45,15 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">栏目名称</label>
+                    <label class="layui-form-label required">栏目标题</label>
                     <div class="layui-input-block">
                         <input type="text" name="title" lay-verify="required" lay-reqtext="栏目名称不能为空" placeholder="请输入栏目名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="subTitle"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -80,6 +89,7 @@
 
             layui.use(['form',  'common'], function () {
                 var form = layui.form,
+                    $ = layui.$,
                     apiUtil = layui.common;
 
                 /**

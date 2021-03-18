@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Share.Service", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApi", "test\TestApi\TestApi.csproj", "{0108712E-7876-4FF8-AFB2-CE80CA49843C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Upload.API", "src\api\ShenNius.Upload.API\ShenNius.Upload.API.csproj", "{F5BA9248-2A88-46F6-B1FE-494620000E9D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,10 +85,6 @@ Global
 		{0108712E-7876-4FF8-AFB2-CE80CA49843C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0108712E-7876-4FF8-AFB2-CE80CA49843C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0108712E-7876-4FF8-AFB2-CE80CA49843C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5BA9248-2A88-46F6-B1FE-494620000E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5BA9248-2A88-46F6-B1FE-494620000E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5BA9248-2A88-46F6-B1FE-494620000E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5BA9248-2A88-46F6-B1FE-494620000E9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,7 +104,6 @@ Global
 		{37CDD21D-6FEA-406A-9DEB-33C523E276C9} = {96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}
 		{4071FB4F-F0D2-4115-93A2-7D8785A7AC85} = {96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}
 		{0108712E-7876-4FF8-AFB2-CE80CA49843C} = {8BA7DC21-479F-4AA9-AB83-9D865C77F0C1}
-		{F5BA9248-2A88-46F6-B1FE-494620000E9D} = {C20E2599-74E7-40E5-8F81-23F6B368C117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}

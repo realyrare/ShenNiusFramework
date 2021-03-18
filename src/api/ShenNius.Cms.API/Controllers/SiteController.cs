@@ -52,31 +52,31 @@ namespace ShenNius.Cms.API.Controllers
         /// <summary>
         /// TODO
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="siteCurrentInput"></param>
         /// <returns></returns>
         [HttpPut]
        
-        public async Task<ApiResult> SetCurrent([FromBody] int id)
+        public async Task<ApiResult> SetCurrent([FromBody] SiteCurrentInput siteCurrentInput)
         {
-            if (id <=0)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            //把之前缓存存储的站点拿出来设置为不是当前的。
 
-           var currentSite= _cache.Get<Site>(KeyHelper.Cms.CurrentSite);
-            if (currentSite != null)
-            {
-                currentSite.IsCurrent = false;
-                await _siteService.UpdateAsync(currentSite);
-            }
-            var model = await _siteService.GetModelAsync(d => d.Id == id);
-            if (model==null)
+            //把之前缓存存储的站点拿出来设置为不是当前的。
+            var model = await _siteService.GetModelAsync(d => d.Id == siteCurrentInput.Id&&d.IsDel==false&&d.IsCurrent==false);
+            if (model == null)
             {
                 throw new FriendlyException("当前站点实体信息为空!");
             }
+            var currentSite= _cache.Get<Site>(KeyHelper.Cms.CurrentSite);
+            if (currentSite != null)
+            {
+                currentSite.IsCurrent = false;
+                //不要使用全部更新  有可能缓存的实体比较旧
+                await _siteService.UpdateAsync(d=>new Site() { IsCurrent=false},d=>d.Id== currentSite.Id);
+            }
+        
             model.IsCurrent = true;
-            await _siteService.UpdateAsync(model);           
+            await _siteService.UpdateAsync(model);
+            //这里最好更新下缓存
+            _cache.Set(KeyHelper.Cms.CurrentSite, model);
             return new ApiResult();
         }
         [HttpGet]
@@ -88,7 +88,7 @@ namespace ShenNius.Cms.API.Controllers
             {
                 if (item.IsCurrent)
                 {
-                    _cache.Set<Site>(KeyHelper.Cms.CurrentSite, item);
+                    _cache.Set(KeyHelper.Cms.CurrentSite, item);
                 }  
             }
             return new ApiResult(data: res);
