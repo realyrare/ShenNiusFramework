@@ -120,15 +120,9 @@
                     var index = layer.open({
                         title: '添加文章',
                         type: 2,
-                        area: [winW - 220 + 'px', winH - 61 + 'px']
-                        , shade: [0.1, '#333']
-                        , resize: false
-                        , move: false
-                        , anim: -1
-                        , offset: 'rb'
-                        , zIndex: "1000"
-                        , shadeClose: false
-                        , skin: 'layer-anim-07',
+              
+                        area: ['100%', '100%'],
+                        zIndex: "10000",
                         content: content,
                         end: function () {
                             refeshTable();
