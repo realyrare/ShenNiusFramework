@@ -6,7 +6,6 @@
 @section css{
     <link href="~/css/article.css" rel="stylesheet" />
     <link href="~/css/site.min.css" rel="stylesheet" />
-    @*<link rel="stylesheet" href="/lib/jq-module/zyupload/zyupload-1.0.0.min.css?v=1" media="all" asp-append-version="true">*@
 }
 <div id="container">
     <form class="layui-form form-cus form-back" action="" id="app">
@@ -46,7 +45,7 @@
                     </div>
                 </div>
 
-              
+
                 <div class="text else">扩展属性</div>
                 <div class="form-cur-wall">
                     <label>文章标签：</label>
@@ -118,17 +117,19 @@
         </div>
     </form>
 </div>
+
 @section js{
+    @*<script src="/lib/tinymce_5.7.1/tinymce/js/tinymce/tinymce.min.js"></script>*@
     <script src="/lib/tinymce/tinymce.min.js"></script>
     <script src="/lib/tinymce/langs/zh_CN.js"></script>
-    @*<script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
-        <script src="/lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>*@
+
     <script>
     tinymce.init({
         selector: '#content',
         height: 400,
+        content_style: "img {max-width:100%;}",
         image_advtab: true,//开启图片上传的高级选项功能
-        images_upload_url: '@domainConfig.CurrentValue.ApiHost/article/QiniuFile',//图片上传
+        images_upload_url: '@domainConfig.CurrentValue.ApiHost/article/qiniu-file',//图片上传
         plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
         toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link filemanager | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
     });
