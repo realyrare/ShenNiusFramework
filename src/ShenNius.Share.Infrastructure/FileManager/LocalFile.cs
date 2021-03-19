@@ -25,36 +25,32 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
     /// </summary>
     public class LocalFile
     {
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        //private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public LocalFile(IWebHostEnvironment webHostEnvironment)
-        {
-            this._webHostEnvironment = webHostEnvironment;
-        }
+        //public LocalFile(IWebHostEnvironment webHostEnvironment)
+        //{
+        //    this._webHostEnvironment = webHostEnvironment;
+        //}
 
-        public string Upload(IFormFile file)
-        {
-            string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            //var file = Request.Form.Files[0];
-            ImgDealwith(file);
-            string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-            //string filename = Guid.NewGuid().ToString() + "." + fileExt;
-            //计算文件的MD5值
-            string filename2 = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
-            string fileFullName = path + "\\" + filename2;
+        //public string Upload(IFormFile file)
+        //{
+        //    string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
+        //    if (!Directory.Exists(path))
+        //    {
+        //        Directory.CreateDirectory(path);
+        //    }
+        //    //var file = Request.Form.Files[0];
+        //     var fileName=  ImgDealwith(file);
+        //    string fileFullName = path + "\\" + fileName;
 
-            using (FileStream fs = File.Create(fileFullName))
-            {
-                file.CopyTo(fs);
-                fs.Flush();
-            }
-            return filename2;
-        }
-        private void ImgDealwith(IFormFile file)
+        //    using (FileStream fs = File.Create(fileFullName))
+        //    {
+        //        file.CopyTo(fs);
+        //        fs.Flush();
+        //    }
+        //    return fileName;
+        //}
+        public static string ImgDealwith(IFormFile file)
         {
             string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             if (fileExt == null)
@@ -72,6 +68,8 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
             {
                 throw new FriendlyException("上传的文件不是图片");
             }
+            string filename = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
+            return filename;
         }    
     }
 }

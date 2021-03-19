@@ -1,119 +1,12 @@
 ﻿@page
 @model ShenNius.Layui.Admin.Pages.Cms.ArticleModifyModel
+@using Microsoft.Extensions.Options;
+@using ShenNius.Layui.Admin.Model;
+@inject IOptionsMonitor<DomainConfig> domainConfig
 @section css{
-    <style>
-        .swimg-wall {
-            display: flex;
-        }
-
-        .upimg-wall {
-            width: 140px;
-            height: 140px;
-            background-color: rgb(245, 247, 250);
-            margin-right: 15px;
-            border-radius: 5px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .select-swimg {
-            width: 140px;
-            height: 140px;
-            text-align: center;
-            padding-top: 35px;
-            color: rgb(172, 180, 191);
-        }
-
-            .select-swimg span {
-                display: block;
-                font-size: 12px;
-            }
-
-        .del-swimg {
-            position: absolute;
-            right: 11px;
-            bottom: 16px;
-            background-color: #e86941;
-            padding: 2px 6px;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        .cur-select {
-            border: 1px solid #e6e6e6;
-            height: 38px;
-            line-height: 38px;
-            border-radius: 3px;
-            padding: 0 15px;
-        }
-
-        .dd {
-            position: relative;
-            top: -5px;
-        }
-
-        .dd-list .dd-item {
-            margin-right: 10px;
-        }
-
-            .dd-list .dd-item img {
-                width: 120px;
-                height: 120px;
-            }
-
-        .dd-list {
-            position: relative;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .dd-empty, .dd-item, .dd-placeholder {
-            display: block;
-            position: relative;
-            margin: 0;
-            padding: 0;
-            min-height: 20px;
-            font-size: 13px;
-            line-height: 20px;
-        }
-
-        .dd-handle {
-            display: block;
-            margin: 5px 0;
-            padding: 10px 10px;
-            color: #333;
-            text-decoration: none;
-            border: 1px solid #e4eaec;
-            border-radius: 3px;
-            box-sizing: border-box;
-        }
-
-        .pg {
-            height: 10px;
-            background: rgb(172, 180, 191);
-            margin-bottom: 16px;
-        }
-
-        .xpg {
-            height: 80px;
-            background: rgb(172, 180, 191);
-        }
-
-        .mt-item > .layui-col-md4 {
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
-            cursor: pointer;
-        }
-
-            .mt-item > .layui-col-md4.cur .pg {
-                background: rgb(64, 158, 255);
-            }
-
-            .mt-item > .layui-col-md4.cur .xpg {
-                background: rgb(64, 158, 255);
-            }
-    </style>
+    <link href="~/css/article.css" rel="stylesheet" />
     <link href="~/css/site.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="/lib/jq-module/zyupload/zyupload-1.0.0.min.css?v=1" media="all" asp-append-version="true">*@
 }
 <div id="container">
     <form class="layui-form form-cus form-back" action="" id="app">
@@ -123,7 +16,7 @@
                 <div class="form-cur-wall">
                     <label>所属栏目：</label>
                     <div class="layui-input-block">
-                        <select name="ColumnId" lay-verify="required" lay-search="">
+                        <select name="columnId" lay-verify="required" lay-search="">
                             <option value="0">父级</option>
                         </select>
                     </div>
@@ -131,50 +24,40 @@
                 <div class="form-cur-wall">
                     <label>作者：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Author" placeholder="" maxlength="30" autocomplete="off" class="layui-input">
+                        <input type="text" name="author" placeholder="" maxlength="30" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="form-cur-wall">
                     <label>来源：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Source" maxlength="40" autocomplete="off" class="layui-input">
+                        <input type="text" name="source" maxlength="40" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="form-cur-wall">
-                    <label>更新时间</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="EditDate" name="EditDate" maxlength="100" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+
 
                 <div class="form-cur-wall">
                     <label style="line-height:inherit;">内容属性：</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="Audit" lay-skin="primary" title="审核状态">
-                        <input type="checkbox" name="IsTop" lay-skin="primary" title="是否推荐">
-                        <input type="checkbox" name="IsHot" lay-skin="primary" title="是否热点">
-                        <input type="checkbox" name="IsComment" lay-skin="primary" title="是否允许评论">
-                        <input type="checkbox" name="IsRecyc" lay-skin="primary" title="是否在回收站">
+                        <input type="checkbox" name="audit" lay-skin="primary" title="审核状态">
+                        <input type="checkbox" name="isTop" lay-skin="primary" title="是否推荐">
+                        <input type="checkbox" name="isHot" lay-skin="primary" title="是否热点">
+                        <input type="checkbox" name="isComment" lay-skin="primary" title="是否允许评论">
+                        <input type="checkbox" name="isRecycle" lay-skin="primary" title="是否在回收站">
                     </div>
                 </div>
 
-                <div class="form-cur-wall layui-clear">
-                    <label style="line-height:inherit;">权重：</label>
-                    <div class="layui-input-block">
-                        <div id="slideSort" style="top:8px;"></div>
-                    </div>
-                </div>
+              
                 <div class="text else">扩展属性</div>
                 <div class="form-cur-wall">
                     <label>文章标签：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Tag" placeholder="" maxlength="100" autocomplete="off" class="layui-input">
+                        <input type="text" name="tag" placeholder="以逗号隔开" maxlength="100" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="form-cur-wall">
                     <label>转向连接：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="LinkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                        <input type="text" name="linkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div style="height:50px;"></div>
@@ -183,13 +66,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">文章标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Title" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                        <input type="text" name="title" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">副标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SubTitle" maxlength="500" autocomplete="off" class="layui-input">
+                        <input type="text" name="subTitle" maxlength="500" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -198,7 +81,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">SEO关键词</label>
                         <div class="layui-input-block">
-                            <textarea name="KeyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔"></textarea>
+                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔"></textarea>
                         </div>
                     </div>
                 </div>
@@ -206,33 +89,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">SEO描述</label>
                         <div class="layui-input-block">
-                            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="SEO描述，填写利于抓取，最多200个字"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-row">
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">文章图片</label>
-                    <div class="layui-input-block">
-                        <div class="swimg-wall">
-                            <div class="upimg-wall fyt-cloud" data-text="ImgUrl" data-img="imgShow" data-type="many">
-                                <div class="select-swimg">
-                                    <i class="icon-addphote"></i>
-                                    <span>选择图片</span>
-                                </div>
-                            </div>
-                            <div class="dd">
-                                <ol class="dd-list" style="display: flex;">
-                                    <li class="dd-item" v-for="it in m.imageList">
-                                        <div class="dd-handle">
-                                            <img :src="it.image" alt="">
-                                        </div>
-                                        <div class="del-swimg"><i class="layui-icon layui-icon-delete"></i></div>
-                                    </li>
-                                </ol>
-                            </div>
+                            <textarea name="summary" class="layui-textarea" style="min-height: 60px;" placeholder="SEO描述，填写利于抓取，最多200个字"></textarea>
                         </div>
                     </div>
                 </div>
@@ -241,13 +98,20 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">文章内容</label>
                     <div class="layui-input-block">
-                        <textarea id="Content" name="Content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea id="content" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
                     </div>
                 </div>
             </div>
+            @*<div class="layui-row">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">文章图片</label>
+                        <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
+                    </div>
+                </div>*@
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                    @*<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>*@
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
                     <button type="button" class="layui-btn layui-btn-primary btn-open-close" onclick="history.go(-1)">返回列表</button>
                 </div>
             </div>
@@ -257,15 +121,17 @@
 @section js{
     <script src="/lib/tinymce/tinymce.min.js"></script>
     <script src="/lib/tinymce/langs/zh_CN.js"></script>
+    @*<script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+        <script src="/lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>*@
     <script>
     tinymce.init({
-        selector: '#Content',
+        selector: '#content',
         height: 400,
+        image_advtab: true,//开启图片上传的高级选项功能
+        images_upload_url: '@domainConfig.CurrentValue.ApiHost/article/QiniuFile',//图片上传
         plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
         toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link filemanager | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
     });
-
-
             layui.use(['form',  'common'], function () {
                 var form = layui.form,
                     $ = layui.$,
@@ -288,6 +154,7 @@
                 } else {
                     BindParentColumn();
                 }*@
+                BindParentColumn();
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
@@ -318,7 +185,7 @@
                     apiUtil.ajax('column/get-all-parent-column', {}, "application/json", "get", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             if (res.data !== null) {
-                                var select = $("#parentId");
+                                var select = $("#columnId");
                                 for (var i = 0; i < res.data.length; i++) {
                                     var val = res.data[i].id;
                                     if (val === value)
@@ -332,5 +199,6 @@
                     });
                 }
             });
+
     </script>
 }

@@ -1,4 +1,4 @@
-using Blog.ShenNius.Layui.Admin.Model;
+using ShenNius.Layui.Admin.Model;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

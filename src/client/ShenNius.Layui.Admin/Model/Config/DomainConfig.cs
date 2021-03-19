@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Blog.ShenNius.Layui.Admin.Model
+﻿namespace ShenNius.Layui.Admin.Model
 {
     public class DomainConfig
     {
