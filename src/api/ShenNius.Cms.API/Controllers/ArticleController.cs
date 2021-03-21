@@ -1,15 +1,20 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Service.Cms;
 using System;
+using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -30,12 +35,16 @@ namespace ShenNius.Cms.API.Controllers
         private readonly IArticleService _articleService;
         private readonly IMapper _mapper;
         private readonly IMemoryCache _cache;
+        private readonly QiniuCloud _qiniuCloud;
+        private readonly QiNiuOssModel _qiNiuOssModel;
 
-        public ArticleController(IArticleService articleService, IMapper mapper, IMemoryCache cache)
+        public ArticleController(IArticleService articleService, IMapper mapper, IMemoryCache cache, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud)
         {
             _articleService = articleService;
             this._mapper = mapper;
             this._cache = cache;
+            _qiniuCloud = qiniuCloud;
+            _qiNiuOssModel = qiNiuOssModel.CurrentValue;
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
@@ -78,13 +87,14 @@ namespace ShenNius.Cms.API.Controllers
             var i= await _articleService.UpdateAsync(model,d=>new  { d.CreateTime});
             return new ApiResult(i);
         }
-        [HttpPost]
-        public ApiResult QiniuFile()
+        [HttpPost, AllowAnonymous]
+        public IActionResult QiniuFile()
         {
-            var files = Request.Form.Files[0];
-             var fileName=  LocalFile.ImgDealwith(files);           
-            var i = QiniuCloud.UploadFile(fileName);
-            return new ApiResult(i);
+            var files = Request.Form.Files[0];                     
+            var data = _qiniuCloud.UploadFile(files, "article/");            
+            var url = _qiNiuOssModel.ImgDomain + data;
+            //TinyMCE 指定的返回格式
+            return Ok(new { location= url });
         }
     }
 }

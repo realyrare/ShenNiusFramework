@@ -158,6 +158,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public DateTime DeleteTime { get; set; } = DateTime.Now;
+        public DateTime ModifyTime { get; set; } = DateTime.Now;
     }
 }
