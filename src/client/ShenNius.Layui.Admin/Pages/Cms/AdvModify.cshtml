@@ -11,6 +11,9 @@
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+        .layui-form-select {
+            width: 350px;
+        }
     </style>
 }
 <form class="layui-form" action="" lay-filter="advList-edit">
@@ -92,7 +95,7 @@
 
                 var id=@Model.Id;
                 if (id > 0) {
-                    apiUtil.ajax('advList/detail', { id: id }, "application/json", "get", function (res) {
+                    apiUtil.ajax('adv-list/detail', { id: id }, "application/json", "get", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             form.val("advList-edit", res.data);
                         }
@@ -102,7 +105,7 @@
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('advList/modify', data.field, "application/json", "put", function (res) {
+                        apiUtil.ajax('adv-list/modify', data.field, "application/json", "put", function (res) {
                             //console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
@@ -112,7 +115,7 @@
                             }
                         });
                     } else {
-                        apiUtil.ajax('advList/add', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('adv-list/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);

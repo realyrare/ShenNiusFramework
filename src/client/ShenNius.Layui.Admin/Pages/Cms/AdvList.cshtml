@@ -31,7 +31,7 @@
                 layer = layui.layer;
             apiUtil.render({
                 elem: '#currentTableId',
-                url: 'advList/get-list-pages',
+                url: 'adv-list/get-list-pages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -51,7 +51,7 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
-                    { field: 'title', width: 150, title: '标题' },
+                    { field: 'title', width: 350, title: '标题' },
                     { field: 'type', title: '类型' },
                     { field: 'summary', title: '备注' },
                     { field: 'status', width: 100, title: '状态', templet: '#switchTpl' },
@@ -101,8 +101,7 @@
                         shade: 0.2,
                         maxmin: true,
                         shadeClose: true,
-                        area: ['100%', '100%'],
-                        zIndex: "10000",
+                        area: ['660px', '600px'],
                         content: content,
                         end: function () {
                             refeshTable();
@@ -117,7 +116,7 @@
                             listIds.push(data[i].id);
                         }
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                            apiUtil.ajax('advList/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                            apiUtil.ajax('adv-list/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                                 if (res.statusCode == 200 && res.success == true) {
                                     layer.msg(res.msg);
                                     layer.close(index);
@@ -149,7 +148,7 @@
                         type: 2,
                         shade: 0.2,
                         shadeClose: true,
-                        area: ['660px', '800px'],
+                        area: ['660px', '600px'],
                         content: content,
                         end: function () {
                             refeshTable();
@@ -160,7 +159,7 @@
                     layer.confirm('真的删除行么', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('advList/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('adv-list/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
