@@ -54,6 +54,8 @@ namespace ShenNius.API.Hosting
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;            
             });
+            //把控制器当成服务 进行拦截
+            mvcBuilder.AddControllersAsServices();
             // 路由配置
             context.Services.AddRouting(options =>
             {

@@ -16,7 +16,7 @@ namespace ShenNius.Sys.API
             //JwtSetting jwtSetting = new JwtSetting();
             //context.Configuration.Bind("JwtSetting", jwtSetting);
             context.Services.Configure<JwtSetting>(context.Configuration.GetSection("JwtSetting"));
-            context.Services.AddMemoryCache();
+          
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
