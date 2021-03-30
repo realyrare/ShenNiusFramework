@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Common;
 
@@ -37,14 +38,14 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 {
                     var parameterName = parameter.Name;//获取Action方法中参数的名字
                     var parameterType = parameter.ParameterType;//获取Action方法中参数的类型
-                    if (!typeof(int).IsAssignableFrom(parameterType))//如果不是ID类型
-                    {
-                        continue;
-                    }
+                    //if (!typeof(int).IsAssignableFrom(parameterType))//如果不是ID类型
+                    //{
+                    //    continue;
+                    //}
                     //自动添加租户id
-                    if (typeof(GlobalSite).IsAssignableFrom(parameterType))
+                    if (typeof(GlobalSiteInput).IsAssignableFrom(parameterType))
                     {
-                        var model = context.ActionArguments[parameterName] as GlobalSite;
+                        var model = context.ActionArguments[parameterName] as GlobalSiteInput;
                         if (siteId != 0)
                         {
                             model.SiteId = siteId.Value;

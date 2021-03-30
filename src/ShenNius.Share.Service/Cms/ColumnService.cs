@@ -39,7 +39,7 @@ namespace ShenNius.Share.Service.Cms
         }
         public async Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput)
         {
-            columnModifyInput.SiteId = _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
+            //columnModifyInput.SiteId = _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var columnModel = await GetModelAsync(d => d.Title.Equals(columnModifyInput.Title)&&d.Id!= columnModifyInput.Id);
             if (columnModel?.Id > 0)
             {
@@ -64,7 +64,6 @@ namespace ShenNius.Share.Service.Cms
         }
         public async Task<ApiResult> AddToUpdateAsync(ColumnInput columnInput)
         {
-            columnInput.SiteId= _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var columnModel = await GetModelAsync(d => d.Title.Equals(columnInput.Title));
             if (columnModel?.Id > 0)
             {

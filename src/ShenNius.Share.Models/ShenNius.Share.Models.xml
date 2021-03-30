@@ -426,13 +426,6 @@
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Title">
             <summary>
             Desc:栏目标题

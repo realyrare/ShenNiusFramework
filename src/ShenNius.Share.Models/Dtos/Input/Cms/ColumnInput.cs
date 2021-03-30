@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShenNius.Share.Models.Dtos.Common;
+using System;
 using System.Collections.Generic;
 using System.Web;
 
@@ -15,15 +16,8 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class ColumnInput
+    public class ColumnInput:GlobalSiteInput
     {
-        /// <summary>
-        /// Desc:站点ID
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int SiteId { get; set; }
-
         /// <summary>
         /// Desc:栏目标题
         /// Default:-
