@@ -1,18 +1,13 @@
 ﻿using AutoMapper;
 using FytSoa.Core.Model.Cms;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Service.Cms;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web;
 
 /*************************************
 * 类 名： AdvListController
@@ -28,18 +23,15 @@ using System.Web;
 namespace ShenNius.Cms.API.Controllers
 {
 
-    public class AdvListController:ApiControllerBase
+    public class AdvListController : ApiControllerBase
 
     {
         private readonly IAdvListService _advListService;
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _cache;
-
-        public AdvListController(IAdvListService advListService, IMapper mapper, IMemoryCache cache)
+        public AdvListController(IAdvListService advListService, IMapper mapper)
         {
             _advListService = advListService;
             this._mapper = mapper;
-            this._cache = cache;
         }
         [HttpDelete]
         public async Task<ApiResult> Deletes([FromBody] CommonDeleteInput commonDeleteInput)
@@ -68,7 +60,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpPost]
         public async Task<ApiResult> Add([FromBody] AdvListInput advListInput)
         {
-            advListInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
+            // advListInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var model = _mapper.Map<AdvList>(advListInput);
             var i = await _advListService.AddAsync(model);
             return new ApiResult(i);
@@ -76,7 +68,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpPut]
         public async Task<ApiResult> Modify([FromBody] AdvListModifyInput advListModifyInput)
         {
-            advListModifyInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
+            // advListModifyInput.SiteId = _cache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var model = _mapper.Map<AdvList>(advListModifyInput);
             var i = await _advListService.UpdateAsync(model, d => new { d.CreateTime });
             return new ApiResult(i);

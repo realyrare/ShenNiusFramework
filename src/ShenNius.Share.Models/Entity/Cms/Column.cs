@@ -17,7 +17,7 @@ using System.Web;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Column")]
-    public class Column : GlobalSite
+    public class Column : BaseEntity
     {
         /// <summary>
         /// Desc:自动递增

@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -17,7 +18,7 @@ using System.Web;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Article")]
-    public class Article
+    public class Article: BaseEntity
     {
         /// <summary>
         /// Desc:-
@@ -26,12 +27,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// </summary>
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
-        /// <summary>
-        /// Desc:站点ID
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int SiteId { get; set; }
+
 
         /// <summary>
         /// Desc:栏目ID
@@ -159,20 +155,6 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// 文章内容
         /// </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// Desc:编辑时间
-        /// Default:-
-        /// Nullable:True
-        /// </summary>
-        public DateTime? ModifyTime { get; set; }
-
-        /// <summary>
-        /// Desc:添加时间
-        /// Default:-
-        /// Nullable:True
-        /// </summary>
-        public DateTime CreateTime { get; set; }
-
         /// <summary>
         /// Desc:删除到回收站时间
         /// Default:-

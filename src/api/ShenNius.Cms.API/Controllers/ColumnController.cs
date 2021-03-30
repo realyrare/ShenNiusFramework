@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
@@ -57,13 +56,11 @@ namespace ShenNius.Cms.API.Controllers
             return new ApiResult(data: res);
         }
         [HttpPost]
-        [MultiTenant]
         public async Task<ApiResult> Add([FromBody] ColumnInput columnInput )
         {
          return await _columnService.AddToUpdateAsync(columnInput);
         }
         [HttpPut]
-        [MultiTenant]
         public async Task<ApiResult> Modify([FromBody] ColumnModifyInput columnModifyInput)
         {
             return await _columnService.ModifyAsync(columnModifyInput);     

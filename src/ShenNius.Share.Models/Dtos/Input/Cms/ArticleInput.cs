@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ShenNius.Share.Models.Dtos.Common;
+using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-   public class ArticleInput
+    public class ArticleInput: GlobalSiteInput
     {
-        /// <summary>
-        /// Desc:站点ID
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int SiteId { get; set; }
 
         /// <summary>
         /// Desc:栏目ID

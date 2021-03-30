@@ -7,7 +7,7 @@ namespace FytSoa.Core.Model.Cms
     /// 广告位管理
     /// </summary>
     [SugarTable("Cms_AdvList")]
-    public class AdvList : GlobalSite
+    public class AdvList : BaseEntity
     {
 
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]

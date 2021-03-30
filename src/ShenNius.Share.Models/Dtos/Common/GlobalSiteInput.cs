@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-/*************************************
+﻿/*************************************
 * 类名：GlobalSiteInput
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
@@ -12,9 +8,11 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
+using ShenNius.Share.Models.Entity.Common;
+
 namespace ShenNius.Share.Models.Dtos.Common
-{
-    public class GlobalSiteInput
+{   
+    public class GlobalSiteInput : IGlobalSite
     {
         public int SiteId { get; set; }
     }

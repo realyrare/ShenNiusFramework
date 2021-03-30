@@ -50,12 +50,11 @@ namespace ShenNius.Cms.API.Controllers
             return new ApiResult();
         }
         /// <summary>
-        /// TODO
+        /// 设置当前站点
         /// </summary>
         /// <param name="siteCurrentInput"></param>
         /// <returns></returns>
-        [HttpPut]
-       
+        [HttpPut]       
         public async Task<ApiResult> SetCurrent([FromBody] SiteCurrentInput siteCurrentInput)
         {
 

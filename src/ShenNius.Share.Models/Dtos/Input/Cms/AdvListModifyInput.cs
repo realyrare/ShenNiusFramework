@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShenNius.Share.Models.Dtos.Common;
+using System;
 using System.Collections.Generic;
 using System.Web;
 
@@ -15,11 +16,9 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class AdvListModifyInput
+    public class AdvListModifyInput: GlobalSiteInput
     {
         public int Id { get; set; }
-        public int SiteId { get; set; }
-
         /// <summary>
         /// Desc:广告位名称
         /// Default:-

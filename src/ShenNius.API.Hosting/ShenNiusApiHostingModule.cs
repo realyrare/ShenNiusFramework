@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using System.Text;
 using ShenNius.Shop.API;
 using ShenNius.Cms.API;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.API.Hosting
 {
@@ -42,6 +43,8 @@ namespace ShenNius.API.Hosting
 
             var mvcBuilder = context.Services.AddControllers(options => {
                 options.Filters.Add(typeof(GlobalExceptionFilter));
+                //全局多租户
+                options.Filters.Add(typeof(MultiTenantAttribute));
                 //配置路由以减号分割
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             } );
