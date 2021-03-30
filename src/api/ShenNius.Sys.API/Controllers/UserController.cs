@@ -22,6 +22,7 @@ using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
+using ShenNius.Share.Infrastructure.Cache;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -31,7 +32,7 @@ namespace ShenNius.Sys.API.Controllers
     {
         readonly IOptions<JwtSetting> _jwtSetting;
         private readonly IUserService _userService;
-        private readonly IMemoryCache _cache;
+        private readonly ICacheHelper _cache;
         private readonly IR_User_RoleService _r_User_RoleService;
         private readonly IMenuService _menuService;
 
@@ -43,7 +44,7 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="cache"></param>
         /// <param name="r_User_RoleService"></param>
         /// <param name="menuService"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IMemoryCache cache, IR_User_RoleService r_User_RoleService, IMenuService menuService)
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, ICacheHelper cache, IR_User_RoleService r_User_RoleService, IMenuService menuService)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;

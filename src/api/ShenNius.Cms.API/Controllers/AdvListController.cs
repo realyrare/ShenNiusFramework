@@ -27,7 +27,9 @@ using System.Web;
 
 namespace ShenNius.Cms.API.Controllers
 {
+
     public class AdvListController:ApiControllerBase
+
     {
         private readonly IAdvListService _advListService;
         private readonly IMapper _mapper;

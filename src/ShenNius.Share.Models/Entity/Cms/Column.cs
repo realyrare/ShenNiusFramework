@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -16,7 +17,7 @@ using System.Web;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Column")]
-    public class Column
+    public class Column : GlobalSite
     {
         /// <summary>
         /// Desc:自动递增
@@ -25,13 +26,6 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// </summary>
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
-
-        /// <summary>
-        /// Desc:站点ID
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int SiteId { get; set; }
 
         /// <summary>
         /// Desc:栏目标题
@@ -73,7 +67,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public int Layer { get; set; } 
+        public int Layer { get; set; }
 
 
         /// <summary>
@@ -103,10 +97,5 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Nullable:True
         /// </summary>
         public string Summary { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? ModifyTime { get; set; }
-        public DateTime CreateTime { get; set; }
     }
 }

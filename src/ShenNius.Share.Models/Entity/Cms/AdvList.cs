@@ -1,4 +1,5 @@
 ﻿using System;
+using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 namespace FytSoa.Core.Model.Cms
 {
@@ -6,13 +7,11 @@ namespace FytSoa.Core.Model.Cms
     /// 广告位管理
     /// </summary>
     [SugarTable("Cms_AdvList")]
-    public class AdvList 
+    public class AdvList : GlobalSite
     {
 
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id {get;set;}
-        public int SiteId { get; set; }
-
         /// <summary>
         /// Desc:广告位名称
         /// Default:-
@@ -83,10 +82,6 @@ namespace FytSoa.Core.Model.Cms
         /// </summary>
         public int Sort { get; set; } = 0;
 
-        /// <summary>
-        /// 更新时间
-        /// </summary>
-        public DateTime ModifyTime { get; set; }
-        public DateTime CreateTime { get; set; }
+
     }
 }

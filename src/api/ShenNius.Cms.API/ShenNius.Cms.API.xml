@@ -4,11 +4,17 @@
         <name>ShenNius.Cms.API</name>
     </assembly>
     <members>
-        <member name="M:ShenNius.Cms.API.Controllers.SiteController.SetCurrent(System.Int32)">
+        <member name="M:ShenNius.Cms.API.Controllers.ColumnController.GetAllParentColumn">
+            <summary>
+            所有父栏目
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Cms.API.Controllers.SiteController.SetCurrent(ShenNius.Share.Models.Dtos.Input.Cms.SiteCurrentInput)">
             <summary>
             TODO
             </summary>
-            <param name="id"></param>
+            <param name="siteCurrentInput"></param>
             <returns></returns>
         </member>
     </members>

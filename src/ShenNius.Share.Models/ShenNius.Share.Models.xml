@@ -4,6 +4,587 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Title">
+            <summary>
+            Desc:广告位名称
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Type">
+            <summary>
+            Desc:广告位类型
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Status">
+            <summary>
+            Desc:是否启用
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.ImgUrl">
+            <summary>
+            Desc:图片地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.LinkUrl">
+            <summary>
+            Desc:链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Target">
+            <summary>
+            Desc:打开窗口类型
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.IsTimeLimit">
+            <summary>
+            Desc:是否启用时间显示
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.BeginTime">
+            <summary>
+            Desc:开始时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.EndTime">
+            <summary>
+            Desc:结束时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Sort">
+            <summary>
+            Desc:排序
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.Title">
+            <summary>
+            Desc:广告位名称
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.Type">
+            <summary>
+            Desc:广告位类型
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.Status">
+            <summary>
+            Desc:是否启用
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.ImgUrl">
+            <summary>
+            Desc:图片地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.LinkUrl">
+            <summary>
+            Desc:链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.Target">
+            <summary>
+            Desc:打开窗口类型
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.IsTimeLimit">
+            <summary>
+            Desc:是否启用时间显示
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.BeginTime">
+            <summary>
+            Desc:开始时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.EndTime">
+            <summary>
+            Desc:结束时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListModifyInput.Sort">
+            <summary>
+            Desc:排序
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.SiteId">
+            <summary>
+            Desc:站点ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.ColumnId">
+            <summary>
+            Desc:栏目ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Title">
+            <summary>
+            Desc:文章标题
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.TitleColor">
+            <summary>
+            Desc:文章标题颜色
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.SubTitle">
+            <summary>
+            Desc:文章副标题
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Author">
+            <summary>
+            Desc:作者
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Source">
+            <summary>
+            Desc:来源
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.IsLink">
+            <summary>
+            Desc:是否外链
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.LinkUrl">
+            <summary>
+            Desc:外部链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Tag">
+            <summary>
+            Desc:文章标签
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.ThumImg">
+            <summary>
+            Desc:文章图
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.VideoUrl">
+            <summary>
+            Desc:视频链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.IsTop">
+            <summary>
+            Desc:是否置顶
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.IsHot">
+            <summary>
+            Desc:是否热点
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.IsComment">
+            <summary>
+            Desc:是否允许评论
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.IsRecycle">
+            <summary>
+            Desc:是否在回收站
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Audit">
+            <summary>
+            Desc:审核状态
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.KeyWord">
+            <summary>
+            SEO关键字
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Summary">
+            <summary>
+            文章摘要
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.Content">
+            <summary>
+            文章内容
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.CreateTime">
+            <summary>
+            Desc:添加时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.SiteId">
+            <summary>
+            Desc:站点ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.ColumnId">
+            <summary>
+            Desc:栏目ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Title">
+            <summary>
+            Desc:文章标题
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.TitleColor">
+            <summary>
+            Desc:文章标题颜色
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.SubTitle">
+            <summary>
+            Desc:文章副标题
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Author">
+            <summary>
+            Desc:作者
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Source">
+            <summary>
+            Desc:来源
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.IsLink">
+            <summary>
+            Desc:是否外链
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.LinkUrl">
+            <summary>
+            Desc:外部链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Tag">
+            <summary>
+            Desc:文章标签
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.ThumImg">
+            <summary>
+            Desc:文章图
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.VideoUrl">
+            <summary>
+            Desc:视频链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.IsTop">
+            <summary>
+            Desc:是否置顶
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.IsHot">
+            <summary>
+            Desc:是否热点
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.IsComment">
+            <summary>
+            Desc:是否允许评论
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.IsRecycle">
+            <summary>
+            Desc:是否在回收站
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Audit">
+            <summary>
+            Desc:审核状态
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.KeyWord">
+            <summary>
+            SEO关键字
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Summary">
+            <summary>
+            文章摘要
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.Content">
+            <summary>
+            文章内容
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.ModifyTime">
+            <summary>
+            Desc:修改时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.SiteId">
+            <summary>
+            Desc:站点ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Title">
+            <summary>
+            Desc:栏目标题
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.EnTitle">
+            <summary>
+            Desc:英文栏位名称
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.SubTitle">
+            <summary>
+            Desc:栏位副标题
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.ParentId">
+            <summary>
+            Desc:父栏目
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.ParentList">
+            <summary>
+            Desc:栏位集合
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Layer">
+            <summary>
+            Desc:栏位等级
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Attr">
+            <summary>
+            Desc:栏位属性
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.ImgUrl">
+            <summary>
+            Desc:栏位图片
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Keyword">
+            <summary>
+            Desc:关键词
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnInput.Summary">
+            <summary>
+            Desc:描述
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.SiteId">
+            <summary>
+            Desc:站点ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Title">
+            <summary>
+            Desc:栏目标题
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.EnTitle">
+            <summary>
+            Desc:英文栏位名称
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.SubTitle">
+            <summary>
+            Desc:栏位副标题
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.ParentId">
+            <summary>
+            Desc:父栏目
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.ParentList">
+            <summary>
+            Desc:栏位集合
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Layer">
+            <summary>
+            Desc:栏位等级
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Attr">
+            <summary>
+            Desc:栏位属性
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.ImgUrl">
+            <summary>
+            Desc:栏位图片
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Keyword">
+            <summary>
+            Desc:关键词
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Summary">
+            <summary>
+            Desc:描述
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.ModifyTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.UserId">
             <summary>
             Desc:系统ID
@@ -689,13 +1270,6 @@
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Column.Title">
             <summary>
             Desc:栏目标题
@@ -752,7 +1326,7 @@
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.KeyWord">
+        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.Keyword">
             <summary>
             Desc:关键词
             Default:-
@@ -764,11 +1338,6 @@
             Desc:描述
             Default:-
             Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.ModifyTime">
-            <summary>
-            修改时间
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Site.UserId">
@@ -912,6 +1481,13 @@
         <member name="P:ShenNius.Share.Models.Entity.Cms.Site.CreateTime">
             <summary>
             创建站点时间
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Common.GlobalSite.CreateTime">
+            <summary>
+            Desc:添加时间
+            Default:-
+            Nullable:True
             </summary>
         </member>
         <member name="T:ShenNius.Share.Models.Entity.Sys.R_Role_Menu">
@@ -1287,6 +1863,81 @@
         <member name="P:ShenNius.Share.Model.Entity.Sys.User.LastLoginTime">
             <summary>
             当前登录时间
+            </summary>
+        </member>
+        <member name="T:FytSoa.Core.Model.Cms.AdvList">
+            <summary>
+            广告位管理
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.Title">
+            <summary>
+            Desc:广告位名称
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.Type">
+            <summary>
+            Desc:广告位类型
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.Status">
+            <summary>
+            Desc:是否启用
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.ImgUrl">
+            <summary>
+            Desc:图片地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.LinkUrl">
+            <summary>
+            Desc:链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.Target">
+            <summary>
+            Desc:打开窗口类型
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.IsTimeLimit">
+            <summary>
+            Desc:是否启用时间显示
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.BeginTime">
+            <summary>
+            Desc:开始时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.EndTime">
+            <summary>
+            Desc:结束时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:FytSoa.Core.Model.Cms.AdvList.Sort">
+            <summary>
+            Desc:排序
+            Default:0
+            Nullable:False
             </summary>
         </member>
     </members>
