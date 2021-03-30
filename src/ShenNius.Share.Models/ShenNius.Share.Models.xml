@@ -1270,13 +1270,6 @@
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Column.Title">
             <summary>
             Desc:栏目标题
@@ -1345,11 +1338,6 @@
             Desc:描述
             Default:-
             Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.ModifyTime">
-            <summary>
-            修改时间
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Site.UserId">
@@ -1493,6 +1481,13 @@
         <member name="P:ShenNius.Share.Models.Entity.Cms.Site.CreateTime">
             <summary>
             创建站点时间
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Entity.Common.GlobalSite.CreateTime">
+            <summary>
+            Desc:添加时间
+            Default:-
+            Nullable:True
             </summary>
         </member>
         <member name="T:ShenNius.Share.Models.Entity.Sys.R_Role_Menu">
@@ -1943,11 +1938,6 @@
             Desc:排序
             Default:0
             Nullable:False
-            </summary>
-        </member>
-        <member name="P:FytSoa.Core.Model.Cms.AdvList.ModifyTime">
-            <summary>
-            更新时间
             </summary>
         </member>
     </members>

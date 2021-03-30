@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Interface;
 using ModuleCore.Attribute;
@@ -12,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace ModuleCore.Manage.Impl
 {

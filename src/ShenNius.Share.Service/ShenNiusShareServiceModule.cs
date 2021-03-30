@@ -22,6 +22,8 @@ namespace ShenNius.Share.Service
 
             context.Services.AddAutoMapper(typeof(AutomapperProfile));
             context.Services.AddHttpContextAccessor();
+            //事务使用AOP 所以注入下。
+            context.Services.AddScoped<DbContext>();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

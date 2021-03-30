@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
@@ -42,10 +43,10 @@ namespace ShenNius.Share.Service.Sys
     public class MenuService : BaseServer<Menu>, IMenuService
     {
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _cache;
+        private readonly ICacheHelper _cache;
         private readonly ICurrentUserContext _currentUserContext;
 
-        public MenuService(IMapper mapper, IMemoryCache cache, ICurrentUserContext currentUserContext)
+        public MenuService(IMapper mapper, ICacheHelper cache, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
             _cache = cache;

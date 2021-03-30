@@ -6,6 +6,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Concurrent;
+using System.Reflection;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 /*************************************
 * 类名：CacheInterceptor
 * 作者：realyrare
@@ -20,86 +24,123 @@ namespace ShenNius.Share.Infrastructure.Attributes
 {
     public class CacheInterceptorAttribute : AbstractInterceptorAttribute
     {
+        private static readonly ConcurrentDictionary<Type, MethodInfo> TypeofTaskResultMethod = new ConcurrentDictionary<Type, MethodInfo>();
+        readonly int _expireSecond;
+        readonly string _cacheKey;
+
+        #region 拦截处理
         /// <summary>
-        /// 缓存秒数
+        /// 过期时间，单位：分
         /// </summary>
-        public int ExpireSeconds { get; set; }
+        /// <param name="expireMin"></param>
+        public CacheInterceptorAttribute(string cacheKey = null, int expireMin = -1)
+        {
+            _expireSecond = expireMin * 60;
+            _cacheKey = cacheKey;
+        }
 
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
-            //判断是否是异步方法
-            bool isAsync = context.IsAsync();
-            //if (context.ImplementationMethod.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null)
-            //{
-            //    isAsync = true;
-            //}
-            //先判断方法是否有返回值，无就不进行缓存判断
-            var methodReturnType = context.GetReturnParameter().Type;
-            if (methodReturnType == typeof(void) || methodReturnType == typeof(Task) || methodReturnType == typeof(ValueTask))
+            try
             {
-                await next(context);
-                return;
-            }
-            var returnType = methodReturnType;
-            if (isAsync)
-            {
-                //取得异步返回的类型
-                returnType = returnType.GenericTypeArguments.FirstOrDefault();
-            }
-            //获取方法参数名
-
-            var param = context.Parameters.Length == 0 ? string.Empty : ":" + JsonConvert.SerializeObject(context.Parameters);
-            //获取方法名称，也就是缓存key值
-            string key = context.ImplementationMethod.DeclaringType.FullName + ":" + context.ImplementationMethod.Name + param;
-            var cache = context.ServiceProvider.GetService<ICacheHelper>();
-
-
-            //如果缓存有值，那就直接返回缓存值
-            if (cache.Exists(key))
-            {
-                //反射获取缓存值，相当于cache.HashGet<>(key,param)
-                var value = typeof(ICacheHelper).GetMethod(nameof(ICacheHelper.Get)).MakeGenericMethod(returnType).Invoke(cache, new[] { key, param });
-                if (isAsync)
+                string key = string.Empty;
+                //自定义的缓存key不存在，再获取类名+方法名或类名+方法名+参数名的组合式key
+                if (!string.IsNullOrEmpty(_cacheKey))
                 {
-                    //判断是Task还是ValueTask
-                    if (methodReturnType == typeof(Task<>).MakeGenericType(returnType))
-                    {
-                        //反射获取Task<>类型的返回值，相当于Task.FromResult(value)
-                        context.ReturnValue = typeof(Task).GetMethod(nameof(Task.FromResult)).MakeGenericMethod(returnType).Invoke(null, new[] { value });
-                    }
-                    else if (methodReturnType == typeof(ValueTask<>).MakeGenericType(returnType))
-                    {
-                        //反射构建ValueTask<>类型的返回值，相当于new ValueTask(value)
-                        context.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), value);
-                    }
+                    key = _cacheKey;
                 }
                 else
                 {
-                    context.ReturnValue = value;
+                    key = GetKey(context.ServiceMethod, context.Parameters);
                 }
-                return;
-            }
-            await next(context);
-            object returnValue;
-            if (isAsync)
-            {
-                returnValue = await context.UnwrapAsyncReturnValue();
-                //反射获取异步结果的值，相当于(context.ReturnValue as Task<>).Result
-                //returnValue = typeof(Task<>).MakeGenericType(returnType).GetProperty(nameof(Task<object>.Result)).GetValue(context.ReturnValue);
 
+                var returnType = GetReturnType(context);
+                var cache = context.ServiceProvider.GetService<ICacheHelper>();
+                if (!cache.Exists(key))
+                {
+                    return;
+                }
+                var strResult = cache.Get<string>(key);
+                var result = JsonConvert.DeserializeObject(strResult, returnType);
+                if (result != null)
+                {
+                    context.ReturnValue = ResultFactory(result, returnType, context.IsAsync());
+                }
+                else
+                {
+                    result = await RunAndGetReturn(context, next);
+                    if (_expireSecond > 0)
+                    {
+                        cache.Set(key, result, TimeSpan.FromMinutes(_expireSecond));
+                    }
+                    else
+                    {
+                        cache.Set(key, result);
+                    }
+                }
             }
-            else
+            catch (Exception e)
             {
-                returnValue = context.ReturnValue;
-            }
-            if (ExpireSeconds > 0)
-            {
-                cache.Set(key, returnValue, TimeSpan.FromSeconds(ExpireSeconds));
-            }
-            else
-            {
-                cache.Set(key, returnValue);
+                Console.WriteLine(e.Message);
             }
         }
+
+        private static string GetKey(MethodInfo method, object[] parameters)
+        {
+            return GetKey(method.DeclaringType.Name, method.Name, parameters);
+        }
+        private static string GetKey(string className, string methodName, object[] parameters)
+        {
+            var paramConcat = parameters.Length == 0 ? string.Empty : ":" + JsonConvert.SerializeObject(parameters);
+            return $"{className}:{methodName}{paramConcat}";
+        }
+
+
+        /// <summary>
+        /// 获取被拦截方法返回值类型
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private Type GetReturnType(AspectContext context)
+        {
+            return context.IsAsync()
+                ? context.ServiceMethod.ReturnType.GetGenericArguments().First()
+                : context.ServiceMethod.ReturnType;
+        }
+
+        /// <summary>
+        /// 执行被拦截方法
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
+        private async Task<object> RunAndGetReturn(AspectContext context, AspectDelegate next)
+        {
+            await context.Invoke(next);
+            return context.IsAsync()
+            ? await context.UnwrapAsyncReturnValue()
+            : context.ReturnValue;
+        }
+
+        /// <summary>
+        /// 处理拦截器返回结果
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="returnType"></param>
+        /// <param name="isAsync"></param>
+        /// <returns></returns>
+        private object ResultFactory(object result, Type returnType, bool isAsync)
+        {
+            return !isAsync
+                ? result
+                : TypeofTaskResultMethod
+                    .GetOrAdd(returnType, t => typeof(Task)
+                    .GetMethods()
+                    .First(p => p.Name == "FromResult" && p.ContainsGenericParameters)
+                    .MakeGenericMethod(returnType))
+                    .Invoke(null, new object[] { result });
+        }
+        #endregion
+
     }
 }
