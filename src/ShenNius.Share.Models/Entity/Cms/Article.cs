@@ -21,15 +21,6 @@ namespace ShenNius.Share.Models.Entity.Cms
     public class Article: BaseEntity
     {
         /// <summary>
-        /// Desc:-
-        /// Default:-
-        /// Nullable:False
-        /// </summary>
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
-
-
-        /// <summary>
         /// Desc:栏目ID
         /// Default:0
         /// Nullable:False

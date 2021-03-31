@@ -37,6 +37,9 @@ namespace ShenNius.Share.Service
 
             CreateMap<AdvListInput, AdvList>();
             CreateMap<AdvListModifyInput, AdvList>();
+
+            CreateMap<KeywordInput, Keyword>();
+            CreateMap<KeywordModifyInput, Keyword>();
         }
     }
 }

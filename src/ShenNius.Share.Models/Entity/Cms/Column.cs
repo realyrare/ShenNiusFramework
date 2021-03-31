@@ -1,8 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：Column
@@ -19,14 +16,6 @@ namespace ShenNius.Share.Models.Entity.Cms
     [SugarTable("Cms_Column")]
     public class Column : BaseEntity
     {
-        /// <summary>
-        /// Desc:自动递增
-        /// Default:-
-        /// Nullable:False
-        /// </summary>
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
-
         /// <summary>
         /// Desc:栏目标题
         /// Default:-

@@ -9,9 +9,6 @@ namespace FytSoa.Core.Model.Cms
     [SugarTable("Cms_AdvList")]
     public class AdvList : BaseEntity
     {
-
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id {get;set;}
         /// <summary>
         /// Desc:广告位名称
         /// Default:-

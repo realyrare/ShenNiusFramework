@@ -47,8 +47,9 @@ namespace ShenNius.Share.Infrastructure.Attributes
                     if (typeof(IGlobalSite).IsAssignableFrom(parameterType))
                     {
                         var model = context.ActionArguments[parameterName] as IGlobalSite;
-                        if (siteId != 0)
+                        if (siteId != null)
                         {
+
                             model.SiteId = siteId.Value;
                         }
                     }

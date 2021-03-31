@@ -12,7 +12,7 @@
         </member>
         <member name="M:ShenNius.Cms.API.Controllers.SiteController.SetCurrent(ShenNius.Share.Models.Dtos.Input.Cms.SiteCurrentInput)">
             <summary>
-            TODO
+            设置当前站点
             </summary>
             <param name="siteCurrentInput"></param>
             <returns></returns>

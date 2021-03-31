@@ -1,22 +1,25 @@
-﻿/*************************************
-* 类名：GlobalSiteInput
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
+
+/*************************************
+* 类名：Keyword
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
-* 时间：2021/3/30 18:15:44
+* 时间：2021/3/31 19:03:29
 *┌───────────────────────────────────┐　    
 *│　   版权所有：一起牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-using ShenNius.Share.Models.Entity.Common;
-
-namespace ShenNius.Share.Models.Dtos.Common
-{  
+namespace ShenNius.Share.Models.Entity.Cms
+{
     /// <summary>
-    /// 多租户约定方便Add ,Modify使用
+    /// 关键词
     /// </summary>
-    public class GlobalSiteInput : IGlobalSite
+    [SugarTable("Cms_Keyword")]
+    public class Keyword:BaseEntity
     {
-        public int SiteId { get; set; }
+        public string  Title { get; set; }
+        public string Url { get; set; }
     }
 }

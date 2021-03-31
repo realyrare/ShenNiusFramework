@@ -4,6 +4,31 @@
         <name>ShenNius.Share.Models</name>
     </assembly>
     <members>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.DetailQuery">
+            <summary>
+            详情查询基类（不是多租户的模块可以使用）
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.DetailSiteQuery">
+            <summary>
+            多租户查询使用
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.GlobalSiteInput">
+            <summary>
+            多租户约定方便Add ,Modify使用
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.ListQuery">
+            <summary>
+            列表查询基类（不是多租户的模块可以使用）
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.ListSiteQuery">
+            <summary>
+            多租户列表查询使用
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Title">
             <summary>
             Desc:广告位名称
@@ -144,13 +169,6 @@
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleInput.ColumnId">
             <summary>
             Desc:栏目ID
@@ -283,13 +301,6 @@
             Desc:添加时间
             Default:-
             Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleModifyInput.ColumnId">
@@ -494,13 +505,6 @@
             Desc:描述
             Default:-
             Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ColumnModifyInput.Title">
@@ -1094,20 +1098,6 @@
             备注
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Article.Id">
-            <summary>
-            Desc:-
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Article.SiteId">
-            <summary>
-            Desc:站点ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Article.ColumnId">
             <summary>
             Desc:栏目ID
@@ -1235,32 +1225,11 @@
             文章内容
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Article.ModifyTime">
-            <summary>
-            Desc:编辑时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Article.CreateTime">
-            <summary>
-            Desc:添加时间
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Article.DeleteTime">
             <summary>
             Desc:删除到回收站时间
             Default:-
             Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Cms.Column.Id">
-            <summary>
-            Desc:自动递增
-            Default:-
-            Nullable:False
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Column.Title">
@@ -1331,6 +1300,11 @@
             Desc:描述
             Default:-
             Nullable:True
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Entity.Cms.Keyword">
+            <summary>
+            关键词
             </summary>
         </member>
         <member name="P:ShenNius.Share.Models.Entity.Cms.Site.UserId">
@@ -1476,11 +1450,14 @@
             创建站点时间
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Common.GlobalSite.CreateTime">
+        <member name="T:ShenNius.Share.Models.Entity.Common.IDeleted">
             <summary>
-            Desc:添加时间
-            Default:-
-            Nullable:True
+            假删除
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Entity.Common.IGlobalSite">
+            <summary>
+            站群Id接口
             </summary>
         </member>
         <member name="T:ShenNius.Share.Models.Entity.Sys.R_Role_Menu">

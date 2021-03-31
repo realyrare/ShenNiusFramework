@@ -24,6 +24,9 @@ namespace ShenNius.Share.Service
             context.Services.AddHttpContextAccessor();
             //事务使用AOP 所以注入下。
             context.Services.AddScoped<DbContext>();
+
+            //注入泛型BaseServer
+            context.Services.AddTransient(typeof(IBaseServer<>), typeof(BaseServer<>));
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
