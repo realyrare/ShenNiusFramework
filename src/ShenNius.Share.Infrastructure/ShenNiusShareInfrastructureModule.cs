@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.FileManager;
+using ShenNius.Share.Infrastructure.ImgUpload;
 
 namespace ShenNius.Share.Infrastructure
 {
@@ -33,7 +35,9 @@ namespace ShenNius.Share.Infrastructure
             {
                 context.Services.AddMemoryCache();
                 context.Services.AddScoped<ICacheHelper, MemoryCacheHelper>();
-            }          
+            }
+            context.Services.Configure<QiNiuOssModel>(context.Configuration.GetSection("QiNiuOss"));
+            context.Services.AddScoped<QiniuCloud>();
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

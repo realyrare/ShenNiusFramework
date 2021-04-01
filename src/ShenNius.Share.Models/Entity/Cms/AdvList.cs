@@ -24,13 +24,6 @@ namespace FytSoa.Core.Model.Cms
         public string Type { get; set; }
 
         /// <summary>
-        /// Desc:是否启用
-        /// Default:b'1'
-        /// Nullable:False
-        /// </summary>
-        public bool Status { get; set; } 
-
-        /// <summary>
         /// Desc:图片地址
         /// Default:-
         /// Nullable:True

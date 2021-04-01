@@ -7,6 +7,7 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Cms;
+using ShenNius.Share.Models.Entity.Tenant;
 
 namespace ShenNius.Share.Service
 {

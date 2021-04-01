@@ -15,18 +15,24 @@ namespace ShenNius.Share.Models.Dtos.Common
     /// <summary>
     /// 列表查询基类（不是多租户的模块可以使用）
     /// </summary>
-    public class ListQuery
+    public class PageQuery
     {
         public int Page { get; set; } = 1;
         public int Limit { get; set; } = 15;
-        public string  Key { get; set; }
     }
     /// <summary>
     /// 多租户列表查询使用
     /// </summary>
-    public class ListSiteQuery : ListQuery, IGlobalSite
+    public class ListSiteQuery : PageQuery, IGlobalSite
     {
         public int SiteId { get; set; }
+    }
+    /// <summary>
+    /// 通用查询 ， 适合只有一个关键词查询的列表
+    /// </summary>
+    public class KeyListSiteQuery : ListSiteQuery, IGlobalSite
+    {
+        public string Key { get; set; }
     }
 
 }

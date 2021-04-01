@@ -23,7 +23,7 @@ namespace ShenNius.Share.Service.Sys
             Description=d.Description,
             Status=false
             }).ToPageAsync(page,15);
-            var userRoleList = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId&&d.IsEnable).ToListAsync();
+            var userRoleList = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId&&d.Status).ToListAsync();
             foreach (var item in query.Items)
             {
                var model= userRoleList.FirstOrDefault(d => d.RoleId == item.Id);

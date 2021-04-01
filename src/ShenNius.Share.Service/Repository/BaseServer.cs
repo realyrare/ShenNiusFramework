@@ -274,6 +274,10 @@ namespace ShenNius.Share.Service.Repository
         {
             return await Db.Queryable<T>().ToPageAsync(page, limit);
         }
+        public async Task<Page<T>> GetPagesAsync(int page, int limit, Expression<Func<T, object>> orderExpression, bool isAsc)
+        {
+            return await Db.Queryable<T>().OrderBy(orderExpression, isAsc == true ? OrderByType.Asc : OrderByType.Desc).ToPageAsync(page, limit);
+        }
 
         /// <summary>
         /// 分页

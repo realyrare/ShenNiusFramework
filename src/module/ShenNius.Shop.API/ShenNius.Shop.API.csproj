@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>C:\Code\ShenNius.Framework\src\module\ShenNius.Shop.API\ShenNius.Shop.API.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Controllers\ApiControllerBase.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\ShenNius.Share.BaseController\ShenNius.Share.BaseController.csproj" />
+	</ItemGroup>
+</Project>

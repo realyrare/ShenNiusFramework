@@ -1,26 +1,24 @@
-﻿using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Models.Entity.Tenant;
-using ShenNius.Share.Service.Repository;
+﻿using ModuleCore.AppModule.Impl;
+using ModuleCore.Attribute;
+using ShenNius.Share.Infrastructure;
+using ShenNius.Share.Service;
 
 /*************************************
-* 类名：ColumnService
+* 类名：ShenNiusShareBaseControllerModule
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
-* 时间：2021/3/11 17:15:30
+* 时间：2021/4/1 15:09:04
 *┌───────────────────────────────────┐　    
 *│　   版权所有：一起牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Cms
+namespace ShenNius.Share.BaseController
 {
-    public interface ISiteService : IBaseServer<Site>
+    [DependsOn(typeof(ShenNiusShareDomainModule),
+       typeof(ShenNiusShareInfrastructureModule)
+    )]
+    public class ShenNiusShareBaseControllerModule : AppModule
     {
-
     }
-    public class SiteService : BaseServer<Site>, ISiteService
-    {
-    }
-
-   
 }

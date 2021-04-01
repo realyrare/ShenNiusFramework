@@ -45,7 +45,7 @@ namespace ShenNius.Share.Service.Sys
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
             if (loginModel.Id == 0)
             {
-                return new ApiResult<LoginOutput>("用户名或密码错误",500);
+                return new ApiResult<LoginOutput>("用户名或密码错误", 500);
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParse.GetAddressByIP(ip);
@@ -81,7 +81,8 @@ namespace ShenNius.Share.Service.Sys
                 Remark = userModifyInput.Remark,
                 Email = userModifyInput.Email,
                 TrueName = userModifyInput.TrueName,
-                Sex = userModifyInput.Sex
+                Sex = userModifyInput.Sex,
+                ModifyTime = DateTime.Now
             },
             d => d.Id == userModifyInput.Id);
 
@@ -89,7 +90,7 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput)
         {
-            if (modifyPwdInput.Id==0)
+            if (modifyPwdInput.Id == 0)
             {
                 modifyPwdInput.Id = _currentUserContext.Id;
             }
@@ -99,7 +100,7 @@ namespace ShenNius.Share.Service.Sys
             }
             modifyPwdInput.OldPassword = Md5Crypt.Encrypt(modifyPwdInput.OldPassword);
             var model = await GetModelAsync(d => d.Id == modifyPwdInput.Id);
-            if (model.Id<=0)
+            if (model.Id <= 0)
             {
                 throw new ArgumentNullException("用户信息为空");
             }
@@ -121,10 +122,10 @@ namespace ShenNius.Share.Service.Sys
         }
         public async Task<ApiResult> GetUserAsync(int id)
         {
-            var model= await GetModelAsync(d=>d.Id==id);
-           var data= _mapper.Map<UserOutput>(model);
+            var model = await GetModelAsync(d => d.Id == id);
+            var data = _mapper.Map<UserOutput>(model);
             return new ApiResult(data);
         }
-       
+
     }
 }

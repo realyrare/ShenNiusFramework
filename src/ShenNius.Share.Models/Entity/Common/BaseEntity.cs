@@ -15,9 +15,10 @@ namespace ShenNius.Share.Models.Entity.Common
 {
     public interface IEntity
     {
-         int Id { get; set; }
-         DateTime? ModifyTime { get; set; }
-         DateTime CreateTime { get; set; }
+        int Id { get; set; }
+        DateTime? ModifyTime { get; set; }
+        DateTime CreateTime { get; set; }
+        bool Status { get; set; }
     }
     /// <summary>
     /// 假删除
@@ -27,13 +28,17 @@ namespace ShenNius.Share.Models.Entity.Common
         public DateTime? DeleteTime { get; set; }
         public bool Status { get; set; }
     }
-    public class BaseEntity: IGlobalSite,IEntity
+    /// <summary>
+    /// 所有数据库实体基类
+    /// </summary>
+    public class BaseEntity : IGlobalSite, IEntity
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
         public int SiteId { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
+        public bool Status { get; set; }
 
     }
 }

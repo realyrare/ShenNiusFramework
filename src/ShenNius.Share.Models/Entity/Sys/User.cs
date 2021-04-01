@@ -1,16 +1,12 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 using System;
 
 namespace ShenNius.Share.Model.Entity.Sys
 {
     [SugarTable("Sys_User")]
-    public class User
-    {
-        /// <summary>
-        /// 唯一编号
-        /// </summary>
-        public int Id { get; set; }
-
+    public class User: BaseEntity
+    { 
         /// <summary>
         /// 登录账号
         /// </summary>
@@ -40,12 +36,6 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// 手机号码
         /// </summary>
         public string Mobile { get; set; }
-
-        /// <summary>
-        /// 状态 1=整除 0=不允许登录
-        /// </summary>
-        public bool Status { get; set; }
-
         /// <summary>
         /// 邮箱
         /// </summary>
@@ -57,13 +47,6 @@ namespace ShenNius.Share.Model.Entity.Sys
         public string Remark { get; set; }
         public string Ip { get; set; }
         public string Address { get; set; }
-
-        /// <summary>
-        /// 添加时间
-        /// </summary>
-        public DateTime CreateTime { get; set; }
-        public DateTime? UpdateTime { get; set; }
-
         /// <summary>
         /// 当前登录时间
         /// </summary>

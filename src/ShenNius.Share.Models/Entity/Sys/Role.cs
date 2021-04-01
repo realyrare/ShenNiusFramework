@@ -1,7 +1,5 @@
-﻿using SqlSugar;
-using System;
-using System.Linq;
-using System.Text;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 
 namespace ShenNius.Share.Model.Entity.Sys
 {
@@ -9,36 +7,14 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 权限角色表
     ///</summary>
     [SugarTable("Sys_Role")]
-    public partial class Role
+    public partial class Role : BaseEntity
     {
-      
-            public Role()
-            {
-
-
-            }
-            /// <summary>
-            /// Desc:
-            /// Default:
-            /// Nullable:False
-            /// </summary>           
-            [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-            public int Id { get; set; }
-
-            /// <summary>
-            /// Desc:
-            /// Default:
-            /// Nullable:True
-            /// </summary>           
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Desc:
-            /// Default:DateTime.Now
-            /// Nullable:False
-            /// </summary>           
-            public DateTime CreateTime { get; set; }
-            public DateTime ModifyTime { get; set; } 
-            public string Description { get; set; }
-        }
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
 }

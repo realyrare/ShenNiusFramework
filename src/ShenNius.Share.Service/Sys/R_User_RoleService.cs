@@ -19,16 +19,16 @@ namespace ShenNius.Share.Service.Sys
             //分配角色
             if (input.Status)
             {
-                var model = await GetModelAsync(d => d.UserId == input.UserId && d.RoleId == input.RoleId&&d.IsEnable);
+                var model = await GetModelAsync(d => d.UserId == input.UserId && d.RoleId == input.RoleId&&d.Status);
                 if (model.Id>0)
                 {
                     return new ApiResult("已经存在该角色了", 500);
                 }
-                R_User_Role addModel = new R_User_Role() {UserId=input.UserId,RoleId=input.RoleId,CreateTime=DateTime.Now,IsEnable=true };
+                R_User_Role addModel = new R_User_Role() {UserId=input.UserId,RoleId=input.RoleId,CreateTime=DateTime.Now,Status=true };
                 await AddAsync(addModel);
             }
             else {
-                await UpdateAsync(d => new R_User_Role() { IsEnable = false }, d => d.UserId == input.UserId && d.RoleId == input.RoleId);
+                await UpdateAsync(d => new R_User_Role() { Status = false }, d => d.UserId == input.UserId && d.RoleId == input.RoleId);
                // await DeleteAsync(d => d.UserId == input.UserId && d.RoleId == input.RoleId);
                //删除的话 要把授权的权限都要删除掉 风险比较高。
             }

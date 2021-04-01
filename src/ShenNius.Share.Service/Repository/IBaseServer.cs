@@ -218,6 +218,7 @@ namespace ShenNius.Share.Service.Repository
         /// <returns></returns>
 		Task<Page<T>> GetPagesAsync(int page,int limit);
 
+        Task<Page<T>> GetPagesAsync(int page, int limit, Expression<Func<T, object>> orderExpression, bool isAsc);
         /// <summary>
         /// 分页
         /// </summary>

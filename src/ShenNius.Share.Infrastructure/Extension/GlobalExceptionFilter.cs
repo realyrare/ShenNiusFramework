@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
-
 using ShenNius.Share.Infrastructure.ApiResponse;
-
 using NLog;
 using Microsoft.Extensions.Logging;
 using ShenNius.Share.Infrastructure.Utils;
@@ -39,7 +37,7 @@ namespace ShenNius.Share.Infrastructure.Extension
             
             if (_webHostEnvironment.IsDevelopment())
             {
-                json.Msg = context.Exception.Message;//显示堆栈信息  
+                json.Msg = context.Exception?.Message;//显示堆栈信息  
                 string msg = json.Msg + "\r\n" + context.Exception.StackTrace;
                 _logger.LogError(msg);
                 LogHelper.Default.Debug(json.Msg);

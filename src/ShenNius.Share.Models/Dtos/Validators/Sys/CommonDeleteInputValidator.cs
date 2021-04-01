@@ -3,7 +3,7 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 
 namespace ShenNius.Share.Models.Dtos.Validators.Sys
 {
-    public class CommonDeleteInputValidator : AbstractValidator<CommonDeleteInput>
+    public class CommonDeleteInputValidator : AbstractValidator<DeletesInput>
     {
         public CommonDeleteInputValidator()
         {

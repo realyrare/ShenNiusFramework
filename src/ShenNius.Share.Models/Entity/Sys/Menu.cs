@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 using System;
 
 namespace ShenNius.Share.Model.Entity.Sys
@@ -7,16 +8,8 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 系统菜单表
     ///</summary>
     [SugarTable("Sys_Menu")]
-    public partial class Menu
+    public partial class Menu : BaseEntity
     {
-        /// <summary>
-        /// Desc:
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
-
         /// <summary>
         /// Desc:
         /// Default:0
@@ -37,31 +30,19 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Nullable:True
         /// </summary>           
         public string Url { get; set; }
-
-        /// <summary>
-        /// Desc:
-        /// Default:DateTime.Now
-        /// Nullable:False
-        /// </summary>           
-        public DateTime CreateTime { get; set; }
-
         /// <summary>
         /// Desc:
         /// Default:
         /// Nullable:True
         /// </summary>           
         public string HttpMethod { get; set; }
-
-        public DateTime ModifyTime { get; set; } 
-
-        public bool Status { get; set; }
         public int Sort { get; set; }
-        public string  Icon { get; set; }
-        [SugarColumn(IsJson =true)]
-        public string[]  BtnCodeIds { get; set; }
+        public string Icon { get; set; }
+        [SugarColumn(IsJson = true)]
+        public string[] BtnCodeIds { get; set; }
 
-        public string  ParentIdList { get; set; }
-        public int  Layer { get; set; }
+        public string ParentIdList { get; set; }
+        public int Layer { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public string BtnCodeName { get; set; }
