@@ -18,7 +18,7 @@ using System.Web;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Article")]
-    public class Article: BaseEntity
+    public class Article: BaseSiteEntity
     {
         /// <summary>
         /// Desc:栏目ID

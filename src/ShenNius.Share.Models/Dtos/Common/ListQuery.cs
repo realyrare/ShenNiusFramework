@@ -34,5 +34,12 @@ namespace ShenNius.Share.Models.Dtos.Common
     {
         public string Key { get; set; }
     }
+    /// <summary>
+    /// 适用于不是多租户的
+    /// </summary>
+    public class KeyListQuery : PageQuery
+    {
+        public string Key { get; set; }
+    }
 
 }

@@ -36,7 +36,7 @@ namespace ShenNius.Share.BaseController.Controllers
     [Authorize]
     [MultiTenant]
     public abstract class ApiTenantBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
-       where TEntity : BaseEntity, new()
+       where TEntity : BaseSiteEntity, new()
        where TDetailQuery : DetailSiteQuery
        where TDeleteInput : DeletesSiteInput
        where TListQuery : ListSiteQuery

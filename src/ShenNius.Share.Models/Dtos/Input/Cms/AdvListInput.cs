@@ -16,7 +16,7 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class AdvListInput:GlobalSiteInput
+    public class AdvListInput : GlobalSiteInput
     {
         /// <summary>
         /// Desc:广告位名称
@@ -88,5 +88,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         /// </summary>
         public int Sort { get; set; } = 0;
         public DateTime CreateTime { get; set; } = DateTime.Now;
+        public string Summary { get; set; }
     }
 }

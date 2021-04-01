@@ -5,7 +5,7 @@ using System;
 namespace ShenNius.Share.Model.Entity.Sys
 {
     [SugarTable("Sys_User")]
-    public class User: BaseEntity
+    public class User: BaseSiteEntity
     { 
         /// <summary>
         /// 登录账号

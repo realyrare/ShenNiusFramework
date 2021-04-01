@@ -7,7 +7,7 @@ namespace FytSoa.Core.Model.Cms
     /// 广告位管理
     /// </summary>
     [SugarTable("Cms_AdvList")]
-    public class AdvList : BaseEntity
+    public class AdvList : BaseSiteEntity
     {
         /// <summary>
         /// Desc:广告位名称
@@ -72,6 +72,6 @@ namespace FytSoa.Core.Model.Cms
         /// </summary>
         public int Sort { get; set; } = 0;
 
-
+        public string Summary { get; set; }
     }
 }

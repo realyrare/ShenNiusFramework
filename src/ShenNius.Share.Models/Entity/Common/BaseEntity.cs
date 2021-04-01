@@ -29,9 +29,9 @@ namespace ShenNius.Share.Models.Entity.Common
         public bool Status { get; set; }
     }
     /// <summary>
-    /// 所有数据库实体基类
+    /// 所有多租户数据库实体基类
     /// </summary>
-    public class BaseEntity : IGlobalSite, IEntity
+    public class BaseSiteEntity : IGlobalSite, IEntity
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
@@ -39,6 +39,16 @@ namespace ShenNius.Share.Models.Entity.Common
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
         public bool Status { get; set; }
-
+    }
+    /// <summary>
+    /// 所有不是多租户的数据库实体基类
+    /// </summary>
+    public class BaseEntity : IEntity
+    {
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public int Id { get; set; }
+        public DateTime? ModifyTime { get; set; }
+        public DateTime CreateTime { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Models.Entity.Common;
+using SqlSugar;
 using System;
 
 /*************************************
@@ -14,10 +15,8 @@ using System;
 namespace ShenNius.Share.Models.Entity.Tenant
 {
     [SugarTable("Tenant_Site")]
-    public class Site
+    public class Site : BaseEntity
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
 
         /// <summary>
         /// Desc:系统ID
@@ -139,13 +138,6 @@ namespace ShenNius.Share.Models.Entity.Tenant
         public string Copyright { get; set; }
 
         /// <summary>
-        /// Desc:网站开启关闭状态
-        /// Default:b'1'
-        /// Nullable:False
-        /// </summary>
-        public bool Status { get; set; } = false;
-
-        /// <summary>
         /// Desc:如果状态关闭，请输入关闭网站原因
         /// Default:-
         /// Nullable:True
@@ -156,12 +148,6 @@ namespace ShenNius.Share.Models.Entity.Tenant
         /// 是否删除
         /// </summary>
         public bool IsDel { get; set; }
-
-        /// <summary>
-        /// 创建站点时间
-        /// </summary>
-        public DateTime CreateTime { get; set; }
-        public DateTime? ModifyTime { get; set; }
 
         public bool IsCurrent { get; set; }
     }

@@ -8,7 +8,7 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 系统菜单表
     ///</summary>
     [SugarTable("Sys_Menu")]
-    public partial class Menu : BaseEntity
+    public partial class Menu : BaseSiteEntity
     {
         /// <summary>
         /// Desc:

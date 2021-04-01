@@ -29,6 +29,16 @@
             多租户列表查询使用
             </summary>
         </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.KeyListSiteQuery">
+            <summary>
+            通用查询 ， 适合只有一个关键词查询的列表
+            </summary>
+        </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Common.KeyListQuery">
+            <summary>
+            适用于不是多租户的
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.AdvListInput.Title">
             <summary>
             Desc:广告位名称
@@ -1322,9 +1332,14 @@
             假删除
             </summary>
         </member>
+        <member name="T:ShenNius.Share.Models.Entity.Common.BaseSiteEntity">
+            <summary>
+            所有多租户数据库实体基类
+            </summary>
+        </member>
         <member name="T:ShenNius.Share.Models.Entity.Common.BaseEntity">
             <summary>
-            所有数据库实体基类
+            所有不是多租户的数据库实体基类
             </summary>
         </member>
         <member name="T:ShenNius.Share.Models.Entity.Common.IGlobalSite">
@@ -1496,13 +1511,6 @@
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Status">
-            <summary>
-            Desc:网站开启关闭状态
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
         <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.CloseInfo">
             <summary>
             Desc:如果状态关闭，请输入关闭网站原因
@@ -1513,11 +1521,6 @@
         <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.IsDel">
             <summary>
             是否删除
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.CreateTime">
-            <summary>
-            创建站点时间
             </summary>
         </member>
         <member name="F:ShenNius.Share.Models.Enums.LogEnum.Add">

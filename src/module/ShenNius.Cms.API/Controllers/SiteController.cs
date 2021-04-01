@@ -11,14 +11,17 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Output.Cms;
 using ShenNius.Share.Models.Entity.Tenant;
 using ShenNius.Share.Service.Cms;
+using ShenNius.Share.Service.Repository;
 using ShenNius.Share.Service.Sys;
 using System;
 using System.Linq.Expressions;
@@ -26,26 +29,21 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Cms.API.Controllers
 {
-    public class SiteController : ApiControllerBase
+    public class SiteController : ApiBaseController<Site, DetailQuery, DeletesInput, KeyListQuery, SiteInput, SiteModifyInput>
     {
-        private readonly ISiteService _siteService;
-        private readonly IMapper _mapper;
-        private readonly ICurrentUserContext _currentUserContext;
-        private readonly IMemoryCache _cache;
-        public SiteController(ISiteService siteService, IMapper mapper, ICurrentUserContext currentUserContext, IMemoryCache memoryCache)
+        private readonly IBaseServer<Site> _service;
+        private readonly ICacheHelper _cacheHelper;
+        public SiteController(IBaseServer<Site> service, IMapper mapper, ICacheHelper cacheHelper) : base(service, mapper)
         {
-            _siteService = siteService;
-            this._mapper = mapper;
-            this._currentUserContext = currentUserContext;
-            _cache = memoryCache;
+            _service = service;
+            _cacheHelper = cacheHelper;
         }
-
         [HttpDelete]
-        public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
+        public override async Task<ApiResult> Deletes([FromBody] DeletesInput deletesInput)
         {
-            foreach (var item in commonDeleteInput.Ids)
+            foreach (var item in deletesInput.Ids)
             {
-                await _siteService.UpdateAsync(d => new Site() { IsDel = false}, d => d.Id == item);
+                await _service.UpdateAsync(d => new Site() { IsDel = false }, d => d.Id == item);
             }
             return new ApiResult();
         }
@@ -54,102 +52,84 @@ namespace ShenNius.Cms.API.Controllers
         /// </summary>
         /// <param name="siteCurrentInput"></param>
         /// <returns></returns>
-        [HttpPut]       
+        [HttpPut]
         public async Task<ApiResult> SetCurrent([FromBody] SiteCurrentInput siteCurrentInput)
         {
-
             //把之前缓存存储的站点拿出来设置为不是当前的。
-            var model = await _siteService.GetModelAsync(d => d.Id == siteCurrentInput.Id&&d.IsDel==false&&d.IsCurrent==false);
+            var model = await _service.GetModelAsync(d => d.Id == siteCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
             if (model == null)
             {
                 throw new FriendlyException("当前站点实体信息为空!");
             }
-            var currentSite= _cache.Get<Site>(KeyHelper.Cms.CurrentSite);
+            var currentSite = _cacheHelper.Get<Site>(KeyHelper.Cms.CurrentSite);
             if (currentSite != null)
             {
                 currentSite.IsCurrent = false;
                 //不要使用全部更新  有可能缓存的实体比较旧
-                await _siteService.UpdateAsync(d=>new Site() { IsCurrent=false},d=>d.Id== currentSite.Id);
+                await _service.UpdateAsync(d => new Site() { IsCurrent = false }, d => d.Id == currentSite.Id);
             }
-        
+
             model.IsCurrent = true;
-            await _siteService.UpdateAsync(model);
+            await _service.UpdateAsync(model);
             //这里最好更新下缓存
-            _cache.Set(KeyHelper.Cms.CurrentSite, model);
+            _cacheHelper.Set(KeyHelper.Cms.CurrentSite, model);
             return new ApiResult();
         }
         [HttpGet]
         public async Task<ApiResult> GetList()
         {
-            
-            var res = await _siteService.GetListAsync(d=>d.IsDel==false);
+            var res = await _service.GetListAsync(d => d.IsDel == false);
             foreach (var item in res)
             {
                 if (item.IsCurrent)
                 {
-                    _cache.Set(KeyHelper.Cms.CurrentSite, item);
-                }  
+                    _cacheHelper.Set(KeyHelper.Cms.CurrentSite, item);
+                }
             }
             return new ApiResult(data: res);
         }
         [HttpGet]
-        public async Task<ApiResult> GetListPages(int page, string key = null)
+        public override async Task<ApiResult> GetListPages([FromQuery] KeyListQuery keyListQuery)
         {
             Expression<Func<Site, bool>> whereExpression = null;
-            if (!string.IsNullOrEmpty(key))
+            if (!string.IsNullOrEmpty(keyListQuery.Key))
             {
-                whereExpression = d => d.Title.Contains(key);
+                whereExpression = d => d.Title.Contains(keyListQuery.Key);
             }
-            var res = await _siteService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
+            var res = await _service.GetPagesAsync(keyListQuery.Page, keyListQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet]
-        public async Task<ApiResult> Detail(int id)
-        {
-            var res = await _siteService.GetModelAsync(d => d.Id == id);
-            return new ApiResult(data: res);
-        }
+        //[HttpPut]
+        //public override async Task<ApiResult> Modify([FromBody] SiteModifyInput siteModifyInput)
+        //{
+        //    var res = await _service.UpdateAsync(d => new Site()
+        //    {
+        //        Id = siteModifyInput.Id,
+        //        IsCurrent = siteModifyInput.IsCurrent,
+        //        Title = siteModifyInput.Title,
+        //        Email = siteModifyInput.Email,
+        //        WeiBo = siteModifyInput.WeiBo,
+        //        WeiXin = siteModifyInput.WeiXin,
+        //        UserId = siteModifyInput.UserId,
+        //        Name = siteModifyInput.Name,
+        //        Url = siteModifyInput.Url,
+        //        Logo = siteModifyInput.Logo,
+        //        Summary = siteModifyInput.Summary,
+        //        Tel = siteModifyInput.Tel,
+        //        Fax = siteModifyInput.Fax,
+        //        QQ = siteModifyInput.QQ,
+        //        Address = siteModifyInput.Address,
+        //        Code = siteModifyInput.Code,
+        //        Keyword = siteModifyInput.Keyword,
+        //        Description = siteModifyInput.Description,
+        //        Copyright = siteModifyInput.Copyright,
+        //        Status = siteModifyInput.Status,
+        //        CloseInfo = siteModifyInput.CloseInfo,
+        //        ModifyTime = siteModifyInput.ModifyTime,
 
-        [HttpPost]
-        public async Task<ApiResult> Add([FromBody] SiteInput siteInput)
-        {
-            siteInput.UserId = _currentUserContext.Id;
-            var model = _mapper.Map<Site>(siteInput);
-            var res = await _siteService.AddAsync(model);
-            return new ApiResult(data: res);
-        }
-        [HttpPut]
-        public async Task<ApiResult> Modify([FromBody] SiteModifyInput siteModifyInput)
-        {
-           
-            var res = await _siteService.UpdateAsync(d => new Site()
-            {
-                Id = siteModifyInput.Id,
-                IsCurrent = siteModifyInput.IsCurrent,
-                Title = siteModifyInput.Title,
-                Email = siteModifyInput.Email,
-                WeiBo = siteModifyInput.WeiBo,
-                WeiXin = siteModifyInput.WeiXin,
-                UserId = siteModifyInput.UserId,
-                Name = siteModifyInput.Name,
-                Url = siteModifyInput.Url,
-                Logo = siteModifyInput.Logo,
-                Summary = siteModifyInput.Summary,
-                Tel = siteModifyInput.Tel,
-                Fax = siteModifyInput.Fax,
-                QQ = siteModifyInput.QQ,
-                Address = siteModifyInput.Address,
-                Code = siteModifyInput.Code,
-                Keyword = siteModifyInput.Keyword,
-                Description = siteModifyInput.Description,
-                Copyright = siteModifyInput.Copyright,
-                Status = siteModifyInput.Status,
-                CloseInfo = siteModifyInput.CloseInfo,
-                ModifyTime = siteModifyInput.ModifyTime,
-
-            }, d => d.Id == siteModifyInput.Id);
-            return new ApiResult(data: res);
-        }
+        //    }, d => d.Id == siteModifyInput.Id);
+        //    return new ApiResult(data: res);
+        //}
     }
 }

@@ -89,5 +89,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         /// </summary>
         public int Sort { get; set; } = 0;
         public DateTime ModifyTime { get; set; } = DateTime.Now;
+        public string Summary { get; set; }
     }
 }
