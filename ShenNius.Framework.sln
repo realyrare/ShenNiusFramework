@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosting", "hosting", "{1404
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.API.Hosting", "src\hosting\ShenNius.API.Hosting\ShenNius.API.Hosting.csproj", "{456D9C0B-797B-49E0-9F55-74FD757A943C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Blog.API", "src\module\ShenNius.Blog.API\ShenNius.Blog.API.csproj", "{6101827E-A534-4D27-95BA-8473645237AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{456D9C0B-797B-49E0-9F55-74FD757A943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456D9C0B-797B-49E0-9F55-74FD757A943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456D9C0B-797B-49E0-9F55-74FD757A943C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6101827E-A534-4D27-95BA-8473645237AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6101827E-A534-4D27-95BA-8473645237AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6101827E-A534-4D27-95BA-8473645237AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6101827E-A534-4D27-95BA-8473645237AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{894C6AAB-7F31-456B-AB56-91F87BB3937E} = {BAFEFD43-8009-49AD-812E-6750DED4CE59}
 		{140438A6-3944-4ACE-B107-4BF340FA09CE} = {96F22E21-1AE7-4189-BBCC-C9E1B25E3BE9}
 		{456D9C0B-797B-49E0-9F55-74FD757A943C} = {140438A6-3944-4ACE-B107-4BF340FA09CE}
+		{6101827E-A534-4D27-95BA-8473645237AC} = {BAFEFD43-8009-49AD-812E-6750DED4CE59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}

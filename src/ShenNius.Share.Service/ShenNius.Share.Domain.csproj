@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ShenNius.Share.Models\ShenNius.Share.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="新文件夹\" />
+  </ItemGroup>
+
 </Project>
