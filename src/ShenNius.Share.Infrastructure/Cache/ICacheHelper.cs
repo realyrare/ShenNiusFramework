@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 /*************************************
 * 类名：ICacheHelper
@@ -22,5 +23,8 @@ namespace ShenNius.Share.Infrastructure.Cache
         T Get<T>(string key);
 
         void Remove(string key);
+
+        T GetOrSet<T>(string key, Func<T> getDataCallback, TimeSpan? exp=null);
+        Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> getDataCallback, TimeSpan? exp = null);
     }
 }

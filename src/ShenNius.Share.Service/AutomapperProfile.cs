@@ -41,6 +41,8 @@ namespace ShenNius.Share.Service
 
             CreateMap<KeywordInput, Keyword>();
             CreateMap<KeywordModifyInput, Keyword>();
+
+            CreateMap<MessageInput, Message>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.Extension;
 using StackExchange.Redis;
 using System;
+using System.Threading.Tasks;
 
 /*************************************
 * 类名：RedisCacheHelper
@@ -36,8 +37,8 @@ namespace ShenNius.Share.Infrastructure.Cache
 
         public T Get<T>(string key)
         {
-            var value= _cache.StringGet(_instance + key);
-           return JsonConvert.DeserializeObject<T>(value);
+            var value = _cache.StringGet(_instance + key);
+            return JsonConvert.DeserializeObject<T>(value);
         }
 
         public void Remove(string key)
@@ -51,7 +52,7 @@ namespace ShenNius.Share.Infrastructure.Cache
             {
                 throw new FriendlyException("value 为空!");
             }
-            var values=  JsonConvert.SerializeObject(value);
+            var values = JsonConvert.SerializeObject(value);
             _cache.StringSet(_instance + key, values);
         }
 
@@ -62,7 +63,63 @@ namespace ShenNius.Share.Infrastructure.Cache
                 throw new FriendlyException("value 为空!");
             }
             var values = JsonConvert.SerializeObject(value);
-            _cache.StringSet(_instance + key, values,timeSpan);
+            _cache.StringSet(_instance + key, values, timeSpan);
+        }
+        public T GetOrSet<T>(string key, Func<T> getDataCallback, TimeSpan? exp = null)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException("Invalid cache key");
+            T data;
+            if (!Exists(key))
+            {
+                data = getDataCallback();
+                if (data == null)
+                {
+                    return default(T);//data
+                }
+                if (exp.HasValue)
+                {
+                    Set(key, data, exp.Value);
+                }
+                else
+                {
+                    Set(key, data);
+                }
+            }
+            else
+            {
+                var value = _cache.StringGet(_instance + key);
+                data = JsonConvert.DeserializeObject<T>(value);
+            }
+            return data;
+        }
+        public async Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> getDataCallback, TimeSpan? exp = null)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException("Invalid cache key");
+            var value = _cache.StringGet(_instance + key);
+            T data;
+            if (!string.IsNullOrEmpty(value))
+            {
+                data = JsonConvert.DeserializeObject<T>(value);
+                if (data == null)
+                {
+                    data = await getDataCallback();
+                    if (data == null)
+                    {
+                        return default(T);//data
+                    }
+                    if (exp.HasValue)
+                    {
+                        Set(key, data, exp.Value);
+                    }
+                    else
+                    {
+                        Set(key, data);
+                    }
+                }
+            }
+            return default(T);
         }
     }
 }
