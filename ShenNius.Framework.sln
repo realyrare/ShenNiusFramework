@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosting", "hosting", "{1404
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.API.Hosting", "src\hosting\ShenNius.API.Hosting\ShenNius.API.Hosting.csproj", "{456D9C0B-797B-49E0-9F55-74FD757A943C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Blog.API", "src\module\ShenNius.Blog.API\ShenNius.Blog.API.csproj", "{6101827E-A534-4D27-95BA-8473645237AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Blog.API", "src\module\ShenNius.Blog.API\ShenNius.Blog.API.csproj", "{6101827E-A534-4D27-95BA-8473645237AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
