@@ -20,15 +20,15 @@ using Newtonsoft.Json;
 using System.Text;
 using ShenNius.Shop.API;
 using ShenNius.Cms.API;
-using ShenNius.Share.Infrastructure.Attributes;
-
+using ShenNius.Blog.API;
 
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
         typeof(ShenNiusShopApiModule),
         typeof(ShenNiusCmsApiModule),
-        typeof(ShenNiusSysApiModule)
+        typeof(ShenNiusSysApiModule),
+         typeof(ShenNiusBlogApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
     {
