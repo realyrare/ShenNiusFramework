@@ -5,7 +5,7 @@ using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Cms
+namespace ShenNius.Share.Domain.Services.Cms
 {
 
     public interface IColumnService : IBaseServer<Column>

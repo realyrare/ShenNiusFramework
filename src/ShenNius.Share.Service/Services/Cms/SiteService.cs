@@ -1,6 +1,6 @@
 ﻿using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Tenant;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 
 /*************************************
 * 类名：ColumnService
@@ -12,7 +12,7 @@ using ShenNius.Share.Service.Repository;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Cms
+namespace ShenNius.Share.Domain.Services.Cms
 {
     public interface ISiteService : IBaseServer<Site>
     {

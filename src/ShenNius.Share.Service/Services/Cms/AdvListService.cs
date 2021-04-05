@@ -1,5 +1,5 @@
 ﻿using FytSoa.Core.Model.Cms;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 
 /*************************************
 * 类 名： AdvListService
@@ -12,7 +12,7 @@ using ShenNius.Share.Service.Repository;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Cms
+namespace ShenNius.Share.Domain.Services.Cms
 {
     public interface IAdvListService : IBaseServer<AdvList>
     {

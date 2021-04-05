@@ -1,7 +1,7 @@
 ﻿using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ShenNius.Share.Infrastructure;
-using ShenNius.Share.Service;
+using ShenNius.Share.Domain;
 
 /*************************************
 * 类名：ShenNiusShareBaseControllerModule

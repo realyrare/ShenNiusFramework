@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System;
 
-namespace ShenNius.Share.Service.Repository
+namespace ShenNius.Share.Domain.Repository
 {
     public class DbContext
     {

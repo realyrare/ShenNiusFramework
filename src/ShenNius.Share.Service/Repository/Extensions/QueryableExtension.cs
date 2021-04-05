@@ -1,8 +1,8 @@
-﻿using ShenNius.Share.Service.Repository;
+﻿using ShenNius.Share.Domain.Repository;
 using SqlSugar;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Repository.Extensions
+namespace ShenNius.Share.Domain.Repository.Extensions
 {
     public static class QueryableExtension
     {

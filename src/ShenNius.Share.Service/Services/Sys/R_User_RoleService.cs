@@ -1,11 +1,11 @@
 ﻿using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using System;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Sys
+namespace ShenNius.Share.Domain.Services.Sys
 {
     public interface IR_User_RoleService : IBaseServer<R_User_Role>
     {

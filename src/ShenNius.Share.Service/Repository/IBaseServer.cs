@@ -1,10 +1,10 @@
-﻿using ShenNius.Share.Service.Repository;
+﻿using ShenNius.Share.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Repository
+namespace ShenNius.Share.Domain.Repository
 {
     public interface IBaseServer<T> where T:class, new()
     {

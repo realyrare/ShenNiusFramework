@@ -2,7 +2,7 @@
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure;
-using ShenNius.Share.Service;
+using ShenNius.Share.Domain;
 
 namespace ShenNius.Cms.API
 {

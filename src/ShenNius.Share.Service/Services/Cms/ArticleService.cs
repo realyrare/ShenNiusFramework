@@ -1,7 +1,7 @@
-﻿using ShenNius.Share.Models.Dtos.Output.Cms;
+﻿using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Service.Repository;
-using ShenNius.Share.Service.Repository.Extensions;
+using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Repository.Extensions;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Cms
+namespace ShenNius.Share.Domain.Services.Cms
 {
     public interface IArticleService : IBaseServer<Article>
     {

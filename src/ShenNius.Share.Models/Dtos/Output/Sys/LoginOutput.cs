@@ -1,8 +1,8 @@
-﻿using ShenNius.Share.Models.Dtos.Output.Sys;
+﻿using ShenNius.Share.Models.Dtos.Input.Sys;
 using System;
 using System.Collections.Generic;
 
-namespace ShenNius.Share.Models.Dtos.Output
+namespace ShenNius.Share.Models.Dtos.Input
 {
     public class LoginOutput
     {

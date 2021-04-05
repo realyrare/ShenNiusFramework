@@ -4,15 +4,14 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
-using ShenNius.Share.Models.Dtos.Output;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using ShenNiusSystem.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Sys
+namespace ShenNius.Share.Domain.Services.Sys
 {
     public interface IUserService : IBaseServer<User>
     {

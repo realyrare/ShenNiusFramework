@@ -6,7 +6,7 @@ using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Service.Sys;
+using ShenNius.Share.Domain.Services.Sys;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Sys
+namespace ShenNius.Share.Domain.Services.Sys
 {
     /// <summary>
     /// 用户上下文

@@ -1,7 +1,7 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
-namespace ShenNius.Share.Models.Entity.Tenant
+namespace ShenNius.Share.Models.Entity.Cms
 {
 
     [SugarTable("Cms_Message")]

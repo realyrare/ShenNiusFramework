@@ -1,5 +1,5 @@
-﻿using ShenNius.Share.Models.Entity.Tenant;
-using ShenNius.Share.Service.Repository;
+﻿using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Models.Entity.Cms;
 
 namespace ShenNius.Share.Domain.Services.Cms
 {

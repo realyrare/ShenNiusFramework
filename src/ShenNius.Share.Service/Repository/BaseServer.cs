@@ -1,11 +1,11 @@
-﻿using ShenNius.Share.Service.Repository.Extensions;
+﻿using ShenNius.Share.Domain.Repository.Extensions;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Repository
+namespace ShenNius.Share.Domain.Repository
 {
     public class BaseServer<T> : DbContext, IBaseServer<T> where T : class, new()
     {

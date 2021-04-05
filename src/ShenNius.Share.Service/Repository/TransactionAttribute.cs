@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Service.Repository
+namespace ShenNius.Share.Domain.Repository
 {
     /// <summary>
     /// AOP 事务

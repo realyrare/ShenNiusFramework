@@ -52,7 +52,7 @@
             用户控制器
             </summary>
         </member>
-        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Service.Sys.IUserService,ShenNius.Share.Infrastructure.Cache.ICacheHelper,ShenNius.Share.Service.Sys.IR_User_RoleService,ShenNius.Share.Service.Sys.IMenuService)">
+        <member name="M:ShenNius.Sys.API.Controllers.UserController.#ctor(Microsoft.Extensions.Options.IOptions{ShenNius.Share.Infrastructure.JsonWebToken.Model.JwtSetting},ShenNius.Share.Domain.Services.Sys.IUserService,ShenNius.Share.Infrastructure.Cache.ICacheHelper,ShenNius.Share.Domain.Services.Sys.IR_User_RoleService,ShenNius.Share.Domain.Services.Sys.IMenuService)">
             <summary>
             
             </summary>

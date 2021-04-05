@@ -10,7 +10,7 @@ using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;

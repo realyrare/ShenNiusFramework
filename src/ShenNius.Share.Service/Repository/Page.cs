@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Share.Service.Repository
+namespace ShenNius.Share.Domain.Repository
 {
     public class Page<T>
     {

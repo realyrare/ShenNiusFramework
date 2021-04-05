@@ -1,7 +1,7 @@
 ﻿using ShenNius.Share.Model.Entity.Sys;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 
-namespace ShenNius.Share.Service.Sys
+namespace ShenNius.Share.Domain.Services.Sys
 {
     public interface IConfigService : IBaseServer<Config>
     {

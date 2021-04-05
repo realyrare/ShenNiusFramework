@@ -1,21 +1,19 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Service.Repository;
-using ShenNius.Share.Service.Repository.Extensions;
+using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Repository.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Service.Sys
+namespace ShenNius.Share.Domain.Services.Sys
 {
     public interface IMenuService : IBaseServer<Menu>
     {

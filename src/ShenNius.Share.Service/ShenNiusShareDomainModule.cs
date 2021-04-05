@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Utils;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using System;
 
-namespace ShenNius.Share.Service
+namespace ShenNius.Share.Domain
 {
     public class ShenNiusShareDomainModule : AppModule
     {

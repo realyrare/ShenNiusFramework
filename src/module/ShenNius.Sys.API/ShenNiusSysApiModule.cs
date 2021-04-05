@@ -4,7 +4,7 @@ using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure;
 using ShenNius.Share.Infrastructure.JsonWebToken.Model;
-using ShenNius.Share.Service;
+using ShenNius.Share.Domain;
 
 namespace ShenNius.Sys.API
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShenNius.Share.Models.Dtos.Output
+namespace ShenNius.Share.Models.Dtos.Input
 {
    public class UserOutput
     {

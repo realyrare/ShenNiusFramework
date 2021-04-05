@@ -6,7 +6,7 @@ using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
-using ShenNius.Share.Service.Repository;
+using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
 
 /*************************************
