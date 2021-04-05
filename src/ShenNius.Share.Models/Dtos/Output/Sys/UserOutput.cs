@@ -6,9 +6,7 @@ namespace ShenNius.Share.Models.Dtos.Input
 {
    public class UserOutput
     {
-        /// <summary>
-        /// 唯一编号
-        /// </summary>
+       
         //public int Id { get; set; }
 
         /// <summary>
@@ -32,9 +30,7 @@ namespace ShenNius.Share.Models.Dtos.Input
         /// </summary>
         public string Mobile { get; set; }
 
-        /// <summary>
-        /// 状态 1=整除 0=不允许登录
-        /// </summary>
+
         //public bool Status { get; set; }
 
         /// <summary>

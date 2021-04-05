@@ -50,7 +50,8 @@ namespace ShenNius.Layui.Admin.Common
             }
             catch (Exception ex)
             {
-               // WebHelper.WriteLog($"\r\n{DateTime.Now}:{ex}");
+
+                LogHelper.WriteLog($"\r\n{DateTime.Now}:{ex}");
                 return default;
             }
            
