@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
+    <ProjectReference Include="..\framework\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
   </ItemGroup>
 
 </Project>

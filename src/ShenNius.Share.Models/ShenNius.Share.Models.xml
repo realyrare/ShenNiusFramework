@@ -735,6 +735,200 @@
             创建站点时间
             </summary>
         </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.UserId">
+            <summary>
+            Desc:系统ID
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Name">
+            <summary>
+            Desc:网站名称
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Url">
+            <summary>
+            Desc:网站域名
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Logo">
+            <summary>
+            Desc:网站Logo
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Summary">
+            <summary>
+            Desc:网站描述
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Tel">
+            <summary>
+            Desc:公司电话
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Fax">
+            <summary>
+            Desc:公司传真
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Email">
+            <summary>
+            Desc:公司人事邮箱
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.QQ">
+            <summary>
+            Desc:公司客服QQ
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.WeiXin">
+            <summary>
+            Desc:微信公众号图片
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.WeiBo">
+            <summary>
+            Desc:微博链接地址或者二维码
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Address">
+            <summary>
+            Desc:公司地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Code">
+            <summary>
+            Desc:网站备案号其它等信息
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Title">
+            <summary>
+            Desc:网站SEO标题
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Keyword">
+            <summary>
+            Desc:网站SEO关键字
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Description">
+            <summary>
+            Desc:网站SEO描述
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Copyright">
+            <summary>
+            Desc:网站版权等信息
+            Default:-
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Status">
+            <summary>
+            Desc:网站开启关闭状态
+            Default:b'1'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.CloseInfo">
+            <summary>
+            Desc:如果状态关闭，请输入关闭网站原因
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.ModifyTime">
+            <summary>
+            创建站点时间
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.Author">
+            <summary>
+            Desc:作者
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.Source">
+            <summary>
+            Desc:来源
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.IsLink">
+            <summary>
+            Desc:是否外链
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.LinkUrl">
+            <summary>
+            Desc:外部链接地址
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.Hits">
+            <summary>
+            Desc:点击量
+            Default:0
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.LastHitTime">
+            <summary>
+            Desc:最后点击时间
+            Default:-
+            Nullable:True
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.IsTop">
+            <summary>
+            Desc:是否置顶
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.ArticleOutput.IsHot">
+            <summary>
+            Desc:是否热点
+            Default:b'0'
+            Nullable:False
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.Sys.ConfigInput.EnName">
             <summary>
             Desc:字典值——英文名称
@@ -860,6 +1054,11 @@
             Nullable:False
             </summary>           
         </member>
+        <member name="T:ShenNius.Share.Models.Dtos.Input.Sys.MenuTreeInitOutput">
+            <summary>
+            左侧树形菜单
+            </summary>
+        </member>
         <member name="P:ShenNius.Share.Models.Dtos.Input.LoginInput.LoginName">
             <summary>
             登录账号
@@ -945,175 +1144,32 @@
             状态 1=整除 0=不允许登录
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.UserId">
-            <summary>
-            Desc:系统ID
-            Default:0
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Name">
-            <summary>
-            Desc:网站名称
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Url">
-            <summary>
-            Desc:网站域名
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Logo">
-            <summary>
-            Desc:网站Logo
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Summary">
-            <summary>
-            Desc:网站描述
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Tel">
-            <summary>
-            Desc:公司电话
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Fax">
-            <summary>
-            Desc:公司传真
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Email">
-            <summary>
-            Desc:公司人事邮箱
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.QQ">
-            <summary>
-            Desc:公司客服QQ
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.WeiXin">
-            <summary>
-            Desc:微信公众号图片
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.WeiBo">
-            <summary>
-            Desc:微博链接地址或者二维码
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Address">
-            <summary>
-            Desc:公司地址
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Code">
-            <summary>
-            Desc:网站备案号其它等信息
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Title">
-            <summary>
-            Desc:网站SEO标题
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Keyword">
-            <summary>
-            Desc:网站SEO关键字
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Description">
-            <summary>
-            Desc:网站SEO描述
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Copyright">
-            <summary>
-            Desc:网站版权等信息
-            Default:-
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.Status">
-            <summary>
-            Desc:网站开启关闭状态
-            Default:b'1'
-            Nullable:False
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.CloseInfo">
-            <summary>
-            Desc:如果状态关闭，请输入关闭网站原因
-            Default:-
-            Nullable:True
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.Cms.SiteModifyInput.ModifyTime">
-            <summary>
-            创建站点时间
-            </summary>
-        </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Output.Sys.MenuTreeInitOutput">
-            <summary>
-            左侧树形菜单
-            </summary>
-        </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.LoginOutput.MenuAuthOutputs">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.LoginOutput.MenuAuthOutputs">
             <summary>
             权限
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Name">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserOutput.Name">
             <summary>
             登录账号
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.TrueName">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserOutput.TrueName">
             <summary>
             真是姓名
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Mobile">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserOutput.Mobile">
             <summary>
             手机号码
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Email">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserOutput.Email">
             <summary>
             邮箱
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Output.UserOutput.Remark">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.UserOutput.Remark">
             <summary>
             备注
             </summary>

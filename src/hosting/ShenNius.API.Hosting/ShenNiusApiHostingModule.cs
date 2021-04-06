@@ -28,7 +28,7 @@ namespace ShenNius.API.Hosting
         typeof(ShenNiusShopApiModule),
         typeof(ShenNiusCmsApiModule),
         typeof(ShenNiusSysApiModule),
-         typeof(ShenNiusBlogApiModule)
+        typeof(ShenNiusBlogApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
     {
