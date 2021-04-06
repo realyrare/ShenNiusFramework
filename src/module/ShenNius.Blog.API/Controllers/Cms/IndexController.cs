@@ -28,6 +28,8 @@ using System.Web;
 
 namespace ShenNius.Blog.API.Controllers.Cms
 {
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class IndexController : ControllerBase
     {
 
@@ -56,7 +58,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         {
             return await _columnService.GetListAsync();
         }
-        [HttpGet("all-column")]
+        [HttpGet]
         public ApiResult GetAllColumn()
         {
             return new ApiResult(GetColumnAsync());
@@ -66,7 +68,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// </summary>
         /// <param name="globalSiteGuid">站点id</param>
         /// <returns></returns>
-        [HttpGet("getsiteinfo")]
+        [HttpGet]
         public ApiResult GetSiteInfo(string globalSiteId)
         {
             var model = _cmsSiteService.GetModelAsync(d => d.Id.Equals(globalSiteId));
@@ -76,7 +78,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             }
             return new ApiResult(model);
         }
-        [HttpGet("right")]
+        [HttpGet]
         public async Task<ApiResult> GetRightData(string spell)
         {
             var monthArticle = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.Audit == true && SqlFunc.DateIsSame(DateTime.Now, ca.CreateTime, DateType.Month), 1, 10);
@@ -84,7 +86,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             var allChildColumn = (await GetColumnAsync()).Where(d => d.ParentId != 0).ToList();
             return new ApiResult(data: new { monthArticle = monthArticle.Items, currentSpellArticle = currentSpellArticle.Items, allChildColumn });
         }
-        [HttpGet("index")]
+        [HttpGet]
         public async Task<ApiResult> GetIndex()
         {
             var recArticleList = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.IsTop == true && ca.Audit == true, 1, 6);
@@ -95,7 +97,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
                 categoryArticleList = categoryArticleList.Items
             });
         }
-        [HttpGet("getalltags")]
+        [HttpGet]
         public async Task<ApiResult> GetAllTags(string spell)
         {
             // 进来可能是大类或子类，1、大类下面有子类，2、大类下面没有子类 3、进来的是子类
@@ -124,7 +126,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("detail")]
+        [HttpGet]
         public async Task<ApiResult> GetDetail(int id = 0, string parentColumnSpell = null, string childColumnspell = null)
         {
 
@@ -158,7 +160,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// <param name="keyword"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        [HttpGet("list")]
+        [HttpGet]
         public async Task<ApiResult> GetList(string parentColumnSpell, string childColumnSpell, string keyword, int page = 1)
         {
             Page<ArticleOutput> query = null; Column columnModel = null;
@@ -224,7 +226,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("addmsg")]
+       [HttpPost]
         public async Task<ApiResult> AddMsg([FromBody] MessageInput messageInput)
         {
             messageInput.IP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.ToString();
@@ -238,13 +240,13 @@ namespace ShenNius.Blog.API.Controllers.Cms
             await _messageService.AddAsync(model);
             return new ApiResult();
         }
-        [HttpGet("load-message")]
+        [HttpGet]
         public async Task<ApiResult> LoadMessage(int articleId, string siteId)
         {
             var result = await _messageService.GetListAsync(x => x.BusinessId == articleId && x.SiteId.Equals(siteId), x => x.CreateTime, false);
             return new ApiResult(result);
         }
-        [HttpGet("getadvlist")]
+        [HttpGet]
         public async Task<ApiResult> GetAdvList()
         {
             var advList = await _advlistService.GetListAsync(x => x.Status == true, x => x.Sort, false);
