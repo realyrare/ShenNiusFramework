@@ -59,7 +59,7 @@ namespace ShenNius.Share.Infrastructure.Extension
                 ValidateAudience = true,
                 ValidAudience = jwtSetting.Audience,//订阅人
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.FromSeconds(jwtSetting.ExpireSeconds),
+                ClockSkew = TimeSpan.FromSeconds(jwtSetting.ExpireSeconds),//ClockSkew默认值为20s，它是一个缓冲期
                 RequireExpirationTime = true,
             };
 

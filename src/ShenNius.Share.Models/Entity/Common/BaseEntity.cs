@@ -18,6 +18,9 @@ namespace ShenNius.Share.Models.Entity.Common
         int Id { get; set; }
         DateTime? ModifyTime { get; set; }
         DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 删除 true  false为正常
+        /// </summary>
         bool Status { get; set; }
     }
     /// <summary>
@@ -25,7 +28,7 @@ namespace ShenNius.Share.Models.Entity.Common
     /// </summary>
     public interface IDeleted
     {
-        public DateTime? DeleteTime { get; set; }
+        //public DateTime? DeleteTime { get; set; }
         public bool Status { get; set; }
     }
     /// <summary>
@@ -38,7 +41,7 @@ namespace ShenNius.Share.Models.Entity.Common
         public int SiteId { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } =  true;
     }
     /// <summary>
     /// 所有不是多租户的数据库实体基类
@@ -49,6 +52,6 @@ namespace ShenNius.Share.Models.Entity.Common
         public int Id { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
     }
 }

@@ -11,8 +11,12 @@
 
 	<ItemGroup>
 	  <Compile Remove="Controllers\ApiControllerBase.cs" />
+	  <Compile Remove="Controllers\KeywordController.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\ShenNius.Share.BaseController\ShenNius.Share.BaseController.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
 	</ItemGroup>
 </Project>

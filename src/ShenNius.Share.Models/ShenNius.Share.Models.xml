@@ -1383,6 +1383,11 @@
             关键词
             </summary>
         </member>
+        <member name="P:ShenNius.Share.Models.Entity.Common.IEntity.Status">
+            <summary>
+            删除 true  false为正常
+            </summary>
+        </member>
         <member name="T:ShenNius.Share.Models.Entity.Common.IDeleted">
             <summary>
             假删除

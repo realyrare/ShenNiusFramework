@@ -25,7 +25,7 @@ using ShenNius.Blog.API;
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
-        typeof(ShenNiusShopApiModule),
+        //typeof(ShenNiusShopApiModule),
         typeof(ShenNiusCmsApiModule),
         typeof(ShenNiusSysApiModule),
         typeof(ShenNiusBlogApiModule)
