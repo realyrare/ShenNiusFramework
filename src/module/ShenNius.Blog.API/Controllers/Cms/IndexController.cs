@@ -54,14 +54,14 @@ namespace ShenNius.Blog.API.Controllers.Cms
             _cache = cache;
         }
 
-        private async Task<List<Column>> GetColumnAsync()
+        private async Task<List<Column>> GetColumnAsync(int siteId)
         {
-            return await _columnService.GetListAsync();
+            return await _columnService.GetListAsync(d=>d.Status==true&&d.SiteId==siteId);
         }
         [HttpGet]
-        public ApiResult GetAllColumn()
+        public ApiResult GetAllColumn(int globalSiteId)
         {
-            return new ApiResult(GetColumnAsync());
+            return new ApiResult(GetColumnAsync(globalSiteId));
         }
         /// <summary>
         /// 请求站点信息
@@ -69,7 +69,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// <param name="globalSiteGuid">站点id</param>
         /// <returns></returns>
         [HttpGet]
-        public ApiResult GetSiteInfo(string globalSiteId)
+        public ApiResult GetSiteInfo(int globalSiteId)
         {
             var model = _cmsSiteService.GetModelAsync(d => d.Id.Equals(globalSiteId));
             if (model == null)
@@ -79,11 +79,11 @@ namespace ShenNius.Blog.API.Controllers.Cms
             return new ApiResult(model);
         }
         [HttpGet]
-        public async Task<ApiResult> GetRightData(string spell)
+        public async Task<ApiResult> GetRightData(string spell, int globalSiteId)
         {
             var monthArticle = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.Audit == true && SqlFunc.DateIsSame(DateTime.Now, ca.CreateTime, DateType.Month), 1, 10);
             var currentSpellArticle = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.Audit == true && cc.EnTitle.Trim().Equals(spell), 1, 10);
-            var allChildColumn = (await GetColumnAsync()).Where(d => d.ParentId != 0).ToList();
+            var allChildColumn = (await GetColumnAsync(globalSiteId)).Where(d => d.ParentId != 0).ToList();
             return new ApiResult(data: new { monthArticle = monthArticle.Items, currentSpellArticle = currentSpellArticle.Items, allChildColumn });
         }
         [HttpGet]
@@ -98,15 +98,15 @@ namespace ShenNius.Blog.API.Controllers.Cms
             });
         }
         [HttpGet]
-        public async Task<ApiResult> GetAllTags(string spell)
+        public async Task<ApiResult> GetAllTags(string spell,int globalSiteId)
         {
             // 进来可能是大类或子类，1、大类下面有子类，2、大类下面没有子类 3、进来的是子类
-            var model = (await GetColumnAsync()).Where(d => d.EnTitle.Equals(spell)).FirstOrDefault();
+            var model = (await GetColumnAsync(globalSiteId)).Where(d => d.EnTitle.Equals(spell)).FirstOrDefault();
             List<int> columnListId = new List<int>();
             if (model.ParentId == 0)
             {
                 //查下该大类有没有子类
-                columnListId = (await GetColumnAsync()).Where(d => d.ParentId == model.Id).Select(d => d.Id).ToList();
+                columnListId = (await GetColumnAsync(globalSiteId)).Where(d => d.ParentId == model.Id).Select(d => d.Id).ToList();
                 //没有子类直接赋值大类id
                 if (columnListId.Count == 0)
                 {
@@ -127,10 +127,10 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> GetDetail(int id = 0, string parentColumnSpell = null, string childColumnspell = null)
+        public async Task<ApiResult> GetDetail(int id = 0,int siteId=0 ,string parentColumnSpell = null, string childColumnspell = null)
         {
 
-            List<Column> columnList = await GetColumnAsync();
+            List<Column> columnList = await GetColumnAsync(siteId);
 
             if (string.IsNullOrEmpty(parentColumnSpell) && string.IsNullOrEmpty(childColumnspell))
             {
@@ -161,11 +161,11 @@ namespace ShenNius.Blog.API.Controllers.Cms
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> GetList(string parentColumnSpell, string childColumnSpell, string keyword, int page = 1)
+        public async Task<ApiResult> GetList(int siteId,string parentColumnSpell, string childColumnSpell, string keyword, int page = 1)
         {
             Page<ArticleOutput> query = null; Column columnModel = null;
             List<int> allChildColumnIdList = new List<int>();
-            var columnList = await GetColumnAsync();
+            var columnList = await GetColumnAsync(siteId);
             //keyword
             Expression<Func<Article, Column, bool>> expression = null;
             if (!string.IsNullOrEmpty(keyword))
@@ -247,9 +247,9 @@ namespace ShenNius.Blog.API.Controllers.Cms
             return new ApiResult(result);
         }
         [HttpGet]
-        public async Task<ApiResult> GetAdvList()
+        public async Task<ApiResult> GetAdvList(int siteId)
         {
-            var advList = await _advlistService.GetListAsync(x => x.Status == true, x => x.Sort, false);
+            var advList = await _advlistService.GetListAsync(x => x.Status == true&&x.SiteId==siteId, x => x.Sort, false);
             return new ApiResult(advList);
         }
     }

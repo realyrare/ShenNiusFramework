@@ -60,14 +60,14 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
-            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.Id, false);
+            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d =>d.Status == true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
         [HttpGet]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
-            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id);
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id&&d.Status==true);
             return new ApiResult(data: res);
         }
         [HttpPost]

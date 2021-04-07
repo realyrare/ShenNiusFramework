@@ -41,7 +41,6 @@ namespace ShenNius.Cms.API.Controllers
             this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
             this._qiniuCloud = qiniuCloud;
         }
-
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {

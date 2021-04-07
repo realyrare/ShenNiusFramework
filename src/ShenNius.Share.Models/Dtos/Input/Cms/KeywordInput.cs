@@ -1,7 +1,5 @@
 ﻿using ShenNius.Share.Models.Dtos.Common;
 using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：KeywordInput

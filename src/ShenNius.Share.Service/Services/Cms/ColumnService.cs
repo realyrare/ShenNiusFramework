@@ -8,6 +8,8 @@ using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Domain.Repository;
 using System;
 using System.Threading.Tasks;
+using ShenNius.Share.Infrastructure.Attributes;
+using System.Collections.Generic;
 
 /*************************************
 * 类名：ArticleService
@@ -26,16 +28,21 @@ namespace ShenNius.Share.Domain.Services.Cms
     {
         Task<ApiResult> AddToUpdateAsync(ColumnInput columnInput);
         Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput);
+        string GetTest();
     }
     public class ColumnService : BaseServer<Column>, IColumnService
     {
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _memoryCache;
-
-        public ColumnService(IMapper mapper, IMemoryCache memoryCache)
+    
+        public ColumnService(IMapper mapper)
         {
             _mapper = mapper;
-            this._memoryCache = memoryCache;
+        }
+        [CacheInterceptor]
+        public virtual string GetTest()
+        {
+          return  "AOP-123";
+
         }
         public async Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput)
         {

@@ -94,7 +94,7 @@ namespace ShenNius.Share.BaseController.Controllers
         {
             foreach (var item in deleteInput.Ids)
             {
-                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.SiteId == deleteInput.SiteId);
+                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.SiteId == deleteInput.SiteId&&d.Status==true);
                 if (res <= 0)
                 {
                     throw new FriendlyException("删除失败了！");
@@ -110,7 +110,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
-            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.SiteId == listQuery.SiteId, d => d.Id, false);
+            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.SiteId == listQuery.SiteId&&d.Status==true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
@@ -122,7 +122,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
-            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.SiteId == detailQuery.SiteId);
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.SiteId == detailQuery.SiteId&&d.Status==true);
             return new ApiResult(data: res);
         }
         /// <summary>

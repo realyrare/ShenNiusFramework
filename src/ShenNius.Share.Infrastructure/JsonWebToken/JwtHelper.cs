@@ -28,7 +28,7 @@ namespace ShenNius.Share.Infrastructure.JsonWebToken
                 audience: jwtSetting.Value.Audience,
                 claims: claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
             );
             // 生成 Token

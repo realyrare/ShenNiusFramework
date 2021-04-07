@@ -1,5 +1,4 @@
 ﻿using AspectCore.DynamicProxy;
-using AspectCore.DynamicProxy.Parameters;
 using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.Cache;
 using System;
@@ -8,8 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using System.Reflection;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
 /*************************************
 * 类名：CacheInterceptor
 * 作者：realyrare
@@ -56,12 +53,13 @@ namespace ShenNius.Share.Infrastructure.Attributes
 
                 var returnType = GetReturnType(context);
                 var cache = context.ServiceProvider.GetService<ICacheHelper>();
-                if (!cache.Exists(key))
+                object result = null;
+                if (cache.Exists(key))
                 {
-                    return;
+                    var strResult = cache.Get(key);
+                    result = strResult;
                 }
-                var strResult = cache.Get<string>(key);
-                var result = JsonConvert.DeserializeObject(strResult, returnType);
+
                 if (result != null)
                 {
                     context.ReturnValue = ResultFactory(result, returnType, context.IsAsync());
@@ -82,6 +80,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                throw e;
             }
         }
 

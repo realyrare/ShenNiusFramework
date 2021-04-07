@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\framework\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\..\module\ShenNius.Blog.API\ShenNius.Blog.API.csproj" />
     <ProjectReference Include="..\..\module\ShenNius.Cms.API\ShenNius.Cms.API.csproj" />
     <ProjectReference Include="..\..\module\ShenNius.Shop.API\ShenNius.Shop.API.csproj" />
