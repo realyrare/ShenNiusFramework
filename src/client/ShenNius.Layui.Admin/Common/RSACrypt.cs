@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using XC.Framework.Security.RSAUtil;
+using XC.RSAUtil;
 
 namespace ShenNius.Layui.Admin.Common
 {

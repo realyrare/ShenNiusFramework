@@ -2,9 +2,7 @@
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.Extensions.DependencyInjection;
 /*************************************
 * 类名：CacheDeleteInterceptorAttribute

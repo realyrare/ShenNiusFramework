@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Caching.Memory;
 using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
@@ -9,7 +7,6 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Threading.Tasks;
 using ShenNius.Share.Infrastructure.Attributes;
-using System.Collections.Generic;
 
 /*************************************
 * 类名：ArticleService
