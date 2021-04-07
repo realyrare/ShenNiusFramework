@@ -43,7 +43,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {
-            Expression<Func<Article, bool>> whereExpression = null;
+            Expression<Func<Article, bool>> whereExpression = d=>d.Status==true;
             if (keywordListSiteQuery.SiteId > 0)
             {
                 whereExpression = d => d.SiteId == keywordListSiteQuery.SiteId;

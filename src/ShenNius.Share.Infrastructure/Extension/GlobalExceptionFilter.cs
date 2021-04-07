@@ -39,8 +39,14 @@ namespace ShenNius.Share.Infrastructure.Extension
             {
                 json.Msg = context.Exception?.Message;//显示堆栈信息  
                 string msg = json.Msg + "\r\n" + context.Exception.StackTrace;
-                _logger.LogError(msg);
-                LogHelper.Default.Debug(json.Msg);
+                try
+                {
+                    _logger.LogError(msg);
+                    LogHelper.Default.Debug(json.Msg);
+                }
+                catch 
+                {                   
+                }               
             }
             else
             {

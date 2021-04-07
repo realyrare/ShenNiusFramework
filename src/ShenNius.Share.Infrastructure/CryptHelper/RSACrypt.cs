@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
-using XC.Framework.Security.RSAUtil;
+using XC.RSAUtil;
 
 namespace ShenNiusSystem.Common
 {
