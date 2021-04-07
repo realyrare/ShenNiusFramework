@@ -57,10 +57,5 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 }
             //}
         }
-
-        //public override void OnActionExecuted(ActionExecutedContext context)
-        //{
-
-        //}
     }
 }

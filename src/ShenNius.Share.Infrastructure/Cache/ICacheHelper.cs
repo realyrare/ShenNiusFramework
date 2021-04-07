@@ -21,6 +21,7 @@ namespace ShenNius.Share.Infrastructure.Cache
         void Set<T>(string key, T value, TimeSpan timeSpan);
 
         T Get<T>(string key);
+        object Get(string key);
 
         void Remove(string key);
 

@@ -11,6 +11,7 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 /*************************************
 * 类名：ColumnController
@@ -31,7 +32,13 @@ namespace ShenNius.Cms.API.Controllers
         {
             _columnService = columnService;
         }
-
+        [HttpGet]
+        [AllowAnonymous]
+        public ApiResult GetTestCache()
+        {
+          var str=  _columnService.GetTest();
+            return new ApiResult(str);
+        }
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {

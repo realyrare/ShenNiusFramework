@@ -16,9 +16,10 @@ namespace ShenNius.Share.Domain.Services.Cms
 {
     public interface IAdvListService : IBaseServer<AdvList>
     {
-
+       
     }
     public class AdvListService : BaseServer<AdvList>, IAdvListService
     {
+      
     }
 }

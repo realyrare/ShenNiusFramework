@@ -121,5 +121,10 @@ namespace ShenNius.Share.Infrastructure.Cache
             }
             return default(T);
         }
+
+        public object Get(string key)
+        {
+            return _cache.StringGet(key);
+        }
     }
 }
