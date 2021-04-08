@@ -19,7 +19,6 @@ namespace ShenNius.Layui.Admin
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -39,12 +38,14 @@ namespace ShenNius.Layui.Admin
                 o.Cookie.HttpOnly = true;
             });
 
-            services.AddRazorPages(options =>
-            {
-                options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
-                options.Conventions.AddPageRoute("/Sys/Login", "");
-                options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
-            }).AddRazorRuntimeCompilation();
+            var mvcBuilder = services.AddRazorPages(options =>
+              {
+                  options.Conventions.Add(new DefaultRouteRemovalPageRouteModelConvention(string.Empty));
+                  options.Conventions.AddPageRoute("/Sys/Login", "");
+                  options.Conventions.Add(new PageRouteTransformerConvention(new SlugifyParameterTransformer()));
+              });
+
+            mvcBuilder.AddRazorRuntimeCompilation();
             //ÐÔÄÜ Ñ¹Ëõ
             services.AddResponseCompression();
         }

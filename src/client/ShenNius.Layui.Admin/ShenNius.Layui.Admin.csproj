@@ -1,9 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	  <!--不编译Views文件夹-->
+	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
+	  <!--不输出到框架版本的目录-->
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <!--只使用中文语言包-->
+	  <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+	 <UserSecretsId>368f8135-f1f3-4480-9be6-a851b9e803db</UserSecretsId>
   </PropertyGroup>
-
+	
   <ItemGroup>
     <Content Remove="wwwroot\js\login.js" />
   </ItemGroup>
