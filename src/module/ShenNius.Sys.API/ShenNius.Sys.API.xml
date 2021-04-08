@@ -39,6 +39,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ShenNius.Sys.API.Controllers.RecycleController.Deletes(ShenNius.Share.Models.Dtos.Input.Sys.DeletesInput)">
+            <summary>
+            彻底删除
+            </summary>
+            <param name="commonDeleteInput"></param>
+            <returns></returns>
+        </member>
         <member name="M:ShenNius.Sys.API.Controllers.RoleController.GetListPagesByUser(System.Int32,System.Int32)">
             <summary>
             根据角色获取当前已授权或未授权的所有角色
