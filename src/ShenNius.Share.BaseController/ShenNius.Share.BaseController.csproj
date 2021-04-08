@@ -8,9 +8,9 @@
 
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\framework\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
+	  <ProjectReference Include="..\framework\core\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
+	  <ProjectReference Include="..\ShenNius.Share.Domain\ShenNius.Share.Domain.csproj" />
 	  <ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
 	  <ProjectReference Include="..\ShenNius.Share.Models\ShenNius.Share.Models.csproj" />
-	  <ProjectReference Include="..\ShenNius.Share.Service\ShenNius.Share.Domain.csproj" />
 	</ItemGroup>
 </Project>
