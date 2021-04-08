@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace ShenNius.Share.Infrastructure.Utils
 {
-   public class InjectHelper
+    public class InjectHelper
     {
         /// <summary>  
         /// 自动注册服务——获取程序集中的实现类对应的多个接口

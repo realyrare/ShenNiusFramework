@@ -9,6 +9,11 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
+using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Models.Entity.Sys;
+using System;
+using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 /*************************************
 * 类名：ApiBaseController
@@ -85,16 +90,22 @@ namespace ShenNius.Share.BaseController.Controllers
             return new ApiResult();
         }
         /// <summary>
-        /// 软删除
+        /// 软删除并将内容放回到回收站
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
         public virtual async Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
         {
+            var recycleService = HttpContext.RequestServices.GetService(typeof(IRecycleService)) as IRecycleService;
+            var userId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
+            var currentName = HttpContext.User.Identity.Name;
             foreach (var item in deleteInput.Ids)
             {
-                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.SiteId == deleteInput.SiteId&&d.Status==true);
+                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.SiteId == deleteInput.SiteId && d.Status == true);
+                var model = new Recycle()
+                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(TEntity), SiteId = deleteInput.SiteId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(TEntity)}中的{item}记录" };
+                await recycleService.AddAsync(model);
                 if (res <= 0)
                 {
                     throw new FriendlyException("删除失败了！");
@@ -110,7 +121,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
-            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.SiteId == listQuery.SiteId&&d.Status==true, d => d.Id, false);
+            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.SiteId == listQuery.SiteId && d.Status == true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
@@ -122,7 +133,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
-            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.SiteId == detailQuery.SiteId&&d.Status==true);
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.SiteId == detailQuery.SiteId && d.Status == true);
             return new ApiResult(data: res);
         }
         /// <summary>
