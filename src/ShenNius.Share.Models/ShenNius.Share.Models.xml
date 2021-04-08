@@ -1584,6 +1584,21 @@
             是否删除
             </summary>
         </member>
+        <member name="F:ShenNius.Share.Models.Enums.AdvEnum.FriendlyLink">
+            <summary>
+            友情链接
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.AdvEnum.Slideshow">
+            <summary>
+            轮播图
+            </summary>
+        </member>
+        <member name="F:ShenNius.Share.Models.Enums.AdvEnum.GoodBlog">
+            <summary>
+            优秀博客
+            </summary>
+        </member>
         <member name="F:ShenNius.Share.Models.Enums.LogEnum.Add">
             <summary>
             保存或添加

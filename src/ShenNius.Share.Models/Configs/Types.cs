@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-/*************************************
+﻿/*************************************
 * 类 名： Adv
 * 作 者： realyrare
 * 邮 箱： mhg215@yeah.net

@@ -3,8 +3,8 @@ using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure;
-using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using ShenNius.Share.Domain;
+using ShenNius.Share.Infrastructure.JsonWebToken;
 
 namespace ShenNius.Sys.API
 {

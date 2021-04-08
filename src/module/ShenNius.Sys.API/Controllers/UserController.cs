@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.JsonWebToken.Model;
 using ShenNius.Share.Infrastructure.JsonWebToken;
 using System;
 using System.Collections.Generic;

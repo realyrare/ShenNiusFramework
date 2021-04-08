@@ -1,4 +1,4 @@
-﻿namespace ShenNius.Share.Infrastructure.JsonWebToken.Model
+﻿namespace ShenNius.Share.Infrastructure.JsonWebToken
 {
     public class JwtSetting
     {

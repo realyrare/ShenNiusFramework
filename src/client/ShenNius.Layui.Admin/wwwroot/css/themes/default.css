@@ -1,18 +1,18 @@
 /*头部右侧背景色 headerRightBg */
 .layui-layout-admin .layui-header {
-/*    background-color: #ffffff !important;*/
-    background-color: #ffb800 !important;
+    background-color: #ffffff !important;
+    /*background-color: #ffb800 !important;*/
 }
 
 /*头部右侧选中背景色 headerRightBgThis */
     .layui-layout-admin .layui-header .layuimini-header-content > ul > .layui-nav-item.layui-this, .layuimini-tool i:hover {
-        background-color: #d09600 !important;
+        background-color: #d2d2d2  !important;
     }
 
 /*头部右侧字体颜色 headerRightColor */
-    .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
+  /*  .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
         color: #e6e6e6;
-    }
+    }*/
 
 /**头部右侧下拉字体颜色 headerRightChildColor */
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child a {
@@ -21,7 +21,7 @@
 
 /*头部右侧鼠标选中 headerRightColorThis */
 .layui-header .layuimini-menu-header-pc.layui-nav .layui-nav-item a:hover, .layui-header .layuimini-header-menu.layuimini-pc-show.layui-nav .layui-this a {
-    color: #fbfbfb !important;
+    color: #409eff !important;
 }
 
 /*头部右侧更多下拉颜色 headerRightNavMore */
