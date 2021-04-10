@@ -49,28 +49,22 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet]
-        public async Task<ApiResult> Detail(int id)
-        {
-            var res = await _recycleService.GetModelAsync(d => d.Id == id);
-            return new ApiResult(data: res);
-        }
         [HttpPost]
         public async Task<ApiResult> Restore([FromBody] DeletesInput input)
         {
             //先删除后还原
             foreach (var item in input.Ids)
             {
-                await _recycleService.DeleteAsync(d=>d.Id==item);
-               var model= await _recycleService.GetModelAsync(d => d.Id ==item);
-                if (model!=null)
+                var model = await _recycleService.GetModelAsync(d => d.Id == item);
+                if (model != null)
                 {
-                    var entity = "I"+ model.TableType + "Service";
+                    var entity = "I" + model.TableType + "Service";
                     entity.GetType();
                     //发布订阅
                     // var s= typeof(model.TableType) ;
                     //根据实体名称创建对应的服务实例，然后去还原。
                 }
+                await _recycleService.DeleteAsync(d=>d.Id==item);               
             }                     
             return new ApiResult();
         }
