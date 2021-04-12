@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using ShenNius.Share.Infrastructure.Extension;
+using SqlSugar;
 using System;
 
 namespace ShenNius.Share.Domain.Repository
@@ -10,7 +11,7 @@ namespace ShenNius.Share.Domain.Repository
         {
             Db = new SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = _connectionStr ?? throw new ArgumentNullException("数据库连接字符串为空"),
+                ConnectionString = _connectionStr ?? throw new FriendlyException("数据库连接字符串为空"),
                
                 DbType = DbType.MySql,
                 IsAutoCloseConnection = true

@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -42,11 +37,11 @@ namespace WebApplication1
                   ValidAudience = "jonny",
                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretsecretsecret")),
                   ClockSkew = TimeSpan.Zero,
-                   ValidateIssuer = false,
+                  ValidateIssuer = false,
                   ValidateAudience = false,
               };
           });
-           
+            services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
@@ -103,7 +98,7 @@ namespace WebApplication1
             });
 
             // 身份验证
-          
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

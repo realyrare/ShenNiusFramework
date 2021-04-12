@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
+using ShenNius.Share.Infrastructure.CommandHandler.Model;
+using ShenNius.Share.Infrastructure.Extension;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -28,12 +31,14 @@ namespace ShenNius.Share.Domain.Services.Sys
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _accessor;
         private readonly ICurrentUserContext _currentUserContext;
+        private readonly IMediator _mediator;
 
-        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext)
+        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext, IMediator mediator)
         {
             _mapper = mapper;
             _accessor = httpContextAccessor;
             _currentUserContext = currentUserContext;
+            _mediator = mediator;
         }
 
 
@@ -54,6 +59,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 Ip = ip,
                 Address = address
             }, d => d.Id == loginModel.Id);
+            await _mediator.Publish(new UserNotification() { Id = loginModel.Id, Name = loginModel.Name });
             var data = _mapper.Map<LoginOutput>(loginModel);
             return new ApiResult<LoginOutput>(data);
         }
@@ -95,17 +101,17 @@ namespace ShenNius.Share.Domain.Services.Sys
             }
             if (!modifyPwdInput.ConfirmPassword.Equals(modifyPwdInput.NewPassword))
             {
-                throw new ArgumentNullException("两次输入的密码不一致");
+                throw new FriendlyException("两次输入的密码不一致");
             }
             modifyPwdInput.OldPassword = Md5Crypt.Encrypt(modifyPwdInput.OldPassword);
             var model = await GetModelAsync(d => d.Id == modifyPwdInput.Id);
             if (model.Id <= 0)
             {
-                throw new ArgumentNullException("用户信息为空");
+                throw new FriendlyException("用户信息为空");
             }
             if (model.Password == modifyPwdInput.OldPassword)
             {
-                throw new ArgumentNullException("旧密码错误!");
+                throw new FriendlyException("旧密码错误!");
             }
             modifyPwdInput.ConfirmPassword = Md5Crypt.Encrypt(modifyPwdInput.ConfirmPassword);
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);
@@ -115,7 +121,7 @@ namespace ShenNius.Share.Domain.Services.Sys
         {
             if (ids.Count == 0 || ids == null)
             {
-                throw new ArgumentNullException("传递的id为空");
+                throw new FriendlyException("传递的id为空");
             }
             return new ApiResult(await DeleteAsync(ids));
         }

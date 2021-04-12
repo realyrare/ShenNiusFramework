@@ -117,7 +117,7 @@ namespace ShenNius.Sys.API.Controllers
             var number = Guid.NewGuid().ToString();
             if (rsaKey.Count <= 0 || rsaKey == null)
             {
-                throw new ArgumentNullException("获取登录的公钥和私钥为空");
+                throw new FriendlyException("获取登录的公钥和私钥为空");
             }
             //获得公钥和私钥
             _cache.Set("LOGINKEY" + number, rsaKey);

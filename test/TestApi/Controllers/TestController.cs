@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using TestApi.Model;
 
 namespace WebApplication1.Controllers
 {
@@ -19,12 +21,37 @@ namespace WebApplication1.Controllers
         };
 
         private readonly ILogger<TestController> _logger;
+        private readonly IMediator _mediator;
 
-        public TestController(ILogger<TestController> logger)
+        public TestController(ILogger<TestController> logger, IMediator mediator)
         {
             _logger = logger;
+            this._mediator = mediator;
         }
+        /// <summary>
+        /// 测试通过 没问题
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Register()
+        {
+            NewUser user = new NewUser() { Password = "2323", Username = "mhg" };
+            var result =await _mediator.Send(user);
 
+          
+            return Ok();
+        }
+        /// <summary>
+        /// 测试通过 没问题
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Register2()
+        {
+            NewUser2 user = new NewUser2() { Password = "2323", Username = "mhg" };
+            _mediator.Publish(user);
+            return Ok();
+        }
         [HttpGet]
         public IEnumerable<WeatherForecast> Get1()
         {

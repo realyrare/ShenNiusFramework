@@ -16,7 +16,7 @@ namespace ShenNius.Share.Infrastructure.Extension
     {
         public static void AddAuthorizationSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services == null) throw new FriendlyException(nameof(services));
 
 
 
@@ -45,7 +45,7 @@ namespace ShenNius.Share.Infrastructure.Extension
             var jwtSetting = configuration.GetSection("JwtSetting").Get<JwtSetting>();
             if (jwtSetting == null)
             {
-                throw new ArgumentNullException(nameof(JwtSetting));
+                throw new FriendlyException(nameof(JwtSetting));
             }
             // 令牌验证参数
             var tokenValidationParameters = new TokenValidationParameters

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShenNius.Share.Infrastructure.Extension;
+using System;
 using System.ComponentModel;
 
 /*************************************
@@ -19,7 +20,7 @@ namespace ShenNius.Share.Infrastructure.Utils
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new FriendlyException("value");
             }
             var text = value.ToString();
             var fi = value.GetType().GetField(text);

@@ -39,7 +39,7 @@ namespace ShenNius.Layui.Admin.Common
                 var json = await response.Content.ReadAsStringAsync();
                 if (json == null)
                 {
-                    throw new ArgumentNullException("api 接口要序列化的json流为空");
+                    throw  new ArgumentNullException("api 接口要序列化的json流为空");
                 }
                 T model = JsonConvert.DeserializeObject<T>(json);
                 if (model == null)
