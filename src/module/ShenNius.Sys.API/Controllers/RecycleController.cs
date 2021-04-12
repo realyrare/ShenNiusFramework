@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Input.Sys;
+using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Sys;
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 /*************************************
@@ -49,24 +53,16 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
+        /// <summary>
+        /// 数据还原
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ApiResult> Restore([FromBody] DeletesInput input)
+        public Task<ApiResult> Restore([FromBody] DeletesInput input)
         {
-            //先删除后还原
-            foreach (var item in input.Ids)
-            {
-                var model = await _recycleService.GetModelAsync(d => d.Id == item);
-                if (model != null)
-                {
-                    var entity = "I" + model.TableType + "Service";
-                    entity.GetType();
-                    //发布订阅
-                    // var s= typeof(model.TableType) ;
-                    //根据实体名称创建对应的服务实例，然后去还原。
-                }
-                await _recycleService.DeleteAsync(d=>d.Id==item);               
-            }                     
-            return new ApiResult();
+            return _recycleService.RestoreAsync(input);
         }
+
     }
 }
