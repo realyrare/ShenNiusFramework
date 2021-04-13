@@ -163,15 +163,19 @@ namespace ShenNius.Sys.API.Controllers
             {
                 result.Data = new LoginOutput();
                 return result;
+            }            
+            //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
+            var menuAuths=  await _menuService.GetCurrentAuthMenus(result.Data.Id);
+            if (menuAuths==null|| menuAuths.Count==0)
+            {
+                throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
             }
+            result.Data.MenuAuthOutputs = menuAuths;
             var token = GetJwtToken(result.Data);
             if (string.IsNullOrEmpty(token))
             {
                 return new ApiResult<LoginOutput>("生成的token字符串为空!");
             }
-            //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
-            var menuAuths=  await _menuService.GetCurrentAuthMenus(result.Data.Id);
-            result.Data.MenuAuthOutputs = menuAuths;
             result.Data.Token = token;
             return result;
         }

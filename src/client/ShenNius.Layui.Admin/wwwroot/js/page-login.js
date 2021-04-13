@@ -41,8 +41,10 @@ layui.use(['jquery', 'form', 'common'], function () {
             success: function (res) {
                 console.log("resmsg:" + res.msg);
                 if (res.statusCode == 200 && res.success == true) {
-                    //console.log("token:" + res.data.token);
-                    //console.log("data:" + res.data);
+                    if (res.data.menuAuthOutputs == null || res.data.menuAuthOutputs.length<=0) {
+                        os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
+                        return;
+                    } 
                     os.SetSession('globalCurrentUserInfo', res.data);
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
@@ -56,7 +58,7 @@ layui.use(['jquery', 'form', 'common'], function () {
                         else {
                             window.location.href ="/index#"+rurl;
                         }
-                    }, 1000);
+                    }, 500);
                 } else {
                     $("#btnlogin").text("立即登录");
                     $("#btnlogin").attr('disabled', false);

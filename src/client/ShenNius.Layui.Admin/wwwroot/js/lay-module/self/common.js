@@ -1,10 +1,10 @@
-﻿layui.define(['layer',  'table','toastr'], function (exports) {
+﻿layui.define(['layer', 'table', 'toastr'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
-        layer = layui.layer, 
+        layer = layui.layer,
         toastr = layui.toastr,
-        table = layui.table; 
+        table = layui.table;
     toastr.options = {
         //toast-top-center  中间
         "positionClass": "toast-top-center",
@@ -24,8 +24,8 @@
             return "https://localhost:44377/api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
-            var token = this.getToken();           
-             options = method === 'get' ? options : JSON.stringify(options);
+            var token = this.getToken();
+            options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
             //console.log(options);
             $.ajax(tool.apiUrl() + url, {
@@ -37,10 +37,10 @@
                 headers: {
                     'Authorization': 'Bearer ' + token
                 },
-                success: function (data) {                   
+                success: function (data) {
                     callFun(data);
                 },
-                error: function (e) {                 
+                error: function (e) {
                     //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
                     //$.parseJSON 进行转译    res.msg 是自己组装的错误信息通用变量 
                     var res = JSON.parse(e.responseText);
@@ -63,14 +63,7 @@
                     }
                     this.error('连接异常，请稍后重试！');
                     return;
-                },
-                //error: function (xhr, type, errorThrown) {
-                //    if (type === 'timeout') {
-                //        layer.msg('连接超时，请稍后重试！');
-                //    } else if (type === 'error') {
-                //        layer.msg('连接异常，请稍后重试！');
-                //    }
-                //}
+                }
             });
         },
         render: function (obj) {
@@ -113,7 +106,33 @@
                 "data": res.data.items //解析数据列表
             };
         },
-
+        //前台权限判断
+        checkAuth: function (module, btnName) {
+            var obj = tool.GetSession('globalCurrentUserInfo');
+            var menuAuths = obj.menuAuthOutputs;
+            if (menuAuths != null && menuAuths.length > 0) {
+                for (var i = 0; i < menuAuths.length; i++) {
+                    console.log("btnName:" + btnName);
+                    console.log("module:" + module);
+                    console.log("menuAuths:" + menuAuths[i].nameCode);
+                    if (menuAuths[i].nameCode!=module) {
+                        toastr.error("不好意思，您没有该操作权限");
+                        return;
+                    }
+                    var btns = menuAuths[i].BtnCodeName;
+                    if (btns != null && btns.length > 0) {
+                        for (var j = 0; j < btns.length; j++) {
+                            console.log("权限按钮:" + btns[j]);
+                            if (btns[j]!=btnName) {
+                                toastr.error("不好意思，您没有该操作按钮权限");
+                                return;
+                            }
+                            
+                        }
+                    }                    
+                }
+            }
+        },
         getToken: function () {
             var obj = tool.GetSession('globalCurrentUserInfo');
             return obj.token;
@@ -185,7 +204,7 @@
          */
         SessionRemove: function (key) {
             localStorage.removeItem(key);
-        },      
+        },
         isExtImage: function (name) {
             var imgExt = new Array(".png", ".jpg", ".jpeg", ".bmp", ".gif");
             name = name.toLowerCase();

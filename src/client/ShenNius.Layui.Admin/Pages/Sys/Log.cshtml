@@ -24,16 +24,15 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" code="delete"> 删除 </button>
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-detail" lay-event="detail">详情</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-detail" lay-event="detail" code="detail" >详情</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" code="delete" >删除</a>
         </script>
 
     </div>
@@ -41,13 +40,18 @@
 
 @section js{
     <script>
-        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
+        //layui 里面要放到外面，放在里面函数会提示未定义的问题
+        function existAuth() {
+            //var btnName = $(this).attr("code");
+            //console.log("code:" + btnName);
+            tool.checkAuth("log", "delete");
+        };
+        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
-                layer = layui.layer;
-
+                layer = layui.layer;            
             var tableIns = apiUtil.render({
                 elem: '#currentTableId',
                 url: 'log/get-list-pages',
@@ -84,7 +88,7 @@
                     return apiUtil.parseDataFun(res);
                 }
             });
-
+                                          
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
                 //var result = JSON.stringify(data.field);
@@ -105,6 +109,7 @@
              * toolbar事件监听
              */
             table.on('toolbar(currentTableFilter)', function (obj) {
+
                 if (obj.event === 'delete') {  // 监听删除操作
                     var checkStatus = table.checkStatus('currentTableId')
                         , data = checkStatus.data,
@@ -167,7 +172,7 @@
                     });
                 }
             });
-
         });
+        
     </script>
 }

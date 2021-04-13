@@ -121,7 +121,7 @@ namespace ShenNius.Layui.Admin.Pages.Sys
                   );
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
                 {
-                    ExpiresUtc = DateTime.UtcNow.AddHours(1),
+                    ExpiresUtc = DateTime.UtcNow.AddHours(24),
                     IsPersistent = true,
                     AllowRefresh = false
                 });
