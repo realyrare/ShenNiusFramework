@@ -5,16 +5,16 @@
     <div class="layuimini-main">
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('edit')">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('delete')">删除</a>
         </script>
     </div>
 </div>
@@ -27,6 +27,15 @@
                 table = layui.table,
                 apiUtil = layui.common,
                 layer = layui.layer;
+            //layui button onclick必须这样写，不然会出现事件未定义；
+            window.existAuth = function (btnName) {
+                /*
+                 第一个参数是列表名称和数据库nameCode一定要对应;
+                 第二个参数是按钮名称和数据库的btnName也要对应的;
+                 event 阻止事件冒泡；
+                */
+                apiUtil.checkAuth("keyword", btnName, event);
+            };
             apiUtil.render({
                 elem: '#currentTableId',
                 url: 'keyword/get-list-pages',

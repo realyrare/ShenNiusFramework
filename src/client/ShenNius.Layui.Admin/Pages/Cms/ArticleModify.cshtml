@@ -61,13 +61,16 @@
                         <input type="text" name="linkUrl" value="@Model.articleOutput.LinkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="text else">文章Id</div>
-                <div class="form-cur-wall">
-                    <label>Id</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id" value="@Model.articleOutput.Id" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                @if (Model.articleOutput.Id > 0)
+                {
+                    <div class="text else">文章Id</div>
+                    <div class="form-cur-wall">
+                        <label>Id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" value="@Model.articleOutput.Id" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
-                </div>
+                }
                 <div style="height:50px;"></div>
             </div>
             <div class="layui-row">
