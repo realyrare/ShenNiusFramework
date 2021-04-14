@@ -107,7 +107,7 @@ namespace ShenNius.Layui.Admin.Pages.Sys
                     return new JsonResult(result);
                 }
                 //¥Ê»®œﬁ
-                _cache.Set($"frontAuthMenu:{result.Data.Id}",result.Data.MenuAuthOutputs);
+                _cache.Set($"frontAuthMenu:{result.Data.Id}", result.Data.MenuAuthOutputs);
                 var identity = new ClaimsPrincipal(
                    new ClaimsIdentity(new[]
                        {
@@ -130,6 +130,20 @@ namespace ShenNius.Layui.Admin.Pages.Sys
             }
             catch (Exception e)
             {
+
+                if (e.Message.Contains("statusCode") && e.Message.Contains("success") && e.Message.Contains("msg"))
+                {
+                    try
+                    {
+                        var result = JsonConvert.DeserializeObject<ApiResult>(e.Message);
+                        apiResult.Msg = result.Msg;
+                        return new JsonResult(apiResult);
+                    }
+                    catch
+                    {
+
+                    }
+                }
                 apiResult.Msg = e.Message;
                 return new JsonResult(apiResult);
             }

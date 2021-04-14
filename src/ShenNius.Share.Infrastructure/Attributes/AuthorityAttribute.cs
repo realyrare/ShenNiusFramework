@@ -15,7 +15,7 @@ using System.Linq;
 namespace ShenNius.Share.Infrastructure.Attributes
 {
     /// <summary>
-    /// 权限验证
+    ///后端API提交请求 权限验证
     /// </summary>
     public class AuthorityAttribute : ActionFilterAttribute
     {

@@ -107,30 +107,34 @@
             };
         },
         //前台权限判断
-        checkAuth: function (module, btnName) {
-            var obj = tool.GetSession('globalCurrentUserInfo');
-            var menuAuths = obj.menuAuthOutputs;
-            if (menuAuths != null && menuAuths.length > 0) {
-                for (var i = 0; i < menuAuths.length; i++) {
-                    console.log("btnName:" + btnName);
-                    console.log("module:" + module);
-                    console.log("menuAuths:" + menuAuths[i].nameCode);
-                    if (menuAuths[i].nameCode!=module) {
-                        toastr.error("不好意思，您没有该操作权限");
-                        return;
-                    }
-                    var btns = menuAuths[i].BtnCodeName;
-                    if (btns != null && btns.length > 0) {
-                        for (var j = 0; j < btns.length; j++) {
-                            console.log("权限按钮:" + btns[j]);
-                            if (btns[j]!=btnName) {
-                                toastr.error("不好意思，您没有该操作按钮权限");
-                                return;
-                            }
-                            
-                        }
-                    }                    
+        checkAuth: function (module, btnName, event) {
+              //event 阻止事件冒泡；
+            try {
+                var obj = tool.GetSession('globalCurrentUserInfo');
+                var menuAuths = obj.menuAuthOutputs;
+                if (menuAuths.length <= 0 || menuAuths == null) {
+                    toastr.error("不好意思，该用户目前没有分配权限，请联系系统管理员！");
+                    return false;
                 }
+                var model = menuAuths.find(d => d.nameCode.trim() == module.trim());
+                if (model == null || model == "" || model == undefined) {
+                    toastr.error("不好意思，您没有该列表的操作权限");
+                    event.stopPropagation();
+                    return false;
+                }
+                var btnsArry = model.btnCodeName.split(',');
+                if (btnsArry != null && btnsArry.length > 0) {
+                    var btnModel = btnsArry.find(d => d.trim() == btnName.trim());
+                    if (btnModel == null || btnModel == undefined || btnModel == "") {
+                        toastr.error("不好意思，您没有操作按钮权限");
+                        event.stopPropagation();
+                        return false;
+                    }
+                }
+            } catch (e) {
+                toastr.error("不好意思，网络错误！" + e);
+                event.stopPropagation();
+                return false;
             }
         },
         getToken: function () {

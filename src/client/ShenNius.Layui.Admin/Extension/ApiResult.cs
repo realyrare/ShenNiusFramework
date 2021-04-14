@@ -17,7 +17,11 @@
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public dynamic Data { get;  set; } 
+        public dynamic Data { get;  set; }
+        public ApiResult()
+        {
+
+        }
         /// <summary>
         /// get请求成功，直接传递数据
         /// </summary>

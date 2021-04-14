@@ -19,7 +19,7 @@ namespace ShenNius.Layui.Admin.Common
             _httpClientFactory = httpClientFactory;
             _domainConfig = domainConfig.CurrentValue;
         }
-        public async Task<T> GetAsync<T>(string queryString,string token=null) where T : class
+        public async Task<T> GetAsync<T>(string queryString, string token = null) where T : class
         {
             try
             {
@@ -29,17 +29,17 @@ namespace ShenNius.Layui.Admin.Common
                 {
                     // 'Authorization': 'Bearer ' + token
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                }               
+                }
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
                     return default;
                 }
-               
+
                 var json = await response.Content.ReadAsStringAsync();
                 if (json == null)
                 {
-                    throw  new ArgumentNullException("api 接口要序列化的json流为空");
+                    throw new ArgumentNullException("api 接口要序列化的json流为空");
                 }
                 T model = JsonConvert.DeserializeObject<T>(json);
                 if (model == null)
@@ -50,41 +50,40 @@ namespace ShenNius.Layui.Admin.Common
             }
             catch (Exception ex)
             {
-
                 LogHelper.WriteLog($"\r\n{DateTime.Now}:{ex}");
                 return default;
             }
-           
+
         }
         public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, Dictionary<string, string> headers = null)
-        {
-            url = _domainConfig.ApiHost + url;
-            postData ??= "";
-            var client = _httpClientFactory.CreateClient();
-            client.Timeout = new TimeSpan(0, 0, 30);
-            if (headers != null)
-            {
-                foreach (var header in headers)
-                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-            using (HttpContent httpContent = new StringContent(postData, Encoding.UTF8))
-            {
-                if (contentType != null)
-                    httpContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
-                var response = await client.PostAsync(url, httpContent);
-                if (!response.IsSuccessStatusCode)
+        {           
+                url = _domainConfig.ApiHost + url;
+                postData ??= "";
+                var client = _httpClientFactory.CreateClient();
+                client.Timeout = new TimeSpan(0, 0, 30);
+                if (headers != null)
                 {
-                    throw new ArgumentNullException(nameof(response));
+                    foreach (var header in headers)
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
-                var json= await response.Content.ReadAsStringAsync();
-                T model = JsonConvert.DeserializeObject<T>(json);
-                if (model == null)
+                using (HttpContent httpContent = new StringContent(postData, Encoding.UTF8))
                 {
-                    throw new ArgumentNullException(nameof(model));
-                }
-                return model ?? default;
-            }
-
+                    if (contentType != null)
+                        httpContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                    var response = await client.PostAsync(url, httpContent);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                      var msg=  await response.Content.ReadAsStringAsync();
+                        throw new Exception(msg);
+                    }
+                    var json = await response.Content.ReadAsStringAsync();
+                    T model = JsonConvert.DeserializeObject<T>(json);
+                    if (model == null)
+                    {
+                        throw new ArgumentNullException(nameof(model));
+                    }
+                    return model ?? default;
+                }                        
         }
     }
 }

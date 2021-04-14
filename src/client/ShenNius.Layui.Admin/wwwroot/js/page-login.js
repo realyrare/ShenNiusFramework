@@ -27,10 +27,10 @@ layui.use(['jquery', 'form', 'common'], function () {
         var crypt = new JSEncrypt();
         crypt.setPrivateKey(data.field.privateKey);
         var enc = crypt.encrypt(data.field.password);
-       // $("#password").val(enc);
+        // $("#password").val(enc);
         data.field.password = enc;
         //console.log("password:" + data.field.password)
-       
+
         $("#btnlogin").text("正在登陆中...");
         $("#btnlogin").attr('disabled', 'disabled');
         $.ajax({
@@ -41,22 +41,19 @@ layui.use(['jquery', 'form', 'common'], function () {
             success: function (res) {
                 console.log("resmsg:" + res.msg);
                 if (res.statusCode == 200 && res.success == true) {
-                    if (res.data.menuAuthOutputs == null || res.data.menuAuthOutputs.length<=0) {
+                    if (res.data.menuAuthOutputs == null || res.data.menuAuthOutputs.length <= 0) {
                         os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                         return;
-                    } 
+                    }
                     os.SetSession('globalCurrentUserInfo', res.data);
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
-                        if (!rurl) {                           
+                        if (!rurl) {
                             window.location.href = '/index';
-                            //layer.msg('登录成功', function () {
-                               
-                            //});
                         }
                         else {
-                            window.location.href ="/index#"+rurl;
+                            window.location.href = "/index#" + rurl;
                         }
                     }, 500);
                 } else {
@@ -65,7 +62,7 @@ layui.use(['jquery', 'form', 'common'], function () {
                     os.error(res.msg);
                 }
             },
-            error: function (e) {              
+            error: function (e) {
                 var res = $.parseJSON(e.responseText);
                 console.log("erro object:" + e.responseText);
                 os.error(res.msg);
