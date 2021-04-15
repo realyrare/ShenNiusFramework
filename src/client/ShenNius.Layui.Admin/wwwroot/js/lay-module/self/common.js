@@ -122,15 +122,17 @@
                     event.stopPropagation();
                     return false;
                 }
-                var btnsArry = model.btnCodeName.split(',');
-                if (btnsArry != null && btnsArry.length > 0) {
-                    var btnModel = btnsArry.find(d => d.trim() == btnName.trim());
-                    if (btnModel == null || btnModel == undefined || btnModel == "") {
-                        toastr.error("不好意思，您没有操作按钮权限");
-                        event.stopPropagation();
-                        return false;
+                if (model.btnCodeName != null && model.btnCodeName!="") {
+                    var btnsArry = model.btnCodeName.split(',');
+                    if (btnsArry != null && btnsArry.length > 0) {
+                        var btnModel = btnsArry.find(d => d.trim() == btnName.trim());
+                        if (btnModel == null || btnModel == undefined || btnModel == "") {
+                            toastr.error("不好意思，您没有操作按钮权限");
+                            event.stopPropagation();
+                            return false;
+                        }
                     }
-                }
+                }                
             } catch (e) {
                 toastr.error("不好意思，网络错误！" + e);
                 event.stopPropagation();

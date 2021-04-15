@@ -26,11 +26,11 @@ namespace ShenNius.Share.Domain.Services.Sys
 
         Task<ApiResult> LoadLeftMenuTreesAsync(int userId);
         /// <summary>
-        /// 根据当前用户Id获取所有角色关联的菜单id
+        /// 根据当前用户Id获取所有角色关联的菜单id和按钮id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<int>> GetCurrentMenuByUser(int userId);
+        Task<List<R_Role_Menu>> GetCurrentMenuByUser(int userId);
         /// <summary>
         /// 当前用户所有的权限集合
         /// </summary>
@@ -52,42 +52,88 @@ namespace ShenNius.Share.Domain.Services.Sys
         }
         public async Task<List<MenuAuthOutput>> GetCurrentAuthMenus(int userId)
         {
-           var data= _cache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
-            if (data==null)
+            var data = _cache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
+            if (data == null)
             {
-                var allMenus = await GetCurrentMenuByUser(userId);
-               var  query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenus.Count > 0, d => allMenus.Contains(d.Id))
-                              .Mapper((it, cache) =>
-                              {
-                                  var codeList = cache.Get(t =>
-                                  {
-                                      return Db.Queryable<Config>().Where(m => m.Type == "按钮").ToList();
-                                  });
-                                  var list = new List<string>();
-                                  if (it.BtnCodeIds != null)
-                                  {
-                                      if (it.BtnCodeIds.Length > 0)
-                                      {
-                                          list = it.BtnCodeIds.ToList();
-                                      }
-                                  }
-                                  if (list.Count > 0)
-                                  {
-                                      //拿取英文名  因为中文名称可能会变，英文名称很少变，出于这个考虑，鉴于还是使用英文名称
-                                      it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.EnName).ToList());
-                                  }
-                              })
+                var allRoleMenus = await GetCurrentMenuByUser(userId);
+                var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
+                var configs = await Db.Queryable<Config>().Where(m => m.Type == "按钮").ToListAsync();
+                var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id))
+                       //.Mapper((it, cache) =>
+                       //{
+                       //    var codeList = cache.Get(t =>
+                       //    {
+                       //        return Db.Queryable<Config>().Where(m => m.Type == "按钮").ToList();
+                       //    });
+                       //    var list = new List<string>();
+                       //    if (it.BtnCodeIds != null)
+                       //    {
+                       //        if (it.BtnCodeIds.Length > 0)
+                       //        {
+                       //         // var btns=  allRoleMenus.Where(d => d.MenuId == it.Id).Select(d => d.BtnCodeIds).ToList();
+                       //            foreach (var item in allMenuBtnIds)
+                       //            {
+                       //                if (item != null && item.Length > 0)
+                       //                {
+                       //                    if (it.BtnCodeIds != null && it.BtnCodeIds.Length > 0)
+                       //                    {
+                       //                        list = it.BtnCodeIds.Where(d => item.Contains(d)).ToList();
+                       //                    }
+                       //                }
+                       //            }
+
+                       //        }
+                       //    }
+                       //    if (list.Count > 0)
+                       //    {
+                       //        //拿取英文名  因为中文名称可能会变，英文名称很少变，出于这个考虑，鉴于还是使用英文名称
+                       //        it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.EnName).ToList());
+                       //    }
+                       //})
                        .ToListAsync();
+
+                foreach (var item in query)
+                {
+                    var model = allRoleMenus.FirstOrDefault(d => d.MenuId == item.Id);
+                    if (model != null)
+                    {
+                        if (item.BtnCodeIds==null|| item.BtnCodeIds.Length<=0)
+                        {
+                            continue;
+                        }
+                        item.BtnCodeIds = model.BtnCodeIds;
+                        if (item.BtnCodeIds != null && item.BtnCodeIds.Length > 0)
+                        {
+                            foreach (var itemBtn in item.BtnCodeIds)
+                            {
+                                //1、已经授权的按钮id匹配字典表找出按钮名称
+                                if (!string.IsNullOrEmpty(itemBtn))
+                                {
+                                    var configModel = configs.FirstOrDefault(d => d.Id.ToString().Equals(itemBtn));
+                                    if (configModel != null)
+                                    {
+                                        item.BtnCodeName += configModel.EnName + ",";
+                                    }
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(item.BtnCodeName))
+                            {
+                                item.BtnCodeName = item.BtnCodeName.TrimEnd(',');
+                            }
+                        }
+                    }
+                }
+               
                 //把当前用户拥有的权限存入到缓存里面
-                data=  _mapper.Map<List<MenuAuthOutput>>(query);
+                data = _mapper.Map<List<MenuAuthOutput>>(query);
                 _cache.Set($"authMenu:{userId}", data);
-            }                    
+            }
             return data;
         }
         public async Task<ApiResult> GetListPagesAsync(int page, string key = null)
         {
-            var res = await Db.Queryable<Menu>().Where(d=>d.Status).WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
-                      .OrderBy(m => m.CreateTime,SqlSugar.OrderByType.Desc)
+            var res = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(!string.IsNullOrEmpty(key), d => d.Name.Contains(key))
+                      .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)
                           .Mapper((it, cache) =>
                           {
                               var codeList = cache.Get(t =>
@@ -144,10 +190,10 @@ namespace ShenNius.Share.Domain.Services.Sys
 
         public async Task<ApiResult> GetAllParentMenuAsync()
         {
-          var list= await GetListAsync(d => d.Status);
-          var data = new List<Menu>();
+            var list = await GetListAsync(d => d.Status);
+            var data = new List<Menu>();
             ChildModule(list, data, 0);
-  
+
             if (data?.Count > 0)
             {
                 foreach (var item in data)
@@ -160,15 +206,15 @@ namespace ShenNius.Share.Domain.Services.Sys
 
         public async Task<ApiResult> AddToUpdateAsync(MenuInput menuInput)
         {
-          var menuModel= await GetModelAsync(d => d.NameCode.Equals(menuInput.NameCode));
-            if (menuModel?.Id>0)
+            var menuModel = await GetModelAsync(d => d.NameCode.Equals(menuInput.NameCode));
+            if (menuModel?.Id > 0)
             {
                 throw new FriendlyException("已经存在该权限码了");
             }
             var menu = _mapper.Map<Menu>(menuInput);
             var menuId = await AddAsync(menu);
             string parentIdList = ""; int layer = 0;
-            if (menuInput.ParentId>0)
+            if (menuInput.ParentId > 0)
             {
                 // 说明有父级  根据父级，查询对应的模型
                 var model = await GetModelAsync(d => d.Id == menuInput.ParentId);
@@ -189,7 +235,7 @@ namespace ShenNius.Share.Domain.Services.Sys
 
         public async Task<ApiResult> ModifyAsync(MenuModifyInput menuModifyInput)
         {
-            var menuModel = await GetModelAsync(d => d.NameCode.Equals(menuModifyInput.NameCode)&&d.Id!= menuModifyInput.Id);
+            var menuModel = await GetModelAsync(d => d.NameCode.Equals(menuModifyInput.NameCode) && d.Id != menuModifyInput.Id);
             if (menuModel?.Id > 0)
             {
                 throw new FriendlyException("已经存在该权限码了");
@@ -255,7 +301,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 Status = false
             }).ToListAsync();
 
-            var permissionsModel = await Db.Queryable<R_Role_Menu>().Where(d => d.RoleId == roleId && d.MenuId == menuId&&d.IsPass).FirstAsync();
+            var permissionsModel = await Db.Queryable<R_Role_Menu>().Where(d => d.RoleId == roleId && d.MenuId == menuId && d.IsPass).FirstAsync();
 
             if (permissionsModel != null && permissionsModel.BtnCodeIds != null)
             {
@@ -276,7 +322,7 @@ namespace ShenNius.Share.Domain.Services.Sys
         public async Task<ApiResult> TreeRoleIdAsync(int roleId)
         {
             var list = new List<MenuTreeOutput>();
-            var existMenuId = await Db.Queryable<R_Role_Menu>().Where(d => d.IsPass && d.RoleId == roleId&&d.IsPass).Select(d => d.MenuId).ToListAsync();
+            var existMenuId = await Db.Queryable<R_Role_Menu>().Where(d => d.IsPass && d.RoleId == roleId && d.IsPass).Select(d => d.MenuId).ToListAsync();
 
             var allMenus = await GetListAsync(d => d.Status);
             if (allMenus.Count <= 0 || allMenus == null)
@@ -319,29 +365,30 @@ namespace ShenNius.Share.Domain.Services.Sys
             return list;
         }
 
-        public async Task<List<int>> GetCurrentMenuByUser(int userId)
+        public async Task<List<R_Role_Menu>> GetCurrentMenuByUser(int userId)
         {
             var allRoleIds = await Db.Queryable<R_User_Role>().Where(d => d.UserId == userId).Select(d => d.RoleId).ToListAsync();
             if (allRoleIds == null || allRoleIds.Count == 0)
             {
                 throw new FriendlyException("当前用户没有角色授权");
             }
-            var allMenuIds = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).Select(d => d.MenuId).ToListAsync();
-            if (allMenuIds == null || allMenuIds.Count == 0)
+            var allRoleMenus = await Db.Queryable<R_Role_Menu>().Where(d => allRoleIds.Contains(d.RoleId)).ToListAsync();
+            if (allRoleMenus == null || allRoleMenus.Count == 0)
             {
                 throw new FriendlyException("当前角色没有菜单授权");
             }
-            return allMenuIds;
+            return allRoleMenus;
         }
         public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
-        {          
-            var allMenuIds=  await GetCurrentMenuByUser(userId);
-            var allMenus = await GetListAsync(d => d.Status&&allMenuIds.Contains(d.Id));
-           
+        {
+            var allRoleMenus = await GetCurrentMenuByUser(userId);
+            var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
+            var allMenus = await GetListAsync(d => d.Status && allMenuIds.Contains(d.Id));
+
             var model = new MenuTreeInitOutput()
             {
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "sys/log-echarts" },
-               LogoInfo=new LogoInfo() { Title="神牛系统平台",Image= "images/logo.jpg?v=99", Href="" },
+                LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "images/logo.jpg?v=99", Href = "" },
             };
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)
@@ -352,11 +399,11 @@ namespace ShenNius.Share.Domain.Services.Sys
                 }
                 var menuInfo = new MenuInfo()
                 {
-                    Title=item.Name,
-                    Icon=item.Icon,
-                    Target= "_self",
-                    Href=item.Url,
-                    Child= AddMenuChildNode(allMenus,item.Id)
+                    Title = item.Name,
+                    Icon = item.Icon,
+                    Target = "_self",
+                    Href = item.Url,
+                    Child = AddMenuChildNode(allMenus, item.Id)
                 };
                 menuInfos.Add(menuInfo);
             }

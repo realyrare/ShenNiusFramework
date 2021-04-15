@@ -34,6 +34,12 @@ namespace ShenNius.Cms.API.Controllers
             _service = service;
             _cacheHelper = cacheHelper;
         }
+        [HttpGet]
+        public override async Task<ApiResult> Detail([FromQuery] DetailQuery detailQuery)
+        {
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.IsDel == false);
+            return new ApiResult(data: res);
+        }
         [HttpDelete]
         public override async Task<ApiResult> Deletes([FromBody] DeletesInput deletesInput)
         {

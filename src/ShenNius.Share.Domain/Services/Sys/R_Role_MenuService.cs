@@ -72,7 +72,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 //增加
                 model.BtnCodeIds = arry;
             }
-          var sign=  await UpdateAsync(d => new R_Role_Menu() { BtnCodeIds = model.BtnCodeIds }, d => d.MenuId == input.MenuId && d.RoleId == input.RoleId);
+          var sign=  await UpdateAsync(d => new R_Role_Menu() { BtnCodeIds = model.BtnCodeIds,ModifyTime=DateTime.Now }, d => d.MenuId == input.MenuId && d.RoleId == input.RoleId);
             return new ApiResult(sign);
           
         }
