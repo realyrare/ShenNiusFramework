@@ -59,9 +59,10 @@ namespace ShenNius.Blog.API.Controllers.Cms
             return await _columnService.GetListAsync(d => d.Status == true && d.SiteId == siteId);
         }
         [HttpGet]
-        public ApiResult GetAllColumn(int siteId)
+        public async Task<ApiResult> GetAllColumn(int siteId)
         {
-            return new ApiResult(GetColumnAsync(siteId));
+         var data = await GetColumnAsync(siteId);
+            return new ApiResult(data);
         }
         /// <summary>
         /// 请求站点信息
