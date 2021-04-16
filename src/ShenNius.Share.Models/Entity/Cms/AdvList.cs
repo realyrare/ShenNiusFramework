@@ -21,7 +21,7 @@ namespace FytSoa.Core.Model.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public string Type { get; set; }
+        public int Type { get; set; }
 
         /// <summary>
         /// Desc:图片地址

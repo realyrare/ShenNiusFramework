@@ -30,7 +30,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public string Type { get; set; }
+        public int Type { get; set; }
 
         /// <summary>
         /// Desc:是否启用

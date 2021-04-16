@@ -32,7 +32,7 @@ namespace ShenNius.Share.Domain.Services.Cms
         public async Task<Page<ArticleOutput>> GetArtcileByConditionAsync(Expression<Func<Article, Column, bool>> where, int pageIndex, int pageSize)
         {
             return await Db.Queryable<Article, Column>((ca, cc) => new object[] { JoinType.Inner, ca.ColumnId == cc.Id })
-                  .Where(where)
+                  .WhereIF(where!=null,where)
                   .OrderBy((ca, cc) => ca.Id, OrderByType.Desc)
                   .Select((ca, cc) => new ArticleOutput
                   {
@@ -62,7 +62,7 @@ namespace ShenNius.Share.Domain.Services.Cms
         public async Task<ArticleOutput> GetArtcileDetailAsync(Expression<Func<Article, Column, bool>> where)
         {
             return await Db.Queryable<Article, Column>((ca, cc) => new object[] { JoinType.Inner, ca.ColumnId == cc.Id })
-                  .Where(where)
+                   .WhereIF(where != null, where)
                   .Select((ca, cc) => new ArticleOutput
                   {
                       Title = ca.Title,
@@ -81,21 +81,7 @@ namespace ShenNius.Share.Domain.Services.Cms
                       ParentColumnUrl = SqlFunc.Subqueryable<Column>().Where(s => s.Id == cc.ParentId).Select(s => s.EnTitle)
                   })
                   .FirstAsync();
-        }
-        public async Task<ArticleOutput> GetUpArticleAsync(int id, int columnId)
-        {
-            return await Db.Queryable<Article, Column>((ca, cc) => new object[] { JoinType.Inner, ca.ColumnId == cc.Id })
-                .Where((ca, cc) => ca.Id > id && ca.ColumnId == columnId)
-                .OrderBy((ca, cc) => ca.Id, OrderByType.Asc)
-                .Select((ca, cc) => new ArticleOutput
-                {
-                    Title = ca.Title,
-                    Id = ca.Id,
-                    ColumnId = ca.ColumnId,
-                    EnTitle = cc.EnTitle,
-                    ParentColumnUrl = SqlFunc.Subqueryable<Column>().Where(s => s.Id == cc.ParentId).Select(s => s.EnTitle)
-                }).FirstAsync();
-        }
+        }       
         public async Task<ArticleOutput> GetNextOrUpArticleAsync(Expression<Func<Article,Column,bool>> expression)
         {
             //(ca, cc) => ca.Id < id && ca.ColumnId == columnId

@@ -10,6 +10,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ShenNius.Cms.API.Controllers.MessageController.SoftDelete(ShenNius.Share.Models.Dtos.Input.Sys.DeletesSiteInput)">
+            <summary>
+            软删除
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShenNius.Cms.API.Controllers.MessageController.Deletes(ShenNius.Share.Models.Dtos.Input.Sys.DeletesSiteInput)">
+            <summary>
+            批量真实删除
+            </summary>
+            <param name="deleteInput"></param>
+            <returns></returns>
+        </member>
         <member name="M:ShenNius.Cms.API.Controllers.SiteController.SetCurrent(ShenNius.Share.Models.Dtos.Input.Cms.SiteCurrentInput)">
             <summary>
             设置当前站点
