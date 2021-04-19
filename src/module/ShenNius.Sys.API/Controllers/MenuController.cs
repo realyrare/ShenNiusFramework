@@ -66,7 +66,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public async Task<ApiResult> TreeByRole(int roleId)
         {
             return await _menuService.TreeRoleIdAsync(roleId);

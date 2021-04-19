@@ -58,39 +58,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 var allRoleMenus = await GetCurrentMenuByUser(userId);
                 var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
                 var configs = await Db.Queryable<Config>().Where(m => m.Type == "按钮").ToListAsync();
-                var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id))
-                       //.Mapper((it, cache) =>
-                       //{
-                       //    var codeList = cache.Get(t =>
-                       //    {
-                       //        return Db.Queryable<Config>().Where(m => m.Type == "按钮").ToList();
-                       //    });
-                       //    var list = new List<string>();
-                       //    if (it.BtnCodeIds != null)
-                       //    {
-                       //        if (it.BtnCodeIds.Length > 0)
-                       //        {
-                       //         // var btns=  allRoleMenus.Where(d => d.MenuId == it.Id).Select(d => d.BtnCodeIds).ToList();
-                       //            foreach (var item in allMenuBtnIds)
-                       //            {
-                       //                if (item != null && item.Length > 0)
-                       //                {
-                       //                    if (it.BtnCodeIds != null && it.BtnCodeIds.Length > 0)
-                       //                    {
-                       //                        list = it.BtnCodeIds.Where(d => item.Contains(d)).ToList();
-                       //                    }
-                       //                }
-                       //            }
-
-                       //        }
-                       //    }
-                       //    if (list.Count > 0)
-                       //    {
-                       //        //拿取英文名  因为中文名称可能会变，英文名称很少变，出于这个考虑，鉴于还是使用英文名称
-                       //        it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.EnName).ToList());
-                       //    }
-                       //})
-                       .ToListAsync();
+                var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id)) .ToListAsync();
 
                 foreach (var item in query)
                 {
@@ -339,8 +307,8 @@ namespace ShenNius.Share.Domain.Services.Sys
                 var menuTreeOutput = new MenuTreeOutput()
                 {
                     Id = item.Id,
-                    Title = item.Name,
-                    Checked = existMenuId.FirstOrDefault(d => d == item.Id) != 0,
+                    Title = item.Name,              
+                    Checked = existMenuId.FirstOrDefault(d => d == item.Id)>0,
                     Children = AddChildNode(allMenus, item.Id, existMenuId),
                 };
                 list.Add(menuTreeOutput);
@@ -357,7 +325,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     Id = item.Id,
                     Title = item.Name,
-                    Checked = existMenuId.FirstOrDefault(d => d == item.Id) != 0,
+                    Checked = existMenuId.FirstOrDefault(d => d == item.Id)> 0,
                     Children = AddChildNode(data, item.Id, existMenuId)
                 };
                 list.Add(menuTreeOutput);

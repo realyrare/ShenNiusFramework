@@ -99,15 +99,16 @@
 
                 var menuId = '', selectIds = '', active = {
                     initTree() {
-                        apiUtil.ajax('menu/tree-by-role', { roleId: @Model.RoleId }, "application/json", "post", function (res) {
+                        apiUtil.ajax('menu/tree-by-role', { roleId: @Model.RoleId }, "application/json", "get", function (res) {
 
                             if (res.statusCode == 200 && res.success == true) {
                                 tree.render({
                                     elem: '#tree'
                                     , data: res.data
-                                    , id: "treeId"
-                                    , showCheckbox: true
-                                    , onlyIconControl: true,
+                                    , id: "treeId",
+                                    showCheckbox: true,
+                                    onlyIconControl: true,
+                                    checkChild: false,
                                     accordion: true,
                                     showLine: true,
                                     oncheck: function (obj) {
