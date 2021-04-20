@@ -2,7 +2,9 @@ body {
     margin: 15px 15px 15px 15px;
     background: #f2f2f2;
 }
-
+.text-color {
+    color: #21b384;
+}
 .layuimini-container {
     border: 1px solid #f2f2f2;
     border-radius: 5px;

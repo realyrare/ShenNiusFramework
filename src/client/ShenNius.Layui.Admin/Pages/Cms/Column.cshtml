@@ -57,7 +57,11 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
-                    { field: 'title', width: 150, title: '标题' },
+                    {
+                        field: 'title', title: '栏目名称', templet: function (res) {
+                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                        }
+                    },
                     { field: 'enTitle', title: '英文名' },
                     { field: 'layer', title: '层次深度' },
                     { field: 'createTime', title: '创建时间' },

@@ -80,7 +80,11 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
-                    { field: 'name', width: 200, title: '菜单名称' },
+                    {
+                        field: 'name', title: '菜单名称', templet: function (res) {
+                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.name + '</a>';
+                        }
+                    },
                     { field: 'btnCodeName', width: 350, title: '菜单按钮' },
                     { field: 'httpMethod', title: 'methond' },
                     { field: 'url', title: 'url' },

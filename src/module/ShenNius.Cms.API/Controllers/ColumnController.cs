@@ -40,29 +40,28 @@ namespace ShenNius.Cms.API.Controllers
             return new ApiResult(str);
         }
         [HttpGet]
-        public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
+        public override  Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {
-            Expression<Func<Column, bool>> whereExpression = d=>d.Status==true;
-            if (keywordListSiteQuery.SiteId > 0)
-            {
-                whereExpression = d => d.SiteId == keywordListSiteQuery.SiteId;
-            }
-            if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
-            {
-                whereExpression = d => d.Title.Contains(keywordListSiteQuery.Key);
-            }
-            var res = await _columnService.GetPagesAsync(keywordListSiteQuery.Page, keywordListSiteQuery.Limit, whereExpression, d => d.Id, false);
-            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+           return _columnService.GetListPagesAsync(keywordListSiteQuery);
+        }
+        [HttpPost]
+        public override  Task<ApiResult> Add([FromBody] ColumnInput columnInput)
+        {
+            return _columnService.AddToUpdateAsync(columnInput);
+        }
+        [HttpPut]
+        public override  Task<ApiResult> Modify([FromBody] ColumnModifyInput columnModifyInput)
+        {
+            return _columnService.ModifyAsync(columnModifyInput);
         }
         /// <summary>
         /// 所有父栏目
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> GetAllParentColumn()
+        public  Task<ApiResult> GetAllParentColumn()
         {
-            var data = await _columnService.GetListAsync(d => d.ParentId == 0);
-            return new ApiResult(data);
+            return  _columnService.GetAllParentColumnAsync();
         }
     }
 }

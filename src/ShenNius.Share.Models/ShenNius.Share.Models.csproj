@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configs\" />
     <Folder Include="Dtos\Input\Shop\" />
     <Folder Include="Dtos\Validators\Shop\" />
     <Folder Include="Dtos\Query\" />

@@ -168,7 +168,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> GetList(int siteId, string parentColumnSpell, string childColumnSpell, string keyword, int page = 1)
         {
-            Page<ArticleOutput> query = null; Column columnModel = null;
+            Column columnModel = null;
             List<int> allChildColumnIdList = new List<int>();
             var columnList = await GetColumnAsync(siteId);
             //keyword
@@ -208,15 +208,9 @@ namespace ShenNius.Blog.API.Controllers.Cms
                     expression = (ca, cc) => ca.ColumnId == childColumnModel.Id;
                 }
             }
-            if (expression == null)
-            {
-                //可以设置为推荐的文章
-                query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
-            }
-            else
-            {
-                query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
-            }
+          
+             var  query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
+         
             return new ApiResult(new
             {
                 ArticleList = query.Items,

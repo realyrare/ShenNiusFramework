@@ -125,8 +125,6 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetAllParentMenu()
         {
-            //var data= await _menuService.GetListAsync(d => d.Status && (d.ParentIdList ==""|| d.ParentIdList==null));
-            //  return new ApiResult(_mapper.Map<List<ParentMenuOutput>>(data));
             return await _menuService.GetAllParentMenuAsync();
         }
         /// <summary>

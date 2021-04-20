@@ -7,6 +7,11 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Threading.Tasks;
 using ShenNius.Share.Infrastructure.Attributes;
+using System.Collections.Generic;
+using System.Linq;
+using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Domain.Repository.Extensions;
+using ShenNius.Share.Models.Dtos.Common;
 
 /*************************************
 * 类名：ArticleService
@@ -26,6 +31,8 @@ namespace ShenNius.Share.Domain.Services.Cms
         Task<ApiResult> AddToUpdateAsync(ColumnInput columnInput);
         Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput);
         string GetTest();
+        Task<ApiResult> GetAllParentColumnAsync();
+        Task<ApiResult> GetListPagesAsync(KeyListSiteQuery keyListSiteQuery);
     }
     public class ColumnService : BaseServer<Column>, IColumnService
     {
@@ -107,5 +114,60 @@ namespace ShenNius.Share.Domain.Services.Cms
             }
             return new Tuple<int, string>(layer,parentIdList);
         }
+
+        public async Task<ApiResult> GetAllParentColumnAsync()
+        {
+            var list = await GetListAsync(d => d.Status);
+            var data = new List<Column>();
+            ChildModule(list, data, 0);
+
+            if (data?.Count > 0)
+            {
+                foreach (var item in data)
+                {
+                    item.Title = WebHelper.LevelName(item.Title, item.Layer);
+                }
+            }
+            return new ApiResult(data);
+        }
+        /// <summary>
+        /// 递归模块列表
+        /// </summary>
+        private void ChildModule(List<Column> list, List<Column> newlist, int parentId)
+        {
+            var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ToList();
+            if (!result.Any()) return;
+            for (int i = 0; i < result.Count(); i++)
+            {
+                newlist.Add(result[i]);
+                ChildModule(list, newlist, result[i].Id);
+            }
+        }
+        public async Task<ApiResult> GetListPagesAsync(KeyListSiteQuery query)
+        {
+            var res = await Db.Queryable<Column>().Where(d => d.Status&&d.SiteId==query.SiteId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key))
+                .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)
+                .ToPageAsync(query.Page, query.Limit);
+            var result = new List<Column>();
+            if (!string.IsNullOrEmpty(query.Key))
+            {
+                var menuModel = await GetModelAsync(m => m.Title.Contains(query.Key));
+                ChildModule(res.Items, result, menuModel.ParentId);
+            }
+            else
+            {
+                ChildModule(res.Items, result, 0);
+            }
+            if (result?.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    item.Title = WebHelper.LevelName(item.Title, item.Layer);
+                }
+            }
+            return new ApiResult(data: new { count = res.TotalItems, items = result });
+        }
+
+
     }
 }
