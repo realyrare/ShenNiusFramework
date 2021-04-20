@@ -1,5 +1,6 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
+using ShenNius.Share.Infrastructure.Configurations;
 using System;
 
 /*************************************
@@ -16,13 +17,21 @@ namespace ShenNius.Share.Infrastructure.Utils
 {
     public class EmailHelper
     {
-        public static void Send(string subject, string content)
+        public static void Send(string subject, string content, string toName, string toAddress)
         {
             try
             {
+
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("shennius", "1248415209@qq.com"));
-                message.To.Add(new MailboxAddress("mhg", "mhg215@yeah.net"));
+                message.From.Add(new MailboxAddress(AppSettings.Email.FromName, AppSettings.Email.FromAddress));
+                if (!string.IsNullOrEmpty(toName) && !string.IsNullOrEmpty(toAddress))
+                {
+                    message.To.Add(new MailboxAddress(toName, toAddress));
+                }
+                else
+                {
+                    message.To.Add(new MailboxAddress("mhg", "mhg215@yeah.net"));
+                }
                 message.Subject = subject;
                 message.Body = new TextPart("plain")
                 {
@@ -35,11 +44,10 @@ namespace ShenNius.Share.Infrastructure.Utils
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
                     // Note: since we don't have an OAuth2 token, disable 	
                     // the XOAUTH2 authentication mechanism.     
-                    client.Authenticate("1248415209@qq.com", "rsvehznvpixojagf");
+                    client.Authenticate(AppSettings.Email.FromAddress, AppSettings.Email.AuthCode);
                     client.Send(message);
                     client.Disconnect(true);
                 }
-
             }
             catch (Exception ex)
             {

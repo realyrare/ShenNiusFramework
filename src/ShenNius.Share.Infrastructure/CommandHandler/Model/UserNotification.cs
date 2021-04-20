@@ -16,5 +16,6 @@ namespace ShenNius.Share.Infrastructure.CommandHandler.Model
     {
         public int Id { get; set; }
         public string Name{ get; set; }
+        public string  Email { get; set; }
     }
 }
