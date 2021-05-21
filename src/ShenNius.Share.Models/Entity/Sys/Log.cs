@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace ShenNius.Share.Model.Entity.Sys
+namespace ShenNius.Share.Models.Entity.Sys
 {
     ///<summary>
     /// 系统操作表
@@ -11,14 +11,11 @@ namespace ShenNius.Share.Model.Entity.Sys
     [SugarTable("Sys_Log")]
     public partial class Log
     {
-        public Log()
-        {
 
-
-        }
         /// <summary>
         /// Desc:唯一标号Guid
         /// </summary>           
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
 
         /// <summary>

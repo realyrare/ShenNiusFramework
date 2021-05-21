@@ -1,4 +1,4 @@
-﻿using ShenNius.Share.Model.Entity.Sys;
+﻿using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 
 namespace ShenNius.Share.Domain.Services.Sys
