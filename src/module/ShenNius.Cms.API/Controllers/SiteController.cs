@@ -1,5 +1,5 @@
 ﻿/*************************************
-* 类名：SiteController
+* 类名：TenantController
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/3/11 17:22:57
@@ -17,7 +17,7 @@ using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Entity.Tenant;
+using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
@@ -25,11 +25,11 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Cms.API.Controllers
 {
-    public class SiteController : ApiBaseController<Site, DetailQuery, DeletesInput, KeyListQuery, SiteInput, SiteModifyInput>
+    public class TenantController : ApiBaseController<Tenant, DetailQuery, DeletesInput, KeyListQuery, TenantInput, TenantModifyInput>
     {
-        private readonly IBaseServer<Site> _service;
+        private readonly IBaseServer<Tenant> _service;
         private readonly ICacheHelper _cacheHelper;
-        public SiteController(IBaseServer<Site> service, IMapper mapper, ICacheHelper cacheHelper) : base(service, mapper)
+        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper) : base(service, mapper)
         {
             _service = service;
             _cacheHelper = cacheHelper;
@@ -45,36 +45,36 @@ namespace ShenNius.Cms.API.Controllers
         {
             foreach (var item in deletesInput.Ids)
             {
-                await _service.UpdateAsync(d => new Site() { IsDel = false }, d => d.Id == item);
+                await _service.UpdateAsync(d => new Tenant() { IsDel = false }, d => d.Id == item);
             }
             return new ApiResult();
         }
         /// <summary>
         /// 设置当前站点
         /// </summary>
-        /// <param name="siteCurrentInput"></param>
+        /// <param name="TenantCurrentInput"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ApiResult> SetCurrent([FromBody] SiteCurrentInput siteCurrentInput)
+        public async Task<ApiResult> SetCurrent([FromBody] TenantCurrentInput TenantCurrentInput)
         {
             //把之前缓存存储的站点拿出来设置为不是当前的。
-            var model = await _service.GetModelAsync(d => d.Id == siteCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
+            var model = await _service.GetModelAsync(d => d.Id == TenantCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
             if (model == null)
             {
                 throw new FriendlyException("当前站点实体信息为空!");
             }
-            var currentSite = _cacheHelper.Get<Site>(KeyHelper.Cms.CurrentSite);
-            if (currentSite != null)
+            var currentTenant = _cacheHelper.Get<Tenant>(KeyHelper.Cms.CurrentTenant);
+            if (currentTenant != null)
             {
-                currentSite.IsCurrent = false;
+                currentTenant.IsCurrent = false;
                 //不要使用全部更新  有可能缓存的实体比较旧
-                await _service.UpdateAsync(d => new Site() { IsCurrent = false }, d => d.Id == currentSite.Id);
+                await _service.UpdateAsync(d => new Tenant() { IsCurrent = false }, d => d.Id == currentTenant.Id);
             }
 
             model.IsCurrent = true;
             await _service.UpdateAsync(model);
             //这里最好更新下缓存
-            _cacheHelper.Set(KeyHelper.Cms.CurrentSite, model);
+            _cacheHelper.Set(KeyHelper.Cms.CurrentTenant, model);
             return new ApiResult();
         }
         [HttpGet]
@@ -85,7 +85,7 @@ namespace ShenNius.Cms.API.Controllers
             {
                 if (item.IsCurrent)
                 {
-                    _cacheHelper.Set(KeyHelper.Cms.CurrentSite, item);
+                    _cacheHelper.Set(KeyHelper.Cms.CurrentTenant, item);
                 }
             }
             return new ApiResult(data: res);
@@ -93,7 +93,7 @@ namespace ShenNius.Cms.API.Controllers
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListQuery keyListQuery)
         {
-            Expression<Func<Site, bool>> whereExpression = null;
+            Expression<Func<Tenant, bool>> whereExpression = null;
             if (!string.IsNullOrEmpty(keyListQuery.Key))
             {
                 whereExpression = d => d.Title.Contains(keyListQuery.Key);
@@ -103,34 +103,34 @@ namespace ShenNius.Cms.API.Controllers
         }
 
         //[HttpPut]
-        //public override async Task<ApiResult> Modify([FromBody] SiteModifyInput siteModifyInput)
+        //public override async Task<ApiResult> Modify([FromBody] TenantModifyInput TenantModifyInput)
         //{
-        //    var res = await _service.UpdateAsync(d => new Site()
+        //    var res = await _service.UpdateAsync(d => new Tenant()
         //    {
-        //        Id = siteModifyInput.Id,
-        //        IsCurrent = siteModifyInput.IsCurrent,
-        //        Title = siteModifyInput.Title,
-        //        Email = siteModifyInput.Email,
-        //        WeiBo = siteModifyInput.WeiBo,
-        //        WeiXin = siteModifyInput.WeiXin,
-        //        UserId = siteModifyInput.UserId,
-        //        Name = siteModifyInput.Name,
-        //        Url = siteModifyInput.Url,
-        //        Logo = siteModifyInput.Logo,
-        //        Summary = siteModifyInput.Summary,
-        //        Tel = siteModifyInput.Tel,
-        //        Fax = siteModifyInput.Fax,
-        //        QQ = siteModifyInput.QQ,
-        //        Address = siteModifyInput.Address,
-        //        Code = siteModifyInput.Code,
-        //        Keyword = siteModifyInput.Keyword,
-        //        Description = siteModifyInput.Description,
-        //        Copyright = siteModifyInput.Copyright,
-        //        Status = siteModifyInput.Status,
-        //        CloseInfo = siteModifyInput.CloseInfo,
-        //        ModifyTime = siteModifyInput.ModifyTime,
+        //        Id = TenantModifyInput.Id,
+        //        IsCurrent = TenantModifyInput.IsCurrent,
+        //        Title = TenantModifyInput.Title,
+        //        Email = TenantModifyInput.Email,
+        //        WeiBo = TenantModifyInput.WeiBo,
+        //        WeiXin = TenantModifyInput.WeiXin,
+        //        UserId = TenantModifyInput.UserId,
+        //        Name = TenantModifyInput.Name,
+        //        Url = TenantModifyInput.Url,
+        //        Logo = TenantModifyInput.Logo,
+        //        Summary = TenantModifyInput.Summary,
+        //        Tel = TenantModifyInput.Tel,
+        //        Fax = TenantModifyInput.Fax,
+        //        QQ = TenantModifyInput.QQ,
+        //        Address = TenantModifyInput.Address,
+        //        Code = TenantModifyInput.Code,
+        //        Keyword = TenantModifyInput.Keyword,
+        //        Description = TenantModifyInput.Description,
+        //        Copyright = TenantModifyInput.Copyright,
+        //        Status = TenantModifyInput.Status,
+        //        CloseInfo = TenantModifyInput.CloseInfo,
+        //        ModifyTime = TenantModifyInput.ModifyTime,
 
-        //    }, d => d.Id == siteModifyInput.Id);
+        //    }, d => d.Id == TenantModifyInput.Id);
         //    return new ApiResult(data: res);
         //}
     }

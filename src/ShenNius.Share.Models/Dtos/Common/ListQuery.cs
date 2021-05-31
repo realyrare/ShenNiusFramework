@@ -23,14 +23,14 @@ namespace ShenNius.Share.Models.Dtos.Common
     /// <summary>
     /// 多租户列表查询使用
     /// </summary>
-    public class ListSiteQuery : PageQuery, IGlobalTenant
+    public class ListTenantQuery : PageQuery, IGlobalTenant
     {
         public int TenantId { get; set; }
     }
     /// <summary>
     /// 通用查询 ， 适合只有一个关键词查询的列表
     /// </summary>
-    public class KeyListSiteQuery : ListSiteQuery, IGlobalTenant
+    public class KeyListTenantQuery : ListTenantQuery, IGlobalTenant
     {
         public string Key { get; set; }
     }

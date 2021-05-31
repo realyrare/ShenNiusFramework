@@ -32,7 +32,7 @@ namespace ShenNius.Share.Domain.Services.Cms
         Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput);
         string GetTest();
         Task<ApiResult> GetAllParentColumnAsync();
-        Task<ApiResult> GetListPagesAsync(KeyListSiteQuery keyListSiteQuery);
+        Task<ApiResult> GetListPagesAsync(KeyListTenantQuery keyListSiteQuery);
     }
     public class ColumnService : BaseServer<Column>, IColumnService
     {
@@ -143,7 +143,7 @@ namespace ShenNius.Share.Domain.Services.Cms
                 ChildModule(list, newlist, result[i].Id);
             }
         }
-        public async Task<ApiResult> GetListPagesAsync(KeyListSiteQuery query)
+        public async Task<ApiResult> GetListPagesAsync(KeyListTenantQuery query)
         {
             var res = await Db.Queryable<Column>().Where(d => d.Status&&d.TenantId==query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key))
                 .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)

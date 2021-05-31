@@ -26,7 +26,7 @@ using System;
 
 namespace ShenNius.Cms.API.Controllers
 {
-    public class KeywordController : ApiTenantBaseController<Keyword, DetailSiteQuery, DeletesSiteInput, ListSiteQuery, KeywordInput, KeywordModifyInput>
+    public class KeywordController : ApiTenantBaseController<Keyword, DetailTenantQuery, DeletesTenantInput, ListTenantQuery, KeywordInput, KeywordModifyInput>
     {
         private readonly IBaseServer<Keyword> _service;
 

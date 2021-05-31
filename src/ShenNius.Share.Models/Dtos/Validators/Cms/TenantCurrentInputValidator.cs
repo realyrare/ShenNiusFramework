@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
+﻿using FluentValidation;
+using ShenNius.Share.Models.Dtos.Input.Cms;
 
 /*************************************
-* 类 名： SiteCurrentInput
+* 类 名： TenantCurrentInputValidator
 * 作 者： realyrare
 * 邮 箱： mhg215@yeah.net
-* 时 间： 2021/3/18 17:39:18
+* 时 间： 2021/3/18 17:40:26
 * .netV： 3.1
 *┌───────────────────────────────────┐　    
 *│　     版权所有：神牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Dtos.Input.Cms
+namespace ShenNius.Share.Models.Dtos.Validators.Cms
 {
-    public class SiteCurrentInput
+    public class TenantCurrentInputValidator : AbstractValidator<TenantCurrentInput>
     {
-        public int Id { get; set; }
+        public TenantCurrentInputValidator()
+        {
+            RuleFor(x =>x.Id).NotEmpty().WithMessage("Id不能为空!");
+        }
     }
 }

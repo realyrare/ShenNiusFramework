@@ -29,7 +29,7 @@ using ShenNius.Share.Models.Entity.Cms;
 namespace ShenNius.Cms.API.Controllers
 {
 
-    public class AdvListController : ApiTenantBaseController<AdvList, DetailSiteQuery, DeletesSiteInput, KeyListSiteQuery, AdvListInput, AdvListModifyInput>
+    public class AdvListController : ApiTenantBaseController<AdvList, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, AdvListInput, AdvListModifyInput>
     {
         private readonly IBaseServer<AdvList> _service;
         private readonly QiNiuOssModel _qiNiuOssModel;
@@ -42,18 +42,18 @@ namespace ShenNius.Cms.API.Controllers
             this._qiniuCloud = qiniuCloud;
         }
         [HttpGet]
-        public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
+        public override async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
             Expression<Func<AdvList, bool>> whereExpression = d=>d.Status==true;
-            if (keywordListSiteQuery.TenantId > 0)
+            if (keywordListTenantQuery.TenantId > 0)
             {
-                whereExpression = d => d.TenantId == keywordListSiteQuery.TenantId;
+                whereExpression = d => d.TenantId == keywordListTenantQuery.TenantId;
             }
-            if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
+            if (!string.IsNullOrEmpty(keywordListTenantQuery.Key))
             {
-                whereExpression = d => d.Title.Contains(keywordListSiteQuery.Key);
+                whereExpression = d => d.Title.Contains(keywordListTenantQuery.Key);
             }
-            var res = await _service.GetPagesAsync(keywordListSiteQuery.Page, keywordListSiteQuery.Limit, whereExpression, d => d.Id, false);
+            var res = await _service.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpPost, AllowAnonymous]

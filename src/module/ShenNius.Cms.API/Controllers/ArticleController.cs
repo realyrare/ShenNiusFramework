@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Cms.API.Controllers
 {
-    public class ArticleController : ApiTenantBaseController<Article, DetailSiteQuery, DeletesSiteInput, KeyListSiteQuery, ArticleInput, ArticleModifyInput>
+    public class ArticleController : ApiTenantBaseController<Article, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, ArticleInput, ArticleModifyInput>
     {
         private readonly IBaseServer<Article> _service;
         private readonly QiniuCloud _qiniuCloud;
@@ -41,18 +41,18 @@ namespace ShenNius.Cms.API.Controllers
         }
 
         [HttpGet]
-        public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
+        public override async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
             Expression<Func<Article, bool>> whereExpression = d=>d.Status==true;
-            if (keywordListSiteQuery.TenantId > 0)
+            if (keywordListTenantQuery.TenantId > 0)
             {
-                whereExpression = d => d.TenantId == keywordListSiteQuery.TenantId;
+                whereExpression = d => d.TenantId == keywordListTenantQuery.TenantId;
             }
-            if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
+            if (!string.IsNullOrEmpty(keywordListTenantQuery.Key))
             {
-                whereExpression = d => d.Title.Contains(keywordListSiteQuery.Key);
+                whereExpression = d => d.Title.Contains(keywordListTenantQuery.Key);
             }
-            var res = await _service.GetPagesAsync(keywordListSiteQuery.Page, keywordListSiteQuery.Limit, whereExpression, d => d.Id, false);
+            var res = await _service.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpPost, AllowAnonymous]

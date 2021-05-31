@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Web;
 
 /*************************************
-* 类名：SiteInputValidator
+* 类名：TenantInputValidator
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/3/11 18:27:41
@@ -16,9 +16,9 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Validators.Cms
 {
-    public class SiteInputValidator : AbstractValidator<SiteInput>
+    public class TenantInputValidator : AbstractValidator<TenantInput>
     {
-        public SiteInputValidator()
+        public TenantInputValidator()
         {
             RuleFor(x =>x.Title).NotEmpty().WithMessage("标题必须填写");
             RuleFor(x => x.Name).NotEmpty().WithMessage("站点名称必须填写");

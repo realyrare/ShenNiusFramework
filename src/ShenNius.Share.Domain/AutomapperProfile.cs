@@ -4,7 +4,7 @@ using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Models.Entity.Tenant;
+using ShenNius.Share.Models.Entity.Sys;
 
 namespace ShenNius.Share.Domain
 {
@@ -28,7 +28,7 @@ namespace ShenNius.Share.Domain
 
             CreateMap<ConfigInput, Config>();
             //cms
-            CreateMap<SiteInput, Site>();
+            CreateMap<TenantInput, Tenant>();
             CreateMap<ColumnInput, Column>();
             CreateMap<ColumnModifyInput, Column>();
             CreateMap<ArticleInput, Article>();

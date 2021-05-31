@@ -1,5 +1,5 @@
 ﻿/*************************************
-* 类名：GlobalSiteInput
+* 类名：GlobalTenantInput
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/3/30 18:15:44

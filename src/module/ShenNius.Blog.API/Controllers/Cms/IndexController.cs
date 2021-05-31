@@ -230,7 +230,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         {
             messageInput.IP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.ToString();
 
-            var list = await _messageService.GetListAsync(m => m.IP == messageInput.IP && m.TenantId == messageInput.SiteId && m.Types == messageInput.Types, m => m.CreateTime, true);
+            var list = await _messageService.GetListAsync(m => m.IP == messageInput.IP && m.TenantId == messageInput.TenantId && m.Types == messageInput.Types, m => m.CreateTime, true);
             if (list.Count() > 3)
             {
                 throw new FriendlyException("您提交的次数过多，请稍后重试！~");

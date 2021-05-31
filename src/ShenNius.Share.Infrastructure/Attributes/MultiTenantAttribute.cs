@@ -5,7 +5,7 @@ using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Common;
-using ShenNius.Share.Models.Entity.Tenant;
+using ShenNius.Share.Models.Entity.Sys;
 using System.Linq;
 
 /*************************************
@@ -32,29 +32,28 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
             var actionName = actionDescriptor.ActionName.ToLower();
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
-            var siteId = cache.Get<Site>(KeyHelper.Cms.CurrentSite)?.Id;
+            var tenantId = cache.Get<Tenant>(KeyHelper.Cms.CurrentTenant)?.Id;
             //如果是增加和修改方法  根据站群id
             //if (methods.Any(o => actionName.Contains(o)))
             //{
-                foreach (var parameter in actionDescriptor.Parameters)
+            foreach (var parameter in actionDescriptor.Parameters)
+            {
+                var parameterName = parameter.Name;//获取Action方法中参数的名字
+                var parameterType = parameter.ParameterType;//获取Action方法中参数的类型
+                                                            //if (!typeof(int).IsAssignableFrom(parameterType))//如果不是ID类型
+                                                            //{
+                                                            //    continue;
+                                                            //}
+                                                            //自动添加租户id
+                if (typeof(IGlobalTenant).IsAssignableFrom(parameterType))
                 {
-                    var parameterName = parameter.Name;//获取Action方法中参数的名字
-                    var parameterType = parameter.ParameterType;//获取Action方法中参数的类型
-                    //if (!typeof(int).IsAssignableFrom(parameterType))//如果不是ID类型
-                    //{
-                    //    continue;
-                    //}
-                    //自动添加租户id
-                    if (typeof(IGlobalTenant).IsAssignableFrom(parameterType))
+                    var model = context.ActionArguments[parameterName] as IGlobalTenant;
+                    if (tenantId != null)
                     {
-                        var model = context.ActionArguments[parameterName] as IGlobalTenant;
-                        if (siteId != null)
-                        {
-
-                            model.TenantId = siteId.Value;
-                        }
+                        model.TenantId = tenantId.Value;
                     }
                 }
+            }
             //}
         }
     }

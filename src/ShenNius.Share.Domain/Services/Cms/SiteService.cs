@@ -1,5 +1,4 @@
-﻿using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Models.Entity.Tenant;
+﻿using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 
 /*************************************
@@ -14,11 +13,11 @@ using ShenNius.Share.Domain.Repository;
 
 namespace ShenNius.Share.Domain.Services.Cms
 {
-    public interface ISiteService : IBaseServer<Site>
+    public interface ISiteService : IBaseServer<Tenant>
     {
 
     }
-    public class SiteService : BaseServer<Site>, ISiteService
+    public class SiteService : BaseServer<Tenant>, ISiteService
     {
     }
 

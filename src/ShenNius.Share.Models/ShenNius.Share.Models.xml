@@ -9,12 +9,12 @@
             详情查询基类（不是多租户的模块可以使用）
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Common.DetailSiteQuery">
+        <member name="T:ShenNius.Share.Models.Dtos.Common.DetailTenantQuery">
             <summary>
             多租户查询使用
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Common.GlobalSiteInput">
+        <member name="T:ShenNius.Share.Models.Dtos.Common.GlobalTenantInput">
             <summary>
             多租户约定方便Add ,Modify使用
             </summary>
@@ -24,12 +24,12 @@
             列表查询基类（不是多租户的模块可以使用）
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Common.ListSiteQuery">
+        <member name="T:ShenNius.Share.Models.Dtos.Common.ListTenantQuery">
             <summary>
             多租户列表查询使用
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Common.KeyListSiteQuery">
+        <member name="T:ShenNius.Share.Models.Dtos.Common.KeyListTenantQuery">
             <summary>
             通用查询 ， 适合只有一个关键词查询的列表
             </summary>
@@ -592,283 +592,283 @@
             修改时间
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.UserId">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.UserId">
             <summary>
             Desc:系统ID
             Default:0
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Name">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Name">
             <summary>
             Desc:网站名称
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Url">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Url">
             <summary>
             Desc:网站域名
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Logo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Logo">
             <summary>
             Desc:网站Logo
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Summary">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Summary">
             <summary>
             Desc:网站描述
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Tel">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Tel">
             <summary>
             Desc:公司电话
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Fax">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Fax">
             <summary>
             Desc:公司传真
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Email">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Email">
             <summary>
             Desc:公司人事邮箱
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.QQ">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.QQ">
             <summary>
             Desc:公司客服QQ
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.WeiXin">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.WeiXin">
             <summary>
             Desc:微信公众号图片
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.WeiBo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.WeiBo">
             <summary>
             Desc:微博链接地址或者二维码
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Address">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Address">
             <summary>
             Desc:公司地址
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Code">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Code">
             <summary>
             Desc:网站备案号其它等信息
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Title">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Title">
             <summary>
             Desc:网站SEO标题
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Keyword">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Keyword">
             <summary>
             Desc:网站SEO关键字
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Description">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Description">
             <summary>
             Desc:网站SEO描述
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Copyright">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Copyright">
             <summary>
             Desc:网站版权等信息
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.Status">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.Status">
             <summary>
             Desc:网站开启关闭状态
             Default:b'1'
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.CloseInfo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.CloseInfo">
             <summary>
             Desc:如果状态关闭，请输入关闭网站原因
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.IsDel">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.IsDel">
             <summary>
             是否删除
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteInput.CreateTime">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantInput.CreateTime">
             <summary>
             创建站点时间
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.UserId">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.UserId">
             <summary>
             Desc:系统ID
             Default:0
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Name">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Name">
             <summary>
             Desc:网站名称
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Url">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Url">
             <summary>
             Desc:网站域名
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Logo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Logo">
             <summary>
             Desc:网站Logo
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Summary">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Summary">
             <summary>
             Desc:网站描述
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Tel">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Tel">
             <summary>
             Desc:公司电话
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Fax">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Fax">
             <summary>
             Desc:公司传真
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Email">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Email">
             <summary>
             Desc:公司人事邮箱
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.QQ">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.QQ">
             <summary>
             Desc:公司客服QQ
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.WeiXin">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.WeiXin">
             <summary>
             Desc:微信公众号图片
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.WeiBo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.WeiBo">
             <summary>
             Desc:微博链接地址或者二维码
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Address">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Address">
             <summary>
             Desc:公司地址
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Code">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Code">
             <summary>
             Desc:网站备案号其它等信息
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Title">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Title">
             <summary>
             Desc:网站SEO标题
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Keyword">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Keyword">
             <summary>
             Desc:网站SEO关键字
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Description">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Description">
             <summary>
             Desc:网站SEO描述
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Copyright">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Copyright">
             <summary>
             Desc:网站版权等信息
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.Status">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.Status">
             <summary>
             Desc:网站开启关闭状态
             Default:b'1'
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.CloseInfo">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.CloseInfo">
             <summary>
             Desc:如果状态关闭，请输入关闭网站原因
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.SiteModifyInput.ModifyTime">
+        <member name="P:ShenNius.Share.Models.Dtos.Input.Cms.TenantModifyInput.ModifyTime">
             <summary>
             创建站点时间
             </summary>
@@ -962,7 +962,7 @@
             批量删除
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Dtos.Input.Sys.DeletesSiteInput">
+        <member name="T:ShenNius.Share.Models.Dtos.Input.Sys.DeletesTenantInput">
             <summary>
             多租户使用
             </summary>
@@ -1393,7 +1393,7 @@
             假删除
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Entity.Common.BaseSiteEntity">
+        <member name="T:ShenNius.Share.Models.Entity.Common.BaseTenantEntity">
             <summary>
             所有多租户数据库实体基类
             </summary>
@@ -1403,7 +1403,7 @@
             所有不是多租户的数据库实体基类
             </summary>
         </member>
-        <member name="T:ShenNius.Share.Models.Entity.Common.IGlobalSite">
+        <member name="T:ShenNius.Share.Models.Entity.Common.IGlobalTenant">
             <summary>
             站群Id接口
             </summary>
@@ -1453,133 +1453,133 @@
             Nullable:False
             </summary>           
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.UserId">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.UserId">
             <summary>
             Desc:系统ID
             Default:0
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Name">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Name">
             <summary>
             Desc:网站名称
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Url">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Url">
             <summary>
             Desc:网站域名
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Logo">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Logo">
             <summary>
             Desc:网站Logo
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Summary">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Summary">
             <summary>
             Desc:网站描述
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Tel">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Tel">
             <summary>
             Desc:公司电话
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Fax">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Fax">
             <summary>
             Desc:公司传真
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Email">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Email">
             <summary>
             Desc:公司人事邮箱
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.QQ">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.QQ">
             <summary>
             Desc:公司客服QQ
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.WeiXin">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.WeiXin">
             <summary>
             Desc:微信公众号图片
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.WeiBo">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.WeiBo">
             <summary>
             Desc:微博链接地址或者二维码
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Address">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Address">
             <summary>
             Desc:公司地址
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Code">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Code">
             <summary>
             Desc:网站备案号其它等信息
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Title">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Title">
             <summary>
             Desc:网站SEO标题
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Keyword">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Keyword">
             <summary>
             Desc:网站SEO关键字
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Description">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Description">
             <summary>
             Desc:网站SEO描述
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.Copyright">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.Copyright">
             <summary>
             Desc:网站版权等信息
             Default:-
             Nullable:False
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.CloseInfo">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.CloseInfo">
             <summary>
             Desc:如果状态关闭，请输入关闭网站原因
             Default:-
             Nullable:True
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Models.Entity.Tenant.Site.IsDel">
+        <member name="P:ShenNius.Share.Models.Entity.Tenant.Tenant.IsDel">
             <summary>
             是否删除
             </summary>
@@ -1717,7 +1717,7 @@
             
             </summary>
         </member>
-        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.Callsite">
+        <member name="P:ShenNius.Share.Model.Entity.Sys.Log.CallTenant">
             <summary>
             请求Url
             </summary>

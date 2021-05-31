@@ -42,18 +42,18 @@ namespace ShenNius.Cms.API.Controllers
             this._recycleService = recycleService;
         }
         [HttpGet]
-        public  async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
+        public  async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
             Expression<Func<Message, bool>> whereExpression = d => d.Status == true;
-            if (keywordListSiteQuery.TenantId > 0)
+            if (keywordListTenantQuery.TenantId > 0)
             {
-                whereExpression = d => d.TenantId == keywordListSiteQuery.TenantId;
+                whereExpression = d => d.TenantId == keywordListTenantQuery.TenantId;
             }
-            if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
+            if (!string.IsNullOrEmpty(keywordListTenantQuery.Key))
             {
-                whereExpression = d => d.UserName.Contains(keywordListSiteQuery.Key);
+                whereExpression = d => d.UserName.Contains(keywordListTenantQuery.Key);
             }
-            var res = await _messageService.GetPagesAsync(keywordListSiteQuery.Page, keywordListSiteQuery.Limit, whereExpression, d => d.Id, false);
+            var res = await _messageService.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         /// <summary>
@@ -62,7 +62,7 @@ namespace ShenNius.Cms.API.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpDelete]
-        public virtual async Task<ApiResult> SoftDelete([FromBody] DeletesSiteInput input)
+        public virtual async Task<ApiResult> SoftDelete([FromBody] DeletesTenantInput input)
         {          
             var userId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
             var currentName = HttpContext.User.Identity.Name;
@@ -85,7 +85,7 @@ namespace ShenNius.Cms.API.Controllers
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public virtual async Task<ApiResult> Deletes([FromBody] DeletesSiteInput deleteInput)
+        public virtual async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
         {
             var res = await _messageService.DeleteAsync(deleteInput.Ids);
             if (res <= 0)

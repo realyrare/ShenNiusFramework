@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 
 /*************************************
-* 类名：SiteModifyInput
+* 类名：TenantModifyInput
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/3/11 19:53:00
@@ -14,7 +14,7 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class SiteModifyInput
+    public class TenantModifyInput
     {       
             public int Id { get; set; }
             /// <summary>

@@ -3,7 +3,7 @@ using SqlSugar;
 using System;
 
 /*************************************
-* 类名：Site
+* 类名：Tenant
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/3/11 17:10:38
@@ -12,14 +12,14 @@ using System;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Entity.Tenant
+namespace ShenNius.Share.Models.Entity.Sys
 {
-    [SugarTable("Tenant_Site")]
-    public class Site : BaseEntity
+    [SugarTable("Sys_Tenant")]
+    public class Tenant : BaseEntity
     {
 
         /// <summary>
-        /// Desc:系统ID
+        /// Desc:系统用户ID
         /// Default:0
         /// Nullable:False
         /// </summary>

@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ShenNius.Cms.API.Controllers
 {
-    public class ColumnController : ApiTenantBaseController<Column, DetailSiteQuery, DeletesSiteInput, KeyListSiteQuery, ColumnInput, ColumnModifyInput>
+    public class ColumnController : ApiTenantBaseController<Column, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, ColumnInput, ColumnModifyInput>
     {
         private readonly IColumnService _columnService;
         public ColumnController(IBaseServer<Column> service, IMapper mapper, IColumnService columnService) : base(service, mapper)
@@ -40,9 +40,9 @@ namespace ShenNius.Cms.API.Controllers
             return new ApiResult(str);
         }
         [HttpGet]
-        public override  Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
+        public override  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
-           return _columnService.GetListPagesAsync(keywordListSiteQuery);
+           return _columnService.GetListPagesAsync(keywordListTenantQuery);
         }
         [HttpPost]
         public override  Task<ApiResult> Add([FromBody] ColumnInput columnInput)

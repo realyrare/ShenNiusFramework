@@ -10,7 +10,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         public string IP { get; set; }
         public string Address { get; set; }
         public DateTime CreateTime { get; set; } = DateTime.Now;
-        public int SiteId { get; set; }
+        public int TenantId { get; set; }
         public string  Content { get; set; }
     }
 }
