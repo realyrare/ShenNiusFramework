@@ -5,13 +5,13 @@ using ShenNius.Layui.Admin.Common;
 using ShenNius.Layui.Admin.Extension;
 using ShenNius.Layui.Admin.Model.Output;
 
-namespace ShenNius.Layui.Admin.Pages.Cms
+namespace ShenNius.Layui.Admin.Pages.Sys
 {
-    public class SiteModifyModel : PageModel
+    public class TenantModifyModel : PageModel
     {
         private readonly HttpHelper _httpHelper;
 
-        public SiteModifyModel(HttpHelper httpHelper)
+        public TenantModifyModel(HttpHelper httpHelper)
         {
             _httpHelper = httpHelper;
         }
@@ -24,7 +24,7 @@ namespace ShenNius.Layui.Admin.Pages.Cms
             Id = id;
             if (!string.IsNullOrEmpty(token))
             {
-                var result = await _httpHelper.GetAsync<ApiResult<SiteOutput>>($"site/detail?id={id}", token);
+                var result = await _httpHelper.GetAsync<ApiResult<SiteOutput>>($"tenant/detail?id={id}", token);
                 if (result != null && result.Success && result.StatusCode == 200)
                 {
                     SiteOutput = result.Data;

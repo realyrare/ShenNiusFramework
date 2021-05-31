@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using NLog;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -118,7 +119,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"方式：{method} \n " +
                 $"参数：{qs}\n " +
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
-            LogHelper.Default.Process(userName, LogType, str);
+            LogHelper.Default.Process(userName, LogType, str,LogLevel.Trace);
         }
     }
 }

@@ -7,7 +7,6 @@ using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Domain.Repository;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
+using ShenNius.Share.Domain.Services.Sys;
 
 /*************************************
 * 类名：IndexController
@@ -39,18 +39,18 @@ namespace ShenNius.Blog.API.Controllers.Cms
         protected ICacheHelper _cache;
         private readonly IMessageService _messageService;
         private readonly IMapper _mapper;
-        private readonly ISiteService _cmsSiteService;
+        private readonly ITenantService _tenantService;
         public IndexController(IAdvListService advlistService
             , IArticleService articleService
             , IColumnService columnService,
-            ICacheHelper cache, ISiteService cmsSiteService, IMessageService messageService, IMapper mapper)
+            ICacheHelper cache, ITenantService tenantService, IMessageService messageService, IMapper mapper)
         {
             _advlistService = advlistService;
             _articleService = articleService;
             _columnService = columnService;
             _messageService = messageService;
             _mapper = mapper;
-            _cmsSiteService = cmsSiteService;
+            _tenantService = tenantService;
             _cache = cache;
         }
 
@@ -72,7 +72,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public ApiResult GetSiteInfo(int siteId)
         {
-            var model = _cmsSiteService.GetModelAsync(d => d.Id.Equals(siteId));
+            var model = _tenantService.GetModelAsync(d => d.Id.Equals(siteId));
             if (model == null)
             {
                 throw new FriendlyException("请求的站点信息为空");

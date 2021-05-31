@@ -27,8 +27,10 @@ namespace ShenNius.Share.Domain
             CreateMap<Menu, MenuAuthOutput>();
 
             CreateMap<ConfigInput, Config>();
-            //cms
             CreateMap<TenantInput, Tenant>();
+            CreateMap<TenantModifyInput, Tenant>();
+            //cms
+
             CreateMap<ColumnInput, Column>();
             CreateMap<ColumnModifyInput, Column>();
             CreateMap<ArticleInput, Article>();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using NLog;
 using ShenNius.Share.Infrastructure.Utils;
 using System.Diagnostics;
 
@@ -42,7 +43,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"参数：{qs}\n " +
                 //$"结果：{res}\n " +
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
-            LogHelper.Default.Process(userName, "", str);
+            LogHelper.Default.Process(userName, "", str,LogLevel.Trace);
         }
     }
 }

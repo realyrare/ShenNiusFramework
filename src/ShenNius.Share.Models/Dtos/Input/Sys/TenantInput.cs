@@ -12,7 +12,7 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Dtos.Input.Cms
+namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
     public class TenantInput
     {

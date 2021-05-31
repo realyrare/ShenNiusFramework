@@ -1,5 +1,5 @@
 ﻿@page
-@model ShenNius.Layui.Admin.Pages.Cms.SiteModifyModel
+@model ShenNius.Layui.Admin.Pages.Sys.TenantModifyModel
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -12,6 +12,11 @@
         }
         .layui-form-select {
             width: 350px;
+        }
+        .layui-upload-img {
+            width: 135px;
+            height: 95px;
+            padding-left: 110px;
         }
     </style>
 }
@@ -125,9 +130,23 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">微信:</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="weiXin" placeholder="请填写入公司微信" value="@Model.SiteOutput.WeiXin" class="layui-input" lay-verify="weiXin">
+                        <label class="layui-form-label">微信:</label>                      
+                        <div class="layui-upload">
+                            <button type="button" class="layui-btn" id="test1">上传图片</button>
+                            <div class="layui-upload-list">
+                                @if (!string.IsNullOrEmpty(Model.SiteOutput.WeiXin))
+                                {
+                                    <img class="layui-upload-img" id="demo1" src="@Model.SiteOutput.WeiXin">
+                                    <input type="hidden" id="weiXin" name="weiXin" class="layui-input" value="@Model.SiteOutput.WeiXin">
+                                }
+                                else
+                                {
+                                    <img class="layui-upload-img" id="demo1">
+                                    <input type="hidden" id="weiXin" name="weiXin" class="layui-input">
+                                }
+                                <p id="demoText"></p>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -138,11 +157,11 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button type="button" class="layui-btn layui-btn-normal" id="next" lay-submit lay-filter="formStep">下一步</button><br />
+                    <div class="layui-input-block" style="display:inline-flex;" >
+                        <button type="button" class="layui-btn layui-btn-normal" id="next" lay-submit lay-filter="formStep">下一步</button>
                         <button type="button" class="layui-btn layui-btn-normal" id="up" lay-submit lay-filter="formStep2" style="display:none">
                             上一步
-                        </button><br />
+                        </button>
                         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
                     </div>
                 </div>
@@ -154,9 +173,10 @@
 
 @section js{
     <script>
-        layui.use(['form', 'common'], function () {
+        layui.use(['form', 'common', 'upload'], function () {
             var $ = layui.$,
                 form = layui.form,
+                upload = layui.upload,
                 apiUtil = layui.common;
             $(function () {
                 $("#next").click(function () {
@@ -172,15 +192,39 @@
                     $("#next").css("display", "block");
                 });
             });
-            //form.on('submit(formStep)', function (data) {
-              
-            //});
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: apiUtil.apiUrl() + 'tenant/qiniu-file' //改成您自己的上传接口
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    if (res.statusCode == 200 && res.success == true) {
+                        $('#demo1').attr('src', res.data);
+                        $('#weiXin').val(res.data);
+                        console.log("img:" + res.data);
+                    }
+                    //上传成功
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
             // 当前弹出层，防止ID被覆盖
             var parentIndex = parent.layer.getFrameIndex(window.name);
             form.on('submit(saveBtn)', function (data) {
                 if (data.field.id > 0) {
-                    apiUtil.ajax('site/modify', data.field, "application/json", "put", function (res) {
-                        //console.log("msg:" + res.msg);
+                    apiUtil.ajax('tenant/modify', data.field, "application/json", "put", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             apiUtil.success(res.msg);
                             parent.layer.close(parentIndex);
@@ -189,7 +233,7 @@
                         }
                     });
                 } else {
-                    apiUtil.ajax('site/add', data.field, "application/json", "post", function (res) {
+                    apiUtil.ajax('tenant/add', data.field, "application/json", "post", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             apiUtil.success(res.msg);
                             parent.layer.close(parentIndex);

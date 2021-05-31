@@ -15,24 +15,31 @@ using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Models.Dtos.Common;
-using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using ShenNius.Share.Infrastructure.FileManager;
+using ShenNius.Share.Infrastructure.ImgUpload;
+using Microsoft.Extensions.Options;
 
-namespace ShenNius.Cms.API.Controllers
+namespace ShenNius.Sys.API.Controllers
 {
     public class TenantController : ApiBaseController<Tenant, DetailQuery, DeletesInput, KeyListQuery, TenantInput, TenantModifyInput>
     {
         private readonly IBaseServer<Tenant> _service;
         private readonly ICacheHelper _cacheHelper;
-        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper) : base(service, mapper)
+        private readonly QiNiuOssModel _qiNiuOssModel;
+        private readonly QiniuCloud _qiniuCloud;
+        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
         {
             _service = service;
             _cacheHelper = cacheHelper;
+            this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
+            this._qiniuCloud = qiniuCloud;
         }
         [HttpGet]
         public override async Task<ApiResult> Detail([FromQuery] DetailQuery detailQuery)
@@ -101,37 +108,17 @@ namespace ShenNius.Cms.API.Controllers
             var res = await _service.GetPagesAsync(keyListQuery.Page, keyListQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-
-        //[HttpPut]
-        //public override async Task<ApiResult> Modify([FromBody] TenantModifyInput TenantModifyInput)
-        //{
-        //    var res = await _service.UpdateAsync(d => new Tenant()
-        //    {
-        //        Id = TenantModifyInput.Id,
-        //        IsCurrent = TenantModifyInput.IsCurrent,
-        //        Title = TenantModifyInput.Title,
-        //        Email = TenantModifyInput.Email,
-        //        WeiBo = TenantModifyInput.WeiBo,
-        //        WeiXin = TenantModifyInput.WeiXin,
-        //        UserId = TenantModifyInput.UserId,
-        //        Name = TenantModifyInput.Name,
-        //        Url = TenantModifyInput.Url,
-        //        Logo = TenantModifyInput.Logo,
-        //        Summary = TenantModifyInput.Summary,
-        //        Tel = TenantModifyInput.Tel,
-        //        Fax = TenantModifyInput.Fax,
-        //        QQ = TenantModifyInput.QQ,
-        //        Address = TenantModifyInput.Address,
-        //        Code = TenantModifyInput.Code,
-        //        Keyword = TenantModifyInput.Keyword,
-        //        Description = TenantModifyInput.Description,
-        //        Copyright = TenantModifyInput.Copyright,
-        //        Status = TenantModifyInput.Status,
-        //        CloseInfo = TenantModifyInput.CloseInfo,
-        //        ModifyTime = TenantModifyInput.ModifyTime,
-
-        //    }, d => d.Id == TenantModifyInput.Id);
-        //    return new ApiResult(data: res);
+        //public override Task<ApiResult> Modify()
+        //{ 
+        
         //}
+        [HttpPost, AllowAnonymous]
+        public ApiResult QiniuFile()
+        {
+            var files = Request.Form.Files[0];
+            var data = _qiniuCloud.UploadFile(files, "tenant/");
+            var url = _qiNiuOssModel.ImgDomain + data;
+            return new ApiResult(data: url);
+        }
     }
 }

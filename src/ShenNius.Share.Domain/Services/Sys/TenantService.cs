@@ -11,15 +11,15 @@ using ShenNius.Share.Domain.Repository;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Domain.Services.Cms
+namespace ShenNius.Share.Domain.Services.Sys
 {
-    public interface ISiteService : IBaseServer<Tenant>
+    public interface ITenantService : IBaseServer<Tenant>
     {
 
     }
-    public class SiteService : BaseServer<Tenant>, ISiteService
+    public class TenantService : BaseServer<Tenant>, ITenantService
     {
     }
 
-   
+
 }

@@ -47,7 +47,7 @@
                 <li class="layui-nav-item" id="currentSiteName">
                     <a href="javascript:;" id="siteValue"><i class="layui-icon layui-icon-website"></i></a>
                     <dl class="layui-nav-child" id="sitelist">
-                        <dd><a><i class="layui-icon"></i>站点切换</a><hr /></dd>
+                        <dd><a><i class="layui-icon"></i>租户切换</a><hr /></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
@@ -148,7 +148,7 @@
                 setCurrentSite(id, value);
             })
             function setCurrentSite(currentSiteId, value) {
-                apiUtil.ajax('site/set-current', { id: currentSiteId }, "application/json", "put", function (res) {
+                apiUtil.ajax('tenant/set-current', { id: currentSiteId }, "application/json", "put", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         LoadSite();
                         //$("#siteValue").text(value);
@@ -193,7 +193,7 @@
                 });
             });
             function LoadSite() {
-                apiUtil.ajax('site/get-list', {}, "application/json", "get", function (res) {
+                apiUtil.ajax('tenant/get-list', {}, "application/json", "get", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         if (res.data != null) {
                             var html = $("#sitelist").empty(), currentSite = $("#siteValue").empty();
@@ -207,7 +207,6 @@
                             }
                             //layui.form.render('currentSite');
                             //layui.form.render('html');
-
                         }
                     } else {
                         apiUtil.error(res.msg);

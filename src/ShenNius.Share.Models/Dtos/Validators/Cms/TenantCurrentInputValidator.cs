@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ShenNius.Share.Models.Dtos.Input.Cms;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 
 /*************************************
 * 类 名： TenantCurrentInputValidator

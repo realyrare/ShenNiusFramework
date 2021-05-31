@@ -10,8 +10,15 @@
 	  <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 	 <UserSecretsId>368f8135-f1f3-4480-9be6-a851b9e803db</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Cms\Site.cshtml.cs" />
+    <Compile Remove="Pages\Cms\SiteModify.cshtml.cs" />
+  </ItemGroup>
 	
   <ItemGroup>
+    <Content Remove="Pages\Cms\Site.cshtml" />
+    <Content Remove="Pages\Cms\SiteModify.cshtml" />
     <Content Remove="wwwroot\js\login.js" />
   </ItemGroup>
 

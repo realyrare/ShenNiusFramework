@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
-using ShenNius.Share.Models.Dtos.Input.Cms;
-using System;
-using System.Collections.Generic;
-using System.Web;
+using ShenNius.Share.Models.Dtos.Input.Sys;
 
 /*************************************
 * 类名：TenantInputValidator
