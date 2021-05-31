@@ -1,5 +1,5 @@
-﻿using FytSoa.Core.Model.Cms;
-using ShenNius.Share.Domain.Repository;
+﻿using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Models.Entity.Cms;
 
 /*************************************
 * 类 名： AdvListService

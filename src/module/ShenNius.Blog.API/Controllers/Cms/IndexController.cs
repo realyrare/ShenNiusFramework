@@ -56,7 +56,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
 
         private async Task<List<Column>> GetColumnAsync(int siteId)
         {
-            return await _columnService.GetListAsync(d => d.Status == true && d.SiteId == siteId);
+            return await _columnService.GetListAsync(d => d.Status == true && d.TenantId == siteId);
         }
         [HttpGet]
         public async Task<ApiResult> GetAllColumn(int siteId)
@@ -90,8 +90,8 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> GetIndex(int siteId)
         {
-            var recArticleList = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.IsTop == true && ca.Audit == true && ca.SiteId == siteId, 1, 6);
-            var categoryArticleList = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.Audit == true && ca.SiteId == siteId, 1, 12);
+            var recArticleList = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.IsTop == true && ca.Audit == true && ca.TenantId == siteId, 1, 6);
+            var categoryArticleList = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.Audit == true && ca.TenantId == siteId, 1, 12);
             return new ApiResult(data: new
             {
                 recArticleList = recArticleList.Items,
@@ -151,9 +151,9 @@ namespace ShenNius.Blog.API.Controllers.Cms
             {
                 throw new FriendlyException("文章详情没有查到数据");
             }
-            var upArticle = await _articleService.GetNextOrUpArticleAsync((ca, cc) => ca.Id > id && ca.ColumnId == model.ColumnId && ca.SiteId == siteId);
-            var nextArticle = await _articleService.GetNextOrUpArticleAsync((ca, cc) => ca.Id < id && ca.ColumnId == model.ColumnId && ca.SiteId == siteId);
-            var sameColumnArticle = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.ColumnId == model.ColumnId && ca.Audit == true && ca.SiteId == siteId, 1, 6);
+            var upArticle = await _articleService.GetNextOrUpArticleAsync((ca, cc) => ca.Id > id && ca.ColumnId == model.ColumnId && ca.TenantId == siteId);
+            var nextArticle = await _articleService.GetNextOrUpArticleAsync((ca, cc) => ca.Id < id && ca.ColumnId == model.ColumnId && ca.TenantId == siteId);
+            var sameColumnArticle = await _articleService.GetArtcileByConditionAsync((ca, cc) => ca.ColumnId == model.ColumnId && ca.Audit == true && ca.TenantId == siteId, 1, 6);
 
             return new ApiResult(new { articleDetailModel = model, upArticle, nextArticle, sameColumnArticle = sameColumnArticle.Items });
         }
@@ -172,7 +172,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             List<int> allChildColumnIdList = new List<int>();
             var columnList = await GetColumnAsync(siteId);
             //keyword
-            Expression<Func<Article, Column, bool>> expression = (ca, cc) => ca.SiteId == siteId;
+            Expression<Func<Article, Column, bool>> expression = (ca, cc) => ca.TenantId == siteId;
             if (!string.IsNullOrEmpty(keyword))
             {
                 keyword = HttpUtility.UrlDecode(keyword);
@@ -230,7 +230,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         {
             messageInput.IP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.ToString();
 
-            var list = await _messageService.GetListAsync(m => m.IP == messageInput.IP && m.SiteId == messageInput.SiteId && m.Types == messageInput.Types, m => m.CreateTime, true);
+            var list = await _messageService.GetListAsync(m => m.IP == messageInput.IP && m.TenantId == messageInput.SiteId && m.Types == messageInput.Types, m => m.CreateTime, true);
             if (list.Count() > 3)
             {
                 throw new FriendlyException("您提交的次数过多，请稍后重试！~");
@@ -243,13 +243,13 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> LoadMessage(int businessId, string siteId, string types)
         {
-            var result = await _messageService.GetListAsync(x => x.BusinessId == businessId && x.SiteId.Equals(siteId) && x.Types.Equals(types), x => x.CreateTime, false);
+            var result = await _messageService.GetListAsync(x => x.BusinessId == businessId && x.TenantId.Equals(siteId) && x.Types.Equals(types), x => x.CreateTime, false);
             return new ApiResult(result);
         }
         [HttpGet]
         public async Task<ApiResult> GetAdvList(int siteId, int type)
         {
-            var advList = await _advlistService.GetListAsync(x => x.Status == true && x.SiteId == siteId && x.Type == type, x => x.Sort, false);
+            var advList = await _advlistService.GetListAsync(x => x.Status == true && x.TenantId == siteId && x.Type == type, x => x.Sort, false);
             return new ApiResult(advList);
         }
     }

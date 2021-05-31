@@ -14,7 +14,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class ArticleModifyInput: GlobalSiteInput
+    public class ArticleModifyInput: GlobalTenantInput
     {
         public int Id { get; set; }
         /// <summary>

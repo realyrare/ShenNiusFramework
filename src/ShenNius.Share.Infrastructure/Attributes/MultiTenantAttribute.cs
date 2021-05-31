@@ -45,13 +45,13 @@ namespace ShenNius.Share.Infrastructure.Attributes
                     //    continue;
                     //}
                     //自动添加租户id
-                    if (typeof(IGlobalSite).IsAssignableFrom(parameterType))
+                    if (typeof(IGlobalTenant).IsAssignableFrom(parameterType))
                     {
-                        var model = context.ActionArguments[parameterName] as IGlobalSite;
+                        var model = context.ActionArguments[parameterName] as IGlobalTenant;
                         if (siteId != null)
                         {
 
-                            model.SiteId = siteId.Value;
+                            model.TenantId = siteId.Value;
                         }
                     }
                 }

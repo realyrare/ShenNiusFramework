@@ -13,7 +13,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class KeywordModifyInput : GlobalSiteInput
+    public class KeywordModifyInput : GlobalTenantInput
     {
         public int Id { get; set; }
         public string Title { get; set; }

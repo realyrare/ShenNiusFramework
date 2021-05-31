@@ -41,7 +41,7 @@ namespace ShenNius.Share.BaseController.Controllers
     [Authorize]
     [MultiTenant]
     public abstract class ApiTenantBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
-       where TEntity : BaseSiteEntity, new()
+       where TEntity : BaseTenantEntity, new()
        where TDetailQuery : DetailSiteQuery
        where TDeleteInput : DeletesSiteInput
        where TListQuery : ListSiteQuery
@@ -81,7 +81,7 @@ namespace ShenNius.Share.BaseController.Controllers
         {
             foreach (var item in deleteInput.Ids)
             {
-                var res = await _service.DeleteAsync(d => d.Id == item && d.SiteId == deleteInput.SiteId);
+                var res = await _service.DeleteAsync(d => d.Id == item && d.TenantId == deleteInput.TenantId);
                 if (res <= 0)
                 {
                     throw new FriendlyException("删除失败了！");
@@ -102,9 +102,9 @@ namespace ShenNius.Share.BaseController.Controllers
             var currentName = HttpContext.User.Identity.Name;
             foreach (var item in deleteInput.Ids)
             {
-                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.SiteId == deleteInput.SiteId && d.Status == true);
+                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.TenantId == deleteInput.TenantId && d.Status == true);
                 var model = new Recycle()
-                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(TEntity), SiteId = deleteInput.SiteId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(TEntity)}中的{item}记录" };
+                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(TEntity), TenantId = deleteInput.TenantId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(TEntity)}中的{item}记录" };
                 await recycleService.AddAsync(model);
                 if (res <= 0)
                 {
@@ -121,7 +121,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
-            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.SiteId == listQuery.SiteId && d.Status == true, d => d.Id, false);
+            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.TenantId == listQuery.TenantId && d.Status == true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
@@ -133,7 +133,7 @@ namespace ShenNius.Share.BaseController.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
-            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.SiteId == detailQuery.SiteId && d.Status == true);
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.TenantId == detailQuery.TenantId && d.Status == true);
             return new ApiResult(data: res);
         }
         /// <summary>

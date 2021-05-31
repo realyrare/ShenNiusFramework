@@ -8,7 +8,7 @@ namespace ShenNius.Share.Models.Entity.Sys
     ///
     ///</summary>
     [SugarTable("Sys_R_Role_Menu")]
-    public partial class R_Role_Menu: BaseSiteEntity
+    public partial class R_Role_Menu: BaseTenantEntity
     {
         /// <summary>
         /// Desc:

@@ -1,13 +1,13 @@
 ﻿using System;
 using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-namespace FytSoa.Core.Model.Cms
+namespace ShenNius.Share.Models.Entity.Cms
 {
     /// <summary>
     /// 广告位管理
     /// </summary>
     [SugarTable("Cms_AdvList")]
-    public class AdvList : BaseSiteEntity
+    public class AdvList : BaseTenantEntity
     {
         /// <summary>
         /// Desc:广告位名称

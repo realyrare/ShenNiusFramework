@@ -16,7 +16,7 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class AdvListInput : GlobalSiteInput
+    public class AdvListInput : GlobalTenantInput
     {
         /// <summary>
         /// Desc:广告位名称

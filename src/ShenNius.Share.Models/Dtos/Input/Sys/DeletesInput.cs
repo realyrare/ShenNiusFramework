@@ -15,8 +15,8 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
     /// <summary>
     /// 多租户使用
     /// </summary>
-    public class DeletesSiteInput: DeletesInput, IGlobalSite 
+    public class DeletesSiteInput: DeletesInput, IGlobalTenant 
     {
-        public int SiteId { get; set; }
+        public int TenantId { get; set; }
     }
 }

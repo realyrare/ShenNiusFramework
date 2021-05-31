@@ -15,8 +15,8 @@ namespace ShenNius.Share.Models.Dtos.Common
     /// <summary>
     /// 多租户约定方便Add ,Modify使用
     /// </summary>
-    public class GlobalSiteInput : IGlobalSite
-    {
-        public int SiteId { get; set; }
+    public class GlobalTenantInput : IGlobalTenant
+    {        
+        public int TenantId { get; set; }
     }
 }

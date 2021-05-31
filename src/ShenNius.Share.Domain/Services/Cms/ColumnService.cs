@@ -68,7 +68,7 @@ namespace ShenNius.Share.Domain.Services.Cms
                 ParentList=result.Item2,
                 ModifyTime=DateTime.Now,
                 Keyword= columnModifyInput.Keyword,
-                SiteId=columnModifyInput.SiteId,
+                TenantId=columnModifyInput.TenantId,
                 ParentId= columnModifyInput.ParentId
             }, d => d.Id == columnModifyInput.Id);
             return new ApiResult(i);
@@ -145,7 +145,7 @@ namespace ShenNius.Share.Domain.Services.Cms
         }
         public async Task<ApiResult> GetListPagesAsync(KeyListSiteQuery query)
         {
-            var res = await Db.Queryable<Column>().Where(d => d.Status&&d.SiteId==query.SiteId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key))
+            var res = await Db.Queryable<Column>().Where(d => d.Status&&d.TenantId==query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key))
                 .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)
                 .ToPageAsync(query.Page, query.Limit);
             var result = new List<Column>();

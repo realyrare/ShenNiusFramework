@@ -2,8 +2,8 @@
 
 namespace ShenNius.Share.Models.Dtos.Common
 {
-    public class GlobalSiteQuery : IGlobalSite
-    {
-        public int SiteId { get; set; }
+    public class GlobalTenantQuery : IGlobalTenant
+    {       
+        public int TenantId { get; set; }
     }
 }

@@ -13,12 +13,13 @@ using System;
 
 namespace ShenNius.Share.Models.Entity.Sys
 {
+    [SugarTable("Sys_Recycle")]
     public class Recycle
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int SiteId { get; set; }
+        public int TenantId { get; set; }
         public int BusinessId { get; set; }
         public string TableType { get; set; }
         public DateTime CreateTime { get; set; }

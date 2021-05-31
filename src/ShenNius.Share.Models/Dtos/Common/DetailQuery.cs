@@ -22,8 +22,8 @@ namespace ShenNius.Share.Models.Dtos.Common
     /// <summary>
     /// 多租户查询使用
     /// </summary>
-    public class DetailSiteQuery : DetailQuery, IGlobalSite
+    public class DetailSiteQuery : DetailQuery, IGlobalTenant
     {
-        public int SiteId { get; set; }
+        public int TenantId { get; set; }
     }
 }

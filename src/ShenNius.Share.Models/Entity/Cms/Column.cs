@@ -14,7 +14,7 @@ using SqlSugar;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Column")]
-    public class Column : BaseSiteEntity
+    public class Column : BaseTenantEntity
     {
         /// <summary>
         /// Desc:栏目标题

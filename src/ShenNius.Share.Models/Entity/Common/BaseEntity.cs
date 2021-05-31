@@ -34,11 +34,11 @@ namespace ShenNius.Share.Models.Entity.Common
     /// <summary>
     /// 所有多租户数据库实体基类
     /// </summary>
-    public class BaseSiteEntity : IGlobalSite, IEntity
+    public class BaseTenantEntity : IGlobalTenant, IEntity
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
-        public int SiteId { get; set; }
+        public int TenantId { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
         public bool Status { get; set; } =  true;

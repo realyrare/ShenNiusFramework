@@ -45,9 +45,9 @@ namespace ShenNius.Cms.API.Controllers
         public  async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {
             Expression<Func<Message, bool>> whereExpression = d => d.Status == true;
-            if (keywordListSiteQuery.SiteId > 0)
+            if (keywordListSiteQuery.TenantId > 0)
             {
-                whereExpression = d => d.SiteId == keywordListSiteQuery.SiteId;
+                whereExpression = d => d.TenantId == keywordListSiteQuery.TenantId;
             }
             if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
             {
@@ -68,9 +68,9 @@ namespace ShenNius.Cms.API.Controllers
             var currentName = HttpContext.User.Identity.Name;
             foreach (var item in input.Ids)
             {
-                var res = await _messageService.UpdateAsync(d => new Message() { Status = false }, d => d.Id == item && d.SiteId ==input.SiteId && d.Status == true);
+                var res = await _messageService.UpdateAsync(d => new Message() { Status = false }, d => d.Id == item && d.TenantId ==input.TenantId && d.Status == true);
                 var model = new Recycle()
-                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(Message), SiteId = input.SiteId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(Message)}中的{item}记录" };
+                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(Message), TenantId = input.TenantId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(Message)}中的{item}记录" };
                 await _recycleService.AddAsync(model);
                 if (res <= 0)
                 {

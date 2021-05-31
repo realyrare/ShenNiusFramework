@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FytSoa.Core.Model.Cms;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,6 +13,7 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Entity.Cms;
 
 /*************************************
 * 类 名： AdvListController
@@ -45,9 +45,9 @@ namespace ShenNius.Cms.API.Controllers
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListSiteQuery keywordListSiteQuery)
         {
             Expression<Func<AdvList, bool>> whereExpression = d=>d.Status==true;
-            if (keywordListSiteQuery.SiteId > 0)
+            if (keywordListSiteQuery.TenantId > 0)
             {
-                whereExpression = d => d.SiteId == keywordListSiteQuery.SiteId;
+                whereExpression = d => d.TenantId == keywordListSiteQuery.TenantId;
             }
             if (!string.IsNullOrEmpty(keywordListSiteQuery.Key))
             {

@@ -14,7 +14,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class ColumnInput:GlobalSiteInput
+    public class ColumnInput:GlobalTenantInput
     {
         /// <summary>
         /// Desc:栏目标题
