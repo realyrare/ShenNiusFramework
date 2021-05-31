@@ -13,6 +13,9 @@ using System;
 
 namespace ShenNius.Share.Models.Entity.Sys
 {
+    /// <summary>
+    /// 回收站
+    /// </summary>
     [SugarTable("Sys_Recycle")]
     public class Recycle
     {

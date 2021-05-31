@@ -17,14 +17,12 @@ namespace ShenNius.Sys.API.Controllers
     public class MenuController : ApiControllerBase
     {
         private readonly IMenuService _menuService;
-        private readonly IMapper _mapper;
         private readonly IConfigService _configService;
         private readonly IR_Role_MenuService _r_Role_MenuService;
 
-        public MenuController(IMenuService menuService,IMapper mapper,IConfigService configService, IR_Role_MenuService r_Role_MenuService)
+        public MenuController(IMenuService menuService,IConfigService configService, IR_Role_MenuService r_Role_MenuService)
         {
             _menuService = menuService;
-            _mapper = mapper;
             _configService = configService;
             _r_Role_MenuService = r_Role_MenuService;
         }

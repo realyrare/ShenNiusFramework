@@ -9,7 +9,7 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 字典表
     ///</summary>
     [SugarTable("Sys_Config")]
-    public partial class Config: BaseTenantEntity
+    public partial class Config: BaseEntity
     {
         /// <summary>
         /// Desc:字典类型标识

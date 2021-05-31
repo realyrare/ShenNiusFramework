@@ -30,7 +30,6 @@
     <Folder Include="Dtos\Validators\Shop\" />
     <Folder Include="Dtos\Query\" />
     <Folder Include="Entity\Shop\" />
-    <Folder Include="Entity\Tenant\" />
   </ItemGroup>
 	<ItemGroup>
 	
