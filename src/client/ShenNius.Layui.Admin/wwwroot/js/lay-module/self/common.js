@@ -147,9 +147,7 @@
             var currentUser = tool.GetSession('globalCurrentUserInfo');
             return currentUser;
         },
-        closeOpen: function () {
-            layer.closeAll();
-        },
+      
         tableLoading: function () {
             tmls = layer.msg('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在加载...', { time: 20000 });
         },

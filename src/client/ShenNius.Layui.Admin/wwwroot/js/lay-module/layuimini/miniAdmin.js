@@ -44,7 +44,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
             options.maxTabNum = options.maxTabNum || 20;
 
             util.ajax(options.iniUrl, {}, "application/json", "get", function (res) {
-                if (res.statusCode != 200 || res.success!=true) {
+                if (res.statusCode != 200 || res.success != true) {
                     miniAdmin.error(res.msg);
                 }
                 var data = res.data;
@@ -82,7 +82,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
             });
 
             //$.getJSON(options.iniUrl, function (data) {
-               
+
             //    if (data == null) {
             //        miniAdmin.error('暂无菜单信息')
             //    } else {
@@ -146,7 +146,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
          * @param clearUrl
          */
         renderClear: function (clearUrl) {
-            $('.layuimini-clear').attr('data-href',clearUrl);
+            $('.layuimini-clear').attr('data-href', clearUrl);
         },
 
         /**
@@ -213,7 +213,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
                 el.msExitFullscreen();
             } else if (el.oRequestFullscreen) {
                 el.oCancelFullScreen();
-            }else if (el.mozCancelFullScreen) {
+            } else if (el.mozCancelFullScreen) {
                 el.mozCancelFullScreen();
             } else if (el.webkitCancelFullScreen) {
                 el.webkitCancelFullScreen();
@@ -251,7 +251,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
          * @returns {*}
          */
         success: function (title) {
-            return layer.msg(title, {icon: 1, shade: this.shade, scrollbar: false, time: 2000, shadeClose: true});
+            return layer.msg(title, { icon: 1, shade: this.shade, scrollbar: false, time: 2000, shadeClose: true });
         },
 
         /**
@@ -260,7 +260,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
          * @returns {*}
          */
         error: function (title) {
-            return layer.msg(title, {icon: 2, shade: this.shade, scrollbar: false, time: 3000, shadeClose: true});
+            return layer.msg(title, { icon: 2, shade: this.shade, scrollbar: false, time: 3000, shadeClose: true });
         },
 
         /**
@@ -291,7 +291,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
              * 清理
              */
             $('body').on('click', '[data-clear]', function () {
-                var loading = layer.load(0, {shade: false, time: 2 * 1000});
+                var loading = layer.load(0, { shade: false, time: 2 * 1000 });
                 sessionStorage.clear();
 
                 // 判断是否清理服务端
@@ -333,14 +333,14 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
                     tips = $(this).prop("innerHTML"),
                     isShow = $('.layuimini-tool i').attr('data-side-fold');
                 if (isShow == 0 && tips) {
-                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>"+tips+"</li></ul>" ;
+                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>" + tips + "</li></ul>";
                     window.openTips = layer.tips(tips, $(this), {
                         tips: [2, '#2f4056'],
                         time: 300000,
-                        skin:"popup-tips",
-                        success:function (el) {
-                            var left = $(el).position().left - 10 ;
-                            $(el).css({ left:left });
+                        skin: "popup-tips",
+                        success: function (el) {
+                            var left = $(el).position().left - 10;
+                            $(el).css({ left: left });
                             element.render();
                         }
                     });
@@ -387,7 +387,5 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
 
         }
     };
-
-
     exports("miniAdmin", miniAdmin);
 });
