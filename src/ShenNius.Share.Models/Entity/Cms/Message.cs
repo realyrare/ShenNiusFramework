@@ -8,7 +8,7 @@ namespace ShenNius.Share.Models.Entity.Cms
    public class Message: BaseTenantEntity
     {
         public int BusinessId { get; set; }
-        public int Types { get; set; }
+        public string Types { get; set; }
         public string Email { get; set; }
         public string Content { get; set; }
         public int UserId { get; set; }

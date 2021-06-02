@@ -34,25 +34,25 @@ namespace ShenNius.Share.Infrastructure.Extension
             {
                 json.Msg = json.Msg.Replace(errorAudit, $"（若新添加服务，需要重新编译项目）{errorAudit}");
             }
-
-            if (_webHostEnvironment.IsDevelopment())
+            try
             {
-                json.Msg = context.Exception?.Message;//显示堆栈信息  
-                string msg = json.Msg + "\r\n" + context.Exception.StackTrace;
-                try
+                if (_webHostEnvironment.IsDevelopment())
                 {
+                    json.Msg = context.Exception?.Message;//显示堆栈信息  
+                    string msg = json.Msg + "\r\n" + context.Exception.StackTrace;
                     _logger.LogError(msg);
                     LogHelper.Default.Process("", "", json.Msg, NLog.LogLevel.Debug);
                 }
-                catch
+                else
                 {
+                    json.Msg = context.Exception.Message;
+                    LogHelper.Default.Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
                 }
             }
-            else
+            catch 
             {
-                json.Msg = context.Exception.Message;
-                LogHelper.Default.Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
             }
+
             json.StatusCode = StatusCodes.Status500InternalServerError;
             var setting = new JsonSerializerSettings
             {

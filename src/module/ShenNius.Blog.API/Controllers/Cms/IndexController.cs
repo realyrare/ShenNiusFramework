@@ -241,7 +241,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             return new ApiResult();
         }
         [HttpGet]
-        public async Task<ApiResult> LoadMessage(int businessId, string siteId, string types)
+        public async Task<ApiResult> LoadMessage(int businessId, int siteId, string types)
         {
             var result = await _messageService.GetListAsync(x => x.BusinessId == businessId && x.TenantId.Equals(siteId) && x.Types.Equals(types), x => x.CreateTime, false);
             return new ApiResult(result);
