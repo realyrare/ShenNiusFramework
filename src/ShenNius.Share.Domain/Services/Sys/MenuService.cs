@@ -121,7 +121,9 @@ namespace ShenNius.Share.Domain.Services.Sys
                                   it.BtnCodeName = string.Join(',', codeList.Where(g => list.Contains(g.Id.ToString())).Select(g => g.Name).ToList());
                               }
                           })
-                   .ToPageAsync(page, 15);
+                   //这里的一页1500条 是为了显示菜单树形的关系。
+                   .ToPageAsync(page, 1500);
+           
             var result = new List<Menu>();
             if (!string.IsNullOrEmpty(key))
             {

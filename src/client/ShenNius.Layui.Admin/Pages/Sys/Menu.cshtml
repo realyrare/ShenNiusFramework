@@ -1,5 +1,6 @@
 ﻿@page
 @model ShenNius.Layui.Admin.Pages.Sys.MenuModel
+
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
@@ -90,6 +91,9 @@
                     { field: 'modifyTime', title: '修改时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
                 ]],
+                height: $(window).height() - 150,
+                limit: 1500,
+                page: false,
                 parseData: function (res) {
                     return apiUtil.parseDataFun(res);
                 }
@@ -102,7 +106,7 @@
                 }, 'data');
             };
             // 监听搜索操作
-            form.on('submit(data-search-btn)', function (data) {              
+            form.on('submit(data-search-btn)', function (data) {
                 if (data.field.menuName == "") {
                     layer.msg("您懂搜索吗？");
                     return;
@@ -124,7 +128,7 @@
              */
             table.on('toolbar(currentTableFilter)', function (obj) {
                 if (obj.event === 'add') {
-                    var content = '/sys/menu-modify?token='+ apiUtil.getToken();
+                    var content = '/sys/menu-modify?token=' + apiUtil.getToken();
                     var index = layer.open({
                         title: '添加菜单',
                         type: 2,

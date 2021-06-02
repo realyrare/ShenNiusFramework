@@ -80,10 +80,10 @@
             if (obj.limit == null || obj.limit == "") {
                 obj.limit = 15;
             }
-            obj.limit = 15;
-            obj.page = true;
+            if (obj.page == null || obj.page == "" || obj.page == undefined) {
+                obj.page = true;
+            }           
             obj.skin = 'line';
-            //console.log("token:" + token);
             table.render(obj);
         },
         parseDataFun: function (res) { //res 即为原始返回的数据         
