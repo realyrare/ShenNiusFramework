@@ -62,7 +62,7 @@ namespace ShenNius.Cms.API.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpDelete]
-        public virtual async Task<ApiResult> SoftDelete([FromBody] DeletesTenantInput input)
+        public  async Task<ApiResult> SoftDelete([FromBody] DeletesTenantInput input)
         {          
             var userId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
             var currentName = HttpContext.User.Identity.Name;
@@ -85,7 +85,7 @@ namespace ShenNius.Cms.API.Controllers
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public virtual async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
+        public  async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
         {
             var res = await _messageService.DeleteAsync(deleteInput.Ids);
             if (res <= 0)
