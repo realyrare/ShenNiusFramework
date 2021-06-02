@@ -27,5 +27,9 @@ namespace ShenNius.Share.Models.Entity.Sys
         public string TableType { get; set; }
         public DateTime CreateTime { get; set; }
         public string  Remark { get; set; }
+        /// <summary>
+        /// 要还原的数据库sql
+        /// </summary>
+        public string  Sql { get; set; }
     }
 }

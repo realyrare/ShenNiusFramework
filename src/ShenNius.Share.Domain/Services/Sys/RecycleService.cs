@@ -41,9 +41,13 @@ namespace ShenNius.Share.Domain.Services.Sys
                 var model = await GetModelAsync(d => d.Id == item);
                 if (model != null)
                 {
-                    await RestoreDataAsync(model.TableType, model.BusinessId);
-                }
-                await DeleteAsync(d => d.Id == item);
+                  var i=await Db.Ado.ExecuteCommandAsync(model.Sql);
+                    if (i>0)
+                    {
+                        await DeleteAsync(d => d.Id == item);
+                    }
+                   // await RestoreDataAsync(model.TableType, model.BusinessId);
+                }              
             }
             return new ApiResult();
         }
