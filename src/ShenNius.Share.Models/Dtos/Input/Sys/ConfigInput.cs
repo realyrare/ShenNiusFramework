@@ -1,4 +1,6 @@
-﻿namespace ShenNius.Share.Models.Dtos.Input.Sys
+﻿using System;
+
+namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
     public  class ConfigInput
     {
@@ -19,5 +21,6 @@
         public string Summary { get; set; }
 
         public string Type { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
     }
 }

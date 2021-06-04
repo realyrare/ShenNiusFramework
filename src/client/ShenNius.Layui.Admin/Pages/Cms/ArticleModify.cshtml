@@ -122,7 +122,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">                   
                     <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
-                    <button type="button" class="layui-btn layui-btn-primary btn-open-close" onclick="history.go(-1)">返回列表</button>
+                    <button type="button" id="btnHref" class="layui-btn layui-btn-primary btn-open-close" >一键匹配內链</button>
                 </div>
             </div>
         </div>
@@ -154,13 +154,25 @@
                  */
                 // 当前弹出层，防止ID被覆盖
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
-
+                var type = "";
                 var id =@Model.articleOutput.Id;
                 if (id > 0) {
                     BindParentColumn(@Model.articleOutput.ColumnId);
+                    type = "edit";
                 } else {
                     BindParentColumn();
-                } 
+                }
+                $("#btnHref").click(function () {
+                    var content = tinyMCE.editors[0].getContent();
+                    apiUtil.ajax('keyword/content-replace', { content,type}, "application/json", "post", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            tinyMCE.editors[0].getContent() = res.data;
+                            apiUtil.success(res.msg);
+                        } else {
+                            apiUtil.error(res.msg);
+                        }
+                    });
+                });
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
