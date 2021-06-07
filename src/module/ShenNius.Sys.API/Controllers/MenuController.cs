@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extension;

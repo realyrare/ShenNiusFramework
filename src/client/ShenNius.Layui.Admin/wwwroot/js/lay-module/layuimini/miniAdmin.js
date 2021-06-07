@@ -79,46 +79,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
                     });
                     miniAdmin.deleteLoader(options.loadingTime);
                 }
-            });
-
-            //$.getJSON(options.iniUrl, function (data) {
-
-            //    if (data == null) {
-            //        miniAdmin.error('暂无菜单信息')
-            //    } else {
-            //        miniAdmin.renderLogo(data.logoInfo);
-            //        miniAdmin.renderClear(options.clearUrl);
-            //        miniAdmin.renderHome(data.homeInfo);
-            //        miniAdmin.renderAnim(options.pageAnim);
-            //        miniAdmin.listen();
-            //        miniMenu.render({
-            //            menuList: data.menuInfo,
-            //            multiModule: options.multiModule,
-            //            menuChildOpen: options.menuChildOpen
-            //        });
-            //        miniTab.render({
-            //            filter: 'layuiminiTab',
-            //            urlHashLocation: options.urlHashLocation,
-            //            multiModule: options.multiModule,
-            //            menuChildOpen: options.menuChildOpen,
-            //            maxTabNum: options.maxTabNum,
-            //            menuList: data.menuInfo,
-            //            homeInfo: data.homeInfo,
-            //            listenSwichCallback: function () {
-            //                miniAdmin.renderDevice();
-            //            }
-            //        });
-            //        miniTheme.render({
-            //            bgColorDefault: options.bgColorDefault,
-            //            listen: true,
-            //        });
-            //        miniAdmin.deleteLoader(options.loadingTime);
-            //    }
-            //}).fail(function () {
-            //    miniAdmin.error('菜单接口有误');
-            //});
-
-
+            });            
         },
 
         /**
@@ -146,7 +107,8 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
          * @param clearUrl
          */
         renderClear: function (clearUrl) {
-            $('.layuimini-clear').attr('data-href', clearUrl);
+            var url = util.apiUrl() + clearUrl;
+            $('.layuimini-clear').attr('data-href', url);
         },
 
         /**

@@ -20,6 +20,7 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
 using ShenNius.Share.Infrastructure.Cache;
+using System.Linq;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -32,6 +33,7 @@ namespace ShenNius.Sys.API.Controllers
         private readonly IR_User_RoleService _r_User_RoleService;
         private readonly IMenuService _menuService;
         private readonly ICacheHelper _cacheHelper;
+        private readonly ICurrentUserContext _currentUserContext;
 
         /// <summary>
         /// 
@@ -41,18 +43,24 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="r_User_RoleService"></param>
         /// <param name="menuService"></param>
         /// <param name="cacheHelper"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper)
+        /// <param name="currentUserContext"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
             _r_User_RoleService = r_User_RoleService;
             _menuService = menuService;
             this._cacheHelper = cacheHelper;
+            this._currentUserContext = currentUserContext;
         }
-        public IActionResult RemoveMenuCache()
+        [HttpGet,AllowAnonymous]
+        public IActionResult RemoveMenuCache(int userId)
         {
-            _cacheHelper.Remove(KeyHelper.Cms.CurrentTenant);
-            return Ok(new { code = 1, msg = "服务端清理缓存成功" });
+            //由于使用了匿名访问，必须前台传值用户id进来，后台拿不到用户当前的值。
+            var id2 = _currentUserContext.Id;
+            //IMenuService:LoadLeftMenuTreesAsync:[1]  清理左侧树形菜单缓存
+            _cacheHelper.Remove($"IMenuService:LoadLeftMenuTreesAsync:[{userId}]");
+            return Ok(new { code = 1, msg = "服务端成功清理左侧树形菜单缓存" });
         }
         /// <summary>
         /// 用户注册
