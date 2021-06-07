@@ -34,7 +34,6 @@ namespace ShenNius.Share.Infrastructure.Cache
 
         public void Remove(string key)
         {
-
             _cache.Remove(key);
         }
 

@@ -29,32 +29,37 @@ namespace ShenNius.Sys.API.Controllers
     {
         readonly IOptions<JwtSetting> _jwtSetting;
         private readonly IUserService _userService;
-        private readonly ICacheHelper _cache;
         private readonly IR_User_RoleService _r_User_RoleService;
         private readonly IMenuService _menuService;
+        private readonly ICacheHelper _cacheHelper;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jwtSetting"></param>
         /// <param name="userService"></param>
-        /// <param name="cache"></param>
         /// <param name="r_User_RoleService"></param>
         /// <param name="menuService"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, ICacheHelper cache, IR_User_RoleService r_User_RoleService, IMenuService menuService)
+        /// <param name="cacheHelper"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
-            _cache = cache;
             _r_User_RoleService = r_User_RoleService;
             _menuService = menuService;
+            this._cacheHelper = cacheHelper;
+        }
+        public IActionResult RemoveMenuCache()
+        {
+            _cacheHelper.Remove(KeyHelper.Cms.CurrentTenant);
+            return Ok(new { code = 1, msg = "服务端清理缓存成功" });
         }
         /// <summary>
         /// 用户注册
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = "user",Method ="add")]
+        [HttpPost, Authority(Module = "user", Method = "add")]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
@@ -87,7 +92,7 @@ namespace ShenNius.Sys.API.Controllers
         /// 查询列表
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Authority(Module ="user")]
+        [HttpGet, Authority(Module = "user")]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             Expression<Func<User, bool>> whereExpression = null;
@@ -103,10 +108,10 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = "user",Method ="auth")]
-        public async Task<ApiResult> SetRole([FromBody]SetUserRoleInput setUserRoleInput)
+        [HttpPost, Authority(Module = "user", Method = "auth")]
+        public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
-            return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);          
+            return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);
         }
 
         [HttpGet]
@@ -120,7 +125,7 @@ namespace ShenNius.Sys.API.Controllers
                 throw new FriendlyException("获取登录的公钥和私钥为空");
             }
             //获得公钥和私钥
-            _cache.Set("LOGINKEY" + number, rsaKey);
+            _cacheHelper.Set(KeyHelper.User.loginRSACrypt + number, rsaKey);
             return new ApiResult(data: new { RsaKey = rsaKey, Number = number });
         }
 
@@ -132,7 +137,7 @@ namespace ShenNius.Sys.API.Controllers
         [AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> SignIn([FromBody] LoginInput loginInput)
         {
-            var rsaKey = _cache.Get<List<string>>("LOGINKEY" + loginInput.NumberGuid);
+            var rsaKey = _cacheHelper.Get<List<string>>(KeyHelper.User.loginRSACrypt + loginInput.NumberGuid);
             if (rsaKey == null)
             {
                 return new ApiResult<LoginOutput>("登录失败，请刷新浏览器再次登录!");
@@ -163,10 +168,10 @@ namespace ShenNius.Sys.API.Controllers
             {
                 result.Data = new LoginOutput();
                 return result;
-            }            
+            }
             //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
-            var menuAuths=  await _menuService.GetCurrentAuthMenus(result.Data.Id);
-            if (menuAuths==null|| menuAuths.Count==0)
+            var menuAuths = await _menuService.GetCurrentAuthMenus(result.Data.Id);
+            if (menuAuths == null || menuAuths.Count == 0)
             {
                 throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
             }

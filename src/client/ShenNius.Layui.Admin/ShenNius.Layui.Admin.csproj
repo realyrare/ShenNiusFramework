@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Remove="Pages\Cms\Site.cshtml" />
     <Content Remove="Pages\Cms\SiteModify.cshtml" />
+    <Content Remove="wwwroot\api\upload.json" />
     <Content Remove="wwwroot\js\login.js" />
   </ItemGroup>
 

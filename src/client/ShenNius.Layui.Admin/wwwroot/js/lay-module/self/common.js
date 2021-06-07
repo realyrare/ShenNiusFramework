@@ -1,8 +1,6 @@
-﻿layui.define(['layer', 'table', 'toastr'], function (exports) {
+﻿layui.define(['table', 'toastr'], function (exports) {
     "use strict";
-
     var $ = layui.jquery,
-        layer = layui.layer,
         toastr = layui.toastr,
         table = layui.table;
     toastr.options = {
@@ -10,7 +8,7 @@
         "positionClass": "toast-top-center",
         "timeOut": "1500"
     };
-    var tmls, tool = {
+    var  tool = {
         error: function (msg) {
             toastr.error(msg);
         },
@@ -53,7 +51,6 @@
                         return;
                     }
                     if (res.statusCode == 500) {
-                        // tool.error(data.msg);
                         toastr.error(res.msg);
                         return;
                     }
@@ -88,7 +85,7 @@
         },
         parseDataFun: function (res) { //res 即为原始返回的数据         
             if (res.statusCode == 401) {
-                layer.msg(res.msg);
+                toastr.error(res.msg);
                 setTimeout(function () {
                     window.location.hash = "/";
                     // window.location.href = "/sys/login";
@@ -96,7 +93,7 @@
                 return;
             }
             if (res.statusCode == 500) {
-                layer.msg(res.msg);
+                toastr.error(res.msg);
                 return;
             }
             return {
@@ -146,24 +143,7 @@
         getCurrentUser: function () {
             var currentUser = tool.GetSession('globalCurrentUserInfo');
             return currentUser;
-        },
-      
-        tableLoading: function () {
-            tmls = layer.msg('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在加载...', { time: 20000 });
-        },
-        tableLoadingClose: function () {
-            setTimeout(function () {
-                layer.close(tmls);
-            }, 500);
-        },
-        load: function () {
-            $('body').append('<div class="loader-cur-wall"><div class="loader-cur"></div></div>');
-        },
-        loadClose: function () {
-            setTimeout(function () {
-                $('.loader-cur-wall').remove();
-            }, 100);
-        },
+        },                    
         getUrlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
@@ -190,7 +170,7 @@
             try {
                 var obj = localStorage.getItem(key);
                 if (obj == "" || obj == null || obj == undefined) {
-                    layer.msg("token信息丢失,即将跳入登陆页面...");
+                    toastr.error("token信息丢失,即将跳入登陆页面...");
                     setTimeout(function () {
                         window.location.href = "/sys/login";
                     }, 500)

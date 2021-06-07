@@ -129,14 +129,14 @@
             //"api/init.json?v=12",
             var options = {
                 iniUrl: "menu/load-left-menu-trees", // 初始化接口"menu/load-left-menu-trees",//
-                clearUrl: "api/clear.json", // 缓存清理接口
+                clearUrl: "user/remove-menu-cache", // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
                 bgColorDefault: false,      // 主题默认配置
                 multiModule: true,          // 是否开启多模块
                 menuChildOpen: true,       // 是否默认展开菜单
                 loadingTime: 0,             // 初始化加载时间
                 pageAnim: true,             // iframe窗口动画
-                maxTabNum: 20,              // 最大的tab打开数量
+                maxTabNum: 15,              // 最大的tab打开数量
             };
             miniAdmin.render(options);
             LoadSite();

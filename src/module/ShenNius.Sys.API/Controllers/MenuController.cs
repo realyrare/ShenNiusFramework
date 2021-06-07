@@ -39,7 +39,6 @@ namespace ShenNius.Sys.API.Controllers
             {
                 await _menuService.UpdateAsync(d=>new Menu() {Status=false },d=>d.Id==item);
             }
-            //await _menuService.DeleteAsync(commonDeleteInput.Ids)
             return new ApiResult();
         }
 
@@ -76,8 +75,7 @@ namespace ShenNius.Sys.API.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<ApiResult> SetBtnPermissions([FromBody]RoleMenuBtnInput roleMenuInput)
-        {
-           
+        {           
             return await _r_Role_MenuService.SetBtnPermissionsAsync(roleMenuInput);
         }
         /// <summary>

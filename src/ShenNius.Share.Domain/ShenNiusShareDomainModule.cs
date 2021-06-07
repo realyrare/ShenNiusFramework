@@ -18,7 +18,7 @@ namespace ShenNius.Share.Domain
                 throw new ArgumentException("data connectionStr is not fuond");
             }
             DbContext._connectionStr = connectionStr;
-            InjectHelper.AddAssembly(context.Services, "ShenNius.Share.Domain");
+            WebHelper.AddAssembly(context.Services, "ShenNius.Share.Domain");
 
             context.Services.AddAutoMapper(typeof(AutomapperProfile));
             context.Services.AddHttpContextAccessor();

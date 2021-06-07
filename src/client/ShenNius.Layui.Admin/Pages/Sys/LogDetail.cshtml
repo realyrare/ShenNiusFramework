@@ -7,7 +7,6 @@
         padding-right: 10px;
         line-height: 38px;
     }
-
     .layui-form-item .layui-textarea {
         width: 350px;
     }
@@ -62,12 +61,9 @@
 </form>
 @section js{
     <script>
-
             layui.use(['form',  'common'], function () {
                 var form = layui.form,
-                    layer = layui.layer,
                     apiUtil = layui.common;
-
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */

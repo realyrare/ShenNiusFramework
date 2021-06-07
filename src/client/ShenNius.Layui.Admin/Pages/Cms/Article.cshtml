@@ -12,10 +12,7 @@
                             <div class="layui-input-inline">
                                 <input type="text" name="title" autocomplete="off" class="layui-input">
                             </div>
-                        </div>
-                        <div class="layui-inline" style="width:100px;">
-                            <input type="checkbox" checked="checked" name="audit" lay-filter="switch" lay-skin="switch" lay-text="已审核|未审核">
-                        </div>
+                        </div>                      
                         <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                         </div>
@@ -81,7 +78,12 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'Id', sort: true },
-                    { field: 'title', width: 350, title: '标题' },
+                    //{ field: 'title', width: 350, title: '标题' },
+                    {
+                        field: 'title', title: '标题', width: 350,templet: function (res) {
+                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                        }
+                    },
                     { field: 'author', title: '作者' },
                     { field: 'source', title: '来源' },
                     { field: 'audit', width: 100, title: '审核状态', templet: '#switchTpl' },
@@ -122,14 +124,11 @@
             table.on('toolbar(currentTableFilter)', function (obj) {
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
-                var winH = $(window).height(), winW = $(window).width();
-                //winW - 220 + 'px', winH - 61 + 'px'
                 if (obj.event === 'add') {
                     var content = '/cms/article-modify';
-                    var index = layer.open({
+                layer.open({
                         title: '添加文章',
-                        type: 2,
-              
+                        type: 2,             
                         area: ['100%', '100%'],
                         zIndex: "10000",
                         content: content,

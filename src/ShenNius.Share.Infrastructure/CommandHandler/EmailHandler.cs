@@ -23,7 +23,7 @@ namespace ShenNius.Share.Infrastructure.CommandHandler
         {
             string content = $"当前名为{notification.Name}的用户在{DateTime.Now}成功登录神牛系统";
             //Send email  
-            EmailHelper.Send("神牛系统用户登录", content, notification.Name, notification.Email);
+            WebHelper.Send("神牛系统用户登录", content, notification.Name, notification.Email);
             return Task.FromResult(true);
         }
     }

@@ -41,9 +41,8 @@
 @section js{
     <script>
 
-        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
-            var $ = layui.jquery,
-                form = layui.form,
+        layui.use(['form', 'layer', 'table', 'common'], function () {
+            var  form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
                 layer = layui.layer;
@@ -81,8 +80,8 @@
                     { field: 'application', title: '应用程序' },
                     { field: 'level', title: '日志等级' },
                     { field: 'callsite', title: 'url' },
-                    { field: 'iP', title: 'IP' },
-                    { field: 'userName', title: '用户名' },
+                    { field: 'ip', title: 'IP' },
+                    { field: 'user', title: '用户名' },
                     { field: 'logger', title: '操作内容' },
                     { field: 'logged', title: '创建时间' },
 
@@ -150,7 +149,7 @@
                 var data = obj.data;
                 if (obj.event === 'detail') {
                     var content = '/sys/log-detail?id=' + data.id;
-                    var index = layer.open({
+                  layer.open({
                         title: '详情',
                         type: 2,
                         shade: 0.2,

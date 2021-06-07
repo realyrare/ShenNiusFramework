@@ -49,7 +49,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
                 }
                 var data = res.data;
                 if (data == null) {
-                    miniAdmin.error('暂无菜单信息')
+                    miniAdmin.error('暂无菜单信息');
                 } else {
                     miniAdmin.renderLogo(data.logoInfo);
                     miniAdmin.renderClear(options.clearUrl);

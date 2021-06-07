@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -42,17 +43,14 @@ namespace ShenNius.Share.Domain.Services.Sys
     {
         private readonly IMapper _mapper;
         private readonly ICacheHelper _cache;
-        private readonly ICurrentUserContext _currentUserContext;
-
-        public MenuService(IMapper mapper, ICacheHelper cache, ICurrentUserContext currentUserContext)
+        public MenuService(IMapper mapper, ICacheHelper cache)
         {
             _mapper = mapper;
             _cache = cache;
-            _currentUserContext = currentUserContext;
         }
         public async Task<List<MenuAuthOutput>> GetCurrentAuthMenus(int userId)
         {
-            var data = _cache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
+            var data = _cache.Get<List<MenuAuthOutput>>($"{KeyHelper.User.AuthMenu}:{userId}");
             if (data == null)
             {
                 var allRoleMenus = await GetCurrentMenuByUser(userId);
@@ -94,7 +92,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                
                 //把当前用户拥有的权限存入到缓存里面
                 data = _mapper.Map<List<MenuAuthOutput>>(query);
-                _cache.Set($"authMenu:{userId}", data);
+                _cache.Set($"{KeyHelper.User.AuthMenu}:{userId}", data);
             }
             return data;
         }
@@ -288,7 +286,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             }
             return new ApiResult(containsBtnList);
         }
-
+        [CacheInterceptor]
         public async Task<ApiResult> TreeRoleIdAsync(int roleId)
         {
             var list = new List<MenuTreeOutput>();
@@ -349,6 +347,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             }
             return allRoleMenus;
         }
+        [CacheInterceptor]
         public async Task<ApiResult> LoadLeftMenuTreesAsync(int userId)
         {
             var allRoleMenus = await GetCurrentMenuByUser(userId);
