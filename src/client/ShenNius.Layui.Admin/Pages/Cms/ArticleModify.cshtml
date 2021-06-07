@@ -166,7 +166,8 @@
                     var content = tinyMCE.editors[0].getContent();
                     apiUtil.ajax('keyword/content-replace', { content,type}, "application/json", "post", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
-                            tinyMCE.editors[0].getContent() = res.data;
+                            var editor = tinymce.get('content');                            
+                            editor.setContent(res.data);
                             apiUtil.success(res.msg);
                         } else {
                             apiUtil.error(res.msg);
