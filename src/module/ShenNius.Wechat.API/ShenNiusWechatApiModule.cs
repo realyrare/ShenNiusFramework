@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using Senparc.CO2NET;
 using Senparc.CO2NET.AspNet;
+using Senparc.CO2NET.RegisterServices;
+using Senparc.Weixin;
 using Senparc.Weixin.Entities;
+using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.MessageHandlers.Middleware;
 using Senparc.Weixin.RegisterServices;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.BaseController;
+using System;
 
 /*************************************
 * 类名：ShenNiusWechatApiModule
@@ -33,8 +37,8 @@ namespace ShenNius.Wechat.API
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-            context. Services.AddMemoryCache()//使用本地缓存必须添加
-                   .AddSenparcWeixinServices(context.Configuration);//Senparc.Weixin 注册（必须）
+            context.Services.AddMemoryCache()//使用本地缓存必须添加
+                    .AddSenparcWeixinServices(context.Configuration);//Senparc.Weixin 注册（必须）           
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
@@ -44,29 +48,24 @@ namespace ShenNius.Wechat.API
             {
                 app.UseDeveloperExceptionPage();
             }
-         
+          
             // IOptions<SenparcSetting> senparcSetting, IOptions<SenparcWeixinSetting> senparcWeixinSetting
             //注册 Senparc.Weixin 及基础库
-            //var registerService = app.UseSenparcGlobal(env, senparcSetting.Value, _ => { }, true)
-            //                         .UseSenparcWeixin(senparcWeixinSetting.Value, weixinRegister => weixinRegister.RegisterMpAccount(senparcWeixinSetting.Value));
+            var senparcSetting = context.Configuration.GetValue<SenparcSetting>("SenparcSetting");
+            var senparcWeixinSetting = context.Configuration.GetValue<SenparcWeixinSetting>("SenparcWeixinSetting");
 
+            //注册 Senparc.Weixin 及基础库
+            var registerService = app.UseSenparcGlobal(env, senparcSetting, _ => { }, true)
+            .UseSenparcWeixin(senparcWeixinSetting, weixinRegister => weixinRegister.RegisterMpAccount(senparcWeixinSetting));
             app.UseRouting();
-
             //使用中间件注册 MessageHandler，指定 CustomMessageHandler 为自定义处理方法
-            //app.UseMessageHandlerForMp("/WeixinAsync",
-            //    (stream, postModel, maxRecordCount, serviceProvider) => new CustomMessageHandler(stream, postModel, maxRecordCount, serviceProvider),
-            //    options =>
-            //    {
-            //        options.AccountSettingFunc = context => senparcWeixinSetting.Value;
-            //    });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
+            app.UseMessageHandlerForMp("/WeixinAsync",
+            (stream, postModel, maxRecordCount, serviceProvider) => new CustomMessageHandler(stream, postModel, maxRecordCount, serviceProvider),
+                options =>
                 {
-                    await context.Response.WriteAsync("Open /WeixinAsync to connect WeChat MessageHandler");//首页默认显示
+                    options.AccountSettingFunc = context => senparcWeixinSetting;
                 });
-            });
+
         }
     }
 }

@@ -9,11 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Senparc.Weixin.MP.Middleware" Version="0.2.400" />
+    <PackageReference Include="Senparc.Weixin.MP.Middleware" Version="0.3.400" />
   </ItemGroup>
 
 </Project>
