@@ -68,3 +68,7 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165019_be2d1343_1173871.png "api-1.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165031_41b05a14_1173871.png "api-2.PNG")
 
+#### QQ群：
+
+878303823（dotnet根据地）
+
