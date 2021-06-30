@@ -1,10 +1,12 @@
 ﻿using AspectCore.Extensions.DependencyInjection;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
+using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Infrastructure.ImgUpload;
@@ -15,7 +17,11 @@ namespace ShenNius.Share.Infrastructure
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.ConfigureDynamicProxy(o => {
+            context.Services.AddMiniProfiler(options =>
+                 options.RouteBasePath = "/profiler"
+            );
+            context.Services.ConfigureDynamicProxy(o =>
+            {
                 //添加AOP的配置
             });
             var RedisConfiguration = context.Configuration.GetSection("Redis");
@@ -45,7 +51,8 @@ namespace ShenNius.Share.Infrastructure
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-
+            var app = context.GetApplicationBuilder();
+            app.UseMiniProfiler();
         }
     }
 }
