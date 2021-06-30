@@ -18,14 +18,13 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
-using ShenNius.Shop.API;
 using ShenNius.Cms.API;
 using ShenNius.Blog.API;
 
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
-        //typeof(ShenNiusShopApiModule),
+        
         typeof(ShenNiusCmsApiModule),
         typeof(ShenNiusSysApiModule),
         typeof(ShenNiusBlogApiModule)

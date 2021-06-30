@@ -77,7 +77,7 @@ namespace ShenNius.Share.Infrastructure.Extension
         public static void UseSwaggerMiddle(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            ProfilerSwagger profilerSwagger = new ProfilerSwagger();
+            var getStream = new ProfilerSwagger().GetStream();
             app.UseSwaggerUI(c =>
             {
                 c.DefaultModelExpandDepth(2);
@@ -93,7 +93,11 @@ namespace ShenNius.Share.Infrastructure.Extension
                 c.EnableValidator();
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShenNius API v1");
                 c.RoutePrefix = string.Empty;
-                c.IndexStream = () => profilerSwagger.GetStream();
+                if (getStream!=null)
+                {
+                    c.IndexStream = () => getStream;
+                }
+               
             });          
         }       
     }
@@ -104,7 +108,7 @@ namespace ShenNius.Share.Infrastructure.Extension
     {
         public  Stream GetStream()
         {
-            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.API.Hosting.index.html");
+            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.Framework.index.html");
         }
     }
 }

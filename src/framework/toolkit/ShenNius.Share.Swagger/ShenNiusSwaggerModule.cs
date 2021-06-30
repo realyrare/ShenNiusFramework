@@ -91,6 +91,7 @@ namespace ShenNius.Swagger
                 c.EnableValidator();
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShenNius API v1");
                 c.RoutePrefix = string.Empty;
+                c.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.API.Hosting.index.html");
             });
         }
     }
