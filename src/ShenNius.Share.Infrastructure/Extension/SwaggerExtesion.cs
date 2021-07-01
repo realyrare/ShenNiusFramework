@@ -5,16 +5,13 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ShenNius.Share.Infrastructure.Extension
 {
-  public static  class SwaggerExtesion
+    public static  class SwaggerExtesion
     {
       
         public static void AddSwaggerSetup(this IServiceCollection services)
@@ -75,6 +72,7 @@ namespace ShenNius.Share.Infrastructure.Extension
         }
 
         public static void UseSwaggerMiddle(this IApplicationBuilder app)
+        
         {
             app.UseSwagger();
             var getStream = new ProfilerSwagger().GetStream();
@@ -95,7 +93,7 @@ namespace ShenNius.Share.Infrastructure.Extension
                 c.RoutePrefix = string.Empty;
                 if (getStream!=null)
                 {
-                    c.IndexStream = () => getStream;
+                    c.IndexStream = ()=> getStream;
                 }
                
             });          
@@ -108,7 +106,7 @@ namespace ShenNius.Share.Infrastructure.Extension
     {
         public  Stream GetStream()
         {
-            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.Framework.index.html");
+            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.Share.Infrastructure.index.html");
         }
     }
 }

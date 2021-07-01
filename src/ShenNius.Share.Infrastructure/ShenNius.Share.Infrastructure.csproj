@@ -11,6 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.2.0" />
 	  <PackageReference Include="MailKit" Version="2.11.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.10" />
@@ -30,6 +38,12 @@
   <ItemGroup>
     <ProjectReference Include="..\framework\core\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\ShenNius.Share.Models\ShenNius.Share.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

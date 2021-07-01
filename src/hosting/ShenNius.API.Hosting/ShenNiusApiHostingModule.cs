@@ -33,14 +33,14 @@ namespace ShenNius.API.Hosting
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
+           
             // 跨域配置
             context.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
-            context.Services.AddAuthorizationSetup(context.Configuration);
-
+            
             var mvcBuilder = context.Services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(GlobalExceptionFilter));
@@ -49,7 +49,6 @@ namespace ShenNius.API.Hosting
                 //配置路由以减号分割
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             });
-
 
             mvcBuilder.AddNewtonsoftJson(options =>
             {
@@ -81,7 +80,7 @@ namespace ShenNius.API.Hosting
                 }
                 options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             });
-            context.Services.AddSwaggerSetup();
+            
             // 模型验证自定义返回格式
             context.Services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -106,8 +105,7 @@ namespace ShenNius.API.Hosting
         {
             var app = context.GetApplicationBuilder();
             var env = ServiceProviderServiceExtensions.GetRequiredService<IWebHostEnvironment>(context.ServiceProvider);
-            NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
-            NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
+           
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
             // 环境变量，开发环境
             if (env.IsDevelopment())
@@ -125,9 +123,10 @@ namespace ShenNius.API.Hosting
 
             // 跨域
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+         
             // 异常处理中间件
             //app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseSwaggerMiddle();
+            
             // HTTP => HTTPS
             app.UseHttpsRedirection();
 

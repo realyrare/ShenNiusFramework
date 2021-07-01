@@ -21,6 +21,7 @@ using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
 using ShenNius.Share.Infrastructure.Cache;
 using System.Linq;
+using StackExchange.Profiling;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -52,6 +53,12 @@ namespace ShenNius.Sys.API.Controllers
             _menuService = menuService;
             this._cacheHelper = cacheHelper;
             this._currentUserContext = currentUserContext;
+        }
+        [HttpGet, AllowAnonymous]
+        public IActionResult GetCounts()
+        {
+            var html = MiniProfiler.Current.RenderIncludes(HttpContext);
+            return Ok(html.Value);
         }
         [HttpGet,AllowAnonymous]
         public IActionResult RemoveMenuCache(int userId)
