@@ -25,8 +25,7 @@ namespace ShenNius.API.Hosting
 {
     [DependsOn(       
         typeof(ShenNiusCmsApiModule),
-        typeof(ShenNiusSysApiModule),
-        typeof(ShenNiusBlogApiModule)
+        typeof(ShenNiusSysApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
     {

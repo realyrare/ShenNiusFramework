@@ -61,13 +61,12 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> GetAllColumn(int siteId)
         {
-            var data = await GetColumnAsync(siteId);
+         var data = await GetColumnAsync(siteId);
             return new ApiResult(data);
         }
         /// <summary>
         /// 请求站点信息
         /// </summary>
-        /// <param name="globalSiteGuid">站点id</param>
         /// <returns></returns>
         [HttpGet]
         public ApiResult GetSiteInfo(int siteId)
@@ -208,7 +207,9 @@ namespace ShenNius.Blog.API.Controllers.Cms
                     expression = (ca, cc) => ca.ColumnId == childColumnModel.Id;
                 }
             }
-            var query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
+          
+             var  query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
+         
             return new ApiResult(new
             {
                 ArticleList = query.Items,
