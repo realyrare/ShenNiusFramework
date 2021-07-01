@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using MediatR;
 using ShenNius.Share.Infrastructure.CommandHandler.Model;
 using ShenNius.Share.Infrastructure.Extension;
+using NLog;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -49,7 +50,9 @@ namespace ShenNius.Share.Domain.Services.Sys
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
             if (loginModel.Id == 0)
             {
+                LogHelper.Default.Process(loginModel.Name, "login", $"{loginModel.Name}登陆失败，用户名或密码错误！", LogLevel.Info);
                 return new ApiResult<LoginOutput>("用户名或密码错误", 500);
+
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParse.GetAddressByIP(ip);
@@ -61,6 +64,8 @@ namespace ShenNius.Share.Domain.Services.Sys
             }, d => d.Id == loginModel.Id);
             await _mediator.Publish(new UserNotification() { Id = loginModel.Id, Name = loginModel.Name });
             var data = _mapper.Map<LoginOutput>(loginModel);
+
+            LogHelper.Default.Process(loginModel.Name, "login", $"{loginModel.Name}登陆成功！", LogLevel.Info);
             return new ApiResult<LoginOutput>(data);
         }
         public async Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput)

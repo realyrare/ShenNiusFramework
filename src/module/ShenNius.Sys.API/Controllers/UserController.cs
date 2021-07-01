@@ -96,11 +96,7 @@ namespace ShenNius.Sys.API.Controllers
         }
         [HttpGet]
         public async Task<ApiResult> GetUser(int id)
-        {
-            if (id == 0)
-            {
-                throw new FriendlyException(nameof(id));
-            }
+        {           
             return await _userService.GetUserAsync(id);
         }
         /// <summary>

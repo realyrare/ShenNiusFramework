@@ -23,8 +23,7 @@ using ShenNius.Blog.API;
 
 namespace ShenNius.API.Hosting
 {
-    [DependsOn(
-        
+    [DependsOn(       
         typeof(ShenNiusCmsApiModule),
         typeof(ShenNiusSysApiModule),
         typeof(ShenNiusBlogApiModule)
@@ -91,7 +90,6 @@ namespace ShenNius.API.Hosting
                         .SelectMany(x => x.Errors
                             .Select(p => p.ErrorMessage))
                         .ToList();
-
                     var result = new ApiResult(
                         msg: string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList()),
                         statusCode: 400
