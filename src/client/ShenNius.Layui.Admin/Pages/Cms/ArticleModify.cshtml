@@ -88,15 +88,18 @@
                 </div>
             </div>
             <div class="layui-row">
-                <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item layui-form-text">
                     <div class="layui-form-item">
                         <label class="layui-form-label">SEO关键词</label>
                         <div class="layui-input-block">
-                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔" >@Model.articleOutput.KeyWord</textarea>
+                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔">@Model.articleOutput.KeyWord</textarea>
                         </div>
                     </div>
-                </div>
-                <div class="layui-col-md6 layui-col-xs12">
+                </div>               
+            </div>
+            <div class="layui-row">
+               
+                <div class="layui-form-item layui-form-text">
                     <div class="layui-form-item">
                         <label class="layui-form-label">SEO描述</label>
                         <div class="layui-input-block">
@@ -114,15 +117,15 @@
                 </div>
             </div>
             @*<div class="layui-row">
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">文章图片</label>
-                        <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
-                    </div>
-                </div>*@
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">文章图片</label>
+                <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
+            </div>
+        </div>*@
             <div class="layui-form-item">
-                <div class="layui-input-block">                   
+                <div class="layui-input-block">
                     <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
-                    <button type="button" id="btnHref" class="layui-btn layui-btn-primary btn-open-close" >一键匹配內链</button>
+                    <button type="button" id="btnHref" class="layui-btn layui-btn-primary btn-open-close">一键匹配內链</button>
                 </div>
             </div>
         </div>

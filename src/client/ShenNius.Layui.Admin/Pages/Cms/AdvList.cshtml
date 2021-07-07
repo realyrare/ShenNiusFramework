@@ -104,11 +104,10 @@
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/cms/adv-modify';
-                    var index = layer.open({
+                   layer.open({
                         title: '添加栏目',
                         type: 2,
                         shade: 0.2,
-                        maxmin: true,
                         shadeClose: true,
                         area: ['660px', '600px'],
                         content: content,
@@ -151,13 +150,13 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var content = '/cms/adv-modify?id=' + data.id;
-                    var index = layer.open({
+                   layer.open({
                         title: '编辑栏目',
                         // tips: [1, '#c00'],
                         type: 2,
                         shade: 0.2,
                         shadeClose: true,
-                        area: ['660px', '700px'],
+                        area: ['660px', '600px'],
                         content: content,
                         end: function () {
                             refeshTable();
