@@ -10,6 +10,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Sys.API.Controllers
 {
@@ -31,7 +32,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(await _configService.GetListAsync(d=>d.Type=="按钮"));
         }
 
-        [HttpDelete]
+        [HttpDelete, Authority(Module =nameof(Menu), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             foreach (var item in commonDeleteInput.Ids)
@@ -41,7 +42,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult();
         }
 
-        [HttpGet, Authority(Module = "menu")]
+        [HttpGet, Authority(Module = nameof(Menu))]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             return await _menuService.GetListPagesAsync(page, key);
@@ -72,7 +73,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="roleMenuInput"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost,Authority(Module = nameof(Menu),Method =nameof(Button.Auth))]
         public async Task<ApiResult> SetBtnPermissions([FromBody]RoleMenuBtnInput roleMenuInput)
         {           
             return await _r_Role_MenuService.SetBtnPermissionsAsync(roleMenuInput);
@@ -82,7 +83,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Authority(Module = nameof(Menu), Method = nameof(Button.Auth))]
         public async Task<ApiResult> AddPermissions([FromBody]PermissionsInput input)
         {
             var model = await _r_Role_MenuService.GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
@@ -105,13 +106,13 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _menuService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
         }
-        [HttpPost]
+        [HttpPost, Authority(Module = nameof(Menu), Method = nameof(Button.Add))]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
         {
             return await _menuService.AddToUpdateAsync(menuInput);
         }
 
-        [HttpPut]
+        [HttpPut, Authority(Module = nameof(Menu), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] MenuModifyInput menuModifyInput)
         {            
             return await _menuService.ModifyAsync(menuModifyInput);

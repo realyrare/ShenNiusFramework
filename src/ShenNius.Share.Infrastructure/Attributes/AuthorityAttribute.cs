@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLog;
 using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using System.Collections.Generic;
@@ -37,10 +37,10 @@ namespace ShenNius.Share.Infrastructure.Attributes
         private string LogType { get; set; }
         private Stopwatch Stopwatch { get; set; }
 
-        public AuthorityAttribute()
-        {
+        //public AuthorityAttribute()
+        //{
 
-        }
+        //}
         public override void OnActionExecuting(ActionExecutingContext context)
         {           
             if (IsLog)
@@ -55,35 +55,35 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 ReturnResult(context, "很抱歉,您未登录！", StatusCodes.Status401Unauthorized);
                 return;
             }
-            IMemoryCache memoryCache = context.HttpContext.RequestServices.GetRequiredService(typeof(IMemoryCache)) as IMemoryCache;
+            ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
             //从缓存获得权限
 
-            var list = memoryCache.Get<List<MenuAuthOutput>>($"authMenu:{userId}");
+            var list = cache.Get<List<MenuAuthOutput>>($"{KeyHelper.User.AuthMenu}:{userId}");
             if (list == null || list.Count <= 0)
             {
                 ReturnResult(context, "不好意思，您没有该按钮操作权限，请联系系统管理员！", StatusCodes.Status403Forbidden);
                 return;
-            }
-            var model = list.FirstOrDefault(d => d.NameCode == Module);
+            }                    
+            var model = list.FirstOrDefault(d => d.NameCode == Module.Trim().ToLower());
             if (model == null)
             {
-                ReturnResult(context, "不好意思，您没有该按钮操作权限", StatusCodes.Status403Forbidden);
+                ReturnResult(context, "不好意思，您没有该列表操作权限", StatusCodes.Status403Forbidden);
                 return;
             }
             LogType= model.Name;
-            if (string.IsNullOrEmpty(Method))
+            if (string.IsNullOrEmpty(Method))         
             {
                 base.OnActionExecuting(context);
                 return;
             }
-            LogType += ":"+model.Name;
+            LogType += ":"+ Method;
             if (!string.IsNullOrEmpty(model.BtnCodeName))
             {
                 var arryBtn = model.BtnCodeName.Split(',');
                 if (arryBtn.Length > 0)
                 {
-                    if (arryBtn.FirstOrDefault(d => d == Method) == null)
+                    if (arryBtn.FirstOrDefault(d => d == Method.ToLower()) == null)
                     {
                         ReturnResult(context,"不好意思，您没有该按钮操作权限", StatusCodes.Status403Forbidden);
                         return;
@@ -101,8 +101,6 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 NullValueHandling = NullValueHandling.Ignore
             };
             context.Result = new JsonResult(new ApiResult(msg, statusCodes), setting);                     
-            //context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(res));
-            //context.Result = new EmptyResult();
         }
         public override void OnActionExecuted(ActionExecutedContext context)
         {

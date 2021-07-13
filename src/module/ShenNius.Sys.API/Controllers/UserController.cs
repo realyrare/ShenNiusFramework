@@ -22,6 +22,7 @@ using System.Linq.Expressions;
 using ShenNius.Share.Infrastructure.Cache;
 using System.Linq;
 using StackExchange.Profiling;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -54,6 +55,10 @@ namespace ShenNius.Sys.API.Controllers
             this._cacheHelper = cacheHelper;
             this._currentUserContext = currentUserContext;
         }
+        /// <summary>
+        /// 测试miniprofiler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, AllowAnonymous]
         public IActionResult GetCounts()
         {
@@ -74,17 +79,19 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = "user", Method = "add")]
+        [HttpPost, Authority(Module = nameof(User), Method =nameof(Button.Add))]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
-        [HttpPost, Authority(Module = "user", Method = "edit")]
+
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
-        [HttpDelete, Authority(Module = "user", Method = "delete")]
+
+        [HttpDelete, Authority(Module = nameof(User), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return await _userService.DeletesAsync(commonDeleteInput.Ids);
@@ -103,7 +110,7 @@ namespace ShenNius.Sys.API.Controllers
         /// 查询列表
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Authority(Module = "user")]
+        [HttpGet, Authority(Module = nameof(User))]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             Expression<Func<User, bool>> whereExpression = null;
@@ -119,7 +126,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = "user", Method = "auth")]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Auth))]
         public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);
