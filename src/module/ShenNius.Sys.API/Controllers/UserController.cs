@@ -20,7 +20,6 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
 using ShenNius.Share.Infrastructure.Cache;
-using System.Linq;
 using StackExchange.Profiling;
 using ShenNius.Share.Models.Configs;
 
@@ -207,6 +206,7 @@ namespace ShenNius.Sys.API.Controllers
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _cacheHelper.Remove($"IMenuService:LoadLeftMenuTreesAsync:[{_currentUserContext.Id}]");
             return new ApiResult(data: "/user/login");
         }
         private string GetJwtToken(LoginOutput loginOutput)

@@ -52,8 +52,7 @@ namespace ShenNius.Cms.API.Controllers
             {
                 throw new FriendlyException("关键字库中没有数据,检查集合是否抛异常了");
             }
-            // 第一次
-            Regex reg = null;
+
             int n = -1;
             Dictionary<string, string> dic = new Dictionary<string, string>();
             for (int i = 0; i < list.Count; i++)
@@ -61,7 +60,8 @@ namespace ShenNius.Cms.API.Controllers
                 if (Regex.Match(input.Content, list[i].Title).Success)
                 {
                     string pattern = $"<a href=\"{list[i].Url}\" target=\"_blank\">{list[i].Title}</a>";
-                    reg = new Regex(list[i].Title);
+                    // 第一次
+                    Regex reg = new Regex(list[i].Title);
                     input.Content = reg.Replace(input.Content, pattern, 1);
                     if (Regex.Match(input.Content, pattern).Success)
                     {

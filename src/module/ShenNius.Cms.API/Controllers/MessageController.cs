@@ -34,12 +34,9 @@ namespace ShenNius.Cms.API.Controllers
     public class MessageController:ControllerBase
     {
         private readonly IMessageService _messageService;
-        private readonly IRecycleService _recycleService;
-
-        public MessageController(IMessageService messageService, IRecycleService recycleService)
+        public MessageController(IMessageService messageService)
         {
             this._messageService = messageService;
-            this._recycleService = recycleService;
         }
         [HttpGet]
         public  async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
@@ -55,30 +52,7 @@ namespace ShenNius.Cms.API.Controllers
             }
             var res = await _messageService.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
-        }
-        /// <summary>
-        /// 软删除
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        public  async Task<ApiResult> SoftDelete([FromBody] DeletesTenantInput input)
-        {          
-            var userId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
-            var currentName = HttpContext.User.Identity.Name;
-            foreach (var item in input.Ids)
-            {
-                var res = await _messageService.UpdateAsync(d => new Message() { Status = false }, d => d.Id == item && d.TenantId ==input.TenantId && d.Status == true);
-                var model = new Recycle()
-                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(Message), TenantId = input.TenantId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(Message)}中的{item}记录",RestoreSql=$"update {nameof(Message)} set status=false where id={item}and TenantId={input.TenantId}" };
-                await _recycleService.AddAsync(model);
-                if (res <= 0)
-                {
-                    throw new FriendlyException("删除失败了！");
-                }
-            }
-            return new ApiResult();
-        }
+        }  
         /// <summary>
         /// 批量真实删除
         /// </summary>

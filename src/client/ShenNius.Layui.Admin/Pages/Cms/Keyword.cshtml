@@ -99,7 +99,7 @@
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/cms/keyword-modify';
-                    var index = layer.open({
+                    layer.open({
                         title: '添加关键词',
                         type: 2,
                         shade: 0.2,
@@ -122,7 +122,7 @@
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
                             apiUtil.ajax('keyword/soft-delete', { ids: listIds }, "application/json", "delete", function (res) {
                                 if (res.statusCode == 200 && res.success == true) {
-                                    layer.msg(res.msg);
+                                    apiUtil.success(res.msg);
                                     layer.close(index);
                                     refeshTable();
                                 } else {
@@ -146,7 +146,7 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var content = '/cms/keyword-modify?id=' + data.id;
-                    var index = layer.open({
+                    layer.open({
                         title: '编辑关键词',
                         // tips: [1, '#c00'],
                         type: 2,
@@ -160,7 +160,7 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除么', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
                         apiUtil.ajax('keyword/soft-delete', { ids: listIds }, "application/json", "delete", function (res) {

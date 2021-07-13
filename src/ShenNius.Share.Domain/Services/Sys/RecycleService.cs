@@ -33,21 +33,28 @@ namespace ShenNius.Share.Domain.Services.Sys
                 var model = await GetModelAsync(d => d.Id == item);
                 if (model != null)
                 {
-                  var i=await Db.Ado.ExecuteCommandAsync(model.RestoreSql);
-                    if (i>0)
+                    try
                     {
-                        //把回收站的记录清空
-                        await DeleteAsync(d => d.Id == item);
+                        var i = await Db.Ado.ExecuteCommandAsync(model.RestoreSql);
+                        if (i > 0)
+                        {
+                            //把回收站的记录清空
+                            await DeleteAsync(d => d.Id == item);
+                        }
                     }
-                }              
+                    catch (System.Exception e)
+                    {
+                        return new ApiResult(e.Message, 500);
+                    }
+                }
             }
             return new ApiResult();
         }
         [Transaction]
         public async Task<ApiResult> RealyDeleteAsync(DeletesInput input)
         {
-           var list= await GetListAsync(d => input.Ids.Contains(d.Id));
-            if (list == null||list.Count<=0)
+            var list = await GetListAsync(d => input.Ids.Contains(d.Id));
+            if (list == null || list.Count <= 0)
             {
                 throw new FriendlyException($"{nameof(input.Ids)}:中参数没有匹配到任何数据记录");
             }
@@ -55,15 +62,22 @@ namespace ShenNius.Share.Domain.Services.Sys
             {
                 if (item != null)
                 {
-                    var i = await Db.Ado.ExecuteCommandAsync(item.RealyDelSql);
-                    if (i > 0)
+                    try
                     {
-                        //把回收站的记录清空
-                        await DeleteAsync(d => d.Id == item.Id);
+                        var i = await Db.Ado.ExecuteCommandAsync(item.RealyDelSql);
+                        if (i > 0)
+                        {
+                            //把回收站的记录清空
+                            await DeleteAsync(d => d.Id == item.Id);
+                        }
+                    }
+                    catch (System.Exception e)
+                    {
+                        return new ApiResult(e.Message, 500);
                     }
                 }
             }
             return new ApiResult();
         }
-    }   
+    }
 }

@@ -19,7 +19,7 @@ namespace ShenNius.Share.Models.Entity.Common
         DateTime? ModifyTime { get; set; }
         DateTime CreateTime { get; set; }
         /// <summary>
-        /// 删除 true  false为正常
+        /// true为正常，  false为删除
         /// </summary>
         bool Status { get; set; }
     }

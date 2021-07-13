@@ -22,8 +22,7 @@
         </fieldset>
 
         <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
-                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="softdelete" onclick="existAuth('delete')"> 伪删除 </button>
+            <div class="layui-btn-container">               
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')">批量真删除 </button>
             </div>
            
@@ -148,22 +147,7 @@
 
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
-                if (obj.event === 'softdelete') {
-                    layer.confirm('确定将该留言放到回收站吗', function (index) {
-                        var listIds = new Array();
-                        listIds[0] = data.id;
-                        apiUtil.ajax('message/soft-delete', { ids: listIds }, "application/json", "delete", function (res) {
-                            if (res.statusCode == 200 && res.success == true) {
-                                layer.msg(res.msg);
-                                layer.close(index);
-                                parent.location.reload();
-                            } else {
-                                layer.msg(res.msg);
-                            }
-                        });
-                    });
-                    return false;
-                } else if (obj.event === 'delete') {
+               if (obj.event === 'delete') {
                     layer.confirm('真的彻底删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;

@@ -37,10 +37,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
         private string LogType { get; set; }
         private Stopwatch Stopwatch { get; set; }
 
-        //public AuthorityAttribute()
-        //{
-
-        //}
+      
         public override void OnActionExecuting(ActionExecutingContext context)
         {           
             if (IsLog)
@@ -53,6 +50,12 @@ namespace ShenNius.Share.Infrastructure.Attributes
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 ReturnResult(context, "很抱歉,您未登录！", StatusCodes.Status401Unauthorized);
+                return;
+            }
+            //当用户名为mhg时（超级管理员），不用验证权限。
+            var currentName = context.HttpContext.User.Identity.Name;
+            if (currentName.Equals("mhg"))
+            {
                 return;
             }
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
