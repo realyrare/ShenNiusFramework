@@ -29,7 +29,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetBtnCodeList()
         {
-            return new ApiResult(await _configService.GetListAsync(d=>d.Type=="按钮"));
+            return new ApiResult(await _configService.GetListAsync(d=>d.Type==nameof(Button)));
         }
 
         [HttpDelete, Authority(Module =nameof(Menu), Method = nameof(Button.Delete))]

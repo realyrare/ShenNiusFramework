@@ -125,7 +125,7 @@ namespace ShenNius.Share.BaseController.Controllers
                     UserId = userId, 
                     TableType = tableName, 
                     TenantId = deleteInput.TenantId, 
-                    Remark = $"{HttpContext.User.Identity.Name}删除了{tableName}中的{item}记录",
+                    Remark = $"用户名为【{HttpContext.User.Identity.Name}】删除了表【{tableName}】中id={item}记录数据。",
                     RestoreSql = $"update {tableName} set status=true where id={item} and TenantId={deleteInput.TenantId}",
                     RealyDelSql= $"delete  from {tableName}  where id={item} and TenantId={deleteInput.TenantId}"
                 };
