@@ -70,7 +70,7 @@ namespace ShenNius.Cms.API.Controllers
             {
                 var res = await _messageService.UpdateAsync(d => new Message() { Status = false }, d => d.Id == item && d.TenantId ==input.TenantId && d.Status == true);
                 var model = new Recycle()
-                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(Message), TenantId = input.TenantId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(Message)}中的{item}记录",Sql=$"update {nameof(Message)} set status=false where id={item}and TenantId={input.TenantId}" };
+                { CreateTime = DateTime.Now, BusinessId = item, UserId = userId, TableType = nameof(Message), TenantId = input.TenantId, Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(Message)}中的{item}记录",RestoreSql=$"update {nameof(Message)} set status=false where id={item}and TenantId={input.TenantId}" };
                 await _recycleService.AddAsync(model);
                 if (res <= 0)
                 {

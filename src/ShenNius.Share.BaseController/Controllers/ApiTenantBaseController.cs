@@ -102,7 +102,7 @@ namespace ShenNius.Share.BaseController.Controllers
             var currentName = HttpContext.User.Identity.Name;
             foreach (var item in deleteInput.Ids)
             {
-                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.TenantId == deleteInput.TenantId && d.Status == true);
+                var res = await _service.UpdateAsync(d => new TEntity() { Status = true }, d => d.Id == item && d.TenantId == deleteInput.TenantId && d.Status == false);
                 var model = new Recycle()
                 { 
                     CreateTime = DateTime.Now, 
@@ -111,7 +111,8 @@ namespace ShenNius.Share.BaseController.Controllers
                     TableType = nameof(TEntity), 
                     TenantId = deleteInput.TenantId, 
                     Remark = $"{HttpContext.User.Identity.Name}删除了{nameof(TEntity)}中的{item}记录",
-                    Sql = $"update {nameof(TEntity)} set status=false where id={item} and TenantId={deleteInput.TenantId}" 
+                    RestoreSql = $"update {nameof(TEntity)} set status=false where id={item} and TenantId={deleteInput.TenantId}",
+                    RealyDelSql= $"delete  from {nameof(TEntity)}  where id={item} and TenantId={deleteInput.TenantId}"
                 };
                 await recycleService.AddAsync(model);
                 if (res <= 0)

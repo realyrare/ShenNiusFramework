@@ -68,17 +68,20 @@ namespace ShenNius.Sys.API.Controllers
             var data = await _roleService.GetListAsync();
             return new ApiResult(data: data);
         }
+
         [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Add))]
         public async Task<ApiResult> Add([FromBody] RoleInput roleInput)
         {
             var role = _mapper.Map<Role>(roleInput);
             return new ApiResult(await _roleService.AddAsync(role));
         }
+
         [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Auth))]
         public async Task<ApiResult> SetMenu(SetRoleMenuInput setRoleMenuInput)
         {
             return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
         }
+
         [HttpPut,Authority(Module = nameof(Role), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {

@@ -1,5 +1,4 @@
-﻿using ShenNius.Share.Domain.Repository;
-using SqlSugar;
+﻿using SqlSugar;
 using System.Threading.Tasks;
 
 namespace ShenNius.Share.Domain.Repository.Extensions

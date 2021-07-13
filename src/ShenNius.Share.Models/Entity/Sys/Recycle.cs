@@ -30,6 +30,7 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// <summary>
         /// 要还原的数据库sql
         /// </summary>
-        public string  Sql { get; set; }
+        public string  RestoreSql { get; set; }
+        public string RealyDelSql { get; set; }
     }
 }
