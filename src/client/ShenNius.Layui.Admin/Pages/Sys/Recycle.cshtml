@@ -116,10 +116,10 @@
                         for (var i in data) {
                             listIds.push(data[i].id)
                         }
-                        // console.recyle("listIds:" + listIds);
+                        // console.log("listIds:" + listIds);
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                            apiUtil.ajax('recyle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
-                                console.recyle(res.msg);
+                            apiUtil.ajax('recycle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                                console.log(res.msg);
                                 if (res.statusCode == 200 && res.success == true) {
                                     layer.msg(res.msg);
                                     layer.close(index);
@@ -136,17 +136,14 @@
             });
 
             //监听表格复选框选择
-            table.on('checkbox(currentTableFilter)', function (obj) {
-                console.recyle(obj)
-            });
-
+          
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'restore') {
                     layer.confirm('确定还原吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('recyle/restore', { ids: listIds }, "application/json", "post", function (res) {
+                        apiUtil.ajax('recycle/restore', { ids: listIds }, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
@@ -161,7 +158,7 @@
                     layer.confirm('真的删除行么', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('recyle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('recycle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);

@@ -206,7 +206,7 @@ namespace ShenNius.Sys.API.Controllers
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            _cacheHelper.Remove($"IMenuService:LoadLeftMenuTreesAsync:[{_currentUserContext.Id}]");
+            _cacheHelper.Remove($"{KeyHelper.User.AuthMenu}:{_currentUserContext.Id}");
             return new ApiResult(data: "/user/login");
         }
         private string GetJwtToken(LoginOutput loginOutput)

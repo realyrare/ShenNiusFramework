@@ -26,6 +26,10 @@ namespace ShenNius.Share.Infrastructure.Configurations
         {
             public static  string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
         }
+        public static class DbTable
+        {
+            public static string Value => _config["DbTable:Value"];
+        }
         public static class Email
         {
             /// <summary>
