@@ -12,23 +12,23 @@
 
 #### 软件架构
 
-1. 1. API框架：dotNetCore 
-1. 2. ORM：SqlSugarCore 
-1. 3. 缓存：MemoryCache和redis一键任意切换
-1. 4. 日志管理：Nlog
-1. 5. 工具类：Aes加密、Md5加密、RSA加密、Des加密  
-1. 6. token:Json Web Token
-1. 7. 实体验证：FluentValidation
-1. 8. 实体映射：AutoMapper
-1. 9. 数据库使用mysql（后面会做sqlserver等其他数据库的兼容）
-1. 10.支持跨平台部署 linux/windows
-1. 11.支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一件切换
-1. 12.支持AOP事务，服务层和控制器都可以打上特性标签使用
-1. 13.对多租户使用Filter，不管是添加还是更新、查询即可自动赋值
-1. 14.支持七牛云图片上传
-1. 15.对于单表的增删改查，在控制器内做了封装，有新的业务按约定建立对应的CRUD实体，一套API自动完成
-1. 16.支持多租户，当然也支持站群管理
-1. 17.支持MediatR进程内通讯解耦
+1. API框架：dotNetCore 
+1. ORM：SqlSugarCore 
+1. 缓存：MemoryCache和redis一键任意切换
+1. 日志管理：Nlog
+1. 工具类：Aes加密、Md5加密、RSA加密、Des加密  
+1. token:Json Web Token
+1. 实体验证：FluentValidation
+1. 实体映射：AutoMapper
+1. 数据库使用mysql（后面会做sqlserver等其他数据库的兼容）
+1. 支持跨平台部署 linux/windows
+1. 支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一件切换
+1. 支持AOP事务，服务层和控制器都可以打上特性标签使用
+1. 对多租户使用Filter，不管是添加还是更新、查询即可自动赋值
+1. 支持七牛云图片上传
+1. 对于单表的增删改查，在控制器内做了封装，有新的业务按约定建立对应的CRUD实体，一套API自动完成
+1. 支持多租户，当然也支持站群管理
+1. 支持MediatR进程内通讯解耦
 
 
 #### 安装教程
