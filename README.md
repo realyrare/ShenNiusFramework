@@ -13,7 +13,7 @@
 #### 软件架构
 1. API框架：dotNetCore 
 2. ORM：SqlSugarCore 
-3. 缓存：MemoryCache（后期会上redis，看项目业务需求） 
+3. 缓存：MemoryCache和redis一键任意切换
 4. 日志管理：Nlog
 5. 工具类：Aes加密、Md5加密、RSA加密、Des加密  
 6. token:Json Web Token
