@@ -19,7 +19,6 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
 using ShenNius.Cms.API;
-using ShenNius.Blog.API;
 
 namespace ShenNius.API.Hosting
 {

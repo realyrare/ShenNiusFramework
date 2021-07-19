@@ -9,6 +9,8 @@
 	  <!--只使用中文语言包-->
 	  <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 	 <UserSecretsId>368f8135-f1f3-4480-9be6-a851b9e803db</UserSecretsId>
+	 <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	 <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +38,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.2" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		<PackageReference Include="System.Drawing.Common" Version="4.7.0" />
 		<!--<PackageReference Include="XC.Framework.Security.RSAUtil" Version="1.0.1" />-->
