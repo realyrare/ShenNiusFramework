@@ -22,6 +22,8 @@ using System.Linq.Expressions;
 using ShenNius.Share.Infrastructure.Cache;
 using StackExchange.Profiling;
 using ShenNius.Share.Models.Configs;
+using Microsoft.AspNetCore.SignalR;
+using ShenNius.Share.Infrastructure.Hubs;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -35,6 +37,7 @@ namespace ShenNius.Sys.API.Controllers
         private readonly IMenuService _menuService;
         private readonly ICacheHelper _cacheHelper;
         private readonly ICurrentUserContext _currentUserContext;
+        private readonly IHubContext<ChatHub> _hubContext;
 
         /// <summary>
         /// 
@@ -45,14 +48,16 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="menuService"></param>
         /// <param name="cacheHelper"></param>
         /// <param name="currentUserContext"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext)
+        /// <param name="hubContext"></param>
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext,IHubContext<ChatHub> hubContext)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
             _r_User_RoleService = r_User_RoleService;
             _menuService = menuService;
-            this._cacheHelper = cacheHelper;
-            this._currentUserContext = currentUserContext;
+            _cacheHelper = cacheHelper;
+            _currentUserContext = currentUserContext;
+            _hubContext = hubContext;
         }
         /// <summary>
         /// 测试miniprofiler
@@ -199,6 +204,11 @@ namespace ShenNius.Sys.API.Controllers
                 return new ApiResult<LoginOutput>("生成的token字符串为空!");
             }
             result.Data.Token = token;
+            //向所有人发送
+            //await _hubContext.Clients.All.SendAsync("ReceiveMessage", "欢迎您登录神牛系统平台");
+            
+            //向当前登录的用户发送欢迎信息
+            await _hubContext.Clients.User(result.Data.Id.ToString()).SendAsync("ReceiveMessage", $"欢迎{loginInput.LoginName}登录神牛系统平台");
             return result;
         }
 
@@ -206,7 +216,7 @@ namespace ShenNius.Sys.API.Controllers
         public ApiResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            _cacheHelper.Remove($"IMenuService:LoadLeftMenuTreesAsync:[{_currentUserContext.Id}]");
+            _cacheHelper.Remove($"{KeyHelper.User.AuthMenu}:{_currentUserContext.Id}");
             return new ApiResult(data: "/user/login");
         }
         private string GetJwtToken(LoginOutput loginOutput)

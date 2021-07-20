@@ -35,9 +35,9 @@ namespace ShenNius.Sys.API.Controllers
         /// <param name="commonDeleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
+        public  Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
-            return new ApiResult(await _recycleService.DeleteAsync(commonDeleteInput.Ids));
+            return  _recycleService.RealyDeleteAsync(commonDeleteInput);
         }
 
         [HttpGet]
