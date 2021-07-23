@@ -14,7 +14,6 @@ using ShenNius.Share.Models.Entity.Sys;
 using System;
 using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
-using System.Collections.Generic;
 using ShenNius.Share.Infrastructure.Configurations;
 
 /*************************************
