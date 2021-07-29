@@ -30,7 +30,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-            var actionName = actionDescriptor.ActionName.ToLower();
+          //s  var actionName = actionDescriptor.ActionName.ToLower();
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var tenantId = cache.Get<Tenant>(KeyHelper.Cms.CurrentTenant)?.Id;
             //如果是增加和修改方法  根据站群id

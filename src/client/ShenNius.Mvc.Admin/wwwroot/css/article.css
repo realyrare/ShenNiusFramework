@@ -1,0 +1,17 @@
+﻿.swimg-wall{display:flex}
+.upimg-wall{position:relative;margin-right:15px;width:140px;height:140px;border-radius:5px;background-color:#f5f7fa;cursor:pointer}
+.select-swimg{padding-top:35px;width:140px;height:140px;color:#acb4bf;text-align:center}
+.select-swimg span{display:block;font-size:12px}
+.del-swimg{position:absolute;right:11px;bottom:16px;padding:2px 6px;background-color:#e86941;color:#fff;cursor:pointer}
+.cur-select{padding:0 15px;height:38px;border:1px solid #e6e6e6;border-radius:3px;line-height:38px}
+.dd{position:relative;top:-5px}
+.dd-list .dd-item{margin-right:10px}
+.dd-list .dd-item img{width:120px;height:120px}
+.dd-list{position:relative;margin:0;padding:0;list-style:none}
+.dd-empty,.dd-item,.dd-placeholder{position:relative;display:block;margin:0;padding:0;min-height:20px;font-size:13px;line-height:20px}
+.dd-handle{display:block;box-sizing:border-box;margin:5px 0;padding:10px 10px;border:1px solid #e4eaec;border-radius:3px;color:#333;text-decoration:none}
+.pg{margin-bottom:16px;height:10px;background:#acb4bf}
+.xpg{height:80px;background:#acb4bf}
+.mt-item>.layui-col-md4{box-shadow:0 0 10px rgba(0,0,0,.1);cursor:pointer}
+.mt-item>.layui-col-md4.cur .pg{background:#409eff}
+.mt-item>.layui-col-md4.cur .xpg{background:#409eff}

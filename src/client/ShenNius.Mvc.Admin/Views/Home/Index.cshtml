@@ -1,0 +1,218 @@
+﻿@{
+    ViewData["Title"] = "欢迎您";
+}
+@section css{
+    <link rel="stylesheet" href="/css/layuimini.css?v=2.0.4.2" media="all" asp-append-version="true">
+    <link rel="stylesheet" href="/css/themes/default.css" media="all" asp-append-version="true">
+    <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <style id="layuimini-bg-color">
+    </style>
+}
+<div class="layui-layout layui-layout-admin">
+
+    <div class="layui-header header">
+        <div class="layui-logo layuimini-logo"></div>
+
+        <div class="layuimini-header-content">
+            <a>
+                <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
+            </a>
+
+            <!--电脑端头部菜单-->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+            </ul>
+
+            <!--手机端头部菜单-->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                    <dl class="layui-nav-child layuimini-menu-header-mobile">
+                    </dl>
+                </li>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
+                </li>
+                <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
+                </li>
+                <li class="layui-nav-item" id="currentSiteName">
+                    <a href="javascript:;" id="siteValue"><i class="layui-icon layui-icon-website"></i></a>
+                    <dl class="layui-nav-child" id="sitelist">
+                        <dd><a><i class="layui-icon"></i>租户切换</a><hr /></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layuimini-setting">
+                    <a href="javascript:;">用户名</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" id="baseUserInfo" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-title="修改密码" data-icon="fa fa-gears" id="modifyPwd">修改密码</a>
+                        </dd>
+                        <dd>
+                            <hr>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" class="login-out">退出登录</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layuimini-select-bgcolor" lay-unselect>
+                    <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--无限极左侧菜单-->
+    <div class="layui-side layui-bg-black layuimini-menu-left">
+    </div>
+
+    <!--初始化加载层-->
+    <div class="layuimini-loader">
+        <div class="layuimini-loader-inner"></div>
+    </div>
+
+    <!--手机端遮罩层-->
+    <div class="layuimini-make"></div>
+
+    <!-- 移动导航 -->
+    <div class="layuimini-site-mobile"><i class="layui-icon"></i></div>
+
+    <div class="layui-body">
+
+        <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+            </ul>
+            <div class="layui-tab-control">
+                <li class="layuimini-tab-roll-left layui-icon layui-icon-left"></li>
+                <li class="layuimini-tab-roll-right layui-icon layui-icon-right"></li>
+                <li class="layui-tab-tool layui-icon layui-icon-down">
+                    <ul class="layui-nav close-box">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"><span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;" layuimini-tab-close="current">关 闭 当 前</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="other">关 闭 其 他</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="all">关 闭 全 部</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <div class="layui-tab-content">
+                <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section js{
+    <script>
+        layui.use(['jquery', 'layer', 'miniAdmin', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                apiUtil = layui.common,
+                miniAdmin = layui.miniAdmin;
+            //"api/init.json?v=12",
+            var options = {
+
+                iniUrl: "menu/load-left-menu-trees", // 初始化接口"menu/load-left-menu-trees",//
+                clearUrl: "user/remove-menu-cache?userId=" + apiUtil.getCurrentUser().id, // 缓存清理接口
+                urlHashLocation: true,      // 是否打开hash定位
+                bgColorDefault: false,      // 主题默认配置
+                multiModule: true,          // 是否开启多模块
+                menuChildOpen: true,       // 是否默认展开菜单
+                loadingTime: 0,             // 初始化加载时间
+                pageAnim: true,             // iframe窗口动画
+                maxTabNum: 15,              // 最大的tab打开数量
+            };
+            miniAdmin.render(options);
+            LoadSite();
+            $("body").on("click", ".setCurrent", function () {
+                var id = $(this).attr("value");
+                var value = $(this).text();
+                console.log("id:" + id);
+                console.log("id2:" + value);
+                setCurrentSite(id, value);
+            })
+            function setCurrentSite(currentSiteId, value) {
+                apiUtil.ajax('tenant/set-current', { id: currentSiteId }, "application/json", "put", function (res) {
+                    if (res.statusCode == 200 && res.success == true) {
+                        LoadSite();
+                        //$("#siteValue").text(value);
+                    } else {
+                        apiUtil.error(res.msg);
+                    }
+                });
+            };
+            $('#modifyPwd').on("click", function () {
+                layer.open({
+                    title: '修改密码',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '360px'],
+                    content: '/sys/user-modify-pwd',
+                    btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+            });
+            $('#baseUserInfo').on("click", function () {
+                layer.open({
+                    title: '基本资料',
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: ['600px', '400px'],
+                    content: '/sys/current-user-info',
+                });
+            });
+            $('.login-out').on("click", function () {
+                $.ajax({
+                    url: "/sys/login?handler=Logout",
+                    type: "get",
+                    success: function (res) {
+                        apiUtil.SessionRemove("globalCurrentUserInfo");
+                        layer.msg('正在处理,即将退出...', function () {
+                            window.location = '/sys/login';
+                        });
+                    }
+                });
+            });
+            function LoadSite() {
+                apiUtil.ajax('tenant/get-list', {}, "application/json", "get", function (res) {
+                    if (res.statusCode == 200 && res.success == true) {
+                        if (res.data != null) {
+                            var html = $("#sitelist").empty(), currentSite = $("#siteValue").empty();
+                            for (var i = 0; i < res.data.length; i++) {
+                                if (res.data[i].isCurrent) {
+                                    // console.log("isCurrent" + res.data[i].isCurrent);
+                                    currentSite.html('<span>' + res.data[i].name + '</span>');
+                                } else {
+                                    html.append(' <dd> <a href="javascript:;" class="setCurrent" value="' + res.data[i].id + '" data-icon="fa fa-gears">' + res.data[i].name + '</a></dd>');
+                                }
+                            }
+                            //layui.form.render('currentSite');
+                            //layui.form.render('html');
+                        }
+                    } else {
+                        apiUtil.error(res.msg);
+                    }
+                });
+            };
+            form.render();
+        });
+    </script>
+}

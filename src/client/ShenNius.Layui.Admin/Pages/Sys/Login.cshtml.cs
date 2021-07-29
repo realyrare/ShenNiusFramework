@@ -107,7 +107,7 @@ namespace ShenNius.Layui.Admin.Pages.Sys
                     return new JsonResult(result);
                 }
                 //¥Ê»®œﬁ
-                _cache.Set($"frontAuthMenu:{result.Data.Id}", result.Data.MenuAuthOutputs);
+                //_cache.Set($"frontAuthMenu:{result.Data.Id}", result.Data.MenuAuthOutputs);
                 var identity = new ClaimsPrincipal(
                    new ClaimsIdentity(new[]
                        {

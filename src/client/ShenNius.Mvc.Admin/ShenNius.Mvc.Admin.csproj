@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\module\ShenNius.Cms.API\ShenNius.Cms.API.csproj" />
+    <ProjectReference Include="..\..\module\ShenNius.Sys.API\ShenNius.Sys.API.csproj" />
+    <ProjectReference Include="..\..\ShenNius.Share.BaseController\ShenNius.Share.BaseController.csproj" />
+  </ItemGroup>
+
+</Project>
