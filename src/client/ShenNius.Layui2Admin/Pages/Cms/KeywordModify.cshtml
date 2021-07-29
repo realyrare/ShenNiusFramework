@@ -1,0 +1,105 @@
+﻿@page
+@model ShenNius.Layui.Admin.Pages.Cms.KeywordModifyModel
+@section css{
+<style>
+    .layui-form-item .layui-input {
+        width: 350px;
+        padding-right: 10px;
+        line-height: 38px;
+    }
+</style>
+}
+<form class="layui-form" action="" lay-filter="keyword-edit">
+    <div class="layuimini-container layuimini-page-anim">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                @if (Model.Id > 0)
+                {
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">添加时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="createTime" readonly class="layui-input">
+                        </div>
+                    </div>
+                }               
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">关键字</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="required" lay-reqtext="关键字不能为空" placeholder="请输入关键字" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">Url</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="url" lay-verify="required" lay-reqtext="关键字链接不能为空" placeholder="关键字链接不能为空" class="layui-input">
+                    </div>
+                </div>                          
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section js{
+    <script>
+
+            layui.use(['form',  'common'], function () {
+                var form = layui.form,
+                    $ = layui.$,
+                    apiUtil = layui.common;
+
+                /**
+                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
+                 */
+                // 当前弹出层，防止ID被覆盖
+                var parentIndex =  parent.layer.getFrameIndex(window.name);
+
+                var id=@Model.Id;
+                if (id > 0) {
+                    apiUtil.ajax('keyword/detail', { id: id }, "application/json", "get", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            form.val("keyword-edit", res.data);
+                        }
+                    });
+                }
+                form.render();
+                //监听提交
+                form.on('submit(saveBtn)', function (data) {
+                    if (data.field.id>0) {
+                        apiUtil.ajax('keyword/modify', data.field, "application/json", "put", function (res) {
+                            //console.log("msg:" + res.msg);
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    } else {
+                        apiUtil.ajax('keyword/add', data.field, "application/json", "post", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    }
+                    return false;
+                });
+                
+            });
+
+    </script>
+
+}
+

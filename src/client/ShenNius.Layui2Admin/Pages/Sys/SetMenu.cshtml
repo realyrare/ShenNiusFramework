@@ -1,0 +1,232 @@
+﻿
+@page
+@model ShenNius.Layui.Admin.Pages.Sys.SetMenuModel
+
+@section css{
+    <style>
+        .layui-table-view {
+            margin-top: 0px;
+        }
+        .layui-col-220 {
+            width: 250px;
+        }
+        .right-col-body {
+            left: 260px;
+        }
+        .list-wall {
+            padding-top: 0px;
+        }
+        .layui-btn {
+            background-color: #409eff;
+        }
+        .shenius-center {
+            padding-top: 6px;
+            text-align: center;
+        }
+        #tree {
+            height: 550px;
+            overflow: auto;
+        }
+        .layui-layer-loading {
+            box-shadow: 0 0px 0px rgba(0, 0, 0, .3) !important;
+        }
+        #open-form {
+            display: none;
+        }
+        .layui-form-select dl {
+            max-height: 150px;
+        }
+        .tips {
+            background-color: #fdf6ec;
+            color: #e6a23c;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .tips i {
+                margin-right: 5px;
+                position: relative;
+                top: 1px;
+            }
+    </style>
+}
+<div class="layui-col-220 fyt-wall">
+    <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
+    <div class="shenius-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
+</div>
+<div class="right-col-body fyt-wall">
+    <div class="list-wall" style="padding-top:10px;">
+        <div class="tips">
+            <i class="layui-icon layui-icon-tips"></i>只有被授权的菜单权限，才能查看具体的按钮功能。
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+</div>
+@section js{
+    <script>
+        layui.use(['table', 'layer', 'jquery', 'tree', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    tree = layui.tree,
+                    apiUtil = layui.common,
+                    form = layui.form;
+                table.render({
+                    elem: '#tablist',
+                    headers: { 'Authorization': 'Bearer ' + apiUtil.getToken() },
+                    url: apiUtil.apiUrl() + 'menu/btn-code',
+                    cols: [
+                        [
+                            { field: 'id', title: 'Id' },
+                            { field: 'name', title: '功能' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    parseData: function (res) {
+                        return {
+                            "code": res.statusCode == 200 ? 0 : -1, //解析接口状态,必须是0 才可以）
+                            "msg": res.msg, //解析提示文本
+                            "count": res.data.length, //解析数据长度
+                            "data": res.data //解析数据列表
+                        };
+                    }
+                });
+
+                var menuId = '', selectIds = '', active = {
+                    initTree() {
+                        apiUtil.ajax('menu/tree-by-role', { roleId: @Model.RoleId }, "application/json", "get", function (res) {
+
+                            if (res.statusCode == 200 && res.success == true) {
+                                tree.render({
+                                    elem: '#tree'
+                                    , data: res.data
+                                    , id: "treeId",
+                                    showCheckbox: true,
+                                    onlyIconControl: true,
+                                    checkChild: false,
+                                    accordion: true,
+                                    showLine: true,
+                                    oncheck: function (obj) {
+                                        menuId = obj.data.id;
+                                        active.reload();
+                                        console.log("当前menuId:" + obj.data.id);
+                                    }
+                                    //, click: function (obj) {
+                                    //    menuId = obj.data.id;
+                                    //    console.log("menuId:" + obj.data);
+                                    //    active.reload();
+                                    //}
+                                });
+                            }
+                        });
+                    },
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                where: {
+                                    menuId: menuId,
+                                    roleId:@Model.RoleId
+                                }
+                            });
+                    },
+                    saveMenu: function () {
+                        var checkedData = tree.getChecked('treeId');
+                        if (checkedData.length == 0) {
+                            layer.msg('请选择授权的功能模块~');
+                            return;
+                        }
+                        selectIds = '';
+                        var strMenu = active.serverArray(checkedData);
+                        //console.log(active.serverArray(checkedData)); return;
+                        //开始提交信息
+                        var index = layer.load(1, {
+                            shade: [0.1, '#fff']
+                        });
+                        apiUtil.ajax("menu/add-permissions", { roleId: @Model.RoleId, menuId: menuId }, "application/json", "post", function (res) {
+                            layer.close(index);
+                            if (res.statusCode === 200 && res.success == true) {
+                                apiUtil.success('菜单保存成功~');
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    },
+                    serverArray(arr) {
+                        for (var item = 0; item < arr.length; item++) {
+                            selectIds += arr[item].id + ",";
+                            if (arr[item].children) {
+                                active.serverArray(arr[item].children)
+                            }
+                        }
+                        return selectIds
+                    }
+                };
+                active.initTree();
+                $('.fyt-wall .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+                //监听授权操作
+                form.on('switch(torole)', function (obj) {
+                    var btnCode = this.value;
+
+                    //开始提交信息
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff']
+                    });
+                    var data = {
+                        roleId: @Model.RoleId,
+                        menuId: menuId,
+                        btnCodeId: btnCode,
+                        status: obj.elem.checked //? true : false
+                    };
+                    $.ajax({
+                        url: apiUtil.apiUrl()+'menu/set-btn-permissions',
+                        type: "post",
+                        headers: {
+                            'Authorization': 'Bearer ' + apiUtil.getToken()
+                        },
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                       dataType: 'json', //服务器返回json格式数据
+                        success: function (res) {
+                            console.log("status" + res.statusCode);
+                            console.log("success" + res.success);
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.close(index);
+                                if (obj.elem.checked) {
+                                    apiUtil.success("授权成功~");
+                                }
+                                else {
+                                    apiUtil.error('取消授权~');
+                                }
+                            } else {
+                                layer.msg(res.msg);
+                                if (obj.elem.checked) {
+                                    obj.elem.checked = false;
+                                } else {
+                                    obj.elem.checked = true;
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            var res = JSON.parse(e.responseText);
+                            console.log(res.statusCode)
+                            apiUtil.error(res.msg);
+                            return;
+                        }
+                    });
+                });
+            });
+    </script>
+
+    <script type="text/html" id="tool">
+        <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
+    </script>
+}
