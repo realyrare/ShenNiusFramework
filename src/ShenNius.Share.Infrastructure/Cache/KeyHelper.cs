@@ -23,6 +23,8 @@
            /// </summary>
             public const string AuthMenu = "authMenu";
 
+            public const string LoginKey = "loginKey";
+
         }
     }
 }
