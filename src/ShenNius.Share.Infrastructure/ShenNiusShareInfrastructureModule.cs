@@ -8,10 +8,12 @@ using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Share.Infrastructure.ImgUpload;
+using System;
 
 namespace ShenNius.Share.Infrastructure
 {
@@ -19,13 +21,18 @@ namespace ShenNius.Share.Infrastructure
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddSwaggerSetup();
-            context.Services.AddAuthorizationSetup(context.Configuration);
+           
+            if (AppSettings.Jwt.Value)
+            {
+                context.Services.AddSwaggerSetup();
+                context.Services.AddAuthorizationSetup(context.Configuration);
+                //注入MiniProfiler
+                context.Services.AddMiniProfiler(options =>
+                    options.RouteBasePath = "/profiler"
+               );
+            }
 
-            //注入MiniProfiler
-            context.Services.AddMiniProfiler(options =>
-                options.RouteBasePath = "/profiler"
-           );
+
 
             //
             context.Services.ConfigureDynamicProxy(o =>
@@ -34,9 +41,9 @@ namespace ShenNius.Share.Infrastructure
             });
 
             //redis和cache配置
-            var RedisConfiguration = context.Configuration.GetSection("Redis");
-            context.Services.Configure<RedisOption>(RedisConfiguration);
-            RedisOption redisOption = RedisConfiguration.Get<RedisOption>();
+            var redisConfiguration = context.Configuration.GetSection("Redis");
+            context.Services.Configure<RedisOption>(redisConfiguration);
+            RedisOption redisOption = redisConfiguration.Get<RedisOption>();
             if (redisOption != null && redisOption.Enable)
             {
                 var options = new RedisCacheOptions
@@ -64,6 +71,7 @@ namespace ShenNius.Share.Infrastructure
 
             context.Services.AddSignalR();
         }
+
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
@@ -75,8 +83,12 @@ namespace ShenNius.Share.Infrastructure
                 //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由
                 routes.MapHub<ChatHub>("/api/chatHub");
             });
-            app.UseMiniProfiler();
-            app.UseSwaggerMiddle();
+            if (AppSettings.Jwt.Value)
+            {
+                app.UseMiniProfiler();
+                app.UseSwaggerMiddle();
+            }
+
 
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
             NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];

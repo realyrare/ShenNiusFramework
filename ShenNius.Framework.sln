@@ -47,8 +47,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Wechat.API", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Mvc.Admin", "src\client\ShenNius.Mvc.Admin\ShenNius.Mvc.Admin.csproj", "{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Layui2Admin", "src\client\ShenNius.Layui2Admin\ShenNius.Layui2Admin.csproj", "{20E84BDD-2B18-4F20-8959-751BFF286EC1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,10 +109,6 @@ Global
 		{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20E84BDD-2B18-4F20-8959-751BFF286EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20E84BDD-2B18-4F20-8959-751BFF286EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20E84BDD-2B18-4F20-8959-751BFF286EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20E84BDD-2B18-4F20-8959-751BFF286EC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,7 +134,6 @@ Global
 		{2631B468-5381-4676-8D86-D616F78D0303} = {94E54389-C585-4526-BE85-0FC56C760FD5}
 		{336505D8-330C-4757-99BE-1D5F5D0EB603} = {BAFEFD43-8009-49AD-812E-6750DED4CE59}
 		{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754} = {1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}
-		{20E84BDD-2B18-4F20-8959-751BFF286EC1} = {1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}

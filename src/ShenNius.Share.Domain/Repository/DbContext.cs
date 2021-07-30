@@ -29,7 +29,6 @@ namespace ShenNius.Share.Domain.Repository
             {
                 string s = exp.Sql;
             };
-
         }
         public SqlSugarClient Db;//用来处理事务多表查询和复杂的操作
     }

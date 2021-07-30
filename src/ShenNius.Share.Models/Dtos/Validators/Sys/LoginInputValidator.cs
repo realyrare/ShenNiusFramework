@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using ShenNius.Share.Models.Dtos.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Validators
 {
-   public class LoginInputValidator : AbstractValidator<LoginInput>
+    public class LoginInputValidator : AbstractValidator<LoginInput>
     {
         public LoginInputValidator()
         {

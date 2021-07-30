@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Infrastructure.Utils;
 using ShenNiusSystem.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
@@ -23,13 +22,6 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
         private readonly ICacheHelper _cacheHelper;
         private readonly ICurrentUserContext _currentUserContext;
 
-        /// <param name="jwtSetting"></param>
-        /// <param name="userService"></param>
-        /// <param name="r_User_RoleService"></param>
-        /// <param name="menuService"></param>
-        /// <param name="cacheHelper"></param>
-        /// <param name="currentUserContext"></param>
-        /// <param name="hubContext"></param>
         public UserController(IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext)
         {
             _userService = userService;
@@ -38,11 +30,12 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             _cacheHelper = cacheHelper;
             _currentUserContext = currentUserContext;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Login()
         {
             var rsaKey = RSACrypt.GetKey();
@@ -51,52 +44,20 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             {
                 throw new FriendlyException("获取登录的公钥和私钥为空");
             }
-            ViewBag.RsaKey = rsaKey;
+            ViewBag.RsaKey = rsaKey[0];
             ViewBag.Number = number;
             //获得公钥和私钥
             _cacheHelper.Set($"{KeyHelper.User.LoginKey}:{number}", rsaKey);
             return View();
         }
-        [HttpPost]
-        public async Task<ApiResult<LoginOutput>> Login(LoginInput loginInput)
+       
+        [HttpGet]
+        public FileResult OnGetVCode()
         {
-            var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
-            if (rsaKey == null)
-            {
-                throw new FriendlyException("登录失败，请刷新浏览器再次登录!");
-            }
-            var result = await _userService.LoginAsync(loginInput);
-            if (result.StatusCode == 500)
-            {
-                result.Data = new LoginOutput();
-                return result;
-            }
-            //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
-            var menuAuths = await _menuService.GetCurrentAuthMenus(result.Data.Id);
-            if (menuAuths == null || menuAuths.Count == 0)
-            {
-                throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
-            }
-            result.Data.MenuAuthOutputs = menuAuths;
-            var identity = new ClaimsPrincipal(
-               new ClaimsIdentity(new[]
-                   {
-                              new Claim(ClaimTypes.Sid,result.Data.Id.ToString()),
-                              new Claim(ClaimTypes.Name,result.Data.LoginName),
-                              new Claim(ClaimTypes.WindowsAccountName,result.Data.LoginName),
-                              new Claim(ClaimTypes.UserData,result.Data.LoginTime.ToString()),
-                              new Claim("mobile",result.Data.Mobile),
-                              new Claim("trueName",result.Data.TrueName)
-                   }, CookieAuthenticationDefaults.AuthenticationScheme)
-              );
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
-            {
-                ExpiresUtc = DateTime.UtcNow.AddHours(24),
-                IsPersistent = true,
-                AllowRefresh = false
-            });
-            _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
-            return result;
+            var vcode = VerifyCode.CreateRandomCode(4);
+            HttpContext.Session.SetString("vcode", vcode);
+            var img = VerifyCode.DrawImage(vcode, 20, Color.White);
+            return File(img, "image/gif");
         }
         [HttpGet]
         public async Task Logout()

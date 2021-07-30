@@ -19,57 +19,50 @@
             toastr.success(msg);
         },
         apiUrl() {
-            return "https://localhost:44377/api/";
+            return "api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
-            var token = this.getToken();
+
             options = method === 'get' ? options : JSON.stringify(options);
             var type = contentType != "application/json" ? "application/x-www-form-urlencoded" : contentType;
-            //console.log(options);
             $.ajax(tool.apiUrl() + url, {
                 data: options,
                 contentType: type,
                 dataType: 'json', //服务器返回json格式数据
-                type: method, //HTTP请求类型
-                //timeout: 10 * 2000, //超时时间设置为50秒；
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
+                type: method, //HTTP请求类型  
                 success: function (data) {
                     callFun(data);
                 },
                 error: function (e) {
                     //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
                     //$.parseJSON 进行转译    res.msg 是自己组装的错误信息通用变量 
-                    var res = JSON.parse(e.responseText);
-                    console.log("erro object:" + e.responseText);
-                    if (res.statusCode == 401) {
-                        toastr.warning(res.msg);
-                        setTimeout(function () {
-                            window.location.href = "/sys/login";
-                        }, 500)
-                        return;
+                    if (e.responseText != null) {
+                        var res = JSON.parse(e.responseText);
+                        console.log("erro object:" + e.responseText);
+                        if (res.statusCode == 401) {
+                            toastr.warning(res.msg);
+                            setTimeout(function () {
+                                window.location.href = "/user/login";
+                            }, 500)
+                            return;
+                        }
+                        if (res.statusCode == 500) {
+                            toastr.error(res.msg);
+                            return;
+                        }
+                        if (res.statusCode == 400) {
+                            toastr.error(res.msg);
+                            return;
+                        }
                     }
-                    if (res.statusCode == 500) {
-                        toastr.error(res.msg);
-                        return;
-                    }
-                    if (res.statusCode == 400) {
-                        toastr.error(res.msg);
-                        return;
-                    }
+                    
                     this.error('连接异常，请稍后重试！');
                     return;
                 }
             });
         },
         render: function (obj) {
-            var token = this.getToken();
-            obj.headers = {
-                'Authorization': 'Bearer ' + token,
-                'cache-control': 'no-cache',
-                'Pragma': 'no-cache'
-            };
+           
             obj.url = this.apiUrl() + obj.url;
             if (obj.limits == null || obj.limits == "") {
                 obj.limits = [10, 15, 20, 25, 50, 100];
@@ -136,10 +129,6 @@
                 return false;
             }
         },
-        getToken: function () {
-            var obj = tool.GetSession('globalCurrentUserInfo');
-            return obj.token;
-        },
         getCurrentUser: function () {
             var currentUser = tool.GetSession('globalCurrentUserInfo');
             return currentUser;
@@ -172,7 +161,7 @@
                 if (obj == "" || obj == null || obj == undefined) {
                     toastr.error("token信息丢失,即将跳入登陆页面...");
                     setTimeout(function () {
-                        window.location.href = "/sys/login";
+                        window.location.href = "/user/login";
                     }, 500)
                     return;
                 }
