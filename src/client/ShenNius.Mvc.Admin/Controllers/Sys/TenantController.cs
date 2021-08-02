@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Models.Entity.Sys;
+using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
     public class TenantController : Controller
     {
+        private readonly ITenantService _tenantService;
+
+        public TenantController(ITenantService tenantService)
+        {
+            this._tenantService = tenantService;
+        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -11,9 +20,18 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
         }
         //
         [HttpGet]
-        public IActionResult Modify()
+        public async Task<IActionResult> Modify(int id = 0)
         {
-            return View();
+            Tenant tenant = null;
+            if (id == 0)
+            {
+                tenant = new Tenant();
+            }
+            else
+            {
+                tenant = await _tenantService.GetModelAsync(d => d.Id == id && d.IsDel == false);
+            }
+            return View(tenant);
         }
     }
 }

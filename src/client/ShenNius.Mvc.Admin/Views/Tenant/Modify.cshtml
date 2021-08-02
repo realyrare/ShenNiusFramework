@@ -1,4 +1,5 @@
-﻿@section css{
+﻿@model ShenNius.Share.Models.Entity.Sys.Tenant
+@section css{
     <style>
         .layui-form-item .layui-input {
             width: 350px;
@@ -39,43 +40,43 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">站点名称:</label>
                         <div class="layui-input-block">
-                            <input type="text" placeholder="请填写站点名称" name="name" class="layui-input" value="@Model.SiteOutput.Name" lay-verify="name" required />
+                            <input type="text" placeholder="请填写站点名称" name="name" class="layui-input" value="@Model.Name" lay-verify="name" required />
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">站点域名:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="url" placeholder="请填写入站点域名" value="@Model.SiteOutput.Url" class="layui-input" lay-verify="url" required>
+                            <input type="text" name="url" placeholder="请填写入站点域名" value="@Model.Url" class="layui-input" lay-verify="url" required>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">版权:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="copyright" placeholder="请填写版权" value="@Model.SiteOutput.Copyright" class="layui-input" lay-verify="copyright">
+                            <input type="text" name="copyright" placeholder="请填写版权" value="@Model.Copyright" class="layui-input" lay-verify="copyright">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">标题:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" placeholder="请填写入站点标题" value="@Model.SiteOutput.Title" class="layui-input" lay-verify="title" required>
+                            <input type="text" name="title" placeholder="请填写入站点标题" value="@Model.Title" class="layui-input" lay-verify="title" required>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">关键字:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="keyword" placeholder="请填写入站点关键字" value="@Model.SiteOutput.Keyword" class="layui-input" lay-verify="keyword" required>
+                            <input type="text" name="keyword" placeholder="请填写入站点关键字" value="@Model.Keyword" class="layui-input" lay-verify="keyword" required>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">描述:</label>
                         <div class="layui-input-block">
-                            <textarea name="description" placeholder="请输入备注" value="@Model.SiteOutput.Description" class="layui-textarea"></textarea>
+                            <textarea name="description" placeholder="请输入备注" value="@Model.Description" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">是否关闭</label>
                         <div class="layui-input-block">
-                            @if (Model.SiteOutput.Status)
+                            @if (Model.Status)
                             {
                                 <input type="checkbox" checked name="status" value="true" lay-skin="switch">
                             }
@@ -88,7 +89,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">关闭原因:</label>
                         <div class="layui-input-block">
-                            <textarea name="closeInfo" placeholder="请输入关闭原因" value="@Model.SiteOutput.CloseInfo" class="layui-textarea"></textarea>
+                            <textarea name="closeInfo" placeholder="请输入关闭原因" value="@Model.CloseInfo" class="layui-textarea"></textarea>
                         </div>
                     </div>
                 </div>
@@ -97,37 +98,37 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">公司电话:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="tel" placeholder="请填写入公司电话" value="@Model.SiteOutput.Tel" class="layui-input" lay-verify="tel">
+                            <input type="text" name="tel" placeholder="请填写入公司电话" value="@Model.Tel" class="layui-input" lay-verify="tel">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">公司传真:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="fax" placeholder="请填写入公司传真" value="@Model.SiteOutput.Fax" class="layui-input" lay-verify="fax">
+                            <input type="text" name="fax" placeholder="请填写入公司传真" value="@Model.Fax" class="layui-input" lay-verify="fax">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">联系邮箱:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="email" placeholder="请填写入联系邮箱" value="@Model.SiteOutput.Email" class="layui-input" lay-verify="email">
+                            <input type="text" name="email" placeholder="请填写入联系邮箱" value="@Model.Email" class="layui-input" lay-verify="email">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">联系地址:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="address" placeholder="请填写入公司联系地址" value="@Model.SiteOutput.Address" class="layui-input" lay-verify="address">
+                            <input type="text" name="address" placeholder="请填写入公司联系地址" value="@Model.Address" class="layui-input" lay-verify="address">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">客服QQ:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="qQ" placeholder="请填写入公司客服QQ" value="@Model.SiteOutput.QQ" class="layui-input" lay-verify="qQ">
+                            <input type="text" name="qQ" placeholder="请填写入公司客服QQ" value="@Model.QQ" class="layui-input" lay-verify="qQ">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">备注:</label>
                         <div class="layui-input-block">
-                            <textarea name="summary" placeholder="请输入备注" value="@Model.SiteOutput.Summary" class="layui-textarea"></textarea>
+                            <textarea name="summary" placeholder="请输入备注" value="@Model.Summary" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -135,10 +136,10 @@
                         <div class="layui-upload">
                             <button type="button" class="layui-btn" id="test1">上传图片</button>
                             <div class="layui-upload-list">
-                                @if (!string.IsNullOrEmpty(Model.SiteOutput.WeiXin))
+                                @if (!string.IsNullOrEmpty(Model.WeiXin))
                                 {
-                                    <img class="layui-upload-img" id="demo1" src="@Model.SiteOutput.WeiXin">
-                                    <input type="hidden" id="weiXin" name="weiXin" class="layui-input" value="@Model.SiteOutput.WeiXin">
+                                    <img class="layui-upload-img" id="demo1" src="@Model.WeiXin">
+                                    <input type="hidden" id="weiXin" name="weiXin" class="layui-input" value="@Model.WeiXin">
                                 }
                                 else
                                 {
@@ -153,7 +154,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">微博:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="weiBo" placeholder="请填写入公司微博" value="@Model.SiteOutput.WeiBo" class="layui-input" lay-verify="weiBo">
+                            <input type="text" name="weiBo" placeholder="请填写入公司微博" value="@Model.WeiBo" class="layui-input" lay-verify="weiBo">
                         </div>
                     </div>
                 </div>

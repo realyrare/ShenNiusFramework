@@ -18,13 +18,13 @@ namespace ShenNius.Layui.Admin.Pages.Sys
         [BindProperty]
         public int Id { get; set; }
         [BindProperty]
-        public SiteOutput SiteOutput { get; set; } = new SiteOutput();
+        public TenantOutput SiteOutput { get; set; } = new TenantOutput();
         public async Task OnGet(int id, string token)
         {
             Id = id;
             if (!string.IsNullOrEmpty(token))
             {
-                var result = await _httpHelper.GetAsync<ApiResult<SiteOutput>>($"tenant/detail?id={id}", token);
+                var result = await _httpHelper.GetAsync<ApiResult<TenantOutput>>($"tenant/detail?id={id}", token);
                 if (result != null && result.Success && result.StatusCode == 200)
                 {
                     SiteOutput = result.Data;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：SiteModifyInput
@@ -14,7 +12,7 @@ using System.Web;
 
 namespace ShenNius.Layui.Admin.Model.Output
 {
-    public class SiteOutput
+    public class TenantOutput
     {
         public int Id { get; set; }
 

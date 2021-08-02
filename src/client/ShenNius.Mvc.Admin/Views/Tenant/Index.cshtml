@@ -23,8 +23,7 @@
     </script>
     <script>
         layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
-            var $ = layui.jquery,
-                form = layui.form,
+            var form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
                 layer = layui.layer;
@@ -103,7 +102,7 @@
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/tenant/modify';
-                    var index = layer.open({
+                   layer.open({
                         title: '添加站点',
                         type: 2,
                         shade: 0.2,
@@ -126,7 +125,7 @@
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
                             apiUtil.ajax('tenant/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                                 if (res.statusCode == 200 && res.success == true) {
-                                    layer.msg(res.msg);
+                                    apiUtil.success(res.msg);
                                     layer.close(index);
                                     refeshTable();
                                 } else {
@@ -150,7 +149,7 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var content = '/tenant/modify?id=' + data.id + '&token=' + apiUtil.getToken();;
-                    var index = layer.open({
+                    layer.open({
                         title: '编辑站点',
                         // tips: [1, '#c00'],
                         type: 2,
@@ -169,7 +168,7 @@
                         listIds[0] = data.id;
                         apiUtil.ajax('tenant/deletes', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
-                                layer.msg(res.msg);
+                                apiUtil.success(res.msg);
                                 layer.close(index);
                                 refeshTable();
                             } else {
