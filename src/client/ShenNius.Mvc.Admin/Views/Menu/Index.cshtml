@@ -126,8 +126,8 @@
              */
             table.on('toolbar(currentTableFilter)', function (obj) {
                 if (obj.event === 'add') {
-                    var content = '/sys/menu-modify?token=' + apiUtil.getToken();
-                    var index = layer.open({
+                    var content = '/menu/modify';
+                    layer.open({
                         title: '添加菜单',
                         type: 2,
                         shade: 0.2,
@@ -174,7 +174,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/sys/menu-modify?id=' + data.id + '&token=' + apiUtil.getToken();
+                    var content = '/menu/modify?id='+ data.id;
                     var index = layer.open({
                         title: '编辑菜单',
                         type: 2,
