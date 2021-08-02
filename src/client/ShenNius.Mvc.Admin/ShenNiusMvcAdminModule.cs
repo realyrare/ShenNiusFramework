@@ -16,6 +16,7 @@ using ShenNius.Cms.API;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Sys.API;
 using System.Linq;
 using System.Reflection;
@@ -41,6 +42,7 @@ namespace ShenNius.Mvc.Admin
                 o.LoginPath = new PathString("/user/login");
                 o.Cookie.HttpOnly = true;
             });
+            context.Services.AddSignalR();
             var mvcBuilder = context.Services.AddControllersWithViews();
 
 
@@ -57,9 +59,8 @@ namespace ShenNius.Mvc.Admin
             // 路由配置
             context.Services.AddRouting(options =>
             {
-                options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
                 // 设置URL为小写
-                options.LowercaseUrls = true;
+                // options.LowercaseUrls = true;
                 // 在生成的URL后面添加斜杠
                 options.AppendTrailingSlash = true;
                 options.LowercaseQueryStrings = true;
@@ -126,15 +127,14 @@ namespace ShenNius.Mvc.Admin
             app.UseEndpoints(endpoints =>
             {
                 //全局路由配置
-                //endpoints.MapControllerRoute(
-                //     name: "default",
-                //       pattern: "{controller=Home}/{action=Index}/{id?}"
-
-                //    );
                 endpoints.MapControllerRoute(
-                 name: "default",
-                 pattern: "{controller:slugify}/{action:slugify}/{id:slugify?}",
-                 defaults: new { controller = "Home", action = "Index" });
+                     name: "default",
+                       pattern: "{controller=Home}/{action=Index}/{id?}"
+
+                    );
+                //这里要说下，为啥地址要写 /api/xxx 
+                //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由
+                endpoints.MapHub<ChatHub>("/api/chatHub");
             });
         }
     }

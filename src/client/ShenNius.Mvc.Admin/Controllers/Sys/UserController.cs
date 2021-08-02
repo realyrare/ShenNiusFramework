@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
-    public class UserController : Controller
+    public partial class UserController : Controller
     {
         private readonly IUserService _userService;
         private readonly IR_User_RoleService _r_User_RoleService;
@@ -30,8 +30,37 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             _cacheHelper = cacheHelper;
             _currentUserContext = currentUserContext;
         }
+        /// <summary>
+        /// 用户首页列表
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 设置角色
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult SetRole()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Modify()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ModifyPwd()
+        {
+            return View();
+        }
+        //
+        [HttpGet]
+        public IActionResult CurrentUserInfo()
         {
             return View();
         }

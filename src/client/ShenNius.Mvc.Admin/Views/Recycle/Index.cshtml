@@ -7,9 +7,9 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户名</label>
+                            <label class="layui-form-label">内容</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userName" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -22,8 +22,6 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="setRole" onclick="existAuth('auth')"> 设置角色 </button>
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
             </div>
         </script>
@@ -31,7 +29,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('edit')">编辑</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-restore" lay-event="restore" onclick="existAuth('restore')">还原</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('delete')">删除</a>
         </script>
 
@@ -40,7 +38,7 @@
 
 @section js{
     <script>
-        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
+        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
@@ -53,11 +51,11 @@
                  第二个参数是按钮名称和数据库的btnName也要对应的;
                  event 阻止事件冒泡；
                 */
-                apiUtil.checkAuth("user", btnName, event);
+                apiUtil.checkAuth("recycle", btnName, event);
             };
-            apiUtil.render({
+            var tableIns = apiUtil.render({
                 elem: '#currentTableId',
-                url: 'user/getListPages',
+                url: 'recycle/get-list-pages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -76,15 +74,11 @@
                 },
                 cols: [[
                     { type: "checkbox", width: 50 },
-                    { field: 'id', width: 80, title: 'ID', sort: true },
-                    { field: 'name', width: 80, title: '用户名' },
-                    { field: 'trueName', title: '真实姓名' },
-                    { field: 'ip', width: 80, title: 'IP' },
-                    { field: 'address', width: 120, title: '地址' },
-                    { field: 'email', width: 120, title: '邮箱' },
-                    { field: 'mobile', width: 120, title: '手机号' },
+                    { field: 'id', title: 'ID', sort: true },
+                    { field: 'tableType', title: '业务类型' },
+                    { field: 'remark', title: '操作内容' },
                     { field: 'createTime', title: '创建时间' },
-                    { field: 'lastLoginTime', title: '最后登录时间' },
+
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
                 ]],
                 parseData: function (res) {
@@ -94,126 +88,79 @@
 
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
+                //var result = JSON.stringify(data.field);
+
                 //执行搜索重载
                 table.reload('currentTableId', {
                     page: {
                         curr: 1
                     }
                     , where: {
-                        key: data.field.userName
+                        key: data.field.title
                     }
                 }, 'data');
                 return false;
             });
 
-            function refeshTable() {
-                table.reload('currentTableId', {
-                    page: {
-                        curr: 1
-                    }
-                }, 'data');
-            };
-            /**
             /**
              * toolbar事件监听
              */
             table.on('toolbar(currentTableFilter)', function (obj) {
-                var checkStatus = table.checkStatus('currentTableId'), data = checkStatus.data;
-                if (obj.event === 'add') {
-                    var content = '/user/Modify';
-                    var index = layer.open({
-                        title: '添加用户',
-                        type: 2,
-                        shade: 0.2,
-                        //maxmin:true,
-                        shadeClose: false,
-                        area: ['660px', '580px'],
-                        zIndex: "10000",
-                        content: content,
-                        end: function () {
-                            refeshTable();
-                        }
-                    });
-
-                } else if (obj.event === 'delete') {  // 监听删除操作
-
-                    var listIds = [];
+                if (obj.event === 'delete') {  // 监听删除操作
+                    var checkStatus = table.checkStatus('currentTableId')
+                        , data = checkStatus.data,
+                        listIds = [];
                     if (data.length > 0) {
                         for (var i in data) {
-                            listIds.push(data[i].id);
+                            listIds.push(data[i].id)
                         }
+                        // console.log("listIds:" + listIds);
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                            apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                            apiUtil.ajax('recycle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                                console.log(res.msg);
                                 if (res.statusCode == 200 && res.success == true) {
                                     layer.msg(res.msg);
                                     layer.close(index);
-                                    refeshTable();
+                                    parent.location.reload();
                                 } else {
                                     layer.msg(res.msg);
                                 }
                             });
-                        })
+                        });
                     } else {
                         layer.msg("请选择需要删除的数据");
                     }
-                } else if (obj.event === 'setRole') {
-                    if (data.length <= 0) {
-                        layer.msg("请选择需要操作的数据");
-                        return;
-                    }
-                    if (data.length >= 2) {
-                        layer.msg("请选择一位用户进行角色分配");
-                        return;
-                    }
-                    var content = '/user/setRole?id=' + data[0].id;
-                    var index = layer.open({
-                        title: '设置角色',
-                        type: 2,
-                        shade: 0.2,
-                        maxmin: true,
-                        shadeClose: true,
-                        area: ['660px', '580px'],
-                        content: content,
-                        end: function () {
-                            refeshTable();
-                        },
-                        btn: ['确定', '关闭']
-                    });
                 }
             });
 
             //监听表格复选框选择
-            table.on('checkbox(currentTableFilter)', function (obj) {
-                console.log(obj)
-            });
 
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
-                if (obj.event === 'edit') {
-                    var content = '/user/Modify?id=' + data.id;
-                    var index = layer.open({
-                        title: '编辑用户',
-                        // tips: [1, '#c00'],
-                        type: 2,
-                        shade: 0.2,
-                        maxmin: true,
-                        shadeClose: true,
-                        area: ['680px', '600px'],
-                        content: content,
-                        end: function () {
-                            refeshTable();
-                        }
-                    });
-                    return false;
-                } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除吗', function (index) {
+                if (obj.event === 'restore') {
+                    layer.confirm('确定还原吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('user/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('recycle/restore', { ids: listIds }, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
-                                refeshTable();
+                                parent.location.reload();
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    });
+                    return false;
+                } else if (obj.event === 'delete') {
+                    layer.confirm('真的删除行么', function (index) {
+                        var listIds = new Array();
+                        listIds[0] = data.id;
+                        apiUtil.ajax('recycle/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.msg(res.msg);
+                                layer.close(index);
+                                parent.location.reload();
                             } else {
                                 layer.msg(res.msg);
                             }
@@ -221,6 +168,7 @@
                     });
                 }
             });
+
         });
     </script>
 }

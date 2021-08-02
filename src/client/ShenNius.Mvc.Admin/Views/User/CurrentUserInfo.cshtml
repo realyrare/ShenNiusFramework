@@ -1,0 +1,54 @@
+﻿
+@section css{
+    <style>
+        .layui-form-item .layui-input-company {
+            width: auto;
+            padding-right: 10px;
+            line-height: 38px;
+        }
+
+        .layui-form-item .layui-input {
+            width: 350px;
+            padding-right: 10px;
+            line-height: 38px;
+        }
+    </style>
+}
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <div class="layui-form layuimini-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">用户Id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="currentUserId" readonly value="@Model.CurrentUserId" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.CurrentUserName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">真实姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.TrueName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">手机</label>
+                <div class="layui-input-block">
+                    <input type="number" name="phone" readonly lay-reqtext="手机不能为空" placeholder="请输入手机" value="@Model.Mobile" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="email" name="email" readonly placeholder="请输入邮箱" value="@Model.Email" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

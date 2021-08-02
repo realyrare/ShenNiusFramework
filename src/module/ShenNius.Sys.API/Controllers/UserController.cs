@@ -213,7 +213,7 @@ namespace ShenNius.Sys.API.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody]LoginInput loginInput)
+        public async Task<ApiResult<LoginOutput>> MvcLogin([FromForm]LoginInput loginInput)
         {
             var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput?.NumberGuid}");
             if (rsaKey == null)

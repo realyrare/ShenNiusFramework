@@ -36,7 +36,7 @@ layui.use(['jquery', 'form', 'common'], function () {
         $.ajax({
             url: "/api/user/mvcLogin",
             type: "post",
-            contentType: "application/json",
+            contentType: "application/x-www-form-urlencoded",
             data: data.field,
             success: function (res) {
                 console.log("resmsg:" + res.msg);

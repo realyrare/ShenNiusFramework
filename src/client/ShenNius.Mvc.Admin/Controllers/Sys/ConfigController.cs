@@ -8,5 +8,9 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
         {
             return View();
         }
+        public IActionResult Modify()
+        {
+            return View();
+        }
     }
 }

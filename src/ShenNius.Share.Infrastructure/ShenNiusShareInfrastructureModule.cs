@@ -11,9 +11,7 @@ using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Share.Infrastructure.ImgUpload;
-using System;
 
 namespace ShenNius.Share.Infrastructure
 {
@@ -21,19 +19,15 @@ namespace ShenNius.Share.Infrastructure
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
-           
+            context.Services.AddSwaggerSetup();
+            //注入MiniProfiler
+            context.Services.AddMiniProfiler(options =>
+                options.RouteBasePath = "/profiler"
+           );
             if (AppSettings.Jwt.Value)
             {
-                context.Services.AddSwaggerSetup();
                 context.Services.AddAuthorizationSetup(context.Configuration);
-                //注入MiniProfiler
-                context.Services.AddMiniProfiler(options =>
-                    options.RouteBasePath = "/profiler"
-               );
             }
-
-
-
             //
             context.Services.ConfigureDynamicProxy(o =>
             {
@@ -68,28 +62,14 @@ namespace ShenNius.Share.Infrastructure
             //注入MediatR
             //https://www.cnblogs.com/sheng-jie/p/10280336.html
             context.Services.AddMediatR(typeof(ShenNiusShareInfrastructureModule));
-
-            context.Services.AddSignalR();
+            
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
-
-            //我这个放到了 Mvc 管道下边，注意顺序
-            app.UseSignalR(routes =>
-            {
-                //这里要说下，为啥地址要写 /api/xxx 
-                //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由
-                routes.MapHub<ChatHub>("/api/chatHub");
-            });
-            if (AppSettings.Jwt.Value)
-            {
-                app.UseMiniProfiler();
-                app.UseSwaggerMiddle();
-            }
-
-
+            app.UseMiniProfiler();
+            app.UseSwaggerMiddle();
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
             NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
         }
