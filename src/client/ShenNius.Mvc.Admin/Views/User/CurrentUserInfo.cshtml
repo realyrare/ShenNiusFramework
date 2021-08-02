@@ -1,4 +1,4 @@
-﻿
+﻿@model UserOutput
 @section css{
     <style>
         .layui-form-item .layui-input-company {
@@ -21,13 +21,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label required">用户Id</label>
                 <div class="layui-input-block">
-                    <input type="text" name="currentUserId" readonly value="@Model.CurrentUserId" class="layui-input">
+                    <input type="text" name="currentUserId" readonly value="@Model.Id" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.CurrentUserName" class="layui-input">
+                    <input type="text" name="username" readonly lay-reqtext="管理账号不能为空" placeholder="请输入管理账号" value="@Model.Name" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">

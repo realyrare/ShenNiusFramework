@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    ViewData["Title"] = "修改密码";
+}
 @section css{
     <style>
         .layui-form-item .layui-input-company {
@@ -49,7 +51,7 @@
 </div>
 @section js{
     <script>
-        layui.use(['form', 'common', 'layer','jquery'], function () {
+        layui.use(['form', 'common', 'layer', 'jquery'], function () {
             var form = layui.form,
                 layer = layui.layer,
                 $ = layui.jquery,

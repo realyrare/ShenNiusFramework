@@ -121,11 +121,10 @@
                 var checkStatus = table.checkStatus('currentTableId'), data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/user/Modify';
-                    var index = layer.open({
+                     layer.open({
                         title: '添加用户',
                         type: 2,
                         shade: 0.2,
-                        //maxmin:true,
                         shadeClose: false,
                         area: ['660px', '580px'],
                         zIndex: "10000",
@@ -166,7 +165,7 @@
                         return;
                     }
                     var content = '/user/setRole?id=' + data[0].id;
-                    var index = layer.open({
+                     layer.open({
                         title: '设置角色',
                         type: 2,
                         shade: 0.2,
@@ -191,7 +190,7 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var content = '/user/Modify?id=' + data.id;
-                    var index = layer.open({
+                    layer.open({
                         title: '编辑用户',
                         // tips: [1, '#c00'],
                         type: 2,

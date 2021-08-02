@@ -7,9 +7,15 @@ using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Cache;
 using ShenNius.Share.Infrastructure.Extension;
 using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNiusSystem.Common;
 using System;
 using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
@@ -49,20 +55,42 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             return View();
         }
         [HttpGet]
-        public IActionResult Modify()
+        public async Task<IActionResult> Modify(int id=0)
         {
-            return View();
+            User model = null;
+            if (id == 0)
+            {
+                model = new User();
+            }
+            else
+            {
+                model = await _userService.GetModelAsync(d => d.Id == id&&d.Status);
+            }            
+            return View(model);
         }
         [HttpGet]
         public IActionResult ModifyPwd()
         {
             return View();
         }
-        //
+
         [HttpGet]
         public IActionResult CurrentUserInfo()
         {
-            return View();
+            UserOutput userOutput = new UserOutput();
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                userOutput.Name = HttpContext.User.Identity.Name;
+                userOutput.Id =Convert.ToInt32( HttpContext.User.Claims.Where(d => d.Type == JwtRegisteredClaimNames.Sid).Select(d => d.Value).FirstOrDefault());
+                userOutput. Mobile = HttpContext.User.Claims.Where(d => d.Type == "mobile").Select(d => d.Value).FirstOrDefault();
+                userOutput. Email = HttpContext.User.Claims.Where(d => d.Type == ClaimTypes.Email).Select(d => d.Value).FirstOrDefault();
+                userOutput.TrueName = HttpContext.User.Claims.Where(d => d.Type == "trueName").Select(d => d.Value).FirstOrDefault();
+            }
+            else
+            {
+                Redirect("/user/login");
+            }
+            return View(userOutput);
         }
         [HttpGet, AllowAnonymous]
         public IActionResult Login()
@@ -79,7 +107,7 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             _cacheHelper.Set($"{KeyHelper.User.LoginKey}:{number}", rsaKey);
             return View();
         }
-       
+
         [HttpGet]
         public FileResult OnGetVCode()
         {

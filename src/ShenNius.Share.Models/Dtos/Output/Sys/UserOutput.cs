@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Models.Dtos.Input
+﻿namespace ShenNius.Share.Models.Dtos.Output.Sys
 {
-   public class UserOutput
+    public class UserOutput
     {
        
-        //public int Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 登录账号
