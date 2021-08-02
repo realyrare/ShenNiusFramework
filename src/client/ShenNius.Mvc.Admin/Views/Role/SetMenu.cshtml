@@ -82,8 +82,7 @@
                     apiUtil = layui.common,
                     form = layui.form;
                 table.render({
-                    elem: '#tablist',
-                    headers: { 'Authorization': 'Bearer ' + apiUtil.getToken() },
+                    elem: '#tablist',                   
                     url: apiUtil.apiUrl() + 'menu/btn-code',
                     cols: [
                         [
@@ -195,13 +194,10 @@
                     };
                     $.ajax({
                         url: apiUtil.apiUrl()+'menu/setBtnPermissions',
-                        type: "post",
-                        headers: {
-                            'Authorization': 'Bearer ' + apiUtil.getToken()
-                        },
+                        type: "post",                       
                         data: JSON.stringify(data),
                         contentType: "application/json",
-                       dataType: 'json', //服务器返回json格式数据
+                        dataType: 'json', //服务器返回json格式数据
                         success: function (res) {
                             console.log("status" + res.statusCode);
                             console.log("success" + res.success);

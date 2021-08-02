@@ -1,4 +1,4 @@
-﻿
+﻿@model Role
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -28,14 +28,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="createTime" readonly class="layui-input">
+                            <input type="text" name="createTime" value="@Model.CreateTime.ToString("yyyy-MM-dd:HH:mm:ss")" readonly class="layui-input">
                         </div>
                     </div>
                 }
                 <div class="layui-form-item">
                     <label class="layui-form-label required">角色名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" class="layui-input">
+                        <input type="text" name="name"  value="@Model.Name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" class="layui-input">
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">备注信息</label>
                     <div class="layui-input-block">
-                        <textarea name="description" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="description" value="@Model.Description" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
 
@@ -71,13 +71,7 @@
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
 
                 var id=@Model.Id;
-                if (id > 0) {
-                    apiUtil.ajax('role/detail', { id: id }, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            form.val("role-edit", res.data);
-                        }
-                    });
-                }
+              
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
