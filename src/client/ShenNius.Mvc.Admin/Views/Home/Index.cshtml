@@ -127,8 +127,8 @@
             //"api/init.json?v=12",
             var options = {
 
-                iniUrl: "menu/load-left-menu-trees", // 初始化接口"menu/load-left-menu-trees",//
-                clearUrl: "user/remove-menu-cache?userId=" + apiUtil.getCurrentUser().id, // 缓存清理接口
+                iniUrl: "menu/LoadLeftMenuTrees", // 初始化接口"menu/load-left-menu-trees",//
+                clearUrl: "user/removeMenuCache?userId=" + apiUtil.getCurrentUser().id, // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
                 bgColorDefault: false,      // 主题默认配置
                 multiModule: true,          // 是否开启多模块
@@ -147,7 +147,7 @@
                 setCurrentSite(id, value);
             })
             function setCurrentSite(currentSiteId, value) {
-                apiUtil.ajax('tenant/set-current', { id: currentSiteId }, "application/json", "put", function (res) {
+                apiUtil.ajax('tenant/setCurrent', { id: currentSiteId }, "application/json", "put", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         LoadSite();
                         //$("#siteValue").text(value);
@@ -176,23 +176,23 @@
                     shade: 0.2,
                     shadeClose: true,
                     area: ['600px', '400px'],
-                    content: '/sys/current-user-info',
+                    content: '/sys/currentUserInfo',
                 });
             });
             $('.login-out').on("click", function () {
                 $.ajax({
-                    url: "/sys/login?handler=Logout",
+                    url: "/user/Logout",
                     type: "get",
                     success: function (res) {
                         apiUtil.SessionRemove("globalCurrentUserInfo");
                         layer.msg('正在处理,即将退出...', function () {
-                            window.location = '/sys/login';
+                            window.location = '/user/login';
                         });
                     }
                 });
             });
             function LoadSite() {
-                apiUtil.ajax('tenant/get-list', {}, "application/json", "get", function (res) {
+                apiUtil.ajax('tenant/getList', {}, "application/json", "get", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         if (res.data != null) {
                             var html = $("#sitelist").empty(), currentSite = $("#siteValue").empty();

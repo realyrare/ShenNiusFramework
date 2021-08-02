@@ -34,7 +34,7 @@ layui.use(['jquery', 'form', 'common'], function () {
         $("#btnlogin").text("正在登陆中...");
         $("#btnlogin").attr('disabled', 'disabled');
         $.ajax({
-            url: "/sys/login?handler=submit",
+            url: "/api/user/mvcLogin",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: data.field,
@@ -50,10 +50,10 @@ layui.use(['jquery', 'form', 'common'], function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
                         if (!rurl) {
-                            window.location.href = '/index';
+                            window.location.href = '/home.html';
                         }
                         else {
-                            window.location.href = "/index#" + rurl;
+                            window.location.href = "/home.html#" + rurl;
                         }
                     }, 500);
                 } else {

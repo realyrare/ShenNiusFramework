@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 
 namespace ShenNius.Share.Infrastructure.Configurations
@@ -22,9 +23,13 @@ namespace ShenNius.Share.Infrastructure.Configurations
                 .AddJsonFile("appsettings.json", true, true);
             _config = builder.Build();
         }
+        public static class Jwt
+        {
+            public static bool Value => !string.IsNullOrEmpty(_config["JwtConfig:IsEnable"]) ? Convert.ToBoolean(_config["JwtConfig:IsEnable"]) : true;
+        }
         public static class Db
         {
-            public static  string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
+            public static string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
         }
         public static class DbTable
         {

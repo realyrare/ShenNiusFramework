@@ -5,7 +5,7 @@ using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Sys;
-
+using ShenNius.Share.Models.Dtos.Output.Sys;
 namespace ShenNius.Share.Domain
 {
     public class AutomapperProfile : Profile

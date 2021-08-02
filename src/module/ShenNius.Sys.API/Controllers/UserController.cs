@@ -212,6 +212,54 @@ namespace ShenNius.Sys.API.Controllers
             return result;
         }
 
+        [HttpPost, AllowAnonymous]
+        public async Task<ApiResult<LoginOutput>> MvcLogin([FromForm]LoginInput loginInput)
+        {
+            var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput?.NumberGuid}");
+            if (rsaKey == null)
+            {
+                throw new FriendlyException("登录失败，请刷新浏览器再次登录!");
+            }
+            var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
+            loginInput.Password = ras.Decrypt(loginInput.Password);
+            var result = await _userService.LoginAsync(loginInput);
+            if (result.StatusCode == 500)
+            {
+                result.Data = new LoginOutput();
+                return result;
+            }
+            //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
+            var menuAuths = await _menuService.GetCurrentAuthMenus(result.Data.Id);
+            if (menuAuths == null || menuAuths.Count == 0)
+            {
+                throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
+            }
+            result.Data.MenuAuthOutputs = menuAuths;
+            var identity = new ClaimsPrincipal(
+               new ClaimsIdentity(new[]
+                   {
+                              new Claim(JwtRegisteredClaimNames.Sid,result.Data.Id.ToString()),
+                              new Claim(ClaimTypes.Name,result.Data.LoginName),
+                              new Claim(ClaimTypes.WindowsAccountName,result.Data.LoginName),
+                              new Claim(ClaimTypes.UserData,result.Data.LoginTime.ToString()),
+                              new Claim("mobile",result.Data.Mobile),
+                              new Claim("trueName",result.Data.TrueName)
+                   }, CookieAuthenticationDefaults.AuthenticationScheme)
+              );
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.UtcNow.AddHours(24),
+                IsPersistent = true,
+                AllowRefresh = false
+            });
+            _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
+            return result;
+        }
+
+        /// <summary>
+        /// jwt退出 用于前后端分离 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ApiResult LogOut()
         {
