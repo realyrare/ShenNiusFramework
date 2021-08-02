@@ -65,7 +65,7 @@
                     if (res.statusCode == 200 && res.success == true) {
                         setTimeout(function () {
                             $.ajax({
-                                url: "/sys/login?handler=Logout",
+                                url: "/user/Logout",
                                 type: "get",
                                 success: function (res) {
                                     layer.msg('密码修改成功，即将退出,重新登陆...', function () {

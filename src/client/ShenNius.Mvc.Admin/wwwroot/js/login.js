@@ -50,10 +50,10 @@ layui.use(['jquery', 'form', 'common'], function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
                         if (!rurl) {
-                            window.location.href = '/home/index';
+                            window.location.href = '/home.html';
                         }
                         else {
-                            window.location.href = "/home/index#" + rurl;
+                            window.location.href = "/home.html#" + rurl;
                         }
                     }, 500);
                 } else {

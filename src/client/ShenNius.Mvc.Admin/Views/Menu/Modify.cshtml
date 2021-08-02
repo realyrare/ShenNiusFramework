@@ -254,7 +254,7 @@
 
 
         function BindParentMenu(value) {
-            apiUtil.ajax('menu/get-all-parent-menu', { }, "application/json", "get", function (res) {
+            apiUtil.ajax('menu/getAllParentMenu', { }, "application/json", "get", function (res) {
                 if (res.statusCode == 200 && res.success == true) {
                     if (res.data !== null) {
                         var select = $("#parentId");

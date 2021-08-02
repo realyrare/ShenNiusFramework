@@ -238,7 +238,7 @@ namespace ShenNius.Sys.API.Controllers
             var identity = new ClaimsPrincipal(
                new ClaimsIdentity(new[]
                    {
-                              new Claim(ClaimTypes.Sid,result.Data.Id.ToString()),
+                              new Claim(JwtRegisteredClaimNames.Sid,result.Data.Id.ToString()),
                               new Claim(ClaimTypes.Name,result.Data.LoginName),
                               new Claim(ClaimTypes.WindowsAccountName,result.Data.LoginName),
                               new Claim(ClaimTypes.UserData,result.Data.LoginTime.ToString()),

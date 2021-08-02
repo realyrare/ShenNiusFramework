@@ -37,7 +37,7 @@
             };
              apiUtil.render({
                 elem: '#currentTableId',
-                url: 'role/get-list-pages',
+                url: 'role/getListPages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -100,7 +100,7 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/sys/role-modify';
+                    var content = '/role/modify';
                     var index = layer.open({
                         title: '添加角色',
                         type: 2,
@@ -145,7 +145,7 @@
                         layer.msg("请选择一个角色分配权限");
                         return;
                     }
-                    var content = '/sys/set-menu?id=' + data[0].id;
+                    var content = '/role/setMenu?id=' + data[0].id;
                     var index = layer.open({
                         title: '设置权限',
                         type: 2,
@@ -171,7 +171,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/sys/role-modify?id=' + data.id;
+                    var content = '/role/Modify?id=' + data.id;
                     var index = layer.open({
                         title: '编辑用户',
                         // tips: [1, '#c00'],

@@ -129,7 +129,7 @@ namespace ShenNius.Mvc.Admin
                 //全局路由配置
                 endpoints.MapControllerRoute(
                      name: "default",
-                       pattern: "{controller=Home}/{action=Index}/{id?}"
+                       pattern: "{controller}/{action}/{id?}"
 
                     );
                 //这里要说下，为啥地址要写 /api/xxx 
