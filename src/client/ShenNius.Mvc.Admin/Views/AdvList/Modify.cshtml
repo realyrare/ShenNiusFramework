@@ -1,4 +1,5 @@
 ﻿
+@model AdvList
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -6,12 +7,15 @@
             padding-right: 10px;
             line-height: 38px;
         }
+
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+
         .layui-form-select {
             width: 350px;
         }
+
         .layui-upload-img {
             width: 135px;
             height: 95px;
@@ -35,7 +39,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="createTime" readonly class="layui-input">
+                            <input type="text" name="createTime" value="@Model.CreateTime.ToWebString()" readonly class="layui-input">
                         </div>
                     </div>
                 }
@@ -43,16 +47,31 @@
                     <label class="layui-form-label required">类型</label>
                     <div class="layui-input-block">
                         <select name="type" id="parentId" lay-verify="parentId" lay-filter="parentId">
-                            <option value="0">友链</option>
-                            <option value="1">轮播图</option>
-                            <option value="2">优秀博客</option>
+                            @if (Model.Type == 1)
+                            {
+                                <option value="0" selected>友链</option>
+                                <option value="1">轮播图</option>
+                                <option value="2">优秀博客</option>
+                            }
+                            else if (Model.Type == 2)
+                            {
+                                <option value="0">友链</option>
+                                <option value="1" selected>轮播图</option>
+                                <option value="2">优秀博客</option>
+                            }
+                            else
+                            {
+                                <option value="0">友链</option>
+                                <option value="1">轮播图</option>
+                                <option value="2" selected>优秀博客</option>
+                            }
                         </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">广告名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="required" lay-reqtext="栏目名称不能为空" placeholder="请输入栏目名称" class="layui-input">
+                        <input type="text" name="title" lay-verify="required" value="@Model.Title" lay-reqtext="栏目名称不能为空" placeholder="请输入栏目名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -60,25 +79,24 @@
                     <div class="layui-upload">
                         <button type="button" class="layui-btn" id="test1">上传图片</button>
                         <div class="layui-upload-list">
-                            <img class="layui-upload-img" id="demo1">
+                            <img class="layui-upload-img" src="@Model.ImgUrl" id="demo1">
                             <p id="demoText"></p>
                         </div>
-                        <input type="hidden" id="imgUrl" name="imgUrl" class="layui-input">
+                        <input type="hidden" id="imgUrl" value="@Model.ImgUrl" name="imgUrl" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">排序</label>
                     <div class="layui-input-block">
-                        <input type="number" name="sort" lay-verify="required" l class="layui-input">
+                        <input type="number" name="sort" value="@Model.Sort" lay-verify="required" l class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">描述信息</label>
                     <div class="layui-input-block">
-                        <textarea name="summary" lay-verify="required" class="layui-textarea" placeholder="请输入描述信息"></textarea>
+                        <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入描述信息"></textarea>
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
@@ -96,20 +114,19 @@
                 upload = layui.upload,
                 $ = layui.jquery,
                 apiUtil = layui.common;
-
             /**
              * 初始化表单，要加上，不然刷新部分组件可能会不加载
              */
             // 当前弹出层，防止ID被覆盖
             var parentIndex = parent.layer.getFrameIndex(window.name);
 
-            var id =@Model.Id;           
+            var id =@Model.Id;
             form.render();
 
             //普通图片上传
             var uploadInst = upload.render({
                 elem: '#test1'
-                , url: apiUtil.apiUrl() +'adv-list/qiniu-file' //改成您自己的上传接口
+                , url: apiUtil.apiUrl() +'advList/qiniu-file' //改成您自己的上传接口
                 , before: function (obj) {
                     //预读本地文件示例，不支持ie8
                     obj.preview(function (index, file, result) {
@@ -137,8 +154,7 @@
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('adv-list/modify', data.field, "application/json", "put", function (res) {
-                            //console.log("msg:" + res.msg);
+                        apiUtil.ajax('advList/modify', data.field, "application/json", "put", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
@@ -147,7 +163,7 @@
                             }
                         });
                     } else {
-                        apiUtil.ajax('adv-list/add', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('advList/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
