@@ -18,17 +18,16 @@ namespace ShenNius.Share.Infrastructure
     public class ShenNiusShareInfrastructureModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
-        {
-            context.Services.AddSwaggerSetup();
-            //注入MiniProfiler
-            context.Services.AddMiniProfiler(options =>
-                options.RouteBasePath = "/profiler"
-           );
+        {           
             if (AppSettings.Jwt.Value)
             {
+                context.Services.AddSwaggerSetup();
+                //注入MiniProfiler
+                context.Services.AddMiniProfiler(options =>
+                    options.RouteBasePath = "/profiler"
+               );
                 context.Services.AddAuthorizationSetup(context.Configuration);
             }
-            //
             context.Services.ConfigureDynamicProxy(o =>
             {
                 //添加AOP的配置
@@ -68,8 +67,11 @@ namespace ShenNius.Share.Infrastructure
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
-            app.UseMiniProfiler();
-            app.UseSwaggerMiddle();
+            if (true)
+            {
+                app.UseMiniProfiler();
+                app.UseSwaggerMiddle();
+            }        
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
             NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
         }

@@ -261,7 +261,7 @@ namespace ShenNius.Sys.API.Controllers
             }
             catch (Exception ex)
             {
-                ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: ex.Message);
+                ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
                 try
                 {
                     LogHelper.Default.Process(loginInput.LoginName, "用户登录", $"登陆失败:{ex.Message}", LogLevel.Error, ex);
@@ -270,8 +270,7 @@ namespace ShenNius.Sys.API.Controllers
                 {
                 }
                 return result;            
-            }
-            
+            }            
         }
 
         /// <summary>

@@ -39,14 +39,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
 
       
         public override void OnActionExecuting(ActionExecutingContext context)
-        {           
-            if (IsLog)
-            {
-                ActionArguments = JsonConvert.SerializeObject(context.ActionArguments);
-                Stopwatch = new Stopwatch();
-                Stopwatch.Start();
-            }
-            
+        {
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 ReturnResult(context, "很抱歉,您未登录！", StatusCodes.Status401Unauthorized);
@@ -58,6 +51,14 @@ namespace ShenNius.Share.Infrastructure.Attributes
             {
                 return;
             }
+            if (IsLog)
+            {
+                ActionArguments = JsonConvert.SerializeObject(context.ActionArguments);
+                Stopwatch = new Stopwatch();
+                Stopwatch.Start();
+            }
+            
+          
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
             //从缓存获得权限
