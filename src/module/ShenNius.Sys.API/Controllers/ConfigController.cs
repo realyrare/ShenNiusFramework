@@ -23,7 +23,7 @@ namespace ShenNius.Sys.API.Controllers
             _configService = configService;
             _mapper = mapper;
         }
-        [HttpDelete,Authority(Module =nameof(Config),Method =nameof(Button.Delete))]
+        [HttpDelete,Authority(Module =nameof(Config),Method =nameof(ButtonConfig.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _configService.DeleteAsync(commonDeleteInput.Ids));
@@ -47,7 +47,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: res);
         }
 
-        [HttpPost, Authority(Module = nameof(Config), Method = nameof(Button.Add))]
+        [HttpPost, Authority(Module = nameof(Config), Method = nameof(ButtonConfig.Add))]
         public async Task<ApiResult> Add([FromBody] ConfigInput input)
         {
             var model= await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
@@ -59,7 +59,7 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _configService.AddAsync(modelInput);
             return new ApiResult(data: res);
         }
-        [HttpPut, Authority(Module = nameof(Config), Method = nameof(Button.Edit))]
+        [HttpPut, Authority(Module = nameof(Config), Method = nameof(ButtonConfig.Edit))]
         public async Task<ApiResult> Modify([FromBody] ConfigModifyInput input)
         {
             var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName)&&d.Id!=input.Id);

@@ -1,5 +1,7 @@
 ﻿using System;
 using ShenNius.Share.Models.Entity.Common;
+using ShenNius.Share.Models.Enums;
+using ShenNius.Share.Models.Enums.Extension;
 using SqlSugar;
 namespace ShenNius.Share.Models.Entity.Cms
 {
@@ -23,6 +25,27 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// </summary>
         public int Type { get; set; }
 
+        [SugarColumn(IsIgnore = true)]
+        public string TypeName
+        {
+            get
+            {
+                string name = "";
+                if (Type == AdvEnum.FriendlyLink.GetValue<int>())
+                {
+                    name = AdvEnum.FriendlyLink.GetEnumText();
+                }
+                if (Type == AdvEnum.Slideshow.GetValue<int>())
+                {
+                    name= AdvEnum.Slideshow.GetEnumText();
+                }
+                if (Type == AdvEnum.GoodBlog.GetValue<int>())
+                {
+                    name= AdvEnum.GoodBlog.GetEnumText();
+                }
+                return name;
+            }
+        }
         /// <summary>
         /// Desc:图片地址
         /// Default:-

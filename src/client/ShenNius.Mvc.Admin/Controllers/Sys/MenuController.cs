@@ -53,7 +53,7 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             {
                 model.MenuOutput = new Menu();
             }
-            var configs = await _configService.GetListAsync(d => d.Type == nameof(Button));
+            var configs = await _configService.GetListAsync(d => d.Type == nameof(ButtonConfig));
 
             return View(model);
         }
