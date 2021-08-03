@@ -11,14 +11,13 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
     {
         private readonly IMenuService _menuService;
         private readonly IConfigService _configService;
-        private readonly IR_Role_MenuService _r_Role_MenuService;
+
         private readonly ICurrentUserContext _currentUserContext;
 
-        public MenuController(IMenuService menuService, IConfigService configService, IR_Role_MenuService r_Role_MenuService, ICurrentUserContext currentUserContext)
+        public MenuController(IMenuService menuService, IConfigService configService, ICurrentUserContext currentUserContext)
         {
             _menuService = menuService;
             _configService = configService;
-            _r_Role_MenuService = r_Role_MenuService;
             this._currentUserContext = currentUserContext;
         }
         [HttpGet]
@@ -50,11 +49,12 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
                 }
                 ViewBag.AlreadyBtns = alreadyBtns;
             }
-            else {
+            else
+            {
                 model.MenuOutput = new Menu();
             }
             var configs = await _configService.GetListAsync(d => d.Type == nameof(Button));
-            
+
             return View(model);
         }
     }

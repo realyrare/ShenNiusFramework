@@ -1,4 +1,4 @@
-﻿
+﻿@model Config
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -32,26 +32,26 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="createTime" readonly class="layui-input">
+                            <input type="text" name="createTime" value="@Model.CreateTime.ToWebString()" readonly class="layui-input">
                         </div>
                     </div>
                 }
                 <div class="layui-form-item">
                     <label class="layui-form-label required">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
+                        <input type="text" name="name" value="@Model.Name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">英文名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="enName" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
+                        <input type="text" name="enName" value="@Model.EnName" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">类型</label>
                     <div class="layui-input-block">
-                        <select name="type" id="type" lay-verify="type" lay-filter="type">
+                        <select name="type" id="type" lay-verify="type" lay-filter="type" value="@Model.Type">
                             <option value="Button">Button</option>
                         </select>
                     </div>
@@ -60,10 +60,9 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">备注信息</label>
                     <div class="layui-input-block">
-                        <textarea name="summary" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
@@ -88,33 +87,25 @@
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
 
                 var id=@Model.Id;
-                if (id > 0) {
-                    apiUtil.ajax('config/detail', { id: id }, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            form.val("config-edit", res.data);
-                        }
-                    });
-                }
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
                         apiUtil.ajax('config/modify', data.field, "application/json", "put", function (res) {
-                            //console.log("msg:" + res.msg);
                             if (res.statusCode == 200 && res.success == true) {
-                                layer.msg(res.msg);
+                                apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
                             } else {
-                                layer.msg(res.msg);
+                                apiUtil.error(res.msg);
                             }
                         });
                     } else {
                         apiUtil.ajax('config/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
-                                layer.msg(res.msg);
+                                apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
                             } else {
-                                layer.msg(res.msg);
+                                apiUtil.error(res.msg);
                             }
                         });
                     }
