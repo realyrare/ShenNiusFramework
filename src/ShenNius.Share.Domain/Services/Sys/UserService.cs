@@ -14,6 +14,7 @@ using MediatR;
 using ShenNius.Share.Infrastructure.CommandHandler.Model;
 using ShenNius.Share.Infrastructure.Extension;
 using NLog;
+using ShenNius.Share.Models.Dtos.Output.Sys;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {

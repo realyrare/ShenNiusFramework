@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "欢迎您";
 }
+@inject ShenNius.Share.Domain.Services.Sys.ICurrentUserContext userContext
 @section css{
     <link rel="stylesheet" href="/css/layuimini.css?v=2.0.4.2" media="all" asp-append-version="true">
     <link rel="stylesheet" href="/css/themes/default.css" media="all" asp-append-version="true">
@@ -49,7 +50,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
-                    <a href="javascript:;">用户名</a>
+                    <a href="javascript:;">@userContext.Name</a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="javascript:;" id="baseUserInfo" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
