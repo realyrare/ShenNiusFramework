@@ -67,7 +67,7 @@ namespace ShenNius.Share.Infrastructure
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
-            if (true)
+            if (AppSettings.Jwt.Value)
             {
                 app.UseMiniProfiler();
                 app.UseSwaggerMiddle();
