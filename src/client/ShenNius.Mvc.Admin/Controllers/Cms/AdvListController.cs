@@ -11,7 +11,7 @@ namespace ShenNius.Mvc.Admin.Controllers.Cms
 
         public AdvListController(IAdvListService advListService)
         {
-            this._advListService = advListService;
+            _advListService = advListService;
         }
         [HttpGet]
         public IActionResult Index()

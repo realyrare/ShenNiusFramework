@@ -1,18 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Domain.Services.Cms;
+using ShenNius.Share.Models.Entity.Cms;
+using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Cms
 {
     public class ColumnController : Controller
     {
+        private readonly IColumnService _columnService;
+
+        public ColumnController(IColumnService columnService)
+        {
+            this._columnService = columnService;
+        }
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult Modify()
+        public async Task<IActionResult> Modify(int id = 0)
         {
-            return View();
+            Column model = id == 0 ? new Column() : await _columnService.GetModelAsync(d => d.Id == id && d.Status);
+            return View(model);
         }
     }
 }
