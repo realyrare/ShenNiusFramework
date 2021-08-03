@@ -62,14 +62,7 @@
                 // 当前弹出层，防止ID被覆盖
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
 
-                var id=@Model.Id;
-                if (id > 0) {
-                    apiUtil.ajax('keyword/detail', { id: id }, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            form.val("keyword-edit", res.data);
-                        }
-                    });
-                }
+                var id=@Model.Id;              
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {

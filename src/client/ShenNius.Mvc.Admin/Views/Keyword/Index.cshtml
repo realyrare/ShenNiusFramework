@@ -36,7 +36,7 @@
             };
             apiUtil.render({
                 elem: '#currentTableId',
-                url: 'keyword/get-list-pages',
+                url: 'keyword/getListPages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -96,7 +96,7 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/cms/keyword-modify';
+                    var content = '/keyword/modify';
                     layer.open({
                         title: '添加关键词',
                         type: 2,
@@ -118,7 +118,7 @@
                             listIds.push(data[i].id);
                         }
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                            apiUtil.ajax('keyword/soft-delete', { ids: listIds }, "application/json", "delete", function (res) {
+                            apiUtil.ajax('keyword/softDelete', { ids: listIds }, "application/json", "delete", function (res) {
                                 if (res.statusCode == 200 && res.success == true) {
                                     apiUtil.success(res.msg);
                                     layer.close(index);
@@ -143,7 +143,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/cms/keyword-modify?id=' + data.id;
+                    var content = '/keyword/modify?id=' + data.id;
                     layer.open({
                         title: '编辑关键词',
                         // tips: [1, '#c00'],
@@ -158,10 +158,10 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除么', function (index) {
+                    layer.confirm('真的删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('keyword/soft-delete', { ids: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('keyword/softDelete', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 layer.close(index);
