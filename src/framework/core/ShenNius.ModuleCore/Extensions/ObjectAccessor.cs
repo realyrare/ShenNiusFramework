@@ -2,13 +2,11 @@
 using ShenNius.ModuleCore.ObjectAccessor.Impl;
 using ShenNius.ModuleCore.ObjectAccessor.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ShenNius.ModuleCore.Extensions
 {
-  public static partial  class ObjectAccessorExtensions
+    public static partial  class ObjectAccessorExtensions
     {       
         public static ObjectAccessor<T> AddObjectAccessor<T>(this IServiceCollection services)
         {

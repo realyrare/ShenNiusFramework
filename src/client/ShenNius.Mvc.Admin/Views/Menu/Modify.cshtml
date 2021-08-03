@@ -1,4 +1,5 @@
-﻿@section css{
+﻿@model MenuDetailOutput
+@section css{
     <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <style>
         .layui-form-item .layui-input {
@@ -30,7 +31,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="createTime" value="@Model.MenuOutput.CreateTime" readonly class="layui-input">
+                            <input type="text" name="createTime" value="@Model.MenuOutput.CreateTime.ToWebString()" readonly class="layui-input">
                         </div>
                     </div>
                 }
@@ -186,7 +187,7 @@
             {
                 BindParentMenu(@Model.MenuOutput.ParentId);
                 //将已经存在的按钮集合赋值
-                var jsonStr = '@Html.Raw(Model.AlreadyBtns)';
+                var jsonStr = '@Html.Raw(ViewBag.AlreadyBtns)';
                 if (jsonStr != null) {
                     var arry = jsonStr.split(',');
                     for (var i = 0; i < arry.length; i++) {

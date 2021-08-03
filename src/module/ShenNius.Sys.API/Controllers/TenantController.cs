@@ -108,10 +108,7 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _service.GetPagesAsync(keyListQuery.Page, keyListQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-        //public override Task<ApiResult> Modify()
-        //{ 
-        
-        //}
+       
         [HttpPost, AllowAnonymous]
         public ApiResult QiniuFile()
         {

@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Code\ShenNius.Framework\src\module\ShenNius.Cms.API\ShenNius.Cms.API.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>1701;1702;1591;1573;1572;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Infrastructure.Configurations;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -56,7 +57,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             {
                 var allRoleMenus = await GetCurrentMenuByUser(userId);
                 var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
-                var configs = await Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)&&m.Status).ToListAsync();
+                var configs = await Db.Queryable<Config>().Where(m => m.Type ==nameof(ButtonConfig)&&m.Status).ToListAsync();
                 var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id)) .ToListAsync();
 
                 foreach (var item in query)
@@ -105,7 +106,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                           {
                               var codeList = cache.Get(t =>
                               {
-                                  return Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)).ToList();
+                                  return Db.Queryable<Config>().Where(m => m.Type ==nameof(ButtonConfig)).ToList();
                               });
                               var list = new List<string>();
                               if (it.BtnCodeIds != null)
@@ -356,10 +357,14 @@ namespace ShenNius.Share.Domain.Services.Sys
             var allMenus = await GetListAsync(d => d.Status && allMenuIds.Contains(d.Id));
 
             var model = new MenuTreeInitOutput()
-            {
+            {               
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "sys/log-echarts" },
                 LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "images/logo.jpg?v=99", Href = "" },
             };
+            if (!AppSettings.Jwt.Value)
+            {
+                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "log/echarts" };
+            }
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)
             {

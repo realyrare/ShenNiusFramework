@@ -6,15 +6,12 @@
             padding-right: 10px;
             line-height: 38px;
         }
-
         .layui-form-item .layui-textarea {
             width: 350px;
         }
-
         .layui-form-select {
             width: 350px;
         }
-
         .layui-upload-img {
             width: 135px;
             height: 95px;
@@ -38,21 +35,27 @@
                         </div>
                     }
                     <div class="layui-form-item">
-                        <label class="layui-form-label">站点名称:</label>
+                        <label class="layui-form-label" required>站点名称:</label>
                         <div class="layui-input-block">
-                            <input type="text" placeholder="请填写站点名称" name="name" class="layui-input" value="@Model.Name" lay-verify="name" required />
+                            <input type="text" placeholder="请填写站点名称" lay-verify="name" name="name" class="layui-input" value="@Model.Name" required />
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">站点域名:</label>
                         <div class="layui-input-block">
-                            <input type="text" name="url" placeholder="请填写入站点域名" value="@Model.Url" class="layui-input" lay-verify="url" required>
+                            <input type="text" name="url" placeholder="请填写入站点域名" value="@Model.Url" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">版权:</label>
                         <div class="layui-input-block">
                             <input type="text" name="copyright" placeholder="请填写版权" value="@Model.Copyright" class="layui-input" lay-verify="copyright">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系邮箱:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="email" placeholder="请填写入联系邮箱" value="@Model.Email" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -106,13 +109,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="fax" placeholder="请填写入公司传真" value="@Model.Fax" class="layui-input" lay-verify="fax">
                         </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">联系邮箱:</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="email" placeholder="请填写入联系邮箱" value="@Model.Email" class="layui-input" lay-verify="email">
-                        </div>
-                    </div>
+                    </div>                   
                     <div class="layui-form-item">
                         <label class="layui-form-label">联系地址:</label>
                         <div class="layui-input-block">

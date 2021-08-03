@@ -1,4 +1,4 @@
-﻿@model Config
+﻿@model Column
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -6,17 +6,15 @@
             padding-right: 10px;
             line-height: 38px;
         }
-
         .layui-form-item .layui-textarea {
             width: 350px;
         }
-
         .layui-form-select {
             width: 350px;
         }
     </style>
 }
-<form class="layui-form" action="" lay-filter="config-edit">
+<form class="layui-form" action="" lay-filter="column-edit">
     <div class="layuimini-container layuimini-page-anim">
         <div class="layuimini-main">
             <div class="layui-form layuimini-form">
@@ -28,7 +26,6 @@
                             <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
@@ -37,32 +34,44 @@
                     </div>
                 }
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">名称</label>
+                    <label class="layui-form-label required">所属父级</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" value="@Model.Name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
+                        <select name="parentId" id="parentId" lay-verify="parentId" lay-filter="parentId">
+                            <option value="0">请选择父级菜单</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">栏目标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="required" value="@Model.Title" lay-reqtext="栏目名称不能为空" placeholder="请输入栏目名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="subTitle"  value="@Model.SubTitle" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">英文名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="enName" value="@Model.EnName" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
+                        <input type="text" name="enTitle"  value="@Model.EnTitle" lay-verify="required" lay-reqtext="英文名称不能为空" placeholder="请输入英文名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">类型</label>
+                    <label class="layui-form-label required">关键字</label>
                     <div class="layui-input-block">
-                        <select name="type" id="type" lay-verify="type" lay-filter="type" value="@Model.Type">
-                            <option value="Button">Button</option>
-                        </select>
+                        <input type="text" name="keyword" value="@Model.Keyword" lay-verify="required" lay-reqtext="关键字不能为空" placeholder="请输入关键字" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label required">描述信息</label>
+                    <div class="layui-input-block">
+                        <textarea name="summary" lay-verify="required" class="layui-textarea" placeholder="请输入描述信息">@Model.Summary</textarea>
                     </div>
                 </div>
 
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label required">备注信息</label>
-                    <div class="layui-input-block">
-                        <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-                    </div>
-                </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
@@ -75,9 +84,9 @@
 @section js{
     <script>
 
-        layui.use(['form', 'common','layer'], function () {
+            layui.use(['form',  'common'], function () {
                 var form = layui.form,
-                    layer = layui.layer,
+                    $ = layui.$,
                     apiUtil = layui.common;
 
                 /**
@@ -87,11 +96,17 @@
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
 
                 var id=@Model.Id;
+                if (id > 0)
+                {
+                    BindParentColumn(@Model.ParentId);
+                } else {
+                    BindParentColumn();
+                }
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('config/modify', data.field, "application/json", "put", function (res) {
+                        apiUtil.ajax('column/modify', data.field, "application/json", "put", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
@@ -100,7 +115,7 @@
                             }
                         });
                     } else {
-                        apiUtil.ajax('config/add', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('column/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
@@ -111,6 +126,24 @@
                     }
                     return false;
                 });
+
+                function BindParentColumn(value) {
+                    apiUtil.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            if (res.data !== null) {
+                                var select = $("#parentId");
+                                for (var i = 0; i < res.data.length; i++) {
+                                    var val = res.data[i].id;
+                                    if (val === value)
+                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
+                                    else
+                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
+                                }
+                                layui.form.render('select');
+                            }
+                        }
+                    });
+                }
             });
 
     </script>

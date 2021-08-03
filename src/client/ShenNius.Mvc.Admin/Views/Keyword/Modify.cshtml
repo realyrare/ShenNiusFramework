@@ -1,4 +1,4 @@
-﻿@model Config
+﻿@model Keyword
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -6,17 +6,9 @@
             padding-right: 10px;
             line-height: 38px;
         }
-
-        .layui-form-item .layui-textarea {
-            width: 350px;
-        }
-
-        .layui-form-select {
-            width: 350px;
-        }
     </style>
 }
-<form class="layui-form" action="" lay-filter="config-edit">
+<form class="layui-form" action="" lay-filter="keyword-edit">
     <div class="layuimini-container layuimini-page-anim">
         <div class="layuimini-main">
             <div class="layui-form layuimini-form">
@@ -28,7 +20,6 @@
                             <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
@@ -37,30 +28,15 @@
                     </div>
                 }
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">名称</label>
+                    <label class="layui-form-label required">关键字</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" value="@Model.Name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
+                        <input type="text" name="title" value="@Model.Title" lay-verify="required" lay-reqtext="关键字不能为空" placeholder="请输入关键字" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">英文名称</label>
+                    <label class="layui-form-label required">Url</label>
                     <div class="layui-input-block">
-                        <input type="text" name="enName" value="@Model.EnName" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label required">类型</label>
-                    <div class="layui-input-block">
-                        <select name="type" id="type" lay-verify="type" lay-filter="type" value="@Model.Type">
-                            <option value="Button">Button</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label required">备注信息</label>
-                    <div class="layui-input-block">
-                        <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <input type="text" name="url" value="@Model.Url" lay-verify="required" lay-reqtext="关键字链接不能为空" placeholder="关键字链接不能为空" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -74,33 +50,26 @@
 </form>
 @section js{
     <script>
-
-        layui.use(['form', 'common','layer'], function () {
+            layui.use(['form',  'common'], function () {
                 var form = layui.form,
-                    layer = layui.layer,
+                    $ = layui.$,
                     apiUtil = layui.common;
-
                 /**
                  * 初始化表单，要加上，不然刷新部分组件可能会不加载
                  */
                 // 当前弹出层，防止ID被覆盖
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
-
-                var id=@Model.Id;
+                var id=@Model.Id;              
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     if (data.field.id>0) {
-                        apiUtil.ajax('config/modify', data.field, "application/json", "put", function (res) {
-                            if (res.statusCode == 200 && res.success == true) {
-                                apiUtil.success(res.msg);
-                                parent.layer.close(parentIndex);
-                            } else {
-                                apiUtil.error(res.msg);
-                            }
+                        apiUtil.ajax('keyword/modify', data.field, "application/json", "put", function (res) {
+                            apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);                           
                         });
                     } else {
-                        apiUtil.ajax('config/add', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('keyword/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
@@ -111,8 +80,10 @@
                     }
                     return false;
                 });
+
             });
 
     </script>
 
 }
+

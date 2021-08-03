@@ -3,8 +3,8 @@
     <div class="layuimini-main">
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
             </div>
         </script>
 
@@ -18,12 +18,10 @@
 </div>
 
 @section js{
-    <script type="text/html" id="switchTpl">
-        <input type="checkbox" name="status" value="{{d.isCurrent}}" disabled lay-skin="switch" lay-text="是|否" {{ d.isCurrent==1?'checked':''}}>
-    </script>
     <script>
-        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
-            var form = layui.form,
+        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
                 layer = layui.layer;
@@ -34,11 +32,11 @@
                  第二个参数是按钮名称和数据库的btnName也要对应的;
                  event 阻止事件冒泡；
                 */
-                apiUtil.checkAuth("site", btnName, event);
+                apiUtil.checkAuth("keyword", btnName, event);
             };
-             apiUtil.render({
+            apiUtil.render({
                 elem: '#currentTableId',
-                url: 'tenant/getListPages',
+                url: 'keyword/getListPages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -46,7 +44,7 @@
                     icon: 'layui-icon-tips'
                 }],
                 authorizeFields: true, // 字段权限开关
-                autoColumnWidth: true,
+                autokeyowrdListWidth: true,
                 overflow: { // 默认所有表格都超出
                     type: 'tips'
                     , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
@@ -58,11 +56,8 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
-                    { field: 'name', width: 150, title: '角色名' },
+                    { field: 'title', width: 200, title: '标题' },
                     { field: 'url', title: 'url' },
-                    { field: 'tel', title: '号码' },
-                    { field: 'email', title: '邮箱' },
-                    { field: 'isCurrent', width: 100, title: '是否当前租户', templet: '#switchTpl' },
                     { field: 'createTime', title: '创建时间' },
                     { field: 'modifyTime', title: '修改时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
@@ -101,14 +96,14 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/tenant/modify';
-                   layer.open({
-                        title: '添加站点',
+                    var content = '/keyword/modify';
+                    layer.open({
+                        title: '添加关键词',
                         type: 2,
-                        shade: 0.2,      
+                        shade: 0.2,
+                        maxmin: true,
                         shadeClose: true,
-                        area: ['650px', '750px'],
-                        zIndex: "10000",
+                        area: ['600px', '300px'],
                         content: content,
                         end: function () {
                             refeshTable();
@@ -116,13 +111,14 @@
                     });
 
                 } else if (obj.event === 'delete') {  // 监听删除操作
-                    var  listIds = [];
+
+                    var listIds = [];
                     if (data.length > 0) {
                         for (var i in data) {
                             listIds.push(data[i].id);
                         }
                         layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
-                            apiUtil.ajax('tenant/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                            apiUtil.ajax('keyword/softDelete', { ids: listIds }, "application/json", "delete", function (res) {
                                 if (res.statusCode == 200 && res.success == true) {
                                     apiUtil.success(res.msg);
                                     layer.close(index);
@@ -142,17 +138,19 @@
             table.on('checkbox(currentTableFilter)', function (obj) {
                 console.log(obj)
             });
+
+
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/tenant/modify?id='+data.id ;
+                    var content = '/keyword/modify?id=' + data.id;
                     layer.open({
-                        title: '编辑站点',
+                        title: '编辑关键词',
                         // tips: [1, '#c00'],
                         type: 2,
                         shade: 0.2,
                         shadeClose: true,
-                        area: ['660px', '800px'],
+                        area: ['600px', '400px'],
                         content: content,
                         end: function () {
                             refeshTable();
@@ -160,10 +158,10 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
-                        apiUtil.ajax('tenant/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                        apiUtil.ajax('keyword/softDelete', { ids: listIds }, "application/json", "delete", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 layer.close(index);
@@ -175,6 +173,8 @@
                     });
                 }
             });
+
         });
     </script>
 }
+

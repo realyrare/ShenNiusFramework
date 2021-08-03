@@ -23,6 +23,9 @@ namespace ShenNius.Share.Infrastructure.Configurations
                 .AddJsonFile("appsettings.json", true, true);
             _config = builder.Build();
         }
+        /// <summary>
+        /// mvc 不启用jwt
+        /// </summary>
         public static class Jwt
         {
             public static bool Value => !string.IsNullOrEmpty(_config["JwtConfig:IsEnable"]) ? Convert.ToBoolean(_config["JwtConfig:IsEnable"]) : true;

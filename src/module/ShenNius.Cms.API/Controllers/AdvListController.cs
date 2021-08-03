@@ -53,7 +53,7 @@ namespace ShenNius.Cms.API.Controllers
             {
                 whereExpression = d => d.Title.Contains(keywordListTenantQuery.Key);
             }
-            var res = await _service.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
+            var res = await _service.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);            
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         [HttpPost, AllowAnonymous]

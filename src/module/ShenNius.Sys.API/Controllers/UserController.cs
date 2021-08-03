@@ -24,6 +24,8 @@ using StackExchange.Profiling;
 using ShenNius.Share.Models.Configs;
 using Microsoft.AspNetCore.SignalR;
 using ShenNius.Share.Infrastructure.Hubs;
+using ShenNius.Share.Infrastructure.Utils;
+using NLog;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -83,19 +85,19 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method =nameof(Button.Add))]
+        [HttpPost, Authority(Module = nameof(User), Method =nameof(ButtonConfig.Add))]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
 
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Edit))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Edit))]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
 
-        [HttpDelete, Authority(Module = nameof(User), Method = nameof(Button.Delete))]
+        [HttpDelete, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return await _userService.DeletesAsync(commonDeleteInput.Ids);
@@ -130,7 +132,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Auth))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Auth))]
         public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);
@@ -214,46 +216,61 @@ namespace ShenNius.Sys.API.Controllers
 
         [HttpPost, AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> MvcLogin([FromForm]LoginInput loginInput)
-        {
-            var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput?.NumberGuid}");
-            if (rsaKey == null)
+        {         
+            try
             {
-                throw new FriendlyException("登录失败，请刷新浏览器再次登录!");
-            }
-            var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
-            loginInput.Password = ras.Decrypt(loginInput.Password);
-            var result = await _userService.LoginAsync(loginInput);
-            if (result.StatusCode == 500)
-            {
-                result.Data = new LoginOutput();
-                return result;
-            }
-            //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
-            var menuAuths = await _menuService.GetCurrentAuthMenus(result.Data.Id);
-            if (menuAuths == null || menuAuths.Count == 0)
-            {
-                throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
-            }
-            result.Data.MenuAuthOutputs = menuAuths;
-            var identity = new ClaimsPrincipal(
-               new ClaimsIdentity(new[]
-                   {
+                var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput?.NumberGuid}");
+                if (rsaKey == null)
+                {
+                    throw new FriendlyException("登录失败，请刷新浏览器再次登录!");
+                }
+                var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
+                loginInput.Password = ras.Decrypt(loginInput.Password);
+               var  result = await _userService.LoginAsync(loginInput);
+                if (result.StatusCode == 500)
+                {
+                    result.Data = new LoginOutput();
+                    return result;
+                }
+                //请求当前用户的所有权限并存到缓存里面并发给前端 准备后面鉴权使用
+                var menuAuths = await _menuService.GetCurrentAuthMenus(result.Data.Id);
+                if (menuAuths == null || menuAuths.Count == 0)
+                {
+                    throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
+                }
+                result.Data.MenuAuthOutputs = menuAuths;
+                var identity = new ClaimsPrincipal(
+                   new ClaimsIdentity(new[]
+                       {
                               new Claim(JwtRegisteredClaimNames.Sid,result.Data.Id.ToString()),
                               new Claim(ClaimTypes.Name,result.Data.LoginName),
                               new Claim(ClaimTypes.WindowsAccountName,result.Data.LoginName),
                               new Claim(ClaimTypes.UserData,result.Data.LoginTime.ToString()),
-                              new Claim("mobile",result.Data.Mobile),
+                              new Claim(ClaimTypes.Email,result.Data.Mobile),
                               new Claim("trueName",result.Data.TrueName)
-                   }, CookieAuthenticationDefaults.AuthenticationScheme)
-              );
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
+                       }, CookieAuthenticationDefaults.AuthenticationScheme)
+                  );
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.UtcNow.AddHours(24),
+                    IsPersistent = true,
+                    AllowRefresh = false
+                });
+                _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
+                return result;
+            }
+            catch (Exception ex)
             {
-                ExpiresUtc = DateTime.UtcNow.AddHours(24),
-                IsPersistent = true,
-                AllowRefresh = false
-            });
-            _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
-            return result;
+                ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
+                try
+                {
+                    LogHelper.Default.Process(loginInput.LoginName, "用户登录", $"登陆失败:{ex.Message}", LogLevel.Error, ex);
+                }
+                catch 
+                {
+                }
+                return result;            
+            }            
         }
 
         /// <summary>

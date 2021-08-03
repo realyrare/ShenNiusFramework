@@ -28,7 +28,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="createTime" value="@Model.CreateTime.ToString("yyyy-MM-dd:HH:mm:ss")" readonly class="layui-input">
+                            <input type="text" name="createTime" value="@Model.CreateTime.ToWebString()" readonly class="layui-input">
                         </div>
                     </div>
                 }
@@ -43,7 +43,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label required">备注信息</label>
                     <div class="layui-input-block">
-                        <textarea name="description" value="@Model.Description" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="description" lay-verify="required" class="layui-textarea" placeholder="请输入备注信息">@Model.Description</textarea>
                     </div>
                 </div>
 

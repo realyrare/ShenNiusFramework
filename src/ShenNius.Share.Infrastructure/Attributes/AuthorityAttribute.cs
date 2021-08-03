@@ -39,14 +39,15 @@ namespace ShenNius.Share.Infrastructure.Attributes
 
       
         public override void OnActionExecuting(ActionExecutingContext context)
-        {           
+        {
+          
             if (IsLog)
             {
                 ActionArguments = JsonConvert.SerializeObject(context.ActionArguments);
                 Stopwatch = new Stopwatch();
                 Stopwatch.Start();
             }
-            
+
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 ReturnResult(context, "很抱歉,您未登录！", StatusCodes.Status401Unauthorized);
