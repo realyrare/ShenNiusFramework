@@ -28,7 +28,7 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
         [HttpGet]
         public async Task<IActionResult> Modify(int id)
         {
-            MenuDetailOutput model = null;
+            MenuDetailOutput model = new MenuDetailOutput();
             string alreadyBtns = string.Empty;
             if (id > 0)
             {

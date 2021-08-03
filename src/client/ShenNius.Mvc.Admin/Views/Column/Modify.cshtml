@@ -6,11 +6,9 @@
             padding-right: 10px;
             line-height: 38px;
         }
-
         .layui-form-item .layui-textarea {
             width: 350px;
         }
-
         .layui-form-select {
             width: 350px;
         }
@@ -28,7 +26,6 @@
                             <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label required">添加时间</label>
                         <div class="layui-input-block">
@@ -101,7 +98,7 @@
                 var id=@Model.Id;
                 if (id > 0)
                 {
-                    BindParentColumn('@Model.ParentId');
+                    BindParentColumn(@Model.ParentId);
                 } else {
                     BindParentColumn();
                 }

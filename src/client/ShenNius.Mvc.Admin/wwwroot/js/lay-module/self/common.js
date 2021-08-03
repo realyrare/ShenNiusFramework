@@ -18,7 +18,7 @@
             toastr.success(msg);
         },
         apiUrl() {
-            return "api/";
+            return "/api/";
         },
         ajax: function (url, options, contentType = "application/json", method = 'post', callFun = null) {
 

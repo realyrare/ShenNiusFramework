@@ -113,11 +113,12 @@
                 </div>
             </div>
             @*<div class="layui-row">
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">文章图片</label>
-                        <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
-                    </div>
-                </div>*@
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">文章图片</label>
+                <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
+            </div>
+        </div>*@
+          
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
@@ -132,13 +133,14 @@
     <script src="/lib/tinymce/tinymce.min.js"></script>
     <script src="/lib/tinymce/langs/zh_CN.js"></script>
     <script>
+       
     tinymce.init({
         selector: '#content',
         auto_focus: true,
         height: 400,
         content_style: "img {max-width:100%;}",
         image_advtab: true,//开启图片上传的高级选项功能
-        images_upload_url: 'api/article/qiniuFile',//图片上传
+        images_upload_url:  '/api/article/qiniuFile',//图片上传
 
         plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
         toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'

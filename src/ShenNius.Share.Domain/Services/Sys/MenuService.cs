@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Infrastructure.Configurations;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -356,10 +357,14 @@ namespace ShenNius.Share.Domain.Services.Sys
             var allMenus = await GetListAsync(d => d.Status && allMenuIds.Contains(d.Id));
 
             var model = new MenuTreeInitOutput()
-            {
+            {               
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "sys/log-echarts" },
                 LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "images/logo.jpg?v=99", Href = "" },
             };
+            if (!AppSettings.Jwt.Value)
+            {
+                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "log/echarts" };
+            }
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)
             {
