@@ -1,22 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ShenNius.Share.Domain.Services.Cms;
+using ShenNius.Share.Models.Entity.Cms;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Cms
 {
-    public class KeywordController : Controller
+    public partial class KeywordController : Controller
     {
+        private readonly IKeywordService _keywordService;
+
+        public KeywordController(IKeywordService KeywordService)
+        {
+            this._keywordService = KeywordService;
+        }
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult Modify()
+        public async Task<IActionResult> Modify(int id = 0)
         {
-            return View();
+            Keyword model = id == 0 ? new Keyword() : await _keywordService.GetModelAsync(d => d.Id == id && d.Status);
+            return View(model);
         }
     }
 }

@@ -4,7 +4,6 @@
         toastr = layui.toastr,
         table = layui.table;
     toastr.options = {
-        //toast-top-center  中间
         "positionClass": "toast-top-center",
         "timeOut": "1500"
     };
@@ -31,7 +30,12 @@
                 dataType: 'json', //服务器返回json格式数据
                 type: method, //HTTP请求类型  
                 success: function (data) {
-                    callFun(data);
+                    if (data.statusCode == 200 && data.success == true) {
+                        callFun(data);
+                    } else {
+                        apiUtil.error(data.msg);
+                        return false;
+                    }                   
                 },
                 error: function (e) {
                     //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
