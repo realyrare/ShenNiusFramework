@@ -29,6 +29,7 @@
     <Folder Include="Dtos\Validators\Shop\" />
     <Folder Include="Dtos\Query\" />
     <Folder Include="Entity\Shop\" />
+    <Folder Include="Event\" />
   </ItemGroup>
 	<ItemGroup>
 	

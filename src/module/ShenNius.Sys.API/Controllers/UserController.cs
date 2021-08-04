@@ -98,9 +98,9 @@ namespace ShenNius.Sys.API.Controllers
         }
 
         [HttpDelete, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Delete))]
-        public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
+        public async Task<ApiResult> Deletes([FromBody] DeletesInput input)
         {
-            return await _userService.DeletesAsync(commonDeleteInput.Ids);
+            return new ApiResult(await _userService.DeleteAsync(input.Ids));
         }
         [HttpPost]
         public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)

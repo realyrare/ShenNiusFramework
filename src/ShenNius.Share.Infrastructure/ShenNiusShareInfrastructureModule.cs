@@ -1,5 +1,4 @@
 ﻿using AspectCore.Extensions.DependencyInjection;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
@@ -70,10 +69,6 @@ namespace ShenNius.Share.Infrastructure
             //七牛云配置信息读取
             context.Services.Configure<QiNiuOssModel>(context.Configuration.GetSection("QiNiuOss"));
             context.Services.AddScoped<QiniuCloud>();
-
-            //注入MediatR
-            //https://www.cnblogs.com/sheng-jie/p/10280336.html
-            context.Services.AddMediatR(typeof(ShenNiusShareInfrastructureModule));
 
         }
 
