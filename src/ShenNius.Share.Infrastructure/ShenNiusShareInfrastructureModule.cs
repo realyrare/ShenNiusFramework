@@ -18,7 +18,7 @@ namespace ShenNius.Share.Infrastructure
     public class ShenNiusShareInfrastructureModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
-        {           
+        {
             if (AppSettings.Jwt.Value)
             {
                 context.Services.AddSwaggerSetup();
@@ -28,6 +28,17 @@ namespace ShenNius.Share.Infrastructure
                );
                 context.Services.AddAuthorizationSetup(context.Configuration);
             }
+            context.Services.AddCap(x =>
+            {
+                x.UseRabbitMQ(z =>
+                {
+                    z.HostName = context.Configuration["RabbitMQ:HostName"];
+                    z.UserName = context.Configuration["RabbitMQ:UserName"];
+                    z.Port = System.Convert.ToInt32(context.Configuration["RabbitMQ:Port"]);
+                    z.Password = context.Configuration["RabbitMQ:Password"];
+                });
+            });
+
             //健康检查服务
             context.Services.AddHealthChecks();
             context.Services.ConfigureDynamicProxy(o =>
@@ -63,7 +74,7 @@ namespace ShenNius.Share.Infrastructure
             //注入MediatR
             //https://www.cnblogs.com/sheng-jie/p/10280336.html
             context.Services.AddMediatR(typeof(ShenNiusShareInfrastructureModule));
-            
+
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
