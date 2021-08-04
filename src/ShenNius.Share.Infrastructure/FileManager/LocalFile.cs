@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using ShenNius.Share.Common;
 using ShenNius.Share.Infrastructure.Extension;
-using ShenNiusSystem.Common;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Web;
 
 /*************************************
 * 类 名： LocalFile

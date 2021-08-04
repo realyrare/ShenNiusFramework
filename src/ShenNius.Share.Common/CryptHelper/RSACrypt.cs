@@ -3,7 +3,7 @@ using System.Text;
 using System.Security.Cryptography;
 using XC.RSAUtil;
 
-namespace ShenNiusSystem.Common
+namespace ShenNius.Share.Common
 {
     /// <summary>
     /// RSA加密解密

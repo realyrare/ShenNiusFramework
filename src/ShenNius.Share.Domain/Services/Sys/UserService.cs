@@ -5,7 +5,6 @@ using ShenNius.Share.Infrastructure.Utils;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Domain.Repository;
-using ShenNiusSystem.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +14,7 @@ using ShenNius.Share.Infrastructure.CommandHandler.Model;
 using ShenNius.Share.Infrastructure.Extension;
 using NLog;
 using ShenNius.Share.Models.Dtos.Output.Sys;
+using ShenNius.Share.Common;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -56,7 +56,7 @@ namespace ShenNius.Share.Domain.Services.Sys
 
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            string address = IpParse.GetAddressByIP(ip);
+            string address = IpParseHelper.GetAddressByIP(ip);
             await UpdateAsync(d => new User()
             {
                 LastLoginTime = DateTime.Now,
@@ -75,7 +75,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var userModel = _mapper.Map<User>(userRegisterInput);
             userModel.CreateTime = DateTime.Now;
             userModel.Ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            userModel.Address = IpParse.GetAddressByIP(userModel.Ip);
+            userModel.Address = IpParseHelper.GetAddressByIP(userModel.Ip);
             var i = await AddAsync(userModel);
             return new ApiResult(i);
         }

@@ -234,7 +234,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             {
                 throw new FriendlyException("您提交的次数过多，请稍后重试！~");
             }
-            messageInput.Address = IpParse.GetAddressByIP(messageInput.IP);
+            messageInput.Address = IpParseHelper.GetAddressByIP(messageInput.IP);
             var model = _mapper.Map<Message>(messageInput);
             await _messageService.AddAsync(model);
             return new ApiResult();

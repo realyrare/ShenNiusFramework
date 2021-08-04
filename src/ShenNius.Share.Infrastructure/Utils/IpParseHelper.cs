@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShenNius.Share.Infrastructure.Utils
 {
-    public class IpParse
+    public class IpParseHelper
     {
         public static string GetAddressByIP(string IP)
         {

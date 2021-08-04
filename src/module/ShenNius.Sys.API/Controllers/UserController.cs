@@ -11,7 +11,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Dtos.Input;
-using ShenNiusSystem.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ShenNius.Share.Infrastructure.Attributes;
@@ -26,6 +25,7 @@ using Microsoft.AspNetCore.SignalR;
 using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Share.Infrastructure.Utils;
 using NLog;
+using ShenNius.Share.Common;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
