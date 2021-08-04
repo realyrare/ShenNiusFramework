@@ -28,6 +28,8 @@ namespace ShenNius.Share.Infrastructure
                );
                 context.Services.AddAuthorizationSetup(context.Configuration);
             }
+            //健康检查服务
+            context.Services.AddHealthChecks();
             context.Services.ConfigureDynamicProxy(o =>
             {
                 //添加AOP的配置
@@ -71,7 +73,9 @@ namespace ShenNius.Share.Infrastructure
             {
                 app.UseMiniProfiler();
                 app.UseSwaggerMiddle();
-            }        
+            }
+            //加入健康检查中间件
+            app.UseHealthChecks("/health");
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
             NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
         }
