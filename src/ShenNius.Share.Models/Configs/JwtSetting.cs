@@ -1,5 +1,8 @@
-﻿namespace ShenNius.Share.Infrastructure.JsonWebToken
+﻿namespace ShenNius.Share.Models.Configs
 {
+    /// <summary>
+    /// jwt实体类
+    /// </summary>
     public class JwtSetting
     {
 

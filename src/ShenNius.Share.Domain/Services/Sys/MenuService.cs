@@ -57,7 +57,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             {
                 var allRoleMenus = await GetCurrentMenuByUser(userId);
                 var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
-                var configs = await Db.Queryable<Config>().Where(m => m.Type ==nameof(ButtonConfig)&&m.Status).ToListAsync();
+                var configs = await Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)&&m.Status).ToListAsync();
                 var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id)) .ToListAsync();
 
                 foreach (var item in query)
@@ -106,7 +106,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                           {
                               var codeList = cache.Get(t =>
                               {
-                                  return Db.Queryable<Config>().Where(m => m.Type ==nameof(ButtonConfig)).ToList();
+                                  return Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)).ToList();
                               });
                               var list = new List<string>();
                               if (it.BtnCodeIds != null)

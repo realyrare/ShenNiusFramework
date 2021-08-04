@@ -20,7 +20,7 @@ namespace ShenNius.Sys.API.Controllers
         }
 
 
-        [HttpDelete, Authority(Module = nameof(Log), Method = nameof(ButtonConfig.Delete))]
+        [HttpDelete, Authority(Module = nameof(Log), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _logService.DeleteAsync(commonDeleteInput.Ids));
@@ -38,7 +38,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet, Authority(Module = nameof(Log), Method = nameof(ButtonConfig.Detail))]
+        [HttpGet, Authority(Module = nameof(Log), Method = nameof(Button.Detail))]
         public async Task<ApiResult> Detail(int id)
         {
             var res = await _logService.GetModelAsync(d => d.Id == id);

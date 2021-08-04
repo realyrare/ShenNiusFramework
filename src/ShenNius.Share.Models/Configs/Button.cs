@@ -17,7 +17,7 @@ namespace ShenNius.Share.Models.Configs
     /// <summary>
     /// 菜单按钮配置
     /// </summary>
-    public class ButtonConfig
+    public class Button
     {
         /// <summary>
         /// 详情

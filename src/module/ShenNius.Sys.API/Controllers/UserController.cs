@@ -85,19 +85,19 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method =nameof(ButtonConfig.Add))]
+        [HttpPost, Authority(Module = nameof(User), Method =nameof(Button.Add))]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
 
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Edit))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
 
-        [HttpDelete, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Delete))]
+        [HttpDelete, Authority(Module = nameof(User), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput input)
         {
             return new ApiResult(await _userService.DeleteAsync(input.Ids));
@@ -132,7 +132,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Auth))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Auth))]
         public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);

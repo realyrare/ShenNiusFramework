@@ -14,7 +14,6 @@ using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.Infrastructure.Extension;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
@@ -44,8 +43,6 @@ namespace ShenNius.API.Hosting
                 options.Filters.Add(typeof(GlobalExceptionFilter));
                 //全局多租户
                 //options.Filters.Add(typeof(MultiTenantAttribute));
-                //配置路由以减号分割
-                options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             });
 
             mvcBuilder.AddNewtonsoftJson(options =>
@@ -132,11 +129,11 @@ namespace ShenNius.API.Hosting
                 // 路由映射
                 app.UseEndpoints(endpoints =>
                 {
-                //全局路由配置
-                endpoints.MapControllerRoute(
-                     name: "default",
-                       pattern: "{controller=Home}/{action=Index}/{id?}"
-                    );
+                    //全局路由配置
+                    endpoints.MapControllerRoute(
+                         name: "default",
+                           pattern: "{controller=Home}/{action=Index}/{id?}"
+                        );
                     //这里要说下，为啥地址要写 /api/xxx 
                     //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由
                     endpoints.MapHub<ChatHub>("/api/chatHub");
