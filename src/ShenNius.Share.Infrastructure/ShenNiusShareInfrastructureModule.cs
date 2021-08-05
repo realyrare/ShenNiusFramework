@@ -11,6 +11,7 @@ using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Models.Configs;
+using System;
 
 namespace ShenNius.Share.Infrastructure
 {
@@ -65,11 +66,18 @@ namespace ShenNius.Share.Infrastructure
                 context.Services.AddMemoryCache();
                 context.Services.AddScoped<ICacheHelper, MemoryCacheHelper>();
             }
-
-            //七牛云配置信息读取
-            context.Services.Configure<QiNiuOss>(context.Configuration.GetSection("QiNiuOss"));
-            context.Services.AddScoped<QiniuCloud>();
-
+            //是否启用本地文件上传 选择性注入
+            var enableLocalFile =Convert.ToBoolean(context.Configuration["LocalFile:IsEnable"]);
+            if (enableLocalFile)
+            {
+                context.Services.AddScoped<IUploadHelper,LocalFile>();
+            }
+            else {
+                //七牛云配置信息读取
+                context.Services.Configure<QiNiuOss>(context.Configuration.GetSection("QiNiuOss"));              
+                context.Services.AddScoped<IUploadHelper,QiniuCloud>();
+            }
+           
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

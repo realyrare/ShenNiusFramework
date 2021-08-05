@@ -32,13 +32,13 @@ namespace ShenNius.Cms.API.Controllers
     {
         private readonly IBaseServer<AdvList> _service;
         private readonly QiNiuOss _qiNiuOssModel;
-        private readonly QiniuCloud _qiniuCloud;
+        private readonly IUploadHelper _uploadHelper;
 
-        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, IUploadHelper  uploadHelper) : base(service, mapper)
         {
             _service = service;
             this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
-            this._qiniuCloud = qiniuCloud;
+            this._uploadHelper = uploadHelper;
         }
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
@@ -59,7 +59,7 @@ namespace ShenNius.Cms.API.Controllers
         public ApiResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _qiniuCloud.UploadFile(files, "advList/");
+            var data = _uploadHelper.Upload(files, "advList/");
             var url = _qiNiuOssModel.ImgDomain + data;
             //TinyMCE 指定的返回格式
             return new ApiResult(data: url);

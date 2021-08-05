@@ -32,13 +32,13 @@ namespace ShenNius.Sys.API.Controllers
         private readonly IBaseServer<Tenant> _service;
         private readonly ICacheHelper _cacheHelper;
         private readonly QiNiuOss _qiNiuOssModel;
-        private readonly QiniuCloud _qiniuCloud;
-        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        private readonly IUploadHelper _uploadHelper;
+        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _service = service;
             _cacheHelper = cacheHelper;
             this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
-            this._qiniuCloud = qiniuCloud;
+            this._uploadHelper = uploadHelper;
         }
         [HttpGet]
         public override async Task<ApiResult> Detail([FromQuery] DetailQuery detailQuery)
@@ -112,7 +112,7 @@ namespace ShenNius.Sys.API.Controllers
         public ApiResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _qiniuCloud.UploadFile(files, "tenant/");
+            var data = _uploadHelper.Upload(files, "tenant/"); 
             var url = _qiNiuOssModel.ImgDomain + data;
             return new ApiResult(data: url);
         }

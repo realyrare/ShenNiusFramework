@@ -1,14 +1,24 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 using MimeKit;
+using ShenNius.Share.Common;
 using ShenNius.Share.Infrastructure.Configurations;
+using ShenNius.Share.Infrastructure.Extensions;
 using System;
 using System.Text.RegularExpressions;
 
 namespace ShenNius.Share.Infrastructure.Common
 {
     public class WebHelper
-    {     
-        public static void Send(string subject, string content, string toName, string toAddress)
+    {  
+        /// <summary>
+        /// 邮件发送
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="content"></param>
+        /// <param name="toName"></param>
+        /// <param name="toAddress"></param>
+        public static void SendEmail(string subject, string content, string toName, string toAddress)
         {
             try
             {
@@ -93,6 +103,32 @@ namespace ShenNius.Share.Infrastructure.Common
                 content = rg.Replace(content, "");
             }
             return content;
+        }
+        /// <summary>
+        /// 图片后缀是否存在
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static string ImgSuffixIsExists(IFormFile file)
+        {
+            string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+            if (fileExt == null)
+            {
+                throw new FriendlyException("上传的文件没有后缀");
+            }
+            //判断文件大小    
+            long length = file.Length;
+            if (length > 1024 * 1024 * 2) //2M
+            {
+                throw new FriendlyException("上传的文件不能大于2M");
+            }
+            string imgTypes = ".gif|.jpg|.php|.jsp|.jpeg|.png|......";
+            if (imgTypes.IndexOf(fileExt.ToLower(), StringComparison.Ordinal) <= -1)
+            {
+                throw new FriendlyException("上传的文件不是图片");
+            }
+            string filename = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
+            return filename;
         }
     }
 }

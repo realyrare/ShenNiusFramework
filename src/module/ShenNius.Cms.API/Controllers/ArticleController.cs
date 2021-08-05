@@ -29,13 +29,13 @@ namespace ShenNius.Cms.API.Controllers
     public class ArticleController : ApiTenantBaseController<Article, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, ArticleInput, ArticleModifyInput>
     {
         private readonly IBaseServer<Article> _service;
-        private readonly QiniuCloud _qiniuCloud;
+        private readonly IUploadHelper _uploadHelper;
         private readonly QiNiuOss _qiNiuOssModel;
 
-        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _service = service;
-            _qiniuCloud = qiniuCloud;
+            _uploadHelper = uploadHelper;
             _qiNiuOssModel = qiNiuOssModel.CurrentValue;
         }
 
@@ -58,7 +58,7 @@ namespace ShenNius.Cms.API.Controllers
         public IActionResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _qiniuCloud.UploadFile(files, "article/");
+            var data = _uploadHelper.Upload(files, "article/");
             var url = _qiNiuOssModel.ImgDomain + data;
             //TinyMCE 指定的返回格式
             return Ok(new { location = url });

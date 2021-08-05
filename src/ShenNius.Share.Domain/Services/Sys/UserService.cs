@@ -61,7 +61,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var data = _mapper.Map<LoginOutput>(loginModel);
 
             LogHelper.Default.Process(loginModel.Name, "login", $"{loginModel.Name}登陆成功！", LogLevel.Info);
-            WebHelper.Send("神牛系统用户登录", $"当前名为{loginModel.Name}的用户在{DateTime.Now}成功登录神牛系统", loginModel.Name, loginModel.Email);
+            WebHelper.SendEmail("神牛系统用户登录", $"当前名为{loginModel.Name}的用户在{DateTime.Now}成功登录神牛系统", loginModel.Name, loginModel.Email);
             return new ApiResult<LoginOutput>(data);
         }
         public async Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput)
