@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using TestApi.Model;
 
 namespace WebApplication1.Controllers

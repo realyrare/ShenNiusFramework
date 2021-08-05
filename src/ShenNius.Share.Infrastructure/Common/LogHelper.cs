@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System;
 
-namespace ShenNius.Share.Infrastructure.Utils
+namespace ShenNius.Share.Infrastructure.Common
 {
     /// <summary>
     /// 日志管理

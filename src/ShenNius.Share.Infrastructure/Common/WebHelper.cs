@@ -1,14 +1,10 @@
 ﻿using MailKit.Net.Smtp;
-using Microsoft.Extensions.DependencyInjection;
 using MimeKit;
 using ShenNius.Share.Infrastructure.Configurations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace ShenNius.Share.Infrastructure.Utils
+namespace ShenNius.Share.Infrastructure.Common
 {
     public class WebHelper
     {     

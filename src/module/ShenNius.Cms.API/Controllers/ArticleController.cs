@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ShenNius.Share.BaseController.Controllers;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -14,6 +12,7 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类名：ArticleController
@@ -31,9 +30,9 @@ namespace ShenNius.Cms.API.Controllers
     {
         private readonly IBaseServer<Article> _service;
         private readonly QiniuCloud _qiniuCloud;
-        private readonly QiNiuOssModel _qiNiuOssModel;
+        private readonly QiNiuOss _qiNiuOssModel;
 
-        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
         {
             _service = service;
             _qiniuCloud = qiniuCloud;

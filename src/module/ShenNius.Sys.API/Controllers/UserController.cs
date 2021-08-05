@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Infrastructure.JsonWebToken;
 using System;
 using System.Collections.Generic;
@@ -14,16 +14,15 @@ using ShenNius.Share.Models.Dtos.Input;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
-using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Caches;
 using StackExchange.Profiling;
-using ShenNius.Share.Models.Configs;
 using Microsoft.AspNetCore.SignalR;
 using ShenNius.Share.Infrastructure.Hubs;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using NLog;
 using ShenNius.Share.Common;
 

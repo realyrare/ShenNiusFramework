@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using NLog;
 using Microsoft.Extensions.Logging;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using Newtonsoft.Json;
+using ShenNius.Share.Models.Configs;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     /// <summary>
     /// Http全局异常过滤器

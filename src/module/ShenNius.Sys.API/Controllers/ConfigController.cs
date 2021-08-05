@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Domain.Services.Sys;

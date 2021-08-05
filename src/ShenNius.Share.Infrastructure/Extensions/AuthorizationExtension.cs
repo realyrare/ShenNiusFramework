@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     public static class AuthorizationExtension
     {

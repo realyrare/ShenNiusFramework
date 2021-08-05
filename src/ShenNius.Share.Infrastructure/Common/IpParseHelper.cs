@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace ShenNius.Share.Infrastructure.Utils
+namespace ShenNius.Share.Infrastructure.Common
 {
     public class IpParseHelper
     {

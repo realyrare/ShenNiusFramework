@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using ShenNius.Share.Common;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using System;
+using System.IO;
 
 /*************************************
 * 类 名： LocalFile
@@ -14,38 +16,38 @@ using System;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.ImgUpload
+namespace ShenNius.Share.Infrastructure.FileManager
 {
     /// <summary>
-    /// 使用的时候单独把类注入
+    ///本地图片上传 使用的时候单独把类注入
     /// </summary>
     public class LocalFile
     {
-        //private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        //public LocalFile(IWebHostEnvironment webHostEnvironment)
-        //{
-        //    this._webHostEnvironment = webHostEnvironment;
-        //}
+        public LocalFile(IWebHostEnvironment webHostEnvironment)
+        {
+            this._webHostEnvironment = webHostEnvironment;
+        }
 
-        //public string Upload(IFormFile file)
-        //{
-        //    string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
-        //    if (!Directory.Exists(path))
-        //    {
-        //        Directory.CreateDirectory(path);
-        //    }
-        //    //var file = Request.Form.Files[0];
-        //     var fileName=  ImgDealwith(file);
-        //    string fileFullName = path + "\\" + fileName;
+        public string Upload(IFormFile file)
+        {
+            string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            //var file = Request.Form.Files[0];
+            var fileName = ImgDealwith(file);
+            string fileFullName = path + "\\" + fileName;
 
-        //    using (FileStream fs = File.Create(fileFullName))
-        //    {
-        //        file.CopyTo(fs);
-        //        fs.Flush();
-        //    }
-        //    return fileName;
-        //}
+            using (FileStream fs = File.Create(fileFullName))
+            {
+                file.CopyTo(fs);
+                fs.Flush();
+            }
+            return fileName;
+        }
         public static string ImgDealwith(IFormFile file)
         {
             string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];

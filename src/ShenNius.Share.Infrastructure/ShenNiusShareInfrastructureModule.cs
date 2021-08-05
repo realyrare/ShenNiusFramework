@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
 using ShenNius.ModuleCore.Extensions;
-using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Configurations;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.ImgUpload;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Infrastructure
 {
@@ -67,7 +67,7 @@ namespace ShenNius.Share.Infrastructure
             }
 
             //七牛云配置信息读取
-            context.Services.Configure<QiNiuOssModel>(context.Configuration.GetSection("QiNiuOss"));
+            context.Services.Configure<QiNiuOss>(context.Configuration.GetSection("QiNiuOss"));
             context.Services.AddScoped<QiniuCloud>();
 
         }

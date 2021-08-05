@@ -7,12 +7,10 @@ using Qiniu.IO.Model;
 using Qiniu.RS;
 using Qiniu.RS.Model;
 using Qiniu.Util;
-using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.FileManager;
-using System;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using System.Collections.Generic;
 using System.IO;
-using System.Web;
 
 /*************************************
 * 类 名： QiniuCloud
@@ -25,7 +23,7 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.ImgUpload
+namespace ShenNius.Share.Infrastructure.FileManager
 {
     public class QiniuCloud
     {
@@ -34,9 +32,9 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
         private static string Bucket;  //空间名
         private static string BasePath;
         private static string domain;
-        private readonly QiNiuOssModel _qiNiuOssModel;
+        private readonly QiNiuOss _qiNiuOssModel;
 
-        public QiniuCloud(IOptionsMonitor<QiNiuOssModel> qiNiuOssModel)
+        public QiniuCloud(IOptionsMonitor<QiNiuOss> qiNiuOssModel)
         {
             _qiNiuOssModel = qiNiuOssModel.CurrentValue;
             Ak = _qiNiuOssModel.Ak;

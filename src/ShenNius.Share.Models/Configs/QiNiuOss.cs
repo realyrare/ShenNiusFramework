@@ -1,6 +1,9 @@
-﻿namespace ShenNius.Share.Infrastructure.FileManager
+﻿namespace ShenNius.Share.Models.Configs
 {
-    public class QiNiuOssModel
+    /// <summary>
+    /// 七牛云配置信息实体
+    /// </summary>
+    public class QiNiuOss
     {
         public string Ak { get; set; }
         public string Sk { get; set; }

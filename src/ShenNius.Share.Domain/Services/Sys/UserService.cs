@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Domain.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using NLog;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Common;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {

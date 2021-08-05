@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using System;

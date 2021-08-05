@@ -11,9 +11,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.BaseController.Controllers;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Cache;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
@@ -23,7 +23,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.ImgUpload;
 using Microsoft.Extensions.Options;
 
 namespace ShenNius.Sys.API.Controllers
@@ -32,9 +31,9 @@ namespace ShenNius.Sys.API.Controllers
     {
         private readonly IBaseServer<Tenant> _service;
         private readonly ICacheHelper _cacheHelper;
-        private readonly QiNiuOssModel _qiNiuOssModel;
+        private readonly QiNiuOss _qiNiuOssModel;
         private readonly QiniuCloud _qiniuCloud;
-        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
         {
             _service = service;
             _cacheHelper = cacheHelper;

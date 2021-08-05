@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.Cache
+namespace ShenNius.Share.Infrastructure.Caches
 {
     public interface ICacheHelper
     {

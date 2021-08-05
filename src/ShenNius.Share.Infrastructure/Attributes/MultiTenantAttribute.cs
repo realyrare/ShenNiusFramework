@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Common;

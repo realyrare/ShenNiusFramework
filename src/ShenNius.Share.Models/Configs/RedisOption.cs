@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-/*************************************
+﻿/*************************************
 * 类名：RedisOption
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
@@ -12,8 +8,11 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.Cache
+namespace ShenNius.Share.Models.Configs
 {
+    /// <summary>
+    /// redis配置信息实体
+    /// </summary>
     public class RedisOption
     {
         public bool Enable { get; set; }

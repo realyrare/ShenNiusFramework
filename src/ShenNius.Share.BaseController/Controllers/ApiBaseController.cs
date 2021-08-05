@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类名：ApiBaseController

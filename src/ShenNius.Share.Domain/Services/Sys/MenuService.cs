@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Cache;
-using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;

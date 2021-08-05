@@ -10,9 +10,9 @@
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.Utils
+namespace ShenNius.Share.Infrastructure.Extensions
 {
-    public static class StaticExtension
+    public static class WebExtension
     {
         public static string ToWebString(this DateTime dt)
         {

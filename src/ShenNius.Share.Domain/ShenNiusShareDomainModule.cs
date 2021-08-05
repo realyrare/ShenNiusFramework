@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using ModuleCore.AppModule.Impl;
 using ModuleCore.Context;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Domain.Repository;
 using System;
 using System.Reflection;

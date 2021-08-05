@@ -1,5 +1,8 @@
-﻿namespace ShenNius.Share.Infrastructure.ApiResponse
+﻿namespace ShenNius.Share.Models.Configs
 {
+    /// <summary>
+    /// api响应客户端格式model
+    /// </summary>
     public class ApiResult
     {
         /// <summary>

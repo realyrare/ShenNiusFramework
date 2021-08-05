@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using NLog;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using System.Diagnostics;
 
 namespace ShenNius.Share.Infrastructure.Attributes

@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     public static  class SwaggerExtesion
     {
