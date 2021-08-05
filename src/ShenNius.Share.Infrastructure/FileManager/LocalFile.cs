@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using ShenNius.Share.Infrastructure.Extension;
-using ShenNiusSystem.Common;
-using System;
-using System.Collections.Generic;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Models.Configs;
 using System.IO;
-using System.Web;
 
 /*************************************
 * 类 名： LocalFile
@@ -18,58 +15,61 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.ImgUpload
+namespace ShenNius.Share.Infrastructure.FileManager
 {
     /// <summary>
-    /// 使用的时候单独把类注入
+    ///本地图片上传 使用的时候单独把类注入
     /// </summary>
-    public class LocalFile
+    public class LocalFile : IUploadHelper
     {
-        //private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        //public LocalFile(IWebHostEnvironment webHostEnvironment)
-        //{
-        //    this._webHostEnvironment = webHostEnvironment;
-        //}
-
-        //public string Upload(IFormFile file)
-        //{
-        //    string path = string.Concat(_webHostEnvironment.ContentRootPath, "\\wwwroot\\Files");
-        //    if (!Directory.Exists(path))
-        //    {
-        //        Directory.CreateDirectory(path);
-        //    }
-        //    //var file = Request.Form.Files[0];
-        //     var fileName=  ImgDealwith(file);
-        //    string fileFullName = path + "\\" + fileName;
-
-        //    using (FileStream fs = File.Create(fileFullName))
-        //    {
-        //        file.CopyTo(fs);
-        //        fs.Flush();
-        //    }
-        //    return fileName;
-        //}
-        public static string ImgDealwith(IFormFile file)
+        public LocalFile(IWebHostEnvironment webHostEnvironment)
         {
-            string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-            if (fileExt == null)
+            this._webHostEnvironment = webHostEnvironment;
+        }
+
+        public ApiResult Delete(string filename)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ApiResult List(string prefix, string marker)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ApiResult Upload(IFormFile file, string prefix)
+        {
+            string path;
+            if (!string.IsNullOrEmpty(prefix))
             {
-                throw new FriendlyException("上传的文件没有后缀");
+                path = string.Concat(_webHostEnvironment.ContentRootPath, $"\\wwwroot\\Files\\{prefix}");
             }
-            //判断文件大小    
-            long length = file.Length;
-            if (length > 1024 * 1024 * 2) //2M
+            else
             {
-                throw new FriendlyException("上传的文件不能大于2M");
+                path = string.Concat(_webHostEnvironment.ContentRootPath, $"\\wwwroot\\Files");
             }
-            string imgTypes = ".gif|.jpg|.php|.jsp|.jpeg|.png|......";
-            if (imgTypes.IndexOf(fileExt.ToLower(), StringComparison.Ordinal) <= -1)
+
+            if (!Directory.Exists(path))
             {
-                throw new FriendlyException("上传的文件不是图片");
+                Directory.CreateDirectory(path);
             }
-            string filename = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
-            return filename;
-        }    
+            //var file = Request.Form.Files[0];
+            var fileName = WebHelper.ImgSuffixIsExists(file);
+            string fileFullName = path + "\\" + fileName;
+
+            using (FileStream fs = File.Create(fileFullName))
+            {
+                file.CopyTo(fs);
+                fs.Flush();
+            }
+            return new ApiResult(data: fileName);
+        }
+
+        public ApiResult Upload(IFormFileCollection files, string prefix)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

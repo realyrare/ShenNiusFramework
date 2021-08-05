@@ -1,6 +1,6 @@
 ﻿using AspectCore.DynamicProxy;
 using Newtonsoft.Json;
-using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Caches;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

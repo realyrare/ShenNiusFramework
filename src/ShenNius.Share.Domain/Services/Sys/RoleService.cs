@@ -1,11 +1,11 @@
-﻿using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Model.Entity.Sys;
+﻿using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {

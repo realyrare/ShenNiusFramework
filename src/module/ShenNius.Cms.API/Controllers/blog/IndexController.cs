@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Cms;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Cache;
-using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
 using SqlSugar;
@@ -15,6 +14,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
 using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类名：IndexController
@@ -234,7 +234,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             {
                 throw new FriendlyException("您提交的次数过多，请稍后重试！~");
             }
-            messageInput.Address = IpParse.GetAddressByIP(messageInput.IP);
+            messageInput.Address = IpParseHelper.GetAddressByIP(messageInput.IP);
             var model = _mapper.Map<Message>(messageInput);
             await _messageService.AddAsync(model);
             return new ApiResult();

@@ -1,8 +1,5 @@
 ﻿using AspectCore.DynamicProxy;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 
 /*************************************
 * 类名：Tenant

@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using ModuleCore.AppModule.Impl;
+﻿using ModuleCore.AppModule.Impl;
 using ModuleCore.Attribute;
 using ModuleCore.Context;
 using ShenNius.Share.Infrastructure;
 using ShenNius.Share.Domain;
-using ShenNius.Share.Infrastructure.JsonWebToken;
 
 namespace ShenNius.Sys.API
 {
@@ -18,7 +16,7 @@ namespace ShenNius.Sys.API
         {
             //JwtSetting jwtSetting = new JwtSetting();
             //context.Configuration.Bind("JwtSetting", jwtSetting);
-            context.Services.Configure<JwtSetting>(context.Configuration.GetSection("JwtSetting"));
+           // context.Services.Configure<JwtSetting>(context.Configuration.GetSection("JwtSetting"));
           
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

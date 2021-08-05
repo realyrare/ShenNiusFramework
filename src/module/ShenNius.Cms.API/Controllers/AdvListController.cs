@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ShenNius.Share.BaseController.Controllers;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -14,6 +12,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ShenNius.Share.Models.Entity.Cms;
+using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类 名： AdvListController
@@ -31,15 +30,13 @@ namespace ShenNius.Cms.API.Controllers
 
     public class AdvListController : ApiTenantBaseController<AdvList, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, AdvListInput, AdvListModifyInput>
     {
-        private readonly IBaseServer<AdvList> _service;
-        private readonly QiNiuOssModel _qiNiuOssModel;
-        private readonly QiniuCloud _qiniuCloud;
+        private readonly IBaseServer<AdvList> _service;       
+        private readonly IUploadHelper _uploadHelper;
 
-        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IUploadHelper  uploadHelper) : base(service, mapper)
         {
             _service = service;
-            this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
-            this._qiniuCloud = qiniuCloud;
+            this._uploadHelper = uploadHelper;
         }
         [HttpGet]
         public override async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
@@ -60,10 +57,8 @@ namespace ShenNius.Cms.API.Controllers
         public ApiResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _qiniuCloud.UploadFile(files, "advList/");
-            var url = _qiNiuOssModel.ImgDomain + data;
-            //TinyMCE 指定的返回格式
-            return new ApiResult(data: url);
+            var data = _uploadHelper.Upload(files, "advList/");
+            return new ApiResult(data: data);
         }
     }
 }

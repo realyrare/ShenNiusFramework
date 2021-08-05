@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Domain.Services.Sys;
@@ -23,7 +22,7 @@ namespace ShenNius.Sys.API.Controllers
             _configService = configService;
             _mapper = mapper;
         }
-        [HttpDelete,Authority(Module =nameof(Config),Method =nameof(ButtonConfig.Delete))]
+        [HttpDelete,Authority(Module =nameof(Config),Method =nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _configService.DeleteAsync(commonDeleteInput.Ids));
@@ -47,7 +46,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: res);
         }
 
-        [HttpPost, Authority(Module = nameof(Config), Method = nameof(ButtonConfig.Add))]
+        [HttpPost, Authority(Module = nameof(Config), Method = nameof(Button.Add))]
         public async Task<ApiResult> Add([FromBody] ConfigInput input)
         {
             var model= await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
@@ -59,7 +58,7 @@ namespace ShenNius.Sys.API.Controllers
             var res = await _configService.AddAsync(modelInput);
             return new ApiResult(data: res);
         }
-        [HttpPut, Authority(Module = nameof(Config), Method = nameof(ButtonConfig.Edit))]
+        [HttpPut, Authority(Module = nameof(Config), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] ConfigModifyInput input)
         {
             var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName)&&d.Id!=input.Id);

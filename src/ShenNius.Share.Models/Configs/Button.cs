@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-/*************************************
+﻿/*************************************
 * 类名：Button
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
@@ -17,7 +13,7 @@ namespace ShenNius.Share.Models.Configs
     /// <summary>
     /// 菜单按钮配置
     /// </summary>
-    public class ButtonConfig
+    public class Button
     {
         /// <summary>
         /// 详情

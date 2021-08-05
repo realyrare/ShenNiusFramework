@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ShenNius.Share.BaseController.Controllers;
-using ShenNius.Share.Infrastructure.ApiResponse;
 using ShenNius.Share.Infrastructure.FileManager;
-using ShenNius.Share.Infrastructure.ImgUpload;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -14,6 +12,7 @@ using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类名：ArticleController
@@ -30,14 +29,13 @@ namespace ShenNius.Cms.API.Controllers
     public class ArticleController : ApiTenantBaseController<Article, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, ArticleInput, ArticleModifyInput>
     {
         private readonly IBaseServer<Article> _service;
-        private readonly QiniuCloud _qiniuCloud;
-        private readonly QiNiuOssModel _qiNiuOssModel;
+        private readonly IUploadHelper _uploadHelper;
 
-        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOssModel> qiNiuOssModel, QiniuCloud qiniuCloud) : base(service, mapper)
+
+        public ArticleController(IBaseServer<Article> service, IMapper mapper, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _service = service;
-            _qiniuCloud = qiniuCloud;
-            _qiNiuOssModel = qiNiuOssModel.CurrentValue;
+            _uploadHelper = uploadHelper;      
         }
 
         [HttpGet]
@@ -59,10 +57,9 @@ namespace ShenNius.Cms.API.Controllers
         public IActionResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _qiniuCloud.UploadFile(files, "article/");
-            var url = _qiNiuOssModel.ImgDomain + data;
+            var data = _uploadHelper.Upload(files, "article/");
             //TinyMCE 指定的返回格式
-            return Ok(new { location = url });
+            return Ok(new { location = data });
         }
     }
 }

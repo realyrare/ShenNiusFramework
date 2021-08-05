@@ -2,12 +2,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     /// <summary>
     /// System.Text.Json（.net core自带json库），目前支持尚不完善
     /// </summary>
-    public class SystemTextJsonConvert
+    public class TextJsonConvert
     {
         public class DateTimeConverter : JsonConverter<DateTime>
         {

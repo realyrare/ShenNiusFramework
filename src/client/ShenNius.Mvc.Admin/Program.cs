@@ -1,11 +1,7 @@
+using AspectCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using NLog.Web;
 
 namespace ShenNius.Mvc.Admin
 {
@@ -21,6 +17,9 @@ namespace ShenNius.Mvc.Admin
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }) 
+            //用AspectCore替换默认的IOC容器
+            .UseServiceProviderFactory(new DynamicProxyServiceProviderFactory())
+            .UseNLog();//加入nlog日志;;
     }
 }

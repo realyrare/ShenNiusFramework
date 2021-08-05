@@ -1,5 +1,4 @@
-﻿using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Extension;
+﻿using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
@@ -7,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {

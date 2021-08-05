@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShenNiusSystem.Common
+namespace ShenNius.Share.Common
 {
     public class Md5Crypt
     {

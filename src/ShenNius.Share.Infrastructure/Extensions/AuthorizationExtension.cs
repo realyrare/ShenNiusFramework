@@ -4,13 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ShenNius.Share.Infrastructure.JsonWebToken;
+using ShenNius.Share.Models.Configs;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     public static class AuthorizationExtension
     {

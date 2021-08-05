@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -7,7 +7,6 @@ using ShenNius.Share.Domain.Services.Sys;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Sys.API.Controllers
 {
@@ -20,7 +19,7 @@ namespace ShenNius.Sys.API.Controllers
         }
 
 
-        [HttpDelete, Authority(Module = nameof(Log), Method = nameof(ButtonConfig.Delete))]
+        [HttpDelete, Authority(Module = nameof(Log), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _logService.DeleteAsync(commonDeleteInput.Ids));
@@ -38,7 +37,7 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet, Authority(Module = nameof(Log), Method = nameof(ButtonConfig.Detail))]
+        [HttpGet, Authority(Module = nameof(Log), Method = nameof(Button.Detail))]
         public async Task<ApiResult> Detail(int id)
         {
             var res = await _logService.GetModelAsync(d => d.Id == id);

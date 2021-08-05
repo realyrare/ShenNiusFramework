@@ -1,4 +1,4 @@
-﻿using ShenNius.Share.Infrastructure.Extension;
+﻿using ShenNius.Share.Infrastructure.Extensions;
 using SqlSugar;
 using System;
 

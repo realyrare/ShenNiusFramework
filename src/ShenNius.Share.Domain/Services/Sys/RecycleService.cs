@@ -1,6 +1,6 @@
 ﻿using ShenNius.Share.Domain.Repository;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using System.Threading.Tasks;

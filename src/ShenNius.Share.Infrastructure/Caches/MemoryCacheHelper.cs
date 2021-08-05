@@ -1,49 +1,40 @@
-﻿using Microsoft.Extensions.Caching.StackExchangeRedis;
-using Newtonsoft.Json;
-using ShenNius.Share.Infrastructure.Extension;
-using StackExchange.Redis;
+﻿using Microsoft.Extensions.Caching.Memory;
+using ShenNius.Share.Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
 
 /*************************************
-* 类名：RedisCacheHelper
+* 类名：MemoryCacheHelper
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
-* 时间：2021/3/25 18:02:04
+* 时间：2021/3/25 18:03:11
 *┌───────────────────────────────────┐　    
 *│　     版权所有：神牛软件　　　　	 │
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.Cache
+namespace ShenNius.Share.Infrastructure.Caches
 {
-    public class RedisCacheHelper : ICacheHelper
+    public class MemoryCacheHelper : ICacheHelper
     {
-        public IDatabase _cache;
-
-        private readonly ConnectionMultiplexer _connection;
-
-        private readonly string _instance;
-        public RedisCacheHelper(RedisCacheOptions options, int database = 0)
+        private readonly IMemoryCache _cache;
+        public MemoryCacheHelper(IMemoryCache cache)
         {
-            _connection = ConnectionMultiplexer.Connect(options.Configuration);
-            _cache = _connection.GetDatabase(database);
-            _instance = options.InstanceName;
+            _cache = cache;
         }
         public bool Exists(string key)
         {
-            return _cache.KeyExists(_instance + key);
+            return _cache.TryGetValue(key, out _);
         }
-
+  
         public T Get<T>(string key)
-        {
-            var value = _cache.StringGet(_instance + key);
-            return JsonConvert.DeserializeObject<T>(value);
+        {          
+            return _cache.Get<T>(key);
         }
 
         public void Remove(string key)
         {
-            _cache.KeyDelete(_instance + key);
+            _cache.Remove(key);
         }
 
         public void Set<T>(string key, T value)
@@ -52,18 +43,15 @@ namespace ShenNius.Share.Infrastructure.Cache
             {
                 throw new FriendlyException("value 为空!");
             }
-            var values = JsonConvert.SerializeObject(value);
-            _cache.StringSet(_instance + key, values);
+            _cache.Set(key, value);
         }
-
         public void Set<T>(string key, T value, TimeSpan timeSpan)
         {
             if (value == null)
             {
                 throw new FriendlyException("value 为空!");
             }
-            var values = JsonConvert.SerializeObject(value);
-            _cache.StringSet(_instance + key, values, timeSpan);
+            _cache.Set(key, value, timeSpan);
         }
         public T GetOrSet<T>(string key, Func<T> getDataCallback, TimeSpan? exp = null)
         {
@@ -88,43 +76,38 @@ namespace ShenNius.Share.Infrastructure.Cache
             }
             else
             {
-                var value = _cache.StringGet(_instance + key);
-                data = JsonConvert.DeserializeObject<T>(value);
+                data = _cache.Get<T>(key);
             }
             return data;
         }
+
         public async Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> getDataCallback, TimeSpan? exp = null)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException("Invalid cache key");
-            var value = _cache.StringGet(_instance + key);
-            T data;
-            if (!string.IsNullOrEmpty(value))
+            T data = _cache.Get<T>(key);
+            if (data == null)
             {
-                data = JsonConvert.DeserializeObject<T>(value);
+                data = await getDataCallback();
                 if (data == null)
                 {
-                    data = await getDataCallback();
-                    if (data == null)
-                    {
-                        return default(T);//data
-                    }
-                    if (exp.HasValue)
-                    {
-                        Set(key, data, exp.Value);
-                    }
-                    else
-                    {
-                        Set(key, data);
-                    }
+                    return default(T);//data
+                }
+                if (exp.HasValue)
+                {
+                    Set(key, data, exp.Value);
+                }
+                else
+                {
+                    Set(key, data);
                 }
             }
-            return default(T);
+            return data;
         }
 
         public object Get(string key)
         {
-            return _cache.StringGet(key);
+            return _cache.Get(key);
         }
     }
 }

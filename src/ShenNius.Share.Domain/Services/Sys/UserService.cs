@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using ShenNius.Share.Infrastructure.ApiResponse;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Domain.Repository;
-using ShenNiusSystem.Common;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using ShenNius.Share.Infrastructure.CommandHandler.Model;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using NLog;
 using ShenNius.Share.Models.Dtos.Output.Sys;
+using ShenNius.Share.Common;
+using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -24,7 +21,6 @@ namespace ShenNius.Share.Domain.Services.Sys
         Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput);
         Task<ApiResult> ModfiyAsync(UserModifyInput userModifyInput);
         Task<ApiResult> ModfiyPwdAsync(ModifyPwdInput modifyPwdInput);
-        Task<ApiResult> DeletesAsync(List<int> ids);
         Task<ApiResult> GetUserAsync(int id);
 
     }
@@ -33,14 +29,13 @@ namespace ShenNius.Share.Domain.Services.Sys
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _accessor;
         private readonly ICurrentUserContext _currentUserContext;
-        private readonly IMediator _mediator;
 
-        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext, IMediator mediator)
+
+        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
             _accessor = httpContextAccessor;
             _currentUserContext = currentUserContext;
-            _mediator = mediator;
         }
 
 
@@ -56,17 +51,17 @@ namespace ShenNius.Share.Domain.Services.Sys
 
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            string address = IpParse.GetAddressByIP(ip);
+            string address = IpParseHelper.GetAddressByIP(ip);
             await UpdateAsync(d => new User()
             {
                 LastLoginTime = DateTime.Now,
                 Ip = ip,
                 Address = address
             }, d => d.Id == loginModel.Id);
-            await _mediator.Publish(new UserNotification() { Id = loginModel.Id, Name = loginModel.Name });
             var data = _mapper.Map<LoginOutput>(loginModel);
 
             LogHelper.Default.Process(loginModel.Name, "login", $"{loginModel.Name}登陆成功！", LogLevel.Info);
+            WebHelper.SendEmail("神牛系统用户登录", $"当前名为{loginModel.Name}的用户在{DateTime.Now}成功登录神牛系统", loginModel.Name, loginModel.Email);
             return new ApiResult<LoginOutput>(data);
         }
         public async Task<ApiResult> RegisterAsync(UserRegisterInput userRegisterInput)
@@ -75,7 +70,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var userModel = _mapper.Map<User>(userRegisterInput);
             userModel.CreateTime = DateTime.Now;
             userModel.Ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            userModel.Address = IpParse.GetAddressByIP(userModel.Ip);
+            userModel.Address = IpParseHelper.GetAddressByIP(userModel.Ip);
             var i = await AddAsync(userModel);
             return new ApiResult(i);
         }
@@ -123,14 +118,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);
             return new ApiResult(i);
         }
-        public async Task<ApiResult> DeletesAsync(List<int> ids)
-        {
-            if (ids.Count == 0 || ids == null)
-            {
-                throw new FriendlyException("传递的id为空");
-            }
-            return new ApiResult(await DeleteAsync(ids));
-        }
+       
         public async Task<ApiResult> GetUserAsync(int id)
         {
             var model = await GetModelAsync(d => d.Id == id);

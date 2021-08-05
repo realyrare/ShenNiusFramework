@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Model.Entity.Sys;
-using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using System;
@@ -25,7 +24,7 @@ namespace ShenNius.Sys.API.Controllers
             _mapper = mapper;
             _r_Role_MenuService = r_Role_MenuService;
         }
-        [HttpDelete,Authority(Module = nameof(Role), Method = nameof(ButtonConfig.Delete))]
+        [HttpDelete,Authority(Module = nameof(Role), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
@@ -69,20 +68,20 @@ namespace ShenNius.Sys.API.Controllers
             return new ApiResult(data: data);
         }
 
-        [HttpPost, Authority(Module = nameof(Role), Method = nameof(ButtonConfig.Add))]
+        [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Add))]
         public async Task<ApiResult> Add([FromBody] RoleInput roleInput)
         {
             var role = _mapper.Map<Role>(roleInput);
             return new ApiResult(await _roleService.AddAsync(role));
         }
 
-        [HttpPost, Authority(Module = nameof(Role), Method = nameof(ButtonConfig.Auth))]
+        [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Auth))]
         public async Task<ApiResult> SetMenu(SetRoleMenuInput setRoleMenuInput)
         {
             return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
         }
 
-        [HttpPut,Authority(Module = nameof(Role), Method = nameof(ButtonConfig.Edit))]
+        [HttpPut,Authority(Module = nameof(Role), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {
             return new ApiResult(await _roleService.UpdateAsync(d => new Role()

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ShenNius.Share.Infrastructure.ApiResponse;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Infrastructure.JsonWebToken;
 using System;
 using System.Collections.Generic;
@@ -11,21 +11,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Dtos.Input;
-using ShenNiusSystem.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Linq.Expressions;
-using ShenNius.Share.Infrastructure.Cache;
+using ShenNius.Share.Infrastructure.Caches;
 using StackExchange.Profiling;
-using ShenNius.Share.Models.Configs;
 using Microsoft.AspNetCore.SignalR;
 using ShenNius.Share.Infrastructure.Hubs;
-using ShenNius.Share.Infrastructure.Utils;
+using ShenNius.Share.Infrastructure.Common;
 using NLog;
+using ShenNius.Share.Common;
 
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
@@ -85,22 +84,22 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method =nameof(ButtonConfig.Add))]
+        [HttpPost, Authority(Module = nameof(User), Method =nameof(Button.Add))]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
 
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Edit))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
 
-        [HttpDelete, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Delete))]
-        public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
+        [HttpDelete, Authority(Module = nameof(User), Method = nameof(Button.Delete))]
+        public async Task<ApiResult> Deletes([FromBody] DeletesInput input)
         {
-            return await _userService.DeletesAsync(commonDeleteInput.Ids);
+            return new ApiResult(await _userService.DeleteAsync(input.Ids));
         }
         [HttpPost]
         public async Task<ApiResult> ModfiyPwd([FromBody] ModifyPwdInput modifyPwdInput)
@@ -132,7 +131,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(ButtonConfig.Auth))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Auth))]
         public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);

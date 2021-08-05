@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShenNius.Share.Infrastructure.Extension
+namespace ShenNius.Share.Infrastructure.Extensions
 {
     public class FriendlyException : Exception
     {

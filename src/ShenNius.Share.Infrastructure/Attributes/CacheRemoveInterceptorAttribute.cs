@@ -1,6 +1,6 @@
 ﻿using AspectCore.DynamicProxy;
-using ShenNius.Share.Infrastructure.Cache;
-using ShenNius.Share.Infrastructure.Extension;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;

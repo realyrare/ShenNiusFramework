@@ -7,12 +7,11 @@ using Qiniu.IO.Model;
 using Qiniu.RS;
 using Qiniu.RS.Model;
 using Qiniu.Util;
-using ShenNius.Share.Infrastructure.Extension;
-using ShenNius.Share.Infrastructure.FileManager;
-using System;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using System.Collections.Generic;
 using System.IO;
-using System.Web;
 
 /*************************************
 * 类 名： QiniuCloud
@@ -25,25 +24,14 @@ using System.Web;
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Infrastructure.ImgUpload
+namespace ShenNius.Share.Infrastructure.FileManager
 {
-    public class QiniuCloud
+    public class QiniuCloud: IUploadHelper
     {
-        private static string Ak;
-        private static string Sk;
-        private static string Bucket;  //空间名
-        private static string BasePath;
-        private static string domain;
-        private readonly QiNiuOssModel _qiNiuOssModel;
-
-        public QiniuCloud(IOptionsMonitor<QiNiuOssModel> qiNiuOssModel)
+        private readonly QiNiuOss _qiNiuOssModel;
+        public QiniuCloud(IOptionsMonitor<QiNiuOss> qiNiuOssModel)
         {
             _qiNiuOssModel = qiNiuOssModel.CurrentValue;
-            Ak = _qiNiuOssModel.Ak;
-            Sk = _qiNiuOssModel.Sk;
-            Bucket = _qiNiuOssModel.Bucket;
-            BasePath = _qiNiuOssModel.BasePath;
-            domain = _qiNiuOssModel.ImgDomain;
         }
         /// <summary>
         /// 根据前缀获得文件列表
@@ -51,9 +39,9 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
         /// <param name="prefix">指定前缀，只有资源名匹配该前缀的资源会被列出</param>
         /// <param name="marker">上一次列举返回的位置标记，作为本次列举的起点信息</param>
         /// <returns></returns>
-        public  ListResult List(string prefix = "case", string marker = "")
+        public  ApiResult List(string prefix = "case", string marker = "")
         {
-            Mac mac = new Mac(Ak, Sk);
+            Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 设置存储区域
             Config.SetZone(ZoneID.CN_South, false);
             BucketManager bucketManager = new BucketManager(mac);
@@ -61,13 +49,13 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
             string delimiter = "";
             // 本次列举的条目数，范围为1-1000
             int limit = 20;
-            prefix = BasePath + prefix;
-            ListResult listRet = bucketManager.ListFiles(Bucket, prefix, marker, limit, delimiter);
+            prefix = _qiNiuOssModel.BasePath + prefix;
+            ListResult listRet = bucketManager.ListFiles(_qiNiuOssModel.Bucket, prefix, marker, limit, delimiter);
             if (listRet.Code != 200)
             {
                 throw new FriendlyException(listRet.Text);
             }
-            return listRet;
+            return new ApiResult(data: listRet);
         }
 
         /// <summary>
@@ -75,37 +63,39 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
         /// </summary>
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
-        public  HttpResult Delete(string filename)
+        public  ApiResult Delete(string filename)
         {
-            Mac mac = new Mac(Ak, Sk);
+            Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 设置存储区域
             Config.SetZone(ZoneID.CN_South, false);
             BucketManager bucketManager = new BucketManager(mac);
             // 文件名
-            filename = filename.Replace(domain, "");
-            HttpResult result = bucketManager.Delete(Bucket, filename);
+            filename = filename.Replace(_qiNiuOssModel.ImgDomain, "");
+            HttpResult result = bucketManager.Delete(_qiNiuOssModel.Bucket, filename);
             if (result.Code != 200)
             {
                 throw new FriendlyException(result.Text);
             }
-            return result;
+            return new ApiResult(data: result);
         }
 
 
-        public  List<string> UploadFile(IFormFileCollection files, string prefix, bool more)
+        public ApiResult Upload(IFormFileCollection files, string prefix)
         {
 
             // 生成(上传)凭证时需要使用此Mac
             // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
             // 实际应用中，请自行设置您的AccessKey和SecretKey
-            Mac mac = new Mac(Ak, Sk);
-            string saveKey = BasePath + prefix;
+            Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
+            string saveKey = _qiNiuOssModel.BasePath + prefix;
             // 上传策略，参见 
             // https://developer.qiniu.com/kodo/manual/put-policy
-            PutPolicy putPolicy = new PutPolicy();
-            // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
-            // putPolicy.Scope = bucket + ":" + saveKey;
-            putPolicy.Scope = Bucket;
+            PutPolicy putPolicy = new PutPolicy
+            {
+                // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
+                // putPolicy.Scope = bucket + ":" + saveKey;
+                Scope = _qiNiuOssModel.Bucket
+            };
             // 上传策略有效期(对应于生成的凭证的有效期)          
             putPolicy.SetExpires(3600);
             // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
@@ -120,7 +110,7 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
             List<string> list = new List<string>();
             foreach (IFormFile file in files)
             {
-                var fileName = LocalFile.ImgDealwith(file);
+                var fileName = WebHelper.ImgSuffixIsExists(file);
                 saveKey += fileName;
                 Stream stream = file.OpenReadStream();
                 HttpResult result = um.UploadStream(stream, saveKey, token);
@@ -130,27 +120,27 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
                 }
                 else
                 {
-                    list.Add(saveKey);
+                    list.Add(_qiNiuOssModel.ImgDomain+saveKey);
 
                 }
             }
             //HttpResult result = um.UploadFile(localFile, saveKey, token);        
-            return list;
+            return new ApiResult(data: list);
         }
-        public  string UploadFile(IFormFile file, string prefix)
+        public  ApiResult Upload(IFormFile file, string prefix)
         {
 
             // 生成(上传)凭证时需要使用此Mac
             // 这个示例单独使用了一个Settings类，其中包含AccessKey和SecretKey
             // 实际应用中，请自行设置您的AccessKey和SecretKey
-            Mac mac = new Mac(Ak, Sk);
-            string saveKey = BasePath + prefix;
+            Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
+            string saveKey = _qiNiuOssModel.BasePath + prefix;
             // 上传策略，参见 
             // https://developer.qiniu.com/kodo/manual/put-policy
             PutPolicy putPolicy = new PutPolicy();
             // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
             // putPolicy.Scope = bucket + ":" + saveKey;
-            putPolicy.Scope = Bucket;
+            putPolicy.Scope = _qiNiuOssModel.Bucket;
             // 上传策略有效期(对应于生成的凭证的有效期)          
             putPolicy.SetExpires(3600);
             // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
@@ -162,7 +152,7 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
             //设置上传域名区域
             Config.SetZone(ZoneID.CN_South, false);
             UploadManager um = new UploadManager();
-            var fileName = LocalFile.ImgDealwith(file);
+            var fileName = WebHelper.ImgSuffixIsExists(file);
             saveKey += fileName;
             Stream stream = file.OpenReadStream();
             HttpResult result = um.UploadStream(stream, saveKey, token);
@@ -172,7 +162,7 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
             }
 
             //HttpResult result = um.UploadFile(localFile, saveKey, token);        
-            return saveKey;
+            return new ApiResult(data: _qiNiuOssModel.ImgDomain + saveKey);
         }
 
         /// <summary>
@@ -180,15 +170,15 @@ namespace ShenNius.Share.Infrastructure.ImgUpload
         /// </summary>
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
-        public  string GetToken()
+        private  string GetToken()
         {
-            Mac mac = new Mac(Ak, Sk);
+            Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 上传策略，参见 
             // https://developer.qiniu.com/kodo/manual/put-policy
             PutPolicy putPolicy = new PutPolicy();
             // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
             // putPolicy.Scope = bucket + ":" + saveKey;
-            putPolicy.Scope = Bucket;
+            putPolicy.Scope = _qiNiuOssModel.Bucket;
             // 上传策略有效期(对应于生成的凭证的有效期)          
             putPolicy.SetExpires(3600);
             // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除

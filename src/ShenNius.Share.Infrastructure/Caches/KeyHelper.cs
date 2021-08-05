@@ -1,4 +1,4 @@
-﻿namespace ShenNius.Share.Infrastructure.Cache
+﻿namespace ShenNius.Share.Infrastructure.Caches
 {
     /// <summary>
     /// 全局缓存key
