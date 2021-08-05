@@ -30,13 +30,12 @@ namespace ShenNius.Cms.API.Controllers
     {
         private readonly IBaseServer<Article> _service;
         private readonly IUploadHelper _uploadHelper;
-        private readonly QiNiuOss _qiNiuOssModel;
 
-        public ArticleController(IBaseServer<Article> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, IUploadHelper uploadHelper) : base(service, mapper)
+
+        public ArticleController(IBaseServer<Article> service, IMapper mapper, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _service = service;
-            _uploadHelper = uploadHelper;
-            _qiNiuOssModel = qiNiuOssModel.CurrentValue;
+            _uploadHelper = uploadHelper;      
         }
 
         [HttpGet]
@@ -59,9 +58,8 @@ namespace ShenNius.Cms.API.Controllers
         {
             var files = Request.Form.Files[0];
             var data = _uploadHelper.Upload(files, "article/");
-            var url = _qiNiuOssModel.ImgDomain + data;
             //TinyMCE 指定的返回格式
-            return Ok(new { location = url });
+            return Ok(new { location = data });
         }
     }
 }

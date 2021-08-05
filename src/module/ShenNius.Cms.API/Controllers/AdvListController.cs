@@ -30,14 +30,12 @@ namespace ShenNius.Cms.API.Controllers
 
     public class AdvListController : ApiTenantBaseController<AdvList, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, AdvListInput, AdvListModifyInput>
     {
-        private readonly IBaseServer<AdvList> _service;
-        private readonly QiNiuOss _qiNiuOssModel;
+        private readonly IBaseServer<AdvList> _service;       
         private readonly IUploadHelper _uploadHelper;
 
-        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IOptionsMonitor<QiNiuOss> qiNiuOssModel, IUploadHelper  uploadHelper) : base(service, mapper)
+        public AdvListController(IBaseServer<AdvList> service, IMapper mapper, IUploadHelper  uploadHelper) : base(service, mapper)
         {
             _service = service;
-            this._qiNiuOssModel = qiNiuOssModel.CurrentValue;
             this._uploadHelper = uploadHelper;
         }
         [HttpGet]
@@ -60,9 +58,7 @@ namespace ShenNius.Cms.API.Controllers
         {
             var files = Request.Form.Files[0];
             var data = _uploadHelper.Upload(files, "advList/");
-            var url = _qiNiuOssModel.ImgDomain + data;
-            //TinyMCE 指定的返回格式
-            return new ApiResult(data: url);
+            return new ApiResult(data: data);
         }
     }
 }

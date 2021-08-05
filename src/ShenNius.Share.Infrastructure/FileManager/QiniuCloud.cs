@@ -90,10 +90,12 @@ namespace ShenNius.Share.Infrastructure.FileManager
             string saveKey = _qiNiuOssModel.BasePath + prefix;
             // 上传策略，参见 
             // https://developer.qiniu.com/kodo/manual/put-policy
-            PutPolicy putPolicy = new PutPolicy();
-            // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
-            // putPolicy.Scope = bucket + ":" + saveKey;
-            putPolicy.Scope = _qiNiuOssModel.Bucket;
+            PutPolicy putPolicy = new PutPolicy
+            {
+                // 如果需要设置为"覆盖"上传(如果云端已有同名文件则覆盖)，请使用 SCOPE = "BUCKET:KEY"
+                // putPolicy.Scope = bucket + ":" + saveKey;
+                Scope = _qiNiuOssModel.Bucket
+            };
             // 上传策略有效期(对应于生成的凭证的有效期)          
             putPolicy.SetExpires(3600);
             // 上传到云端多少天后自动删除该文件，如果不设置（即保持默认默认）则不删除
@@ -118,7 +120,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
                 }
                 else
                 {
-                    list.Add(saveKey);
+                    list.Add(_qiNiuOssModel.ImgDomain+saveKey);
 
                 }
             }
@@ -160,7 +162,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
             }
 
             //HttpResult result = um.UploadFile(localFile, saveKey, token);        
-            return new ApiResult(data:saveKey);
+            return new ApiResult(data: _qiNiuOssModel.ImgDomain + saveKey);
         }
 
         /// <summary>
