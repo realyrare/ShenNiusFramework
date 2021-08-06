@@ -10,7 +10,7 @@ namespace ShenNius.Share.Infrastructure.Configurations
         /// <summary>
         /// 配置文件的根节点
         /// </summary>
-        private static readonly IConfigurationRoot _config;
+        public static readonly IConfigurationRoot _config;
 
         /// <summary>
         /// Constructor
