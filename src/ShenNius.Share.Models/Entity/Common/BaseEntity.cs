@@ -23,14 +23,7 @@ namespace ShenNius.Share.Models.Entity.Common
         /// </summary>
         bool Status { get; set; }
     }
-    /// <summary>
-    /// 假删除
-    /// </summary>
-    public interface IDeleted
-    {
-        //public DateTime? DeleteTime { get; set; }
-        public bool Status { get; set; }
-    }
+
     /// <summary>
     /// 所有多租户数据库实体基类
     /// </summary>

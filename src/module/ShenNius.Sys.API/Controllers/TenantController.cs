@@ -23,7 +23,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using ShenNius.Share.Infrastructure.FileManager;
-using Microsoft.Extensions.Options;
 
 namespace ShenNius.Sys.API.Controllers
 {
@@ -84,6 +83,7 @@ namespace ShenNius.Sys.API.Controllers
         [HttpGet]
         public async Task<ApiResult> GetList()
         {
+            //首页加载该列表时赋值于缓存
             var res = await _service.GetListAsync(d => d.IsDel == false);
             foreach (var item in res)
             {
