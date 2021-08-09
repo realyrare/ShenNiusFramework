@@ -56,17 +56,17 @@ namespace ShenNius.Share.Infrastructure.MsgQueue
                     }
                     //声明创建一个交换机，交换机类型设定为‘type指定的值’
                     channel.ExchangeDeclare(exchange: exchange, type: type);
-                    if (type == "topic")
+                    if (type.Equals(ExchangeType.Topic))
                     {
                         channel.BasicPublish(exchange, routingKey, null, body);    //发布消息
                     }
-                    if (type == "fanout")
+                    if (type.Equals(ExchangeType.Fanout))
                     {
                         var queueName = channel.QueueDeclare().QueueName;
                         //发布到指定exchange，fanout类型无需指定routingKey
                         channel.BasicPublish(exchange: exchange, routingKey: "", basicProperties: null, body: body);
                     }
-                    if (type == "direct")
+                    if (type.Equals(ExchangeType.Direct))
                     {
                         //发布到direct类型exchange，必须指定routingKey
                         channel.BasicPublish(exchange: exchange, routingKey: routingKey, basicProperties: null, body: body);
@@ -86,31 +86,27 @@ namespace ShenNius.Share.Infrastructure.MsgQueue
                         //定义一个队列
                         channel.QueueDeclare(queue, false, false, false, null);
                     }
-
                     channel.ExchangeDeclare(exchange: exchange, type: type);
-                    if (type == "topic")
+                    if (type.Equals(ExchangeType.Topic))
                     {
                         //获取连接通道所使用的队列
                         queueName = channel.QueueDeclare().QueueName;
-                        channel.QueueBind(queueName, exchange, routingKey: routingKey);   //队列绑定到交换机                       
+                        // 绑定队列到topic类型exchange，需指定路由键routingKey
+                        channel.QueueBind(queueName, exchange, routingKey: routingKey);                        
                     }
-                    if (type == "fanout")
-                    {
-                        //申明fanout类型exchange
-                        channel.ExchangeDeclare(exchange: "fanoutEC", type: "fanout");
+                    if (type.Equals(ExchangeType.Fanout))
+                    {                       
                         //申明随机队列名称
                         queueName = channel.QueueDeclare().QueueName;
                         //绑定队列到指定fanout类型exchange，无需指定路由键
-                        channel.QueueBind(queue: queueName, exchange: "fanoutEC", routingKey: "");
+                        channel.QueueBind(queue: queueName, exchange: exchange, routingKey: "");
                     }
-                    if (type == "direct")
-                    {
-                        //申明direct类型exchange
-                        channel.ExchangeDeclare(exchange: "directEC", type: "direct");
+                    if (type.Equals(ExchangeType.Direct))
+                    {                     
                         //绑定队列到direct类型exchange，需指定路由键routingKey
-                        channel.QueueBind(queue: "green", exchange: "directEC", routingKey: "green");
+                        channel.QueueBind(queue: queue, exchange: exchange, routingKey: routingKey);
                     }
-                    if (type != "topic" || type != "fanout" || type != "direct")
+                    if (type != ExchangeType.Topic || type != ExchangeType.Fanout || type != ExchangeType.Direct)
                     {
                         throw new ArgumentNullException("指定的type匹配不到具体分支的值");
                     }
