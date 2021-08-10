@@ -48,7 +48,7 @@ namespace ShenNius.Shop.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public Task<ApiResult> GetAllParentColumn()
+        public Task<ApiResult> GetAllParentCategory()
         {
             return _categoryService.GetAllParentCategoryAsync();
         }

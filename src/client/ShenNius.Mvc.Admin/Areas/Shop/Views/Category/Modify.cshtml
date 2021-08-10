@@ -14,9 +14,13 @@
         .layui-form-item .layui-textarea {
             width: 350px;
         }
-
         .layui-form-select {
             width: 350px;
+        }
+        .layui-upload-img {
+            width: 135px;
+            height: 95px;
+            padding-left: 150px;
         }
     </style>
 }
@@ -156,9 +160,9 @@
                                 for (var i = 0; i < res.data.length; i++) {
                                     var val = res.data[i].id;
                                     if (val === value)
-                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
+                                        select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
                                     else
-                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
+                                        select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
                                 }
                                 layui.form.render('select');
                             }
