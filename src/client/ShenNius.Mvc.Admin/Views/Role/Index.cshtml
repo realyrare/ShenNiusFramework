@@ -146,11 +146,10 @@
                         return;
                     }
                     var content = '/role/setMenu?id=' + data[0].id;
-                    var index = layer.open({
+                    layer.open({
                         title: '设置权限',
                         type: 2,
                         shade: 0.2,
-                        maxmin: true,
                         shadeClose: true,
                         area: ['760px', '700px'],
                         content: content,

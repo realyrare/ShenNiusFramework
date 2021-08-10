@@ -83,7 +83,7 @@
                     form = layui.form;
                 table.render({
                     elem: '#tablist',                   
-                    url: apiUtil.apiUrl() + 'menu/btn-code',
+                    url: apiUtil.apiUrl() + 'menu/btnCode',
                     cols: [
                         [
                             { field: 'id', title: 'Id' },
@@ -105,7 +105,7 @@
 
                 var menuId = '', selectIds = '', active = {
                     initTree() {
-                        apiUtil.ajax('menu/treeByRole', { roleId: @Model.RoleId }, "application/json", "get", function (res) {
+                        apiUtil.ajax('menu/treeByRole', { roleId:  @ViewBag.RoleId }, "application/json", "get", function (res) {
 
                             if (res.statusCode == 200 && res.success == true) {
                                 tree.render({
@@ -120,7 +120,7 @@
                                     oncheck: function (obj) {
                                         menuId = obj.data.id;
                                         active.reload();
-                                        console.log("当前menuId:" + obj.data.id);
+                                       // console.log("当前menuId:" + obj.data.id);
                                     }
                                     //, click: function (obj) {
                                     //    menuId = obj.data.id;
@@ -136,7 +136,7 @@
                             {
                                 where: {
                                     menuId: menuId,
-                                    roleId:@Model.RoleId
+                                    roleId: @ViewBag.RoleId,
                                 }
                             });
                     },
@@ -153,7 +153,7 @@
                         var index = layer.load(1, {
                             shade: [0.1, '#fff']
                         });
-                        apiUtil.ajax("menu/addPermissions", { roleId: @Model.RoleId, menuId: menuId }, "application/json", "post", function (res) {
+                        apiUtil.ajax("menu/addPermissions", { roleId:  @ViewBag.RoleId, menuId: menuId }, "application/json", "post", function (res) {
                             layer.close(index);
                             if (res.statusCode === 200 && res.success == true) {
                                 apiUtil.success('菜单保存成功~');
@@ -187,7 +187,7 @@
                         shade: [0.1, '#fff']
                     });
                     var data = {
-                        roleId: @Model.RoleId,
+                        roleId:  @ViewBag.RoleId,
                         menuId: menuId,
                         btnCodeId: btnCode,
                         status: obj.elem.checked //? true : false
@@ -199,8 +199,8 @@
                         contentType: "application/json",
                         dataType: 'json', //服务器返回json格式数据
                         success: function (res) {
-                            console.log("status" + res.statusCode);
-                            console.log("success" + res.success);
+                            //console.log("status" + res.statusCode);
+                            //console.log("success" + res.success);
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.close(index);
                                 if (obj.elem.checked) {

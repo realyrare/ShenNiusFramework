@@ -45,7 +45,10 @@ namespace ShenNius.Mvc.Admin
                 o.Cookie.HttpOnly = true;
             });
             context.Services.AddSignalR();
-            var mvcBuilder = context.Services.AddControllersWithViews(o=>o.Filters.Add(new AuthorizeFilter()));
+            var mvcBuilder = context.Services.AddControllersWithViews(options => {
+                options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
 
 
             mvcBuilder.AddNewtonsoftJson(options =>

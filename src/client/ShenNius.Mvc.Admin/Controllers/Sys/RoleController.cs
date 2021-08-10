@@ -27,8 +27,9 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             return View(model);
         }
         [HttpGet]
-        public IActionResult SetMenu()
+        public IActionResult SetMenu(int id)
         {
+            ViewBag.RoleId = id;
             return View();
         }
     }

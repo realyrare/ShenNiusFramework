@@ -33,33 +33,29 @@
                     if (data.statusCode == 200 && data.success == true) {
                         callFun(data);
                     } else {
-                        apiUtil.error(data.msg);
+                        toastr.error(data.msg);
                         return false;
                     }                   
                 },
                 error: function (e) {
                     //返回500错误 或者其他 http状态码错误时 需要在error 回调函数中处理了 并且返回的数据还不能直接alert，需要使用
                     //$.parseJSON 进行转译    res.msg 是自己组装的错误信息通用变量 
-                    if (e.responseText != null) {
-                        var res = JSON.parse(e.responseText);
-                        console.log("erro object:" + e.responseText);
-                        if (res.statusCode == 401) {
-                            toastr.warning(res.msg);
-                            setTimeout(function () {
-                                window.location.href = "/user/login";
-                            }, 500)
-                            return;
-                        }
-                        if (res.statusCode == 500) {
-                            toastr.error(res.msg);
-                            return;
-                        }
-                        if (res.statusCode == 400) {
-                            toastr.error(res.msg);
-                            return;
-                        }
+                    var res = JSON.parse(e.responseText);
+                    if (res.statusCode == 401) {
+                        toastr.warning(res.msg);
+                        setTimeout(function () {
+                            window.location.href = "/user/login";
+                        }, 500)
+                        return;
                     }
-                    
+                    if (res.statusCode == 500) {
+                        toastr.error(res.msg);
+                        return;
+                    }
+                    if (res.statusCode == 400) {
+                        toastr.error(res.msg);
+                        return;
+                    }
                     this.error('连接异常，请稍后重试！');
                     return;
                 }
