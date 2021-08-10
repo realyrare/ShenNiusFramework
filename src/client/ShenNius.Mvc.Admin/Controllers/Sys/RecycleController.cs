@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
+
     public class RecycleController : Controller
     {
         [HttpGet]

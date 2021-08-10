@@ -41,6 +41,17 @@ namespace WebApplication1
                   ValidateAudience = false,
               };
           });
+            services.AddCap(x =>
+            {
+                x.UseMySql(Configuration["ConnectionStrings:MySql"]);
+                x.UseRabbitMQ(z =>
+                {
+                    z.HostName = Configuration["RabbitMQ:HostName"];
+                    z.UserName = Configuration["RabbitMQ:UserName"];
+                    z.Port = Convert.ToInt32(Configuration["RabbitMQ:Port"]);
+                    z.Password = Configuration["RabbitMQ:Password"];
+                });
+            });
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(options =>
@@ -63,19 +74,19 @@ namespace WebApplication1
                 };
                 options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, scheme);
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
- {
-     {
-         new OpenApiSecurityScheme
-         {
-             Reference = new OpenApiReference
-             {
-                 Type = ReferenceType.SecurityScheme,
-                 Id = "Bearer"
-             }
-         },
-         new string[] {}
-     }
- });
+                 {
+                     {
+                         new OpenApiSecurityScheme
+                         {
+                             Reference = new OpenApiReference
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             }
+                         },
+                         new string[] {}
+                     }
+                 });
             });
 
         }

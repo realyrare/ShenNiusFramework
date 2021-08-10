@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
+
     public partial class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -107,7 +108,7 @@ namespace ShenNius.Mvc.Admin.Controllers.Sys
             return View();
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public FileResult OnGetVCode()
         {
             var vcode = VerifyCode.CreateRandomCode(4);

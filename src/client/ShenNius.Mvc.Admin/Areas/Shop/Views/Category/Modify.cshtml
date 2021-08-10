@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewData["Title"] = "Modify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Category
+@section css{
+    <style>
+        .layui-form-item .layui-input {
+            width: 350px;
+            padding-right: 10px;
+            line-height: 38px;
+        }
+        .layui-form-item .layui-textarea {
+            width: 350px;
+        }
+
+        .layui-form-select {
+            width: 350px;
+        }
+    </style>
+}
+<form class="layui-form" action="" lay-filter="column-edit">
+    <div class="layuimini-container layuimini-page-anim">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                @if (Model.Id > 0)
+                {
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">添加时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="createTime" value="@Model.CreateTime.ToWebString()" readonly class="layui-input">
+                        </div>
+                    </div>
+                }
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">所属父级</label>
+                    <div class="layui-input-block">
+                        <select name="parentId" id="parentId" lay-verify="parentId" lay-filter="parentId">
+                            <option value="0">请选择父级菜单</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">栏目标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required" value="@Model.Name" lay-reqtext="栏目名称不能为空" placeholder="请输入栏目名称" class="layui-input">
+                    </div>
+                </div>                            
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">图标</label>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" src="@Model.IconSrc" id="demo1">
+                            <p id="demoText"></p>
+                        </div>
+                        <input type="hidden" id="IconSrc" value="@Model.IconSrc" name="imgUrl" class="layui-input">
+                    </div>
+                </div>
+               
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section js{
+    <script>
+
+            layui.use(['form',  'common','upload'], function () {
+                var form = layui.form,
+                    $ = layui.$,
+                    upload = layui.upload,
+                    apiUtil = layui.common;
+
+                /**
+                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
+                 */
+                // 当前弹出层，防止ID被覆盖
+                var parentIndex =  parent.layer.getFrameIndex(window.name);
+
+                //普通图片上传
+                var uploadInst = upload.render({
+                    elem: '#test1'
+                    , url: apiUtil.apiUrl() + 'caregory/qiniuFile' //改成您自己的上传接口
+                    , before: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#demo1').attr('src', result); //图片链接（base64）
+                        });
+                    }
+                    , done: function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            $('#demo1').attr('src', res.data);
+                            $('#IconSrc').val(res.data);
+                           // console.log("img:" + res.data);
+                        }
+                        //上传成功
+                    }
+                    , error: function () {
+                        //演示失败状态，并实现重传
+                        var demoText = $('#demoText');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function () {
+                            uploadInst.upload();
+                        });
+                    }
+                });
+                var id=@Model.Id;
+                if (id > 0)
+                {
+                    BindParentColumn(@Model.ParentId);
+                } else {
+                    BindParentColumn();
+                }
+                form.render();
+                //监听提交
+                form.on('submit(saveBtn)', function (data) {
+                    if (data.field.id>0) {
+                        apiUtil.ajax('Category/modify', data.field, "application/json", "put", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    } else {
+                        apiUtil.ajax('Category/add', data.field, "application/json", "post", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    }
+                    return false;
+                });
+
+                function BindParentColumn(value) {
+                    apiUtil.ajax('Category/getAllParentCategory', {}, "application/json", "get", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            if (res.data !== null) {
+                                var select = $("#parentId");
+                                for (var i = 0; i < res.data.length; i++) {
+                                    var val = res.data[i].id;
+                                    if (val === value)
+                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
+                                    else
+                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
+                                }
+                                layui.form.render('select');
+                            }
+                        }
+                    });
+                }
+            });
+
+    </script>
+
+}
+
+

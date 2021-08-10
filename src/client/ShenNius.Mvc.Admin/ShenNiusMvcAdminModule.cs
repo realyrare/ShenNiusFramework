@@ -20,10 +20,14 @@ using ShenNius.Sys.API;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using ShenNius.Shop.API;
+using ShenNius.Share.Infrastructure.Extensions;
 
 namespace ShenNius.Mvc.Admin
 {
     [DependsOn(
+         typeof(ShenNiusShopApiModule),
           typeof(ShenNiusCmsApiModule),
           typeof(ShenNiusSysApiModule)
           )]
@@ -42,7 +46,7 @@ namespace ShenNius.Mvc.Admin
                 o.Cookie.HttpOnly = true;
             });
             context.Services.AddSignalR();
-            var mvcBuilder = context.Services.AddControllersWithViews();
+            var mvcBuilder = context.Services.AddControllersWithViews(o=>o.Filters.Add(new AuthorizeFilter()));
 
 
             mvcBuilder.AddNewtonsoftJson(options =>
@@ -114,6 +118,10 @@ namespace ShenNius.Mvc.Admin
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = new CustomerFileExtensionContentTypeProvider()
+            });
             app.UseSession();
 
             app.UseHttpsRedirection();
@@ -122,14 +130,19 @@ namespace ShenNius.Mvc.Admin
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+           
             // 路由映射
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                name: "shop",
+                areaName: "shop",
+                pattern: "shop/{controller}/{action}/{id?}");
+
                 //全局路由配置
                 endpoints.MapControllerRoute(
                      name: "default",
-                       pattern: "{controller}/{action}/{id?}"
-
+                       pattern: "{controller=home}/{action=index}/{id?}"
                     );
                 //这里要说下，为啥地址要写 /api/xxx 
                 //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由

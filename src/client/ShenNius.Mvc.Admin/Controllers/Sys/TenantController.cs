@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Entity.Sys;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
+
     public class TenantController : Controller
     {
         private readonly ITenantService _tenantService;

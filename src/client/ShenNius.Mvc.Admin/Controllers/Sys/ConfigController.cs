@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
+
     public class ConfigController : Controller
     {
         private readonly IConfigService _configService;

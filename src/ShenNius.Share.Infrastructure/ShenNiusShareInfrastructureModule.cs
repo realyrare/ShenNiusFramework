@@ -28,16 +28,16 @@ namespace ShenNius.Share.Infrastructure
                );
                 context.Services.AddAuthorizationSetup(context.Configuration);
             }
-            context.Services.AddCap(x =>
-            {
-                x.UseRabbitMQ(z =>
-                {
-                    z.HostName = context.Configuration["RabbitMQ:HostName"];
-                    z.UserName = context.Configuration["RabbitMQ:UserName"];
-                    z.Port = System.Convert.ToInt32(context.Configuration["RabbitMQ:Port"]);
-                    z.Password = context.Configuration["RabbitMQ:Password"];
-                });
-            });
+            //context.Services.AddCap(x =>
+            //{
+            //    x.UseRabbitMQ(z =>
+            //    {
+            //        z.HostName = context.Configuration["RabbitMQ:HostName"];
+            //        z.UserName = context.Configuration["RabbitMQ:UserName"];
+            //        z.Port = Convert.ToInt32(context.Configuration["RabbitMQ:Port"]);
+            //        z.Password = context.Configuration["RabbitMQ:Password"];
+            //    });
+            //});
 
             //健康检查服务
             context.Services.AddHealthChecks();

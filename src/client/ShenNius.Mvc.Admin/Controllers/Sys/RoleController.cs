@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Controllers.Sys
 {
+  
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

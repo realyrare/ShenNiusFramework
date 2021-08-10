@@ -4,11 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="DotNetCore.CAP.MySql" Version="5.1.2" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.10" />
 		<!--<PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />-->
 		<PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+		<PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.1.2" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
