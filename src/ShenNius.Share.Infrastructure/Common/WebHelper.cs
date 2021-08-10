@@ -4,8 +4,12 @@ using MimeKit;
 using ShenNius.Share.Common;
 using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Entity.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ShenNius.Share.Infrastructure.Common
 {
@@ -129,6 +133,53 @@ namespace ShenNius.Share.Infrastructure.Common
             }
             string filename = Md5Crypt.GetStreamMd5(file.OpenReadStream()) + "." + fileExt;
             return filename;
+        }
+
+        /// <summary>
+        /// 处理数据库树形结构数据。比如menu\category\column
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parentId">树形父id</param>
+        /// <param name="id">树形id</param>
+        /// <param name="getDataCallback">回调函数</param>
+        /// <returns></returns>
+        public static async Task<Tuple<int, string>> DealTreeData<T>(int parentId, int id, Func<Task<T>> getDataCallback) where T: BaseTenantTreeEntity
+        {
+            string parentIdList = ""; int layer = 0;
+            if (parentId > 0)
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = await getDataCallback();
+                if (model.Id > 0)
+                {
+                    parentIdList = model.ParentList + id + ",";
+                    layer = model.Layer + 1;
+                }
+            }
+            else
+            {
+                parentIdList = "," + id + ",";
+                layer = 1;
+            }
+            return new Tuple<int, string>(layer, parentIdList);
+        }
+
+        /// <summary>
+        /// 树形数据递归 比如menu\category\column
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="newlist"></param>
+        /// <param name="parentId"></param>
+        public static void ChildNode<T>(List<T> list, List<T> newlist, int parentId) where T : BaseTenantTreeEntity
+        {
+            var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ToList();
+            if (!result.Any()) return;
+            for (int i = 0; i < result.Count(); i++)
+            {
+                newlist.Add(result[i]);
+                ChildNode(list, newlist, result[i].Id);
+            }
         }
     }
 }

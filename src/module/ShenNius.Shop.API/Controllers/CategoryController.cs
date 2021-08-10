@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Shop;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Shop.API.Controllers
 {
@@ -24,7 +20,7 @@ namespace ShenNius.Shop.API.Controllers
         /// 所有父分类
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        //[HttpGet]
         //public Task<ApiResult> GetAllParentColumn()
         //{
         //    return _service.GetAllParentColumnAsync();

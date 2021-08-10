@@ -25,6 +25,18 @@ namespace ShenNius.Share.Models.Entity.Common
     }
 
     /// <summary>
+    /// 所有不是多租户的数据库实体基类
+    /// </summary>
+    public class BaseEntity : IEntity
+    {
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public int Id { get; set; }
+        public DateTime? ModifyTime { get; set; }
+        public DateTime CreateTime { get; set; }
+        public bool Status { get; set; } = true;
+    }
+
+    /// <summary>
     /// 所有多租户数据库实体基类
     /// </summary>
     public class BaseTenantEntity : IGlobalTenant, IEntity
@@ -36,15 +48,24 @@ namespace ShenNius.Share.Models.Entity.Common
         public DateTime CreateTime { get; set; }
         public bool Status { get; set; } =  true;
     }
+
+
     /// <summary>
-    /// 所有不是多租户的数据库实体基类
+    /// 所有多租户数据库(分类，栏目，菜单等树形结构使用)实体基类
     /// </summary>
-    public class BaseEntity : IEntity
+    public class BaseTenantTreeEntity : IGlobalTenant, IEntity
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
+        public int TenantId { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
         public bool Status { get; set; } = true;
+
+        // Desc:栏位集合    
+        public string ParentList { get; set; }
+        /// Desc:栏位等级     
+        public int Layer { get; set; }
+        public int ParentId { get; set; }
     }
 }

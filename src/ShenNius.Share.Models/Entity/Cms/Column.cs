@@ -14,7 +14,7 @@ using SqlSugar;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     [SugarTable("Cms_Column")]
-    public class Column : BaseTenantEntity
+    public class Column : BaseTenantTreeEntity
     {
         /// <summary>
         /// Desc:栏目标题
@@ -36,29 +36,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Nullable:True
         /// </summary>
         public string SubTitle { get; set; }
-
-        /// <summary>
-        /// Desc:父栏目
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int ParentId { get; set; } = 0;
-
-        /// <summary>
-        /// Desc:栏位集合
-        /// Default:-
-        /// Nullable:False
-        /// </summary>
-        public string ParentList { get; set; }
-
-        /// <summary>
-        /// Desc:栏位等级
-        /// Default:0
-        /// Nullable:False
-        /// </summary>
-        public int Layer { get; set; }
-
-
+     
         /// <summary>
         /// Desc:栏位属性
         /// Default:-
