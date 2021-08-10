@@ -1,8 +1,7 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
+using ShenNius.Share.Models.Enums.Extension;
+using ShenNius.Share.Models.Enums.Shop;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：Goods
@@ -25,10 +24,41 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// 商品规格
         /// </summary>
         public int SpecType { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public  string SpecTypeText { get{
+                string name = "";
+                if (SpecType == SpecTypeEnum.Single.GetValue<int>())
+                {
+                    name = SpecTypeEnum.Single.GetEnumText();
+                }
+                if (SpecType == SpecTypeEnum.Multi.GetValue<int>())
+                {
+                    name = SpecTypeEnum.Multi.GetEnumText();
+                }                
+                return name;
+            }        
+        }
         /// <summary>
         /// 库存计算方式
         /// </summary>
         public int DeductStockType { get; set; }
+
+        public string DeductStockTypeText
+        {
+            get
+            {
+                string name = "";
+                if (SpecType == DeductStockTypeEnum.PlaceOrder.GetValue<int>())
+                {
+                    name = DeductStockTypeEnum.PlaceOrder.GetEnumText();
+                }
+                if (SpecType == DeductStockTypeEnum.Pay.GetValue<int>())
+                {
+                    name = DeductStockTypeEnum.Pay.GetEnumText();
+                }
+                return name;
+            }
+        }
         public string Content { get; set; }
         /// <summary>
         /// 初始销量
