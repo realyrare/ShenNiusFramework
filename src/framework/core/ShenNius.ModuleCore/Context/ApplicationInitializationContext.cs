@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ModuleCore.Context
+namespace ShenNius.ModuleCore.Context
 {
     /// <summary>
     /// 应用初始化上下文

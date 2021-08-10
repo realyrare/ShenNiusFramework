@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace ModuleCore.Topology
+namespace ShenNius.ModuleCore
 {
     /// <summary>
     /// 拓扑排序工具类

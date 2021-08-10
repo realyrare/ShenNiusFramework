@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
-using ModuleCore.AppModule.Impl;
-using ModuleCore.Context;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 using ShenNius.ModuleCore.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;

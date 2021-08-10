@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModuleCore.Context;
-using ShenNius.ModuleCore.ObjectAccessor.Interface;
+using ShenNius.ModuleCore.Context;
+
 namespace ShenNius.ModuleCore.Extensions
 {
     public static class ApplicationInitializationExtensions

@@ -1,8 +1,7 @@
-﻿using ModuleCore.AppModule.Impl;
-using ModuleCore.Attribute;
-using ModuleCore.Context;
-using ShenNius.Share.Infrastructure;
+﻿using ShenNius.Share.Infrastructure;
 using ShenNius.Share.Domain;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 
 namespace ShenNius.Cms.API
 {

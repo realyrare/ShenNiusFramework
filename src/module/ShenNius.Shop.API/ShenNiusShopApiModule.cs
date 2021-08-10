@@ -1,5 +1,4 @@
-﻿using ModuleCore.AppModule.Impl;
-using ModuleCore.Attribute;
+﻿using ShenNius.ModuleCore;
 using ShenNius.Share.BaseController;
 
 namespace ShenNius.Shop.API

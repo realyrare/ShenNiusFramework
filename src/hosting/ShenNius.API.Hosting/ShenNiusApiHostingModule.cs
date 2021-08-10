@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ModuleCore.AppModule.Impl;
-using ModuleCore.Attribute;
-using ModuleCore.Context;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Sys.API;
 using ShenNius.ModuleCore.Extensions;
@@ -19,6 +16,8 @@ using Newtonsoft.Json;
 using System.Text;
 using ShenNius.Cms.API;
 using ShenNius.Share.Infrastructure.Hubs;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 
 namespace ShenNius.API.Hosting
 {

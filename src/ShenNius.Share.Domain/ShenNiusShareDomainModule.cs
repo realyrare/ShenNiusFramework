@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using ModuleCore.AppModule.Impl;
-using ModuleCore.Context;
-using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Domain.Repository;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 
 namespace ShenNius.Share.Domain
 {

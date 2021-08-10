@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
-namespace ModuleCore.Context
+namespace ShenNius.ModuleCore.Context
 {
     /// <summary>
     /// 应用卸载上下文

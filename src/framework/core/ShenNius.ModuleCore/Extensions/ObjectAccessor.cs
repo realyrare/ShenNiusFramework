@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ShenNius.ModuleCore.ObjectAccessor.Impl;
-using ShenNius.ModuleCore.ObjectAccessor.Interface;
 using System;
 using System.Linq;
 
@@ -24,16 +22,11 @@ namespace ShenNius.ModuleCore.Extensions
             {
                 throw new Exception("在类型“{typeof(T).AssemblyQualifiedName)}”之前注册了对象: ");
             }
-
             //Add to the beginning for fast retrieve
             services.Insert(0, ServiceDescriptor.Singleton(typeof(ObjectAccessor<T>), accessor));
             services.Insert(0, ServiceDescriptor.Singleton(typeof(IObjectAccessor<T>), accessor));
 
             return accessor;
         }
-      
-
-      
-
     }
 }

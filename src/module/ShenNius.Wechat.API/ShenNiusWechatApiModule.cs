@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ModuleCore.AppModule.Impl;
-using ModuleCore.Attribute;
-using ModuleCore.Context;
 using Senparc.CO2NET;
 using Senparc.CO2NET.AspNet;
-using Senparc.CO2NET.RegisterServices;
 using Senparc.Weixin;
 using Senparc.Weixin.Entities;
 using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.MessageHandlers.Middleware;
 using Senparc.Weixin.RegisterServices;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 using ShenNius.ModuleCore.Extensions;
 using ShenNius.Share.BaseController;
-using System;
 
 /*************************************
 * 类名：ShenNiusWechatApiModule

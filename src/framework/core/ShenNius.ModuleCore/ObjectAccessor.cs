@@ -1,11 +1,11 @@
-﻿using ShenNius.ModuleCore.ObjectAccessor.Interface;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
-namespace ShenNius.ModuleCore.ObjectAccessor.Impl
+﻿namespace ShenNius.ModuleCore
 {
+
+    public interface IObjectAccessor<TType>
+    {
+        TType Value { get; set; }
+    }
+
     public class ObjectAccessor<TType> : IObjectAccessor<TType>
     {
         public ObjectAccessor( TType obj)

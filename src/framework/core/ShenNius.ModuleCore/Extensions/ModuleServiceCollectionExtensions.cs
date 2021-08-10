@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ModuleCore.AppModule.Interface;
-using ModuleCore.Manage.Impl;
-using ModuleCore.Manage.Interface;
+using ModuleCore.Manage;
+using ShenNius.ModuleCore;
 using ShenNius.ModuleCore.Extensions;
-using ShenNius.ModuleCore.ObjectAccessor.Impl;
 
 namespace ModuleCore.Extensions
 {

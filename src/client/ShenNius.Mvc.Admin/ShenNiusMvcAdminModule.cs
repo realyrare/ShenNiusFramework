@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ModuleCore.AppModule.Impl;
-using ModuleCore.Attribute;
-using ModuleCore.Context;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ShenNius.Cms.API;
@@ -23,6 +20,8 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using ShenNius.Shop.API;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.ModuleCore;
+using ShenNius.ModuleCore.Context;
 
 namespace ShenNius.Mvc.Admin
 {

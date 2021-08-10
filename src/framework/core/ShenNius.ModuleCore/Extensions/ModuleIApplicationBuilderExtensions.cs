@@ -1,8 +1,7 @@
-﻿using ModuleCore.Manage.Interface;
-using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-using ShenNius.ModuleCore.ObjectAccessor.Impl;
+using ShenNius.ModuleCore;
+using ModuleCore.Manage;
 
 namespace ModuleCore.Extensions
 {
