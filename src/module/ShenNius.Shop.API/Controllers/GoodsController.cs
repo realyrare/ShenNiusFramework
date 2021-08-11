@@ -17,8 +17,8 @@ namespace ShenNius.Shop.API.Controllers
     /// </summary>
     public class GoodsController : ApiTenantBaseController<Goods, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, GoodsInput, GoodsModifyInput>
     {
-        private readonly IGoodsService _goodsService;
-        public GoodsController(IBaseServer<Goods> service, IMapper mapper, IGoodsService  goodsService) : base(service, mapper)
+        private readonly GoodsService _goodsService;
+        public GoodsController(IBaseServer<Goods> service, IMapper mapper, GoodsService  goodsService) : base(service, mapper)
         {
             _goodsService = goodsService;
         }

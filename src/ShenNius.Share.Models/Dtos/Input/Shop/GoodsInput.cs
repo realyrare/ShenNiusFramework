@@ -42,6 +42,9 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         /// </summary>
         public int GoodsStatus { get; set; }
         public string ImgUrl { get; set; }
-
+        /// <summary>
+        /// 商品多规格
+        /// </summary>
+        public string SpecMany { get; set; }
     }
 }

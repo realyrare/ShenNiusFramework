@@ -17,7 +17,7 @@ using System.Web;
 namespace ShenNius.Share.Models.Entity.Shop
 {
     [SugarTable("shop_Goods_Spec")]
-    public class Goods_Spec : BaseTenantEntity
+    public class GoodsSpec : BaseTenantEntity
     {
         public int GoodsId { get; set; }
         public string  GoodsNo { get; set; }
@@ -35,7 +35,7 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// <summary>
         /// 商品spu标识
         /// </summary>
-        public int SpecSkuId { get; set; }
+        public string SpecSkuId { get; set; }
         
     }
 }
