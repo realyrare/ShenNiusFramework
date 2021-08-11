@@ -24,54 +24,75 @@
                 <div class="form-cur-wall">
                     <label>商品价格：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="author" maxlength="30" autocomplete="off" class="layui-input">
+                        <input type="text" name="goodsPrice" maxlength="30" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="form-cur-wall">
                     <label>商品划线价：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="source" maxlength="40" autocomplete="off" class="layui-input">
+                        <input type="text" name="linePrice" maxlength="40" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>商品编码：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="goodsNo" maxlength="40" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>库存数量：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="stockNum" maxlength="40" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>商品重量：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="goodsWeight" maxlength="40" lay-verify="required" class="layui-input">
                     </div>
                 </div>
 
                 <div class="form-cur-wall">
-                    <label style="line-height:inherit;">商品规格：</label>
+                    <label >商品状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="" lay-skin="primary" title="单规格" />
-                        <input type="radio" name="" lay-skin="primary" title="多规格" />
+                        <input type="radio" name="goodsStatus" lay-skin="primary" value="10" title="上架" />
+                        <input type="radio" name="goodsStatus" lay-skin="primary" value="20" title="下架" />
                     </div>
                 </div>
                 <div class="form-cur-wall">
-                    <label style="line-height:inherit;">商品状态：</label>
+                    <label >库存计算：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="" lay-skin="primary" title="上架" />
-                        <input type="radio" name="" lay-skin="primary" title="下架" />
+                        <input type="radio" name="deductStockType" value="10" lay-skin="primary" title="下单减库存" />
+                        <input type="radio" name="deductStockType" value="20" lay-skin="primary" title="付款减库存" />
                     </div>
                 </div>
-                <div class="form-cur-wall">
-                    <label style="line-height:inherit;">库存计算方式：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="" lay-skin="primary" title="下单减库存" />
-                        <input type="radio" name="" lay-skin="primary" title="付款减库存" />
-                    </div>
-                </div>
-
 
                 <div class="text else">其他</div>
                 <div class="form-cur-wall">
                     <label>初始销量：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="tag" maxlength="100" autocomplete="off" class="layui-input">
+                        <input type="text" name="salesInitial" maxlength="100" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="form-cur-wall">
                     <label>运费模板：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="linkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                        @*目前现调用字典表的模板*@
+                        @*<input type="text" name="deliveryId" maxlength="100" autocomplete="off" class="layui-input">*@
+                        <div class="layui-input-block">
+                            <select name="deliveryId" id="deliveryId" lay-verify="required" lay-search="">
+                                @if (ViewBag.Freights != null)
+                                {
+                                    foreach (var item in (List<Config>)ViewBag.Freights)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
-                @*//运费模板*@
-                <div style="height:50px;"></div>
+
             </div>
             <div class="layui-row">
                 <div class="layui-form-item">
@@ -81,45 +102,26 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">商品编码</label>
+                    <label class="layui-form-label">商品规格</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">库存数量</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">商品重量</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                        <input type="radio" name="specType" lay-skin="primary" title="单规格" class="layui-input" />
+                        <input type="radio" name="specType" lay-skin="primary" title="多规格" class="layui-input" />
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">商品图片</label>
                     <div class="layui-upload">
-                        <button type="button" class="layui-btn" id="test1">上传图片</button>
-                        <div class="layui-upload-list">
-                            <img class="layui-upload-img" id="demo1">
-                            <p id="demoText"></p>
-                        </div>
+                        <button type="button" class="layui-btn" id="test1">上传图片</button>                      
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;margin-left:110px;">
+                        预览图：
+                        <div class="layui-upload-list" id="demo1"></div>
+                        @*<p id="demoText"></p>*@
+                    </blockquote>
                         <input type="hidden" id="IconSrc" name="imgUrl" class="layui-input">
-                    </div>
-                </div>
+                    </div>        
+                </div>                
             </div>
-            <div class="layui-row">
-                <div class="layui-form-item layui-form-text">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">SEO关键词</label>
-                        <div class="layui-input-block">
-                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
             <div class="layui-row">
 
             <div class="layui-row">
@@ -158,21 +160,31 @@
         plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
         toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
     });
-            layui.use(['form',  'common'], function () {
+            layui.use(['form',  'common','upload'], function () {
                 var form = layui.form,
                     $ = layui.$,
+                    upload = layui.upload,
                     apiUtil = layui.common;
-
-                /**
-                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
-                 */
                 // 当前弹出层，防止ID被覆盖
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
                
-                    BindParentColumn();
-                
-               
+                BindParentColumn();                               
                 form.render();
+                //多图片上传
+                upload.render({
+                    elem: '#test1'
+                    , url: 'https://httpbin.org/post' //改成您自己的上传接口
+                    , multiple: true
+                    , before: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#demo1').append('<img style="width:90px;margin-right:10px;" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+                        });
+                    }
+                    , done: function (res) {
+                        //上传完毕
+                    }
+                });
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
                     data.field.content = tinyMCE.editors[0].getContent();
@@ -182,38 +194,29 @@
                     data.field.isComment = data.field.isComment === 'on' ? true : false;
                     data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
                     if (data.field.id>0) {
-                        apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {
-                            if (res.statusCode == 200 && res.success == true) {
+                        apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {          
                                 apiUtil.success(res.msg);
-                                parent.layer.close(parentIndex);
-                            } else {
-                                apiUtil.error(res.msg);
-                            }
+                                parent.layer.close(parentIndex);                           
                         });
                     } else {
-                        apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {
-                            if (res.statusCode == 200 && res.success == true) {
-                                apiUtil.success(res.msg);
+                        apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {            apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);
-                            } else {
-                                apiUtil.error(res.msg);
-                            }
                         });
                     }
                     return false;
                 });
 
                 function BindParentColumn(value) {
-                    apiUtil.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
+                    apiUtil.ajax('category/getAllParentcategory', {}, "application/json", "get", function (res) {
                         if (res.statusCode == 200 && res.success == true) {
                             if (res.data !== null) {
                                 var select = $("#columnId");
                                 for (var i = 0; i < res.data.length; i++) {
                                     var val = res.data[i].id;
                                     if (val === value)
-                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
+                                        select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
                                     else
-                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
+                                        select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
                                 }
                                 layui.form.render('select');
                             }

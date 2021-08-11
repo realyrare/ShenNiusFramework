@@ -51,16 +51,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">类型</label>
                     <div class="layui-input-block">
-                        <select name="type" id="type" lay-verify="type" lay-filter="type" value="@Model.Type">
-                            <option value="Button">Button</option>
-                        </select>
+                        <input type="text" name="type" value="@Model.Type" lay-verify="required" lay-reqtext="字典key" placeholder="请输入名称" class="layui-input">
                     </div>
                 </div>
-
+                
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label required">备注信息</label>
+                    <label class="layui-form-label ">备注信息</label>
                     <div class="layui-input-block">
-                        <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="summary"  value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">

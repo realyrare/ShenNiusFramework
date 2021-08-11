@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Shop;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Entity.Shop;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
     public class GoodsController : Controller
     {
         private readonly IGoodsService _goodsService;
+        private readonly IConfigService _configService;
 
-        public GoodsController(IGoodsService  goodsService)
+        public GoodsController(IGoodsService  goodsService,IConfigService configService)
         {
-            this._goodsService = goodsService;
+            _goodsService = goodsService;
+            _configService = configService;
         }
         [HttpGet]
         public IActionResult Index()
@@ -22,9 +25,10 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-           
+            var datas = await _configService.GetListAsync(d => d.Type.Equals("Freight"));
+            ViewBag.Freights = datas;
             return View();
         }
         [HttpGet]
