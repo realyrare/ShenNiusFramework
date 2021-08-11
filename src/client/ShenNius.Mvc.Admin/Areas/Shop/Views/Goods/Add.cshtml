@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewData["Title"] = "Modify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link href="~/css/article.css" rel="stylesheet" />
+    <link href="~/css/site.min.css" rel="stylesheet" />
+}
+<div id="container">
+    <form class="layui-form form-cus form-back" action="" id="app" lay-filter="column-edit">
+        <div class="panel-body">
+            <div class="panel-addpic">
+                <div class="text">基本属性</div>
+                <div class="form-cur-wall">
+                    <label>所属分类：</label>
+                    <div class="layui-input-block">
+                        <select name="categoryId" id="categoryId" lay-verify="required" lay-search="">
+                            <option value="0">父级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>商品价格：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="author" maxlength="30" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>商品划线价：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="source" maxlength="40" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">商品规格：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="" lay-skin="primary" title="单规格" />
+                        <input type="radio" name="" lay-skin="primary" title="多规格" />
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">商品状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="" lay-skin="primary" title="上架" />
+                        <input type="radio" name="" lay-skin="primary" title="下架" />
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">库存计算方式：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="" lay-skin="primary" title="下单减库存" />
+                        <input type="radio" name="" lay-skin="primary" title="付款减库存" />
+                    </div>
+                </div>
+
+
+                <div class="text else">其他</div>
+                <div class="form-cur-wall">
+                    <label>初始销量：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tag" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>运费模板：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="linkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                @*//运费模板*@
+                <div style="height:50px;"></div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品编码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">库存数量</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品重量</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">商品图片</label>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="demo1">
+                            <p id="demoText"></p>
+                        </div>
+                        <input type="hidden" id="IconSrc" name="imgUrl" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO关键词</label>
+                        <div class="layui-input-block">
+                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">商品详情</label>
+                    <div class="layui-input-block">
+                        <textarea id="content" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>               
+                </div>
+            </div>
+        </div>
+            </div>
+    </form>
+    </div>
+
+
+@section js{
+    <script src="/lib/tinymce/tinymce.min.js"></script>
+    <script src="/lib/tinymce/langs/zh_CN.js"></script>
+    <script>
+
+    tinymce.init({
+        selector: '#content',
+        auto_focus: true,
+        height: 400,
+        content_style: "img {max-width:100%;}",
+        image_advtab: true,//开启图片上传的高级选项功能
+        images_upload_url:  '/api/article/qiniuFile',//图片上传
+
+        plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
+        toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
+    });
+            layui.use(['form',  'common'], function () {
+                var form = layui.form,
+                    $ = layui.$,
+                    apiUtil = layui.common;
+
+                /**
+                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
+                 */
+                // 当前弹出层，防止ID被覆盖
+                var parentIndex =  parent.layer.getFrameIndex(window.name);
+               
+                    BindParentColumn();
+                
+               
+                form.render();
+                //监听提交
+                form.on('submit(saveBtn)', function (data) {
+                    data.field.content = tinyMCE.editors[0].getContent();
+                    data.field.audit = data.field.audit === 'on' ? true : false;
+                    data.field.isTop = data.field.isTop === 'on' ? true : false;
+                    data.field.isHot = data.field.isHot === 'on' ? true : false;
+                    data.field.isComment = data.field.isComment === 'on' ? true : false;
+                    data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
+                    if (data.field.id>0) {
+                        apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    } else {
+                        apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    }
+                    return false;
+                });
+
+                function BindParentColumn(value) {
+                    apiUtil.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            if (res.data !== null) {
+                                var select = $("#columnId");
+                                for (var i = 0; i < res.data.length; i++) {
+                                    var val = res.data[i].id;
+                                    if (val === value)
+                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
+                                    else
+                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
+                                }
+                                layui.form.render('select');
+                            }
+                        }
+                    });
+                }
+            });
+
+    </script>
+}
+

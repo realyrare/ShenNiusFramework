@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "分类列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="layuimini-container layuimini-page-anim">
@@ -60,11 +60,11 @@
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
                     {
-                        field: 'title', title: '商品分类名称', templet: function (res) {
-                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                        field: 'name', title: '分类名称', templet: function (res) {
+                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.name + '</a>';
                         }
                     },
-                    { field: 'enTitle', title: '英文名' },
+                    { field: 'iconSrc', title: '图标' },
                     { field: 'layer', title: '层次深度' },
                     { field: 'createTime', title: '创建时间' },
                     { field: 'modifyTime', title: '修改时间' },

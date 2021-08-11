@@ -22,6 +22,12 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult Add()
+        {
+           
+            return View();
+        }
+        [HttpGet]
         public async Task<IActionResult> Modify(int id = 0)
         {
             Goods model = id == 0 ? new Goods() : await _goodsService.GetModelAsync(d => d.Id == id && d.Status);
