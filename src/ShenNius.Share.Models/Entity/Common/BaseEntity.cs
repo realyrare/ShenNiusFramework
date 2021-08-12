@@ -44,6 +44,8 @@ namespace ShenNius.Share.Models.Entity.Common
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
         public int TenantId { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public int TenantName { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
         public bool Status { get; set; } =  true;
