@@ -14,7 +14,7 @@ using SqlSugar;
 namespace ShenNius.Share.Models.Entity.Shop
 {
     [SugarTable("shop_Spec_Value")]
-    public class Spec_Value : BaseTenantEntity
+    public class SpecValue : BaseTenantEntity
     {
         public string  Value { get; set; }
         public int SpecId { get; set; }
