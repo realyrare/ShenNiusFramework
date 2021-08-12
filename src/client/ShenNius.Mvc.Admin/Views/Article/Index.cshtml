@@ -76,7 +76,7 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'Id', sort: true },
-                    //{ field: 'title', width: 350, title: '标题' },
+                    { field: 'tenantName', title: '租户名称' },
                     {
                         field: 'title', title: '标题', width: 350,templet: function (res) {
                             return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';

@@ -161,6 +161,12 @@ namespace ShenNius.Share.BaseController.Controllers
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
             var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.TenantId == listQuery.TenantId && d.Status == true, d => d.Id, false);
+            var tenantService = HttpContext.RequestServices.GetService(typeof(ITenantService)) as ITenantService;
+           var tenantList= await tenantService.GetListAsync(d=>d.Status);
+            foreach (var item in res.Items)
+            {
+                item.TenantName = tenantList.Where(d => d.Id == item.TenantId).Select(d => d.Name).FirstOrDefault();
+            }
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 

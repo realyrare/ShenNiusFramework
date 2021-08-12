@@ -55,6 +55,7 @@
                 cols: [[
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
+                    { field: 'tenantName', title: '租户名称' },
                     {
                         field: 'title', title: '栏目名称', templet: function (res) {
                             return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
