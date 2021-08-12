@@ -1,8 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：Goods_Spec
@@ -20,7 +17,7 @@ namespace ShenNius.Share.Models.Entity.Shop
     /// 商品规格，规格值多对多的表
     /// </summary>
     [SugarTable("shop_goods_spec_rel")]
-    public class Goods_Spec_Rel : BaseTenantEntity
+    public class GoodsSpecRel : BaseTenantEntity
     {
         public int GoodsId { get; set; }
 

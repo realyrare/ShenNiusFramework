@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
 using ShenNius.Share.Infrastructure.Common;
@@ -41,43 +42,41 @@ namespace ShenNius.Share.Domain.Services.Shop
         [Transaction]
         public async Task<ApiResult> AddAsync(GoodsInput input)
         {
-            // 保存商品
-            var goods = _mapper.Map<Goods>(input);
-            var goodsId = await AddAsync(goods);
-           
-            // 保存规格
-            if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
+            try
             {
-                GoodsSpec goodsSpec = new GoodsSpec()
+                // 保存商品
+                var goods = _mapper.Map<Goods>(input);
+                var goodsId = await AddAsync(goods);
+                // 保存规格
+                if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
                 {
-                    CreateTime=DateTime.Now,
-                    TenantId=input.TenantId,
-                    GoodsId=goodsId,
-                    SpecSkuId=null
-                };               
-               await Db.Insertable(goodsSpec).ExecuteReturnIdentityAsync();               
+                    var goodsSpec = input.BuildGoodsSpec(goodsId);
+                    if (null == goodsSpec)
+                    {
+                        throw new FriendlyException("商品规格实体数据不能为空！");
+                    }
+                    await Db.Insertable(goodsSpec).ExecuteReturnIdentityAsync();
+                }
+                else
+                {
+                    var goodsSpecs = input.BuildGoodsSpecs(goodsId);
+                    if (null == goodsSpecs || goodsSpecs.Count == 0)
+                    {
+                        throw new FriendlyException("商品规格实体数据集合不能为空！");
+                    }
+                    await Db.Insertable(goodsSpecs).ExecuteReturnIdentityAsync();
+                    var goodsSpecRels = input.BuildGoodsSpecRels(goodsId);
+                    if (goodsSpecRels.Count==0|| goodsSpecRels==null)
+                    {
+                        throw new FriendlyException("商品规格实体关系集合数据不能为空！");
+                    }
+                    await Db.Insertable(goodsSpecRels).ExecuteReturnIdentityAsync();
+                }
             }
-            else
+            catch (Exception e)
             {
-                var list = new List<GoodsSpec>();
-               // var specMany = JsonConvert.DeserializeObject<SpecManyDto>(input.SpecMany);
-                //foreach (var specList in specMany.SpecList)
-                //{
-                //    specList.GoodsSpec.SpecSkuId = specList.SpecSkuId;
-                //    specList.GoodsSpec.GoodsId = goodsId;
-                //    specList.GoodsSpec.CreateTime = CreateTime;
-                //    specList.GoodsSpec.UpdateTime = UpdateTime;
-                //    specList.GoodsSpec.WxappId = WxappId;
-                //    var goodsSpec = specList.GoodsSpec.Mapper<GoodsSpec>();
-                //    list.Add(goodsSpec);
-                //}
-                //return list;
-
-                //var goodsSpecs = request.BuildGoodsSpecs((uint)goodsId);
-                //await _fsql.Insert<GoodsSpec>().AppendData(goodsSpecs).ExecuteAffrowsAsync();
-                //var goodsSpecRels = request.BuildGoodsSpecRels((uint)goodsId);
-                //await _fsql.Insert<GoodsSpecRel>().AppendData(goodsSpecRels).ExecuteAffrowsAsync();
-            }
+                return new ApiResult(e.Message);
+            }          
             return new ApiResult();
         }
     }

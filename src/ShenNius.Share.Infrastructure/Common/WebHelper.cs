@@ -150,7 +150,7 @@ namespace ShenNius.Share.Infrastructure.Common
             {
                 // 说明有父级  根据父级，查询对应的模型
                 var model = await getDataCallback();
-                if (model.Id > 0)
+                if (model?.Id > 0)
                 {
                     parentIdList = model.ParentList + id + ",";
                     layer = model.Layer + 1;

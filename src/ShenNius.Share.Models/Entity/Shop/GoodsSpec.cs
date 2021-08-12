@@ -31,7 +31,7 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// 商品销量
         /// </summary>
         public int GoodsSales { get; set; }
-        public int GoodsWeight { get; set; }
+        public double GoodsWeight { get; set; }
         /// <summary>
         /// 商品spu标识
         /// </summary>

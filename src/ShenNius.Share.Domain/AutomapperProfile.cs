@@ -6,6 +6,9 @@ using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
+using ShenNius.Share.Models.Entity.Shop;
+using ShenNius.Share.Models.Dtos.Input.Shop;
+
 namespace ShenNius.Share.Domain
 {
     public class AutomapperProfile : Profile
@@ -43,6 +46,9 @@ namespace ShenNius.Share.Domain
             CreateMap<KeywordModifyInput, Keyword>();
 
             CreateMap<MessageInput, Message>();
+
+            //shop
+            CreateMap<GoodsInput, Goods>();
         }
     }
 }
