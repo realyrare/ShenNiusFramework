@@ -3,10 +3,9 @@
     ViewData["Title"] = "Modify";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section css{
-    <link href="~/css/article.css" rel="stylesheet" />
-    <link href="~/css/site.min.css" rel="stylesheet" />
+    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/goods.css" rel="stylesheet" asp-append-version="true" />
 }
 <div id="container">
     <form class="layui-form form-cus form-back" action="" id="app" lay-filter="column-edit">
@@ -21,7 +20,6 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="form-cur-wall">
                     <label>初始销量</label>
                     <div class="layui-input-block">
@@ -81,7 +79,75 @@
                         <input type="radio" name="specType" lay-skin="primary" value="20" lay-filter="specType" title="多规格" class="layui-input" />
                     </div>
                 </div>
-                <div id="sigleSpec">
+                <div class="goods-spec-many am-form-group">
+                    <div class="goods-spec-box am-u-sm-9 am-u-sm-push-2 am-u-end">
+                        <!-- 规格属性 -->
+                        <div class="spec-attr"></div>
+
+                        <!-- 添加规格：按钮 -->
+                        <div class="spec-group-button">
+                            <button type="button" class="btn-addSpecGroup am-btn">添加规格</button>
+                        </div>
+
+                        <!-- 添加规格：表单 -->
+                        <div class="spec-group-add">
+                            <div class="spec-group-add-item am-form-group">
+                                <label class="am-form-label form-require">规格名 </label>
+                                <input type="text" class="input-specName tpl-form-input"  placeholder="请输入规格名称">
+                            </div>
+                            <div class="spec-group-add-item am-form-group">
+                                <label class="am-form-label form-require">规格值 </label>
+                                <input type="text" class="input-specValue tpl-form-input" placeholder="请输入规格值">
+                            </div>
+                            <div class="spec-group-add-item am-margin-top">
+                                <button type="button" class="btn-addSpecName am-btn am-btn-xs
+                                            am-btn-secondary">
+                                    确定
+                                </button>
+                                <button type="button" class="btn-cancleAddSpecName am-btn am-btn-xs
+                                              am-btn-default">
+                                    取消
+                                </button>
+                            </div>
+                        </div>
+                        <!-- 商品多规格sku信息 -->
+                        <div class="goods-sku am-scrollable-horizontal">
+                            <!-- 分割线 -->
+                            <div class="goods-spec-line am-margin-top-lg am-margin-bottom-lg"></div>
+                            <!-- sku 批量设置 -->
+                            <div class="spec-batch am-form-inline">
+                                <div class="am-form-group">
+                                    <label class="am-form-label">批量设置</label>
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="text" data-type="goods_no" placeholder="商家编码">
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="number" data-type="goods_price" placeholder="销售价">
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="number" data-type="line_price" placeholder="划线价">
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="number" data-type="stock_num" placeholder="库存数量">
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="number" data-type="goods_weight" placeholder="重量">
+                                </div>
+                                <div class="am-form-group">
+                                    <button type="button" class="btn-specBatchBtn am-btn am-btn-sm am-btn-secondary
+                                                 am-radius">
+                                        确定
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- sku table -->
+                            <table class="spec-sku-tabel am-table am-table-bordered am-table-centered am-margin-bottom-xs am-text-nowrap"></table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sigleSpec" style="display:none;">
                     <div class="layui-form-item">
                         <label class="layui-form-label" required>商品价格</label>
                         <div class="layui-input-block">
@@ -142,11 +208,15 @@
 
     </form>
 </div>
-
+<!-- 商品多规格模板 -->
+@await Html.PartialAsync("~/Views/Shared/Templates/tpl_spec_many.cshtml")
 
 @section js{
     <script src="/lib/tinymce/tinymce.min.js"></script>
     <script src="/lib/tinymce/langs/zh_CN.js"></script>
+    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="~/js/art-template.js"></script>
+    <script src="~/js/goodsSpec.js" asp-append-version="true"></script>
     <script>
 
         tinymce.init({
@@ -170,17 +240,23 @@
 
             BindParentColumn();
             form.render();
+
+            // 注册商品多规格组件
+            var specMany = new GoodsSpec({
+                container: '.goods-spec-many'
+            });
+
             //处理单/多规格的显示问题
             form.on('radio(specType)', function (data) {
                 //但规格
                 if (data.value == 10) {
-                    $("#sigleSpec").show();
+                    $("#sigleSpec").show() && $(".goods-spec-many").hide();
                 }
                 //多规格
                 if (data.value == 20) {
-                    $("#sigleSpec").hide();
+                    $("#sigleSpec").hide() && $(".goods-spec-many").show();
                 }
-                console.log(data.elem); //得到radio原始DOM对象
+                //console.log(data.elem); //得到radio原始DOM对象
 
             });
             //多图片上传
@@ -201,10 +277,7 @@
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 data.field.content = tinyMCE.editors[0].getContent();
-                data.field.audit = data.field.audit === 'on' ? true : false;
-                data.field.isTop = data.field.isTop === 'on' ? true : false;
-                data.field.isHot = data.field.isHot === 'on' ? true : false;
-                data.field.isComment = data.field.isComment === 'on' ? true : false;
+
                 data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
                 if (data.field.id > 0) {
                     apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {
