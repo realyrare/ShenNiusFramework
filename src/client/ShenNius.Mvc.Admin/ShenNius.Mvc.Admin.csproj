@@ -35,10 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Shop\Models\" />
-    <Folder Include="Areas\Sys\Controllers\" />
-    <Folder Include="Areas\Sys\Data\" />
     <Folder Include="Areas\Sys\Models\" />
-    <Folder Include="Areas\Sys\Views\" />
   </ItemGroup>
 
 
@@ -52,6 +49,23 @@
     <None Include="Areas\Cms\Views\Column\Modify.cshtml" />
     <None Include="Areas\Cms\Views\Keyword\Index.cshtml" />
     <None Include="Areas\Cms\Views\Keyword\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\Config\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Config\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\Menu\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Menu\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\Message\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Recycle\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Role\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Role\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\Role\SetMenu.cshtml" />
+    <None Include="Areas\Sys\Views\Tenant\Index.cshtml" />
+    <None Include="Areas\Sys\Views\Tenant\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\User\CurrentUserInfo.cshtml" />
+    <None Include="Areas\Sys\Views\User\Index.cshtml" />
+    <None Include="Areas\Sys\Views\User\Login.cshtml" />
+    <None Include="Areas\Sys\Views\User\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\User\ModifyPwd.cshtml" />
+    <None Include="Areas\Sys\Views\User\SetRole.cshtml" />
   </ItemGroup>
 
 
