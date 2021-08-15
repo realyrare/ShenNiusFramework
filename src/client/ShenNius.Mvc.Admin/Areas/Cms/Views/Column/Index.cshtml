@@ -1,0 +1,187 @@
+﻿<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('edit')">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('delete')">删除</a>
+        </script>
+    </div>
+</div>
+
+@section js{
+    <script>
+        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                apiUtil = layui.common,
+                layer = layui.layer;
+            //layui button onclick必须这样写，不然会出现事件未定义；
+            window.existAuth = function (btnName) {
+                /*
+                 第一个参数是列表名称和数据库nameCode一定要对应;
+                 第二个参数是按钮名称和数据库的btnName也要对应的;
+                 event 阻止事件冒泡；
+                */
+                apiUtil.checkAuth("column", btnName, event);
+            };
+             apiUtil.render({
+                elem: '#currentTableId',
+                url: 'column/getListPages',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                authorizeFields: true, // 字段权限开关
+                autoColumnWidth: true,
+                overflow: { // 默认所有表格都超出
+                    type: 'tips'
+                    , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                    , color: 'black' // 字体颜色
+                    , bgColor: 'white' // 背景色
+                    , header: true, // 表头支持 overflow
+                    total: true // 合计行支持 overflow
+                },
+                cols: [[
+                    { type: "checkbox", width: 50 },
+                    { field: 'id', width: 80, title: 'ID', sort: true },
+                    { field: 'tenantName', title: '租户名称' },
+                    {
+                        field: 'title', title: '栏目名称', templet: function (res) {
+                            return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                        }
+                    },
+                    { field: 'enTitle', title: '英文名' },
+                    { field: 'layer', title: '层次深度' },
+                    { field: 'createTime', title: '创建时间' },
+                    { field: 'modifyTime', title: '修改时间' },
+                    { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
+                 ]],
+                 height: $(window).height() - 155,
+                 limit: 1500,
+                parseData: function (res) {
+                    return apiUtil.parseDataFun(res);
+                }
+            });
+
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                var result = JSON.stringify(data.field);
+                //执行搜索重载
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        searchParams: result
+                    }
+                }, 'data');
+                return false;
+            });
+
+            function refeshTable() {
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                }, 'data');
+            };
+            /**
+             * toolbar事件监听
+             */
+            table.on('toolbar(currentTableFilter)', function (obj) {
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                if (obj.event === 'add') {
+                    var content = '/column/modify';
+                    var index = layer.open({
+                        title: '添加栏目',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['660px', '550px'],
+                        content: content,
+                        end: function () {
+                            refeshTable();
+                        }
+                    });
+
+                } else if (obj.event === 'delete') {  // 监听删除操作
+
+                      var  listIds = [];
+                    if (data.length > 0) {
+                        for (var i in data) {
+                            listIds.push(data[i].id);
+                        }
+                        layer.confirm('您确定执行该操作吗？', { icon: 3, title: '提示信息' }, function (index) {
+                            apiUtil.ajax('column/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                                if (res.statusCode == 200 && res.success == true) {
+                                    layer.msg(res.msg);
+                                    layer.close(index);
+                                    refeshTable();
+                                } else {
+                                    layer.msg(res.msg);
+                                }
+                            });
+                        })
+                    } else {
+                        layer.msg("请选择需要删除的数据");
+                    }
+                }
+            });
+
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter)', function (obj) {
+                console.log(obj)
+            });
+
+
+            table.on('tool(currentTableFilter)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+                    var content = '/column/modify?id=' + data.id;
+                    var index = layer.open({
+                        title: '编辑栏目',
+                        // tips: [1, '#c00'],
+                        type: 2,
+                        shade: 0.2,
+                        shadeClose: true,
+                        area: ['660px', '630px'],
+                        content: content,
+                        end: function () {
+                            refeshTable();
+                        }
+                    });
+                    return false;
+                } else if (obj.event === 'delete') {
+                    layer.confirm('真的删除吗', function (index) {
+                        var listIds = new Array();
+                        listIds[0] = data.id;
+                        apiUtil.ajax('column/deletes', { ids: listIds }, "application/json", "delete", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                layer.msg(res.msg);
+                                layer.close(index);
+                                refeshTable();
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    });
+                }
+            });
+
+        });
+    </script>
+}
+

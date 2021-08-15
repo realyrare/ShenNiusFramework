@@ -45,7 +45,8 @@ namespace ShenNius.Mvc.Admin
                 o.Cookie.HttpOnly = true;
             });
             context.Services.AddSignalR();
-            var mvcBuilder = context.Services.AddControllersWithViews(options => {
+            var mvcBuilder = context.Services.AddControllersWithViews(options =>
+            {
                 options.Filters.Add(new AuthorizeFilter());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
@@ -132,15 +133,24 @@ namespace ShenNius.Mvc.Admin
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
             // 路由映射
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                name: "sys",
+                areaName: "sys",
+                pattern: "sys/{controller}/{action}/{id?}");
+
                 endpoints.MapAreaControllerRoute(
                 name: "shop",
                 areaName: "shop",
                 pattern: "shop/{controller}/{action}/{id?}");
 
+                endpoints.MapAreaControllerRoute(
+                name: "cms",
+                areaName: "cms",
+                pattern: "cms/{controller}/{action}/{id?}");
                 //全局路由配置
                 endpoints.MapControllerRoute(
                      name: "default",
