@@ -181,12 +181,12 @@
             });
             $('.login-out').on("click", function () {
                 $.ajax({
-                    url: "/user/Logout",
+                    url: "sys/user/Logout",
                     type: "get",
                     success: function (res) {
                         apiUtil.SessionRemove("globalCurrentUserInfo");
                         layer.msg('正在处理,即将退出...', function () {
-                            window.location = '/user/login';
+                            window.location = '/sys/user/login';
                         });
                     }
                 });

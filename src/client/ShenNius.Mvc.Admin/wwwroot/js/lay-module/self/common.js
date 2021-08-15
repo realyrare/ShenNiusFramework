@@ -44,7 +44,7 @@
                     if (res.statusCode == 401) {
                         toastr.warning(res.msg);
                         setTimeout(function () {
-                            window.location.href = "/user/login";
+                            window.location.href = "sys/user/login";
                         }, 500)
                         return;
                     }
@@ -161,7 +161,7 @@
                 if (obj == "" || obj == null || obj == undefined) {
                     toastr.error("token信息丢失,即将跳入登陆页面...");
                     setTimeout(function () {
-                        window.location.href = "/user/login";
+                        window.location.href = "/sys/user/login";
                     }, 500)
                     return;
                 }

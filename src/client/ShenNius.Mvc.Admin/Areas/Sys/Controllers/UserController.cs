@@ -120,7 +120,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         public async Task Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            Response.Redirect("/user/login/");
+            Response.Redirect("/sys/user/login/");
         }
     }
 }

@@ -41,7 +41,7 @@ namespace ShenNius.Mvc.Admin
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
             {
                 o.Cookie.Name = "ShenNius.Mvc.Admin";
-                o.LoginPath = new PathString("/user/login");
+                o.LoginPath = new PathString("/sys/user/login");
                 o.Cookie.HttpOnly = true;
             });
             context.Services.AddSignalR();

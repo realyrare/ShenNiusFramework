@@ -5,6 +5,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Cms\**" />
+    <Compile Remove="Controllers\Sys\**" />
+    <Compile Remove="Views\AdvList\**" />
+    <Compile Remove="Views\Article\**" />
+    <Compile Remove="Views\Column\**" />
+    <Compile Remove="Views\Config\**" />
+    <Compile Remove="Views\Keyword\**" />
+    <Compile Remove="Views\Menu\**" />
+    <Compile Remove="Views\Message\**" />
+    <Compile Remove="Views\Recycle\**" />
+    <Compile Remove="Views\Role\**" />
+    <Compile Remove="Views\Tenant\**" />
+    <Compile Remove="Views\User\**" />
+    <Content Remove="Controllers\Cms\**" />
+    <Content Remove="Controllers\Sys\**" />
+    <Content Remove="Views\AdvList\**" />
+    <Content Remove="Views\Article\**" />
+    <Content Remove="Views\Column\**" />
+    <Content Remove="Views\Config\**" />
+    <Content Remove="Views\Keyword\**" />
+    <Content Remove="Views\Menu\**" />
+    <Content Remove="Views\Message\**" />
+    <Content Remove="Views\Recycle\**" />
+    <Content Remove="Views\Role\**" />
+    <Content Remove="Views\Tenant\**" />
+    <Content Remove="Views\User\**" />
+    <EmbeddedResource Remove="Controllers\Cms\**" />
+    <EmbeddedResource Remove="Controllers\Sys\**" />
+    <EmbeddedResource Remove="Views\AdvList\**" />
+    <EmbeddedResource Remove="Views\Article\**" />
+    <EmbeddedResource Remove="Views\Column\**" />
+    <EmbeddedResource Remove="Views\Config\**" />
+    <EmbeddedResource Remove="Views\Keyword\**" />
+    <EmbeddedResource Remove="Views\Menu\**" />
+    <EmbeddedResource Remove="Views\Message\**" />
+    <EmbeddedResource Remove="Views\Recycle\**" />
+    <EmbeddedResource Remove="Views\Role\**" />
+    <EmbeddedResource Remove="Views\Tenant\**" />
+    <EmbeddedResource Remove="Views\User\**" />
+    <None Remove="Controllers\Cms\**" />
+    <None Remove="Controllers\Sys\**" />
+    <None Remove="Views\AdvList\**" />
+    <None Remove="Views\Article\**" />
+    <None Remove="Views\Column\**" />
+    <None Remove="Views\Config\**" />
+    <None Remove="Views\Keyword\**" />
+    <None Remove="Views\Menu\**" />
+    <None Remove="Views\Message\**" />
+    <None Remove="Views\Recycle\**" />
+    <None Remove="Views\Role\**" />
+    <None Remove="Views\Tenant\**" />
+    <None Remove="Views\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Areas\Cms\Views\_ViewImports.cshtml" />
     <Content Remove="Areas\Shop\Views\_ViewImports.cshtml" />
   </ItemGroup>
