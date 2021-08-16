@@ -29,11 +29,11 @@ namespace ShenNius.Shop.API.Controllers
         //{
 
         //}
-        //[HttpPost]
-        //public override Task<ApiResult> Add([FromBody] CategoryInput input)
-        //{
-
-        //}
+        [HttpPost]
+        public override Task<ApiResult> Add([FromBody] GoodsInput input)
+        {
+            return _goodsService.AddAsync(input);
+        }
         //[HttpPut]
         //public override Task<ApiResult> Modify([FromBody] CategoryModifyInput input)
         //{
