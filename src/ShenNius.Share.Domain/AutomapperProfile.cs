@@ -49,6 +49,11 @@ namespace ShenNius.Share.Domain
 
             //shop
             CreateMap<GoodsInput, Goods>();
+            CreateMap<GoodsModifyInput, Goods>();
+            CreateMap<Goods, GoodsModifyInput>();
+
+            CreateMap<GoodsSpec, GoodsSpecInput>();
+            
         }
     }
 }

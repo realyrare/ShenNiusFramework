@@ -23,7 +23,6 @@ namespace ShenNius.Shop.API.Controllers
             _goodsService = goodsService;
         }
 
-
         //[HttpGet]
         //public override Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         //{
@@ -34,11 +33,11 @@ namespace ShenNius.Shop.API.Controllers
         {
             return _goodsService.AddAsync(input);
         }
-        //[HttpPut]
-        //public override Task<ApiResult> Modify([FromBody] CategoryModifyInput input)
-        //{
-
-        //}
+        [HttpPut]
+        public override Task<ApiResult> Modify([FromBody] GoodsModifyInput input)
+        {
+            return _goodsService.ModifyAsync(input);
+        }
         [HttpPost]
         public Task<ApiResult> AddSpec([FromForm] SpecInput input)
         {
