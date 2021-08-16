@@ -5,7 +5,7 @@
     /// </summary>
     public class KeyHelper
     {
-        public class Cms
+        public class Sys
         {
             /// <summary>
             /// 当前站点key

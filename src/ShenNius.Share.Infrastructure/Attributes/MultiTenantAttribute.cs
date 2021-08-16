@@ -32,7 +32,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
           //s  var actionName = actionDescriptor.ActionName.ToLower();
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
-            var tenantId = cache.Get<Tenant>(KeyHelper.Cms.CurrentTenant)?.Id;
+            var tenantId = cache.Get<Tenant>(KeyHelper.Sys.CurrentTenant)?.Id;
             //如果是增加和修改方法  根据站群id
             //if (methods.Any(o => actionName.Contains(o)))
             //{

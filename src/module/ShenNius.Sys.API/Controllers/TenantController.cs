@@ -66,7 +66,7 @@ namespace ShenNius.Sys.API.Controllers
             {
                 throw new FriendlyException("当前站点实体信息为空!");
             }
-            var currentTenant = _cacheHelper.Get<Tenant>(KeyHelper.Cms.CurrentTenant);
+            var currentTenant = _cacheHelper.Get<Tenant>(KeyHelper.Sys.CurrentTenant);
             if (currentTenant != null)
             {
                 currentTenant.IsCurrent = false;
@@ -77,7 +77,7 @@ namespace ShenNius.Sys.API.Controllers
             model.IsCurrent = true;
             await _service.UpdateAsync(model);
             //这里最好更新下缓存
-            _cacheHelper.Set(KeyHelper.Cms.CurrentTenant, model);
+            _cacheHelper.Set(KeyHelper.Sys.CurrentTenant, model);
             return new ApiResult();
         }
         [HttpGet]
@@ -89,7 +89,7 @@ namespace ShenNius.Sys.API.Controllers
             {
                 if (item.IsCurrent)
                 {
-                    _cacheHelper.Set(KeyHelper.Cms.CurrentTenant, item);
+                    _cacheHelper.Set(KeyHelper.Sys.CurrentTenant, item);
                 }
             }
             return new ApiResult(data: res);
