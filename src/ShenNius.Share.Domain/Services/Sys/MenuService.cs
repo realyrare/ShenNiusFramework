@@ -357,12 +357,12 @@ namespace ShenNius.Share.Domain.Services.Sys
 
             var model = new MenuTreeInitOutput()
             {               
-                HomeInfo = new HomeInfo() { Title = "首页", Href = "sys/log-echarts" },
-                LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "images/logo.jpg?v=99", Href = "" },
+                HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/log-echarts" },
+                LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "/images/logo.jpg?v=999", Href = "" },
             };
             if (!AppSettings.Jwt.Value)
             {
-                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "log/echarts" };
+                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/log/echarts" };
             }
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)

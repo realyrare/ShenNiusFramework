@@ -1,4 +1,8 @@
 ﻿
+@{
+    ViewData["Title"] = "多租户列表 ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
         <script type="text/html" id="toolbarDemo">
@@ -22,7 +26,7 @@
         <input type="checkbox" name="status" value="{{d.isCurrent}}" disabled lay-skin="switch" lay-text="是|否" {{ d.isCurrent==1?'checked':''}}>
     </script>
     <script>
-        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
+        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
             var form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
@@ -36,7 +40,7 @@
                 */
                 apiUtil.checkAuth("site", btnName, event);
             };
-             apiUtil.render({
+            apiUtil.render({
                 elem: '#currentTableId',
                 url: 'tenant/getListPages',
                 toolbar: '#toolbarDemo',
@@ -102,10 +106,10 @@
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
                     var content = '/tenant/modify';
-                   layer.open({
+                    layer.open({
                         title: '添加站点',
                         type: 2,
-                        shade: 0.2,      
+                        shade: 0.2,
                         shadeClose: true,
                         area: ['650px', '750px'],
                         zIndex: "10000",
@@ -116,7 +120,7 @@
                     });
 
                 } else if (obj.event === 'delete') {  // 监听删除操作
-                    var  listIds = [];
+                    var listIds = [];
                     if (data.length > 0) {
                         for (var i in data) {
                             listIds.push(data[i].id);
@@ -145,7 +149,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/tenant/modify?id='+data.id ;
+                    var content = '/tenant/modify?id=' + data.id;
                     layer.open({
                         title: '编辑站点',
                         // tips: [1, '#c00'],

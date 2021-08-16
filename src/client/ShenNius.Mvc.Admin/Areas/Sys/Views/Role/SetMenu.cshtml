@@ -1,4 +1,7 @@
-﻿@section css{
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
     <style>
         .layui-table-view {
             margin-top: 0px;
@@ -82,7 +85,7 @@
                     apiUtil = layui.common,
                     form = layui.form;
                 table.render({
-                    elem: '#tablist',                   
+                    elem: '#tablist',
                     url: apiUtil.apiUrl() + 'menu/btnCode',
                     cols: [
                         [
@@ -194,7 +197,7 @@
                     };
                     $.ajax({
                         url: apiUtil.apiUrl()+'menu/setBtnPermissions',
-                        type: "post",                       
+                        type: "post",
                         data: JSON.stringify(data),
                         contentType: "application/json",
                         dataType: 'json', //服务器返回json格式数据

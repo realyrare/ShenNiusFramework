@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Sys\Models\**" />
+    <Compile Remove="Areas\Sys\Views\Message\**" />
     <Compile Remove="Controllers\Cms\**" />
     <Compile Remove="Controllers\Sys\**" />
     <Compile Remove="Views\AdvList\**" />
@@ -18,6 +20,8 @@
     <Compile Remove="Views\Role\**" />
     <Compile Remove="Views\Tenant\**" />
     <Compile Remove="Views\User\**" />
+    <Content Remove="Areas\Sys\Models\**" />
+    <Content Remove="Areas\Sys\Views\Message\**" />
     <Content Remove="Controllers\Cms\**" />
     <Content Remove="Controllers\Sys\**" />
     <Content Remove="Views\AdvList\**" />
@@ -31,6 +35,8 @@
     <Content Remove="Views\Role\**" />
     <Content Remove="Views\Tenant\**" />
     <Content Remove="Views\User\**" />
+    <EmbeddedResource Remove="Areas\Sys\Models\**" />
+    <EmbeddedResource Remove="Areas\Sys\Views\Message\**" />
     <EmbeddedResource Remove="Controllers\Cms\**" />
     <EmbeddedResource Remove="Controllers\Sys\**" />
     <EmbeddedResource Remove="Views\AdvList\**" />
@@ -44,6 +50,8 @@
     <EmbeddedResource Remove="Views\Role\**" />
     <EmbeddedResource Remove="Views\Tenant\**" />
     <EmbeddedResource Remove="Views\User\**" />
+    <None Remove="Areas\Sys\Models\**" />
+    <None Remove="Areas\Sys\Views\Message\**" />
     <None Remove="Controllers\Cms\**" />
     <None Remove="Controllers\Sys\**" />
     <None Remove="Views\AdvList\**" />
@@ -89,13 +97,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Shop\Models\" />
-    <Folder Include="Areas\Sys\Models\" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
     <None Include="Areas\Cms\Views\AdvList\Index.cshtml" />
     <None Include="Areas\Cms\Views\AdvList\Modify.cshtml" />
     <None Include="Areas\Cms\Views\Article\Index.cshtml" />
@@ -104,11 +105,13 @@
     <None Include="Areas\Cms\Views\Column\Modify.cshtml" />
     <None Include="Areas\Cms\Views\Keyword\Index.cshtml" />
     <None Include="Areas\Cms\Views\Keyword\Modify.cshtml" />
+    <None Include="Areas\Cms\Views\Message\Index.cshtml" />
+    <None Include="Areas\Shop\Views\Shared\Templates\tpl_spec_many.cshtml" />
+    <None Include="Areas\Shop\Views\Shared\_Layout.cshtml" />
     <None Include="Areas\Sys\Views\Config\Index.cshtml" />
     <None Include="Areas\Sys\Views\Config\Modify.cshtml" />
     <None Include="Areas\Sys\Views\Menu\Index.cshtml" />
     <None Include="Areas\Sys\Views\Menu\Modify.cshtml" />
-    <None Include="Areas\Sys\Views\Message\Index.cshtml" />
     <None Include="Areas\Sys\Views\Recycle\Index.cshtml" />
     <None Include="Areas\Sys\Views\Role\Index.cshtml" />
     <None Include="Areas\Sys\Views\Role\Modify.cshtml" />

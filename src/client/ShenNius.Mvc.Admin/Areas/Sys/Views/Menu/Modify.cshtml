@@ -1,16 +1,22 @@
-﻿@model MenuDetailOutput
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model MenuDetailOutput
 @section css{
     <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <style>
         .layui-form-item .layui-input {
             width: 350px;
         }
+
         .layui-iconpicker {
             max-width: 100%;
         }
+
         .layui-form-select {
             width: 350px;
         }
+
         .layui-iconpicker-body.layui-iconpicker-body-page .hide {
             display: none;
         }

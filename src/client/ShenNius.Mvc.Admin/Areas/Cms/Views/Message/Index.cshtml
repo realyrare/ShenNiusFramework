@@ -1,4 +1,7 @@
 ﻿
+@{
+    ViewData["Title"] = "留言列表 ";
+}
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
         <fieldset class="table-search-fieldset">
@@ -147,7 +150,7 @@
 
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
-               if (obj.event === 'delete') {
+                if (obj.event === 'delete') {
                     layer.confirm('真的彻底删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;

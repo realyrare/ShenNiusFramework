@@ -1,4 +1,8 @@
-﻿@model Config
+﻿@{
+    ViewData["Title"] = "字典添加修改 ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Config
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -54,11 +58,11 @@
                         <input type="text" name="type" value="@Model.Type" lay-verify="required" lay-reqtext="字典key" placeholder="请输入名称" class="layui-input">
                     </div>
                 </div>
-                
+
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label ">备注信息</label>
                     <div class="layui-input-block">
-                        <textarea name="summary"  value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                        <textarea name="summary" value="@Model.Summary" class="layui-textarea" placeholder="请输入备注信息"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">

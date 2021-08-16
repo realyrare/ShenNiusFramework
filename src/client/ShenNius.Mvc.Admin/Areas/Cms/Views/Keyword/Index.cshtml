@@ -97,7 +97,7 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/keyword/modify';
+                    var content = '/cms/keyword/modify';
                     layer.open({
                         title: '添加关键词',
                         type: 2,
@@ -144,7 +144,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/keyword/modify?id=' + data.id;
+                    var content = '/cms/keyword/modify?id=' + data.id;
                     layer.open({
                         title: '编辑关键词',
                         // tips: [1, '#c00'],

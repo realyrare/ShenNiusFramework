@@ -103,7 +103,7 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/column/modify';
+                    var content = '/cms/column/modify';
                     var index = layer.open({
                         title: '添加栏目',
                         type: 2,
@@ -150,7 +150,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/column/modify?id=' + data.id;
+                    var content = '/cms/column/modify?id=' + data.id;
                     var index = layer.open({
                         title: '编辑栏目',
                         // tips: [1, '#c00'],

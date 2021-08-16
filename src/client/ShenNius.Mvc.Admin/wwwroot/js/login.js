@@ -39,7 +39,7 @@ layui.use(['jquery', 'form', 'common'], function () {
             contentType: "application/x-www-form-urlencoded",
             data: data.field,
             success: function (res) {
-                console.log("resmsg:" + res.msg);
+                //console.log("resmsg:" + res.msg);
                 if (res.statusCode == 200 && res.success == true) {
                     if (res.data.menuAuthOutputs == null || res.data.menuAuthOutputs.length <= 0) {
                         os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
@@ -50,10 +50,10 @@ layui.use(['jquery', 'form', 'common'], function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
                         if (!rurl) {
-                            window.location.href = 'home/index';
+                            window.location.href = '/home/index';
                         }
                         else {
-                            window.location.href = "home/index#" + rurl;
+                            window.location.href = "/home/index#" + rurl;
                         }
                     }, 500);
                 } else {

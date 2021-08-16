@@ -1,4 +1,9 @@
-﻿<div class="layuimini-container layuimini-page-anim">
+﻿
+@{
+    ViewData["Title"] = "用户列表 ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
         <fieldset class="table-search-fieldset">
@@ -120,8 +125,8 @@
             table.on('toolbar(currentTableFilter)', function (obj) {
                 var checkStatus = table.checkStatus('currentTableId'), data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/user/Modify';
-                     layer.open({
+                    var content = '/sys/user/Modify';
+                    layer.open({
                         title: '添加用户',
                         type: 2,
                         shade: 0.2,
@@ -164,8 +169,8 @@
                         layer.msg("请选择一位用户进行角色分配");
                         return;
                     }
-                    var content = '/user/setRole?id=' + data[0].id;
-                     layer.open({
+                    var content = '/sys/user/setRole?id=' + data[0].id;
+                    layer.open({
                         title: '设置角色',
                         type: 2,
                         shade: 0.2,
@@ -189,7 +194,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/user/Modify?id=' + data.id;
+                    var content = '/sys/user/Modify?id=' + data.id;
                     layer.open({
                         title: '编辑用户',
                         // tips: [1, '#c00'],

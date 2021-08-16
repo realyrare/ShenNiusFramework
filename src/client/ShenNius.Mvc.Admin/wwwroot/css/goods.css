@@ -6,14 +6,14 @@
 .goods-spec-many input.am-field-error { border-color: #dd514c !important; }
 .goods-spec-many .spec-group-item { margin-bottom: 25px; }
 .goods-spec-many .spec-group-item .spec-group-name { margin-bottom: 15px; }
-.goods-spec-many .spec-group-item .spec-group-name span { font-size: 1.5rem; }
+.goods-spec-many .spec-group-item .spec-group-name span { font-size: 1.0rem; }
 .goods-spec-many .spec-group-item .spec-group-name .icon-shanchu1 { display: inline-block; }
-.goods-spec-many .spec-group-item .spec-list .spec-item { position: relative; margin-right: 12px; margin-bottom: 12px; }
-.goods-spec-many .spec-group-item .spec-list .spec-item span { min-width: 50px; display: inline-block; border: 1px solid #ddd; text-align: center; padding: 0 15px; border-radius: 2px; font-size: 1.3rem; line-height: 30px; }
+.goods-spec-many .spec-group-item .spec-list .spec-item { position: relative; margin-right: 12px; margin-bottom: 12px; float:left;}
+.goods-spec-many .spec-group-item .spec-list .spec-item span { min-width: 50px; display: inline-block; border: 1px solid #ddd; text-align: center; padding: 0 15px; border-radius: 2px; font-size: 15px; line-height: 30px; }
 .goods-spec-many .spec-group-item .spec-list .spec-item:hover .icon-shanchu1 { visibility: visible; }
 .goods-spec-many .spec-group-item .spec-list .spec-item .icon-shanchu1 { position: absolute; width: 20px; top: -9px; right: -9px; visibility: hidden; }
 .goods-spec-many .spec-group-item .spec-item-add input { width: 110px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
-.goods-spec-many .spec-group-item .spec-item-add button { display: table-cell; height: 32px; font-size: 1.3rem; border-color: #e3e2e5; border-left: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; outline: none; }
+.goods-spec-many .spec-group-item .spec-item-add button { display: table-cell; height: 32px; font-size: 16px; border-color: #e3e2e5; border-left: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; outline: none;padding-left:15px;padding-right:15px; }
 .goods-spec-many .icon-shanchu1 { cursor: pointer; text-align: center; color: #ababab; font-size: 1.3rem; }
 .goods-spec-many .icon-shanchu1:hover { color: #6b6b6b; }
 .goods-spec-many .spec-group-button button { color: #2589ff; background-color: #fff; border-color: #2589ff; font-size: 12px; border-radius: 4px; outline: 0; font-weight: 400; padding: .6em 1em; outline: none !important; }
@@ -22,11 +22,19 @@
 .goods-spec-many .spec-group-add .spec-group-add-item { margin-bottom: 10px;padding-left:10px; }
 .goods-spec-many .spec-group-add .spec-group-add-item input { width: 160px; border-radius: 4px; display: inline-block; margin-left: 12px;height:32px; }
 .goods-spec-many .goods-sku { display: none; /* 批量设置sku */ /* 商品sku表格 */ }
-.goods-spec-many .goods-sku .goods-spec-line { border: 1px dashed #e3e2e5; }
+    .goods-spec-many .goods-sku .goods-spec-line {
+        border: 1px dashed #e3e2e5;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
 .goods-spec-many .goods-sku .spec-batch { margin-bottom: 2rem; }
-.goods-spec-many .goods-sku .spec-batch .am-form-label { padding-top: 0; }
-.goods-spec-many .goods-sku .spec-batch .am-form-group { margin-left: .6rem; }
-.goods-spec-many .goods-sku .spec-batch .am-form-group input { width: 140px; }
+.goods-spec-many .goods-sku .spec-batch .am-form-label { padding-top: 0;line-height:30px; }
+    .goods-spec-many .goods-sku .spec-batch .am-form-group {
+        margin-left: .6rem;
+        float: left;
+        padding: 5px 6px;
+    }
+.goods-spec-many .goods-sku .spec-batch .am-form-group input { width: 140px;height:28px; }
 .goods-spec-many .goods-sku .spec-sku-tabel td.td-spec-value { padding: .7rem 1.3rem !important; }
 .goods-spec-many .goods-sku .spec-sku-tabel input { display: inline-block !important; }
 .goods-spec-many .goods-sku .spec-sku-tabel input.ipt-goods-no { width: 140px; }
@@ -56,4 +64,80 @@
     background-color: #3bb4f2;
     border-color: #3bb4f2;
 }
+.am-cf:after {
+    clear: both;
+}
+.am-cf:after, .am-cf:before {
+    content: " ";
+    display: table;
+}
+.am-fl {
+    float: left;
+}
 
+.am-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 0.3em 1em;
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    outline: 0;
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: background-color .3s ease-out,border-color .3s ease-out;
+    transition: background-color .3s ease-out,border-color .3s ease-out;
+}
+
+.am-field-valid {
+    padding: 6px 5px;
+    line-height: 1.42857;
+}
+
+.am-text-nowrap {
+    white-space: nowrap;
+}
+
+.am-margin-bottom-xs {
+    margin-bottom: .5rem;
+}
+
+.am-table-bordered {
+    border: 1px solid #ddd;
+}
+
+.am-table {
+    width: 100%;
+    margin-bottom: 15px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+.am-table-bordered > tbody > tr:first-child > td, .am-table-bordered > tbody > tr:first-child > th {
+    border-top: none;
+}
+
+.am-table-centered > tbody > tr > td, .am-table-centered > tbody > tr > th, .am-table-centered > tfoot > tr > td, .am-table-centered > tfoot > tr > th, .am-table-centered > thead > tr > td, .am-table-centered > thead > tr > th {
+    text-align: center;
+}
+
+.am-table-bordered > tbody > tr > td, .am-table-bordered > tbody > tr > th, .am-table-bordered > tfoot > tr > td, .am-table-bordered > tfoot > tr > th, .am-table-bordered > thead > tr > td, .am-table-bordered > thead > tr > th {
+    border-left: 1px solid #ddd;
+}
+
+.am-table > tbody > tr > td, .am-table > tbody > tr > th, .am-table > tfoot > tr > td, .am-table > tfoot > tr > th, .am-table > thead > tr > td, .am-table > thead > tr > th {
+    padding: .7rem;
+    line-height: 1.6;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}

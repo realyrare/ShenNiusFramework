@@ -163,7 +163,7 @@
                     shade: 0.2,
                     shadeClose: true,
                     area: ['600px', '360px'],
-                    content: '/user/modifyPwd',
+                    content: '/sys/user/modifyPwd',
                     btn2: function () {
                         layer.closeAll();
                     }
@@ -176,12 +176,12 @@
                     shade: 0.2,
                     shadeClose: true,
                     area: ['600px', '400px'],
-                    content: '/user/currentUserInfo',
+                    content: '/sys/user/currentUserInfo',
                 });
             });
             $('.login-out').on("click", function () {
                 $.ajax({
-                    url: "sys/user/Logout",
+                    url: "/sys/user/Logout",
                     type: "get",
                     success: function (res) {
                         apiUtil.SessionRemove("globalCurrentUserInfo");

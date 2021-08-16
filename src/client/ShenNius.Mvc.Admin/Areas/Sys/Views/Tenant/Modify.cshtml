@@ -1,4 +1,7 @@
-﻿@model ShenNius.Share.Models.Entity.Sys.Tenant
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ShenNius.Share.Models.Entity.Sys.Tenant
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -6,12 +9,15 @@
             padding-right: 10px;
             line-height: 38px;
         }
+
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+
         .layui-form-select {
             width: 350px;
         }
+
         .layui-upload-img {
             width: 135px;
             height: 95px;
@@ -109,7 +115,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="fax" placeholder="请填写入公司传真" value="@Model.Fax" class="layui-input" lay-verify="fax">
                         </div>
-                    </div>                   
+                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">联系地址:</label>
                         <div class="layui-input-block">

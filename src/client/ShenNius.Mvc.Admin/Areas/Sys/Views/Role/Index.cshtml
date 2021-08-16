@@ -1,4 +1,9 @@
-﻿<div class="layuimini-container layuimini-page-anim">
+﻿
+@{
+    ViewData["Title"] = "角色列表 ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
@@ -20,7 +25,7 @@
 
 @section js{
     <script>
-        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
+        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
@@ -35,7 +40,7 @@
                 */
                 apiUtil.checkAuth("role", btnName, event);
             };
-             apiUtil.render({
+            apiUtil.render({
                 elem: '#currentTableId',
                 url: 'role/getListPages',
                 toolbar: '#toolbarDemo',
@@ -100,12 +105,11 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/role/modify';
-                    var index = layer.open({
+                    var content = '/sys/role/modify';
+                 layer.open({
                         title: '添加角色',
                         type: 2,
                         shade: 0.2,
-                        //maxmin:true,
                         shadeClose: false,
                         area: ['600px', '350px'],
                         zIndex: "10000",
@@ -117,7 +121,7 @@
 
                 } else if (obj.event === 'delete') {  // 监听删除操作
 
-                      var  listIds = [];
+                    var listIds = [];
                     if (data.length > 0) {
                         for (var i in data) {
                             listIds.push(data[i].id);
@@ -145,7 +149,7 @@
                         layer.msg("请选择一个角色分配权限");
                         return;
                     }
-                    var content = '/role/setMenu?id=' + data[0].id;
+                    var content = '/sys/role/setMenu?id=' + data[0].id;
                     layer.open({
                         title: '设置权限',
                         type: 2,
@@ -170,7 +174,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/role/Modify?id=' + data.id;
+                    var content = '/sys/role/Modify?id=' + data.id;
                     layer.open({
                         title: '编辑用户',
                         // tips: [1, '#c00'],

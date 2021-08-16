@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Configs;

@@ -86,8 +86,10 @@
                     specValue: specValueInputValue
                 }, function (result) {
                         layer.close(load);
-                        layer.msg(result.msg);
-                        return false;
+                        if (result.success == false) {
+                            layer.msg(result.msg);
+                            return false;
+                        }                      
                     // 清空输入内容
                     $specNameInput.val('') && $specValueInput.val('');
                     // 记录规格数据
@@ -142,7 +144,7 @@
                     specValue: specItemInputValue
                 }, function (result) {
                         layer.close(load);
-                        if (result.success == true) {
+                        if (result.success == false) {
                         layer.msg(result.msg);
                         return false;
                     }
@@ -225,10 +227,19 @@
          * 渲染多规格模块html
          */
         renderHtml: function () {
-            // 渲染商品规格元素
-            this.$specAttr.html(template('tpl_spec_attr', data));
-            // 渲染商品规格table
-            this.renderTableHtml();
+            try {
+                console.log("渲染多规格模块");
+                console.log("data:" + JSON.stringify(data));
+                if (this.$specAttr == null) {
+                    console.log("对象为空");
+                }
+                // 渲染商品规格元素
+                this.$specAttr.html(template('tpl_spec_attr', data));
+                // 渲染商品规格table
+                this.renderTableHtml();
+            } catch (e) {
+                console.log("异常：" + e);
+            }           
         },
 
         /*

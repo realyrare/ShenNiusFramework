@@ -121,7 +121,7 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/article/modify';
+                    var content = '/cms/article/modify';
                 layer.open({
                         title: '添加文章',
                         type: 2,
@@ -166,7 +166,7 @@
             table.on('tool(currentTableFilter)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    var content = '/article/modify?id=' + data.id;
+                    var content = '/cms/article/modify?id=' + data.id;
                     var index = layer.open({
                         title: '编辑文章',
                         // tips: [1, '#c00'],

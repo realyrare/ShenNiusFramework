@@ -1,4 +1,8 @@
-﻿<div class="layuimini-container layuimini-page-anim">
+﻿@{
+    ViewData["Title"] = "回收站列表 ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
         <fieldset class="table-search-fieldset">
@@ -38,7 +42,7 @@
 
 @section js{
     <script>
-        layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
+        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,

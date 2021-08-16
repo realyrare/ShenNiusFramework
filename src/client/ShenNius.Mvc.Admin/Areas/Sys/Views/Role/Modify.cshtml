@@ -1,4 +1,7 @@
-﻿@model Role
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Role
 @section css{
     <style>
         .layui-form-item .layui-input {
@@ -35,7 +38,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">角色名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name"  value="@Model.Name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" class="layui-input">
+                        <input type="text" name="name" value="@Model.Name" lay-verify="required" lay-reqtext="角色名不能为空" placeholder="请输入角色名" class="layui-input">
                     </div>
                 </div>
 
@@ -71,7 +74,7 @@
                 var parentIndex =  parent.layer.getFrameIndex(window.name);
 
                 var id=@Model.Id;
-              
+
                 form.render();
                 //监听提交
                 form.on('submit(saveBtn)', function (data) {
