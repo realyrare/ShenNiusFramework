@@ -1,6 +1,6 @@
 ﻿@charset "UTF-8";
 /* 多规格 */
-/*.goods-spec-many { display: none;*/ /* 添加规格组 */ /* sku容器 */ /*}*/
+.goods-spec-many { display: none;  /*添加规格组   sku容器 */ }
 .goods-spec-many .goods-spec-box { margin-top: 15px; border: 1px solid #e4e4e4; padding: 20px; border-radius: 4px;margin-left:110px; }
 .goods-spec-many input { padding-left: 10px !important; border: 1px solid #e3e2e5 !important; }
 .goods-spec-many input.am-field-error { border-color: #dd514c !important; }

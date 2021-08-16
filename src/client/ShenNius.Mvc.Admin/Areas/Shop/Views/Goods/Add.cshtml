@@ -75,7 +75,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" required>商品规格</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="specType" lay-skin="primary" value="10" lay-filter="specType" title="单规格" class="layui-input" />
+                        <input type="radio" name="specType" lay-skin="primary" value="10" lay-filter="specType" title="单规格" class="layui-input" checked/>
                         <input type="radio" name="specType" lay-skin="primary" value="20" lay-filter="specType" title="多规格" class="layui-input" />
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                     </div>
                 </div>
 
-                <div id="sigleSpec" style="display:none;">
+                <div id="sigleSpec">
                     <div class="layui-form-item">
                         <label class="layui-form-label" required>商品价格</label>
                         <div class="layui-input-block">
@@ -277,7 +277,7 @@
                 data.field.content = tinyMCE.editors[0].getContent();
 
                 //data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
-
+                var item = $('input[name=age]:checked').val();
                 var specMany2 = JSON.stringify(specMany.getData());
                 console.log("specMany:" + specMany2);
                 var isEmpty = specMany.isEmptySkuList();
