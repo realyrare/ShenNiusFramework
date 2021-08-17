@@ -13,6 +13,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Domain.Services.Cms;
 
 /*************************************
 * 类名：ArticleController
@@ -28,30 +29,20 @@ namespace ShenNius.Cms.API.Controllers
 {
     public class ArticleController : ApiTenantBaseController<Article, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, ArticleInput, ArticleModifyInput>
     {
-        private readonly IBaseServer<Article> _service;
+
         private readonly IUploadHelper _uploadHelper;
+        private readonly IArticleService _articleService;
 
-
-        public ArticleController(IBaseServer<Article> service, IMapper mapper, IUploadHelper uploadHelper) : base(service, mapper)
+        public ArticleController(IBaseServer<Article> service, IMapper mapper, IUploadHelper uploadHelper, IArticleService articleService) : base(service, mapper)
         {
-            _service = service;
-            _uploadHelper = uploadHelper;      
+            _uploadHelper = uploadHelper;
+            _articleService = articleService;
         }
 
         [HttpGet]
-        public override async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
+        public override  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query )
         {
-            Expression<Func<Article, bool>> whereExpression = d=>d.Status==true;
-            if (keywordListTenantQuery.TenantId > 0)
-            {
-                whereExpression = d => d.TenantId == keywordListTenantQuery.TenantId;
-            }
-            if (!string.IsNullOrEmpty(keywordListTenantQuery.Key))
-            {
-                whereExpression = d => d.Title.Contains(keywordListTenantQuery.Key);
-            }
-            var res = await _service.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
-            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+           return _articleService.GetPagesAsync(query);
         }
         [HttpPost, AllowAnonymous]
         public IActionResult QiniuFile()

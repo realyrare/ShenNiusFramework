@@ -174,8 +174,8 @@ namespace ShenNius.Share.Infrastructure.Common
         public static void ChildNode<T>(List<T> list, List<T> newlist, int parentId) where T : BaseTenantTreeEntity
         {
             var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ToList();
-            if (!result.Any()) return;
-            for (int i = 0; i < result.Count(); i++)
+            if (!result.Any()) return ;
+            for (int i = 0; i < result.Count; i++)
             {
                 newlist.Add(result[i]);
                 ChildNode(list, newlist, result[i].Id);

@@ -7,6 +7,8 @@ using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;
 using ShenNius.Share.Models.Entity.Shop;
+using ShenNius.Share.Models.Entity.Sys;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,15 +98,26 @@ namespace ShenNius.Share.Domain.Services.Shop
         }
         
         public async Task<ApiResult> GetListPagesAsync(KeyListTenantQuery query)
-        {
-            var res = await Db.Queryable<Category>().Where(d => d.Status && d.TenantId == query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Name.Contains(query.Key))
-                .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)
-                .ToPageAsync(query.Page, query.Limit);
+        {           
+            var res = await Db.Queryable<Category>().Where(d=>d.Status&&d.TenantId==query.TenantId)
+               .WhereIF(!string.IsNullOrEmpty(query.Key), c => c.Name.Contains(query.Key))
+               .OrderBy(c => c.Id, OrderByType.Desc)
+               .Select(c => new Category()
+               {
+                   Id = c.Id,
+                   TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id ==c.TenantId).Select(s => s.Name),
+                   Name = c.Name,
+                   CreateTime = c.CreateTime,
+                   Layer = c.Layer,
+                   ModifyTime = c.ModifyTime,
+                   IconSrc=c.IconSrc
+               })
+               .ToPageAsync(query.Page, query.Limit);
             var result = new List<Category>();
             if (!string.IsNullOrEmpty(query.Key))
             {
                 var menuModel = await GetModelAsync(m => m.Name.Contains(query.Key));
-                WebHelper.ChildNode(res.Items, result, menuModel.ParentId);
+              WebHelper.ChildNode(res.Items, result, menuModel.ParentId);
             }
             else
             {
@@ -116,8 +129,11 @@ namespace ShenNius.Share.Domain.Services.Shop
                 {
                     item.Name = WebHelper.LevelName(item.Name, item.Layer);
                 }
+                return new ApiResult(data: new { count = res.TotalItems, items = result });
             }
-            return new ApiResult(data: new { count = res.TotalItems, items = result });
+            else {
+                return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+            }           
         }
 
     }

@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Common;
+using ShenNius.Share.Models.Entity.Sys;
 
 /*************************************
 * 类名：ColumnService
@@ -26,9 +29,30 @@ namespace ShenNius.Share.Domain.Services.Cms
         Task<List<string>> GetAllTagsAsync(List<int> columnIds);
         Task<ArticleOutput> GetArtcileDetailAsync(Expression<Func<Article, Column, bool>> where);
         Task<ArticleOutput> GetNextOrUpArticleAsync(Expression<Func<Article, Column, bool>> expression);
+
+        Task<ApiResult> GetPagesAsync(KeyListTenantQuery query);
     }
     public class ArticleService : BaseServer<Article>, IArticleService
     {
+        public async Task<ApiResult> GetPagesAsync(KeyListTenantQuery query)
+        {           
+          var res=  await Db.Queryable<Article, Column>((a, c) => new JoinQueryInfos(JoinType.Inner, a.ColumnId == c.Id && a.Status == true))
+                    .WhereIF(!string.IsNullOrEmpty(query.Key), (a, c) => a.Title.Contains(query.Key))
+                    .OrderBy((a, c) => a.Id, OrderByType.Desc)
+                    .Select((a,c)=>new Article() {
+                    Title=a.Title,
+                    CreateTime=a.CreateTime,
+                    ModifyTime=a.ModifyTime,
+                    Id=a.Id,
+                    Audit=a.Audit,
+                    Author=a.Author,
+                    Source=a.Source,
+                    ColumnName=c.Title,
+                    TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
+                    })
+                    .ToPageAsync(query.Page,query.Limit);
+            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+        }
         public async Task<Page<ArticleOutput>> GetArtcileByConditionAsync(Expression<Func<Article, Column, bool>> where, int pageIndex, int pageSize)
         {
             return await Db.Queryable<Article, Column>((ca, cc) => new object[] { JoinType.Inner, ca.ColumnId == cc.Id })

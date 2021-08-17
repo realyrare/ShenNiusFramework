@@ -22,7 +22,12 @@ namespace ShenNius.Shop.API.Controllers
         {
             _goodsService = goodsService;
         }
-       
+
+        [HttpGet]
+        public override Task<ApiResult> GetListPages(KeyListTenantQuery query)
+        {
+            return _goodsService.GetListPageAsync(query);
+        }
         [HttpPost]
         public override Task<ApiResult> Add([FromBody] GoodsInput input)
         {

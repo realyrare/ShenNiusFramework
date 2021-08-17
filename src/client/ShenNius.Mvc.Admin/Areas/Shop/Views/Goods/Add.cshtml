@@ -168,7 +168,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" required>库存数量</label>
                         <div class="layui-input-block">
-                            <input type="number" name="stockNum" maxlength="40" lay-verify="required" class="layui-input">
+                            <input type="number" name="stockNum" maxlength="40" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -209,13 +209,11 @@
     <script src="/lib/tinymce/tinymce.min.js"></script>
     <script src="/lib/tinymce/langs/zh_CN.js"></script>
     <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
-
     <script src="~/js/goodsSpec.js" asp-append-version="true"></script>
     <script src="~/js/art-template.js" asp-append-version="true"></script>
     <!-- 商品多规格模板 -->
     @await Html.PartialAsync("~/Views/Shared/Templates/tpl_spec_many.cshtml")
     <script>
-
         tinymce.init({
             selector: '#content',
             auto_focus: true,
@@ -223,7 +221,6 @@
             content_style: "img {max-width:100%;}",
             image_advtab: true,//开启图片上传的高级选项功能
             images_upload_url: '/api/article/qiniuFile',//图片上传
-
             plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
             toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
         });
@@ -254,7 +251,6 @@
                     $("#sigleSpec").hide() && $(".goods-spec-many").show();
                 }
                 //console.log(data.elem); //得到radio原始DOM对象
-
             });
             //多图片上传
             upload.render({
@@ -285,18 +281,18 @@
                     }
                     data.specMany = specMany2;
                 } else {
-                    data.field.goodsSpecInput = new {
-                        "goodsNo": data.field.goodsNo,
-                        "linePrice": data.field.linePrice,
-                        "goodsPrice": data.field.goodsPrice,
-                        "goodsWeight": data.field.goodsWeight,
-                        "stockNum": data.field.stockNum,                                
-                    }
+                    data.field.goodsSpecInput =  {
+                        goodsNo: data.field.goodsNo,
+                        linePrice: data.field.linePrice,
+                        goodsPrice: data.field.goodsPrice,
+                        goodsWeight: data.field.goodsWeight,
+                        stockNum: data.field.stockNum,
+                    };
                 }                
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
                 data.field.deductStockType = $('input[name=deductStockType]:checked').val();
-                apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {
+                apiUtil.ajax('goods/add', data.field, "application/json", "post", function (res) {
                     apiUtil.success(res.msg);
                     parent.layer.close(parentIndex);
                 });

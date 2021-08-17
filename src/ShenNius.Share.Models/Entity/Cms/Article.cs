@@ -23,9 +23,9 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public int ColumnId { get; set; } = 0;
-
-
+        public int ColumnId { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public string ColumnName { get; set; }
         /// <summary>
         /// Desc:文章标题
         /// Default:-

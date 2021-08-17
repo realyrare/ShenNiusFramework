@@ -5,7 +5,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
     public class CategoryInput: GlobalTenantInput
     {
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
         public int ParentId { get; set; }
 
         public string IconSrc { get; set; }

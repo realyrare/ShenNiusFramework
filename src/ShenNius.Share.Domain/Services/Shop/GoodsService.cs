@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
-using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
-using ShenNius.Share.Domain.Repository.Extensions;
-using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;
 using ShenNius.Share.Models.Entity.Shop;
+using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
+using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 /*************************************
@@ -44,6 +41,8 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <param name="input"></param>
         /// <returns></returns>
         Task<ApiResult> AddSpecAsync(SpecValuesInput input);
+
+        Task<ApiResult> GetListPageAsync(KeyListTenantQuery query);
     }
     public class GoodsService : BaseServer<Goods>, IGoodsService
     {
@@ -52,6 +51,25 @@ namespace ShenNius.Share.Domain.Services.Shop
         public GoodsService(IMapper mapper)
         {
             _mapper = mapper;
+        }
+
+        public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
+        {
+            var datas =await Db.Queryable<Goods, Category,Tenant>((g, c,t) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id,JoinType.Inner,g.TenantId==t.Id))
+                .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c, t) => g.Name==query.Key)
+                .OrderBy((g, c,t) => g.Id, OrderByType.Desc)
+                .Select((g, c,t) => new Goods() { 
+                Name=g.Name,
+                CategoryName=c.Name,
+                CreateTime=g.CreateTime,
+                DeductStockType=g.DeductStockType,
+                SalesInitial=g.SalesInitial,
+                SalesActual=g.SalesActual,
+                SpecType=g.SpecType,
+                Id=g.Id,
+                TenantName=t.Name
+                }).ToPageListAsync(query.Page,query.Limit);
+            return new ApiResult(datas);
         }
         public async Task<ApiResult> DetailAsync(int id)
         {

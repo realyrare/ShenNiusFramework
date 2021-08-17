@@ -12,6 +12,8 @@ using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Domain.Repository.Extensions;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Entity.Sys;
+using SqlSugar;
 
 /*************************************
 * 类名：ArticleService
@@ -49,13 +51,11 @@ namespace ShenNius.Share.Domain.Services.Cms
         }
         public async Task<ApiResult> ModifyAsync(ColumnModifyInput columnModifyInput)
         {
-            //columnModifyInput.SiteId = _memoryCache.Get<Site>(KeyHelper.Cms.CurrentSite).Id;
             var columnModel = await GetModelAsync(d => d.Title.Equals(columnModifyInput.Title) && d.Id != columnModifyInput.Id);
             if (columnModel?.Id > 0)
             {
                 throw new FriendlyException("已经存在类目名称了");
             }
-            // var result = await DealColumn(columnModifyInput.ParentId, columnModifyInput.Id);
             var result = await WebHelper.DealTreeData(columnModifyInput.ParentId, columnModifyInput.Id, async () =>
               await GetModelAsync(d => d.Id == columnModifyInput.ParentId));
 
@@ -85,46 +85,16 @@ namespace ShenNius.Share.Domain.Services.Cms
             }
             var column = _mapper.Map<Column>(columnInput);
             var columnId = await AddAsync(column);
-
-            // var result = await DealColumn(columnInput.ParentId, columnId);
             var result = await WebHelper.DealTreeData(columnInput.ParentId, columnId, async () =>
            await GetModelAsync(d => d.Id == columnInput.ParentId));
             var i = await UpdateAsync(d => new Column() { ParentList = result.Item2, Layer = result.Item1 }, d => d.Id == columnId);
             return new ApiResult(i);
         }
 
-        /// <summary>
-        /// 处理栏目层次逻辑
-        /// </summary>
-        /// <param name="parentId">父Id</param>
-        /// <param name="columnId">当前栏目Id</param>
-        /// <returns></returns>
-        private async Task<Tuple<int, string>> DealColumn(int parentId, int columnId)
-        {
-            string parentIdList = ""; int layer = 0;
-            if (parentId > 0)
-            {
-                // 说明有父级  根据父级，查询对应的模型
-                var model = await GetModelAsync(d => d.Id == parentId);
-                if (model.Id > 0)
-                {
-                    parentIdList = model.ParentList + columnId + ",";
-                    layer = model.Layer + 1;
-                }
-            }
-            else
-            {
-                parentIdList = "," + columnId + ",";
-                layer = 1;
-            }
-            return new Tuple<int, string>(layer, parentIdList);
-        }
-
         public async Task<ApiResult> GetAllParentColumnAsync()
         {
             var list = await GetListAsync(d => d.Status);
             var data = new List<Column>();
-            //ChildModule(list, data, 0);
             WebHelper.ChildNode(list, data, 0);
             if (data?.Count > 0)
             {
@@ -135,35 +105,32 @@ namespace ShenNius.Share.Domain.Services.Cms
             }
             return new ApiResult(data);
         }
-        /// <summary>
-        /// 递归模块列表
-        /// </summary>
-        private void ChildModule(List<Column> list, List<Column> newlist, int parentId)
-        {
-            var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ToList();
-            if (!result.Any()) return;
-            for (int i = 0; i < result.Count(); i++)
-            {
-                newlist.Add(result[i]);
-                // ChildModule(list, newlist, result[i].Id);
-                WebHelper.ChildNode(list, newlist, result[i].Id);
-            }
-        }
+
         public async Task<ApiResult> GetListPagesAsync(KeyListTenantQuery query)
         {
-            var res = await Db.Queryable<Column>().Where(d => d.Status && d.TenantId == query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key))
-                .OrderBy(m => m.CreateTime, SqlSugar.OrderByType.Desc)
+            var res = await Db.Queryable<Column>().Where(d => d.Status && d.TenantId == query.TenantId)
+                .WhereIF(!string.IsNullOrEmpty(query.Key), c => c.Title.Contains(query.Key))
+                .OrderBy(c => c.Id, OrderByType.Desc)
+                .Select(c => new Column()
+                {
+                    Id = c.Id,
+                    TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
+                    Title = c.Title,
+                    CreateTime = c.CreateTime,
+                    EnTitle = c.EnTitle,
+                    Layer = c.Layer,
+                    ModifyTime = c.ModifyTime
+                })
                 .ToPageAsync(query.Page, query.Limit);
+
             var result = new List<Column>();
             if (!string.IsNullOrEmpty(query.Key))
             {
                 var menuModel = await GetModelAsync(m => m.Title.Contains(query.Key));
-                // ChildModule(res.Items, result, menuModel.ParentId);
                 WebHelper.ChildNode(res.Items, result, menuModel.ParentId);
             }
             else
             {
-                // ChildModule(res.Items, result, 0);
                 WebHelper.ChildNode(res.Items, result, 0);
             }
             if (result?.Count > 0)
@@ -172,8 +139,12 @@ namespace ShenNius.Share.Domain.Services.Cms
                 {
                     item.Title = WebHelper.LevelName(item.Title, item.Layer);
                 }
+                return new ApiResult(data: new { count = res.TotalItems, items = result });
             }
-            return new ApiResult(data: new { count = res.TotalItems, items = result });
+            else
+            {
+                return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+            }
         }
 
 

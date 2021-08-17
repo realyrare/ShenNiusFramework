@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Shop;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;

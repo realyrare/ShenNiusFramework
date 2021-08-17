@@ -358,7 +358,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var model = new MenuTreeInitOutput()
             {               
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/log-echarts" },
-                LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "/images/logo.jpg?v=999", Href = "" },
+                LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "ig/images/logo.jpg?v=999", Href = "" },
             };
             if (!AppSettings.Jwt.Value)
             {
