@@ -20,6 +20,8 @@ namespace ShenNius.Share.Models.Entity.Shop
     {
         public string Name { get; set; }
         public int CategoryId { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public string CategoryName { get; set; }
         /// <summary>
         /// 商品规格
         /// </summary>
