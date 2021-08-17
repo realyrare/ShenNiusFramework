@@ -281,13 +281,13 @@
                     }
                     data.specMany = specMany2;
                 } else {
-                    data.field.goodsSpecInput =  {
-                        goodsNo: data.field.goodsNo,
-                        linePrice: data.field.linePrice,
-                        goodsPrice: data.field.goodsPrice,
-                        goodsWeight: data.field.goodsWeight,
-                        stockNum: data.field.stockNum,
-                    };
+                    //data.field.goodsSpecInput =  {
+                    //    goodsNo: data.field.goodsNo,
+                    //    linePrice: data.field.linePrice,
+                    //    goodsPrice: data.field.goodsPrice,
+                    //    goodsWeight: data.field.goodsWeight,
+                    //    stockNum: data.field.stockNum,
+                    //};
                 }                
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
@@ -303,7 +303,7 @@
                 apiUtil.ajax('category/getAllParentcategory', {}, "application/json", "get", function (res) {
                     if (res.statusCode == 200 && res.success == true) {
                         if (res.data !== null) {
-                            var select = $("#columnId");
+                            var select = $("#categoryId");
                             for (var i = 0; i < res.data.length; i++) {
                                 var val = res.data[i].id;
                                 if (val === value)

@@ -34,12 +34,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         public int DeliveryId { get; set; }
 
         public DateTime CreateTime { get; set; } = DateTime.Now;
-
-        public decimal GoodsPrice { get; set; }
-        public decimal LinePrice { get; set; }
-        public string GoodsNo { get; set; }
-        public int StockNum { get; set; }
-        public int GoodsWeight { get; set; }
+    
         /// <summary>
         /// 商品状态
         /// </summary>
@@ -49,6 +44,10 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         /// 商品多规格
         /// </summary>
         public string SpecMany { get; set; }
+        /// <summary>
+        /// 单规格
+        /// </summary>
+        public string SpecSingle { get; set; }
         public GoodsSpecInput  GoodsSpecInput { get; set; }
         
 

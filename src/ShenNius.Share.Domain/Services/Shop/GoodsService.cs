@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
@@ -55,10 +56,10 @@ namespace ShenNius.Share.Domain.Services.Shop
 
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
         {
-            var datas =await Db.Queryable<Goods, Category,Tenant>((g, c,t) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id,JoinType.Inner,g.TenantId==t.Id))
-                .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c, t) => g.Name==query.Key)
-                .OrderBy((g, c,t) => g.Id, OrderByType.Desc)
-                .Select((g, c,t) => new Goods() { 
+            var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id))
+                .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name==query.Key)
+                .OrderBy((g, c) => g.Id, OrderByType.Desc)
+                .Select((g, c) => new Goods() { 
                 Name=g.Name,
                 CategoryName=c.Name,
                 CreateTime=g.CreateTime,
@@ -67,7 +68,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 SalesActual=g.SalesActual,
                 SpecType=g.SpecType,
                 Id=g.Id,
-                TenantName=t.Name
+                TenantName= SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name)
                 }).ToPageListAsync(query.Page,query.Limit);
             return new ApiResult(datas);
         }
@@ -114,6 +115,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             // 保存规格
             if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
             {
+               input.GoodsSpecInput= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
                 var goodsSpec = input.BuildGoodsSpec(goodsId);
                 if (null == goodsSpec)
                 {

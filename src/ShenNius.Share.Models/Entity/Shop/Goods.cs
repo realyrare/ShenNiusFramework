@@ -44,7 +44,7 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// 库存计算方式
         /// </summary>
         public int DeductStockType { get; set; }
-
+        [SugarColumn(IsIgnore = true)]
         public string DeductStockTypeText
         {
             get

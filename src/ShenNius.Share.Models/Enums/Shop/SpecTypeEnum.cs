@@ -18,12 +18,12 @@ namespace ShenNius.Share.Models.Enums.Shop
         /// 单规格
         /// </summary>
         [Description("单规格")]
-        Single =1,
+        Single =10,
         /// <summary>
         /// 多规格
         /// </summary>
         [Description("多规格")]
-        Multi =2
+        Multi =20
     }
    
 

@@ -297,6 +297,7 @@ namespace ShenNius.Share.Domain.Repository
             return await query.ToPageAsync(page, limit);
         }
 
+
         /// <summary>
         /// 获得列表
         /// </summary>
@@ -451,6 +452,7 @@ namespace ShenNius.Share.Domain.Repository
         {
             return await Db.Queryable<T>().AnyAsync(whereExpression);
         }
+
         /// <summary>
         /// 多表查询
         /// </summary>
