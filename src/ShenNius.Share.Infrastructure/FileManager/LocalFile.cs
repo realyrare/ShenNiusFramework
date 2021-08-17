@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Models.Configs;
+using System.Collections.Generic;
 using System.IO;
 
 /*************************************
@@ -41,6 +42,39 @@ namespace ShenNius.Share.Infrastructure.FileManager
 
         public ApiResult Upload(IFormFile file, string prefix)
         {
+            var path = CreateDirectory(prefix);
+            //var file = Request.Form.Files[0];
+            var fileName = WebHelper.ImgSuffixIsExists(file);
+            string fileFullName = path + "\\" + fileName;
+            using (FileStream fs = File.Create(fileFullName))
+            {
+                file.CopyTo(fs);
+                fs.Flush();
+            }
+            return new ApiResult(data: fileName);
+        }
+
+        public ApiResult Upload(IFormFileCollection files, string prefix)
+        {
+            var path = CreateDirectory(prefix);
+            List<string> list = new List<string>();
+            foreach (var file in files)
+            {
+                var fileName = WebHelper.ImgSuffixIsExists(file);
+                string fileFullName = path + "\\" + fileName;
+
+                using (FileStream fs = File.Create(fileFullName))
+                {
+                    file.CopyTo(fs);
+                    fs.Flush();
+                }
+                list.Add(fileFullName);
+            }
+            return new ApiResult(data: list);
+        }
+
+        private string CreateDirectory(string prefix)
+        {
             string path;
             if (!string.IsNullOrEmpty(prefix))
             {
@@ -55,21 +89,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
             {
                 Directory.CreateDirectory(path);
             }
-            //var file = Request.Form.Files[0];
-            var fileName = WebHelper.ImgSuffixIsExists(file);
-            string fileFullName = path + "\\" + fileName;
-
-            using (FileStream fs = File.Create(fileFullName))
-            {
-                file.CopyTo(fs);
-                fs.Flush();
-            }
-            return new ApiResult(data: fileName);
-        }
-
-        public ApiResult Upload(IFormFileCollection files, string prefix)
-        {
-            throw new System.NotImplementedException();
+            return path;
         }
     }
 }

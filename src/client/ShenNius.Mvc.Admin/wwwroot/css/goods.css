@@ -141,3 +141,11 @@
     vertical-align: top;
     border-top: 1px solid #ddd;
 }
+
+/*图片删除样式*/
+.del {
+    color: white;
+    background: red;
+    font-weight: 600;
+    font-size: 14px;
+}

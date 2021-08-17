@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Shop;
+using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;
@@ -18,9 +20,12 @@ namespace ShenNius.Shop.API.Controllers
     public class GoodsController : ApiTenantBaseController<Goods, DetailTenantQuery, DeletesTenantInput, KeyListTenantQuery, GoodsInput, GoodsModifyInput>
     {
         private readonly IGoodsService _goodsService;
-        public GoodsController(IBaseServer<Goods> service, IMapper mapper, IGoodsService  goodsService) : base(service, mapper)
+        private readonly IUploadHelper _uploadHelper;
+
+        public GoodsController(IBaseServer<Goods> service, IMapper mapper, IGoodsService  goodsService, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _goodsService = goodsService;
+            _uploadHelper = uploadHelper;
         }
 
         [HttpGet]
@@ -47,6 +52,22 @@ namespace ShenNius.Shop.API.Controllers
         public Task<ApiResult> AddSpecValue([FromForm] SpecValuesInput input)
         {
             return _goodsService.AddSpecAsync(input);
+        }
+        [HttpPost, AllowAnonymous]
+        public IActionResult UploadImg()
+        {
+            var files = Request.Form.Files[0];
+            var data = _uploadHelper.Upload(files, "goods/");
+            //TinyMCE 指定的返回格式
+            return Ok(new { location = data });
+        }
+        [HttpPost]
+        public IActionResult MultipleUploadImg()
+        {
+            var files = Request.Form.Files;
+            var data = _uploadHelper.Upload(files, "goods/");
+            //TinyMCE 指定的返回格式
+            return Ok(new { location = data });
         }
     }
 }

@@ -57,15 +57,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label required">商品图片</label>
+                    <label class="layui-form-label required">商品图片</label>                    
                     <div class="layui-upload">
-                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                        <button type="button" class="layui-btn" id="btnUploadShowImg">上传图片</button>
                         <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;margin-left:110px;">
                             预览图：
-                            <div class="layui-upload-list" id="demo1"></div>
-                            @*<p id="demoText"></p>*@
+                            <div class="layui-upload-list" id="demo2"></div>
                         </blockquote>
-                        <input type="hidden" id="imgUrl" name="imgUrl" class="layui-input">
                     </div>
                 </div>
 
@@ -252,21 +250,7 @@
                 }
                 //console.log(data.elem); //得到radio原始DOM对象
             });
-            //多图片上传
-            upload.render({
-                elem: '#test1'
-                , url: 'https://httpbin.org/post' //改成您自己的上传接口
-                , multiple: true
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        $('#demo1').append('<img style="width:90px;margin-right:10px;" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
-                    });
-                }
-                , done: function (res) {
-                    //上传完毕
-                }
-            });
+          
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 data.field.content = tinyMCE.editors[0].getContent();
@@ -293,6 +277,11 @@
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
                 data.field.deductStockType = $('input[name=deductStockType]:checked').val();
+                data.field.imgUrl = $(".div_img input").map(function () { return $(this).attr("value"); }).get().join(',');
+                if (data.field.imgUrl == "" || data.field.imgUrl == null) {
+                    layer.msg("商品图片至少需要上传一张！");
+                    return;
+                }
                 apiUtil.ajax('goods/add', data.field, "application/json", "post", function (res) {
                     apiUtil.success(res.msg);
                     parent.layer.close(parentIndex);
