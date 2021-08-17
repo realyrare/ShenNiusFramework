@@ -72,7 +72,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 }).ToPageListAsync(query.Page,query.Limit);
             return new ApiResult(datas);
         }
-        public async Task<ApiResult> DetailAsync(int id)
+        public async Task<ApiResult<GoodsModifyInput>> DetailAsync(int id)
         {
             Goods goods = await GetModelAsync(d => d.Id == id && d.Status);
 
@@ -85,7 +85,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == id).FirstAsync();                 
                 model.GoodsSpecInput = _mapper.Map<GoodsSpecInput>(goodsSpec);
             }
-            return new ApiResult(model);
+            return new ApiResult<GoodsModifyInput>(model);
         }
         [Transaction]
         public async Task<ApiResult> AddAsync(GoodsInput input)

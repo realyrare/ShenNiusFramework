@@ -30,6 +30,10 @@ namespace ShenNius.Share.Infrastructure.Configurations
         {
             public static bool Value => !string.IsNullOrEmpty(_config["JwtConfig:IsEnable"]) ? Convert.ToBoolean(_config["JwtConfig:IsEnable"]) : true;
         }
+        public static class Domain
+        {
+            public static string ImgHost => _config["Domain:ImgHost"];
+        }
         public static class Db
         {
             public static string Connection = string.Empty;//=> _config["ConnectionStrings:MySql"];
