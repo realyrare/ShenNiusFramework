@@ -92,14 +92,17 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             try
             {
+                Db.BeginTran();
                 // 保存商品
                 var goods = _mapper.Map<Goods>(input);
-                var goodsId = await AddAsync(goods);
+                var goodsId = await Db.Insertable<Goods>(goods).ExecuteReturnIdentityAsync();
                 // 保存规格
-                await DealwithGoodsSpec(goodsId, input);                    
+                await DealwithGoodsSpec(goodsId, input);
+                Db.CommitTran();
             }
             catch (Exception e)
             {
+                Db.RollbackTran();
                 return new ApiResult(e.Message);
             }          
             return new ApiResult();
@@ -144,17 +147,21 @@ namespace ShenNius.Share.Domain.Services.Shop
             var goods = await GetModelAsync(d => d.Id == input.Id); 
             if (goods == null) throw new FriendlyException($"此商品{input.Id}没有查找对应的商品信息");
             try
-            {  // 更新商品
+            {
+                Db.BeginTran();
+                // 更新商品
                 var model = _mapper.Map<Goods>(input);
-                var goodsId = await UpdateAsync(model,d=>new {d.CreateTime });
+                var goodsId = await Db.Updateable(model).IgnoreColumns(d => new { d.CreateTime }).ExecuteCommandAsync();
                 // 更新规格 
                 await Db.Deleteable<GoodsSpec>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
                 await Db.Deleteable<GoodsSpecRel>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
                 // 保存规格
                 await DealwithGoodsSpec(goodsId, input);
+                Db.CommitTran();
             }
             catch (Exception e)
             {
+                Db.RollbackTran();
                 return new ApiResult(e.Message);
             }
             return new ApiResult();        

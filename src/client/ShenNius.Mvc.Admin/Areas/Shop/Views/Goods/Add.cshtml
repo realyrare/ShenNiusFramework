@@ -281,13 +281,14 @@
                     }
                     data.specMany = specMany2;
                 } else {
-                    //data.field.goodsSpecInput =  {
-                    //    goodsNo: data.field.goodsNo,
-                    //    linePrice: data.field.linePrice,
-                    //    goodsPrice: data.field.goodsPrice,
-                    //    goodsWeight: data.field.goodsWeight,
-                    //    stockNum: data.field.stockNum,
-                    //};
+                    var specSingle =  {
+                        goodsNo: data.field.goodsNo,
+                        linePrice: data.field.linePrice,
+                        goodsPrice: data.field.goodsPrice,
+                        goodsWeight: data.field.goodsWeight,
+                        stockNum: data.field.stockNum,
+                    };
+                    data.field.specSingle=JSON.stringify(specSingle);
                 }                
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();

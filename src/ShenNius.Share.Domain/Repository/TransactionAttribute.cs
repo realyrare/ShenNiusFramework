@@ -34,6 +34,11 @@ namespace ShenNius.Share.Domain.Repository
                 }
                 dbContext.Db.CommitTran();
             }
+            catch (AggregateException ex)
+            {
+                dbContext.Db.RollbackTran();
+                throw ex;
+            }
             catch (Exception ex)
             {
                 dbContext.Db.RollbackTran();
