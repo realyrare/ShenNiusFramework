@@ -30,6 +30,8 @@ namespace ShenNius.Share.Domain.Services.Shop
     public interface IGoodsService : IBaseServer<Goods>
     {
         Task<ApiResult> AddAsync(GoodsInput input);
+        Task<ApiResult> ModifyAsync(GoodsModifyInput input);
+        Task<ApiResult> DetailAsync(int id);
         /// <summary>
         /// 添加规格组名称和值
         /// </summary>
@@ -51,6 +53,21 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             _mapper = mapper;
         }
+        public async Task<ApiResult> DetailAsync(int id)
+        {
+            Goods goods = await GetModelAsync(d => d.Id == id && d.Status);
+
+            if (goods == null) throw new FriendlyException($"此商品{id}没有查找对应的商品信息");
+           var model= _mapper.Map<GoodsModifyInput>(goods);
+              
+            model.GoodsSpecInput = new GoodsSpecInput();
+            if (model.SpecType == SpecTypeEnum.Single.GetValue<int>())
+            {
+                var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == id).FirstAsync();                 
+                model.GoodsSpecInput = _mapper.Map<GoodsSpecInput>(goodsSpec);
+            }
+            return new ApiResult(model);
+        }
         [Transaction]
         public async Task<ApiResult> AddAsync(GoodsInput input)
         {
@@ -60,30 +77,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 var goods = _mapper.Map<Goods>(input);
                 var goodsId = await AddAsync(goods);
                 // 保存规格
-                if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
-                {
-                    var goodsSpec = input.BuildGoodsSpec(goodsId);
-                    if (null == goodsSpec)
-                    {
-                        throw new FriendlyException("商品规格实体数据不能为空！");
-                    }
-                    await Db.Insertable(goodsSpec).ExecuteReturnIdentityAsync();
-                }
-                else
-                {
-                    var goodsSpecs = input.BuildGoodsSpecs(goodsId);
-                    if (null == goodsSpecs || goodsSpecs.Count == 0)
-                    {
-                        throw new FriendlyException("商品规格实体数据集合不能为空！");
-                    }
-                    await Db.Insertable(goodsSpecs).ExecuteReturnIdentityAsync();
-                    var goodsSpecRels = input.BuildGoodsSpecRels(goodsId);
-                    if (goodsSpecRels.Count==0|| goodsSpecRels==null)
-                    {
-                        throw new FriendlyException("商品规格实体关系集合数据不能为空！");
-                    }
-                    await Db.Insertable(goodsSpecRels).ExecuteReturnIdentityAsync();
-                }
+                await DealwithGoodsSpec(goodsId, input);                    
             }
             catch (Exception e)
             {
@@ -91,7 +85,60 @@ namespace ShenNius.Share.Domain.Services.Shop
             }          
             return new ApiResult();
         }
-
+        /// <summary>
+        /// 公共的商品规格信息处理
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private async Task DealwithGoodsSpec(int goodsId, GoodsInput input) 
+        {
+            // 保存规格
+            if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
+            {
+                var goodsSpec = input.BuildGoodsSpec(goodsId);
+                if (null == goodsSpec)
+                {
+                    throw new FriendlyException("商品规格实体数据不能为空！");
+                }
+                await Db.Insertable(goodsSpec).ExecuteReturnIdentityAsync();
+            }
+            else
+            {
+                var goodsSpecs = input.BuildGoodsSpecs(goodsId);
+                if (null == goodsSpecs || goodsSpecs.Count == 0)
+                {
+                    throw new FriendlyException("商品规格实体数据集合不能为空！");
+                }
+                await Db.Insertable(goodsSpecs).ExecuteReturnIdentityAsync();
+                var goodsSpecRels = input.BuildGoodsSpecRels(goodsId);
+                if (goodsSpecRels.Count == 0 || goodsSpecRels == null)
+                {
+                    throw new FriendlyException("商品规格实体关系集合数据不能为空！");
+                }
+                await Db.Insertable(goodsSpecRels).ExecuteReturnIdentityAsync();
+            }
+        }
+        public async Task<ApiResult> ModifyAsync(GoodsModifyInput input)
+        {           
+            var goods = await GetModelAsync(d => d.Id == input.Id); 
+            if (goods == null) throw new FriendlyException($"此商品{input.Id}没有查找对应的商品信息");
+            try
+            {  // 更新商品
+                var model = _mapper.Map<Goods>(input);
+                var goodsId = await UpdateAsync(model,d=>new {d.CreateTime });
+                // 更新规格 
+                await Db.Deleteable<GoodsSpec>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
+                await Db.Deleteable<GoodsSpecRel>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
+                // 保存规格
+                await DealwithGoodsSpec(goodsId, input);
+            }
+            catch (Exception e)
+            {
+                return new ApiResult(e.Message);
+            }
+            return new ApiResult();        
+        }
         /// <summary>
         /// 添加规格组名称和值
         /// </summary>
@@ -110,8 +157,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                     CreateTime = DateTime.Now     
                 };
                 specId = await Db.Insertable(specModel).ExecuteReturnIdentityAsync();
-            }
-        
+            }        
             var specValueId = await  Db.Queryable<SpecValue>().Where(d => d.Value.Equals(input.SpecValue) && d.SpecId == specId).Select(d => d.Id).FirstAsync();
             // 判断规格值是否存在
            

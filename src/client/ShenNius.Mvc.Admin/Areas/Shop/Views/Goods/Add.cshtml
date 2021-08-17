@@ -48,7 +48,6 @@
                         </select>
                     </div>
                 </div>
-                @*<div class="text else">其他</div>*@
             </div>
             <div class="layui-row">
                 <div class="layui-form-item">
@@ -66,7 +65,7 @@
                             <div class="layui-upload-list" id="demo1"></div>
                             @*<p id="demoText"></p>*@
                         </blockquote>
-                        <input type="hidden" id="IconSrc" name="imgUrl" class="layui-input">
+                        <input type="hidden" id="imgUrl" name="imgUrl" class="layui-input">
                     </div>
                 </div>
 
@@ -275,17 +274,28 @@
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 data.field.content = tinyMCE.editors[0].getContent();
-
-                //data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
-                var item = $('input[name=age]:checked').val();
-                var specMany2 = JSON.stringify(specMany.getData());
-                console.log("specMany:" + specMany2);
-                var isEmpty = specMany.isEmptySkuList();
-                if (isEmpty == true) {
-                    layer.msg('商品规格不能为空');
-                    return false;
-                }
-                data.specMany = specMany2;
+                var specType = $('input[name=specType]:checked').val();
+                if (specType == 20) {
+                    var specMany2 = JSON.stringify(specMany.getData());
+                    console.log("specMany:" + specMany2);
+                    var isEmpty = specMany.isEmptySkuList();
+                    if (isEmpty == true) {
+                        layer.msg('商品规格不能为空');
+                        return false;
+                    }
+                    data.specMany = specMany2;
+                } else {
+                    data.field.goodsSpecInput = new {
+                        "goodsNo": data.field.goodsNo,
+                        "linePrice": data.field.linePrice,
+                        "goodsPrice": data.field.goodsPrice,
+                        "goodsWeight": data.field.goodsWeight,
+                        "stockNum": data.field.stockNum,                                
+                    }
+                }                
+                data.field.specType = specType;
+                data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
+                data.field.deductStockType = $('input[name=deductStockType]:checked').val();
                 apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {
                     apiUtil.success(res.msg);
                     parent.layer.close(parentIndex);

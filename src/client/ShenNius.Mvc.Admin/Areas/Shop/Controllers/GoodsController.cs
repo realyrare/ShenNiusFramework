@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Entity.Shop;
@@ -14,10 +15,12 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
         private readonly IGoodsService _goodsService;
         private readonly IConfigService _configService;
 
+
         public GoodsController(IGoodsService  goodsService,IConfigService configService)
         {
             _goodsService = goodsService;
             _configService = configService;
+
         }
         [HttpGet]
         public IActionResult Index()
@@ -34,8 +37,11 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
         [HttpGet]
         public async Task<IActionResult> Modify(int id = 0)
         {
-            Goods model = id == 0 ? new Goods() : await _goodsService.GetModelAsync(d => d.Id == id && d.Status);
-            return View(model);
+            var result = await _goodsService.DetailAsync(id);
+            var datas = await _configService.GetListAsync(d => d.Type.Equals("Freight"));
+            ViewBag.Freights = datas;
+
+            return View(result.Data);
         }
     }
 }
