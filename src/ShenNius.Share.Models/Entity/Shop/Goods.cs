@@ -50,11 +50,11 @@ namespace ShenNius.Share.Models.Entity.Shop
             get
             {
                 string name = "";
-                if (SpecType == DeductStockTypeEnum.PlaceOrder.GetValue<int>())
+                if (DeductStockType == DeductStockTypeEnum.PlaceOrder.GetValue<int>())
                 {
                     name = DeductStockTypeEnum.PlaceOrder.GetEnumText();
                 }
-                if (SpecType == DeductStockTypeEnum.Pay.GetValue<int>())
+                if (DeductStockType == DeductStockTypeEnum.Pay.GetValue<int>())
                 {
                     name = DeductStockTypeEnum.Pay.GetEnumText();
                 }

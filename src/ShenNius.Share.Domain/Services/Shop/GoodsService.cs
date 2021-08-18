@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Repository.Extensions;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
@@ -29,7 +30,7 @@ namespace ShenNius.Share.Domain.Services.Shop
     {
         Task<ApiResult> AddAsync(GoodsInput input);
         Task<ApiResult> ModifyAsync(GoodsModifyInput input);
-        Task<ApiResult> DetailAsync(int id);
+        Task<ApiResult<GoodsModifyInput>> DetailAsync(int id);
         /// <summary>
         /// 添加规格组名称和值
         /// </summary>
@@ -56,7 +57,7 @@ namespace ShenNius.Share.Domain.Services.Shop
 
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
         {
-            var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id))
+            var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id&&g.TenantId==query.TenantId))
                 .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name==query.Key)
                 .OrderBy((g, c) => g.Id, OrderByType.Desc)
                 .Select((g, c) => new Goods() { 
@@ -68,8 +69,9 @@ namespace ShenNius.Share.Domain.Services.Shop
                 SalesActual=g.SalesActual,
                 SpecType=g.SpecType,
                 Id=g.Id,
-                TenantName= SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name)
-                }).ToPageListAsync(query.Page,query.Limit);
+                TenantName= SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
+                TenantId=c.TenantId
+                }).ToPageAsync(query.Page,query.Limit);
             return new ApiResult(datas);
         }
         public async Task<ApiResult<GoodsModifyInput>> DetailAsync(int id)
@@ -87,7 +89,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             }
             return new ApiResult<GoodsModifyInput>(model);
         }
-        [Transaction]
+  
         public async Task<ApiResult> AddAsync(GoodsInput input)
         {
             try
@@ -118,8 +120,9 @@ namespace ShenNius.Share.Domain.Services.Shop
             // 保存规格
             if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
             {
-               input.GoodsSpecInput= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
-                var goodsSpec = input.BuildGoodsSpec(goodsId);
+              var specSingle= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
+                input.GoodsSpecInput = specSingle;
+               var goodsSpec = input.BuildGoodsSpec(goodsId);
                 if (null == goodsSpec)
                 {
                     throw new FriendlyException("商品规格实体数据不能为空！");

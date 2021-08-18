@@ -1,5 +1,5 @@
 ﻿layui.use('upload', function () {
-    var $ = layui.jquery
+    var $ = layui.jquery,
     upload = layui.upload;
 
     upload.render({
@@ -9,6 +9,7 @@
         accept: "images",
         exts: 'gif|jpg|jpeg|png|bmp|png',
         size: 1024 * 1.05 //限制文件大小，单位 KB
+        ,method:"post"
         , before: function (obj) {
             obj.preview(function (index, file, result) {
             });
@@ -25,7 +26,8 @@
                 })
                 return;
             } else {
-                layer.msg(res.msg);
+                //layer.msg(res.msg);
+                alert(res.msg);
                 return;
             }
         }

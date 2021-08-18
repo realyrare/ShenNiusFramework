@@ -20,8 +20,8 @@
 </div>
 @section js{
     <script>
-        layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
-            var $ = layui.jquery,
+        layui.use(['form', 'layer', 'table', 'common'], function () {
+            var 
                 form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common,
@@ -55,7 +55,7 @@
                 },
                 cols: [[
                     { type: "checkbox", width: 50 },
-                    { field: 'id', width: 80, title: '商品Id', sort: true },
+                    { field: 'id', width: 80, title: 'Id' },
                     { field: 'tenantName', title: '租户名称' },
                     {
                         field: 'name', title: '商品名称', templet: function (res) {
@@ -63,14 +63,13 @@
                         }
                     },
                     { field: 'categoryName', title: '分类名称' },
-                    { field: 'salesActual', title: '实际销量' },
+                    //{ field: 'imgUrl', title: '分类名称' },
+                    { field: 'salesActual', title: '实际销量' }, 
                     { field: 'specTypeText', title: '商品规格' },
                     { field: 'deductStockTypeText', title: '库存计算' },
                     { field: 'createTime', title: '创建时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
                 ]],
-                height: $(window).height() - 155,
-                limit: 1500,
                 parseData: function (res) {
                     return apiUtil.parseDataFun(res);
                 }

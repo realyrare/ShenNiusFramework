@@ -29,9 +29,9 @@ namespace ShenNius.Shop.API.Controllers
         }
 
         [HttpGet]
-        public override Task<ApiResult> GetListPages(KeyListTenantQuery query)
+        public override  Task<ApiResult> GetListPages(KeyListTenantQuery query)
         {
-            return _goodsService.GetListPageAsync(query);
+            return  _goodsService.GetListPageAsync(query);
         }
         [HttpPost]
         public override Task<ApiResult> Add([FromBody] GoodsInput input)
@@ -57,17 +57,17 @@ namespace ShenNius.Shop.API.Controllers
         public IActionResult UploadImg()
         {
             var files = Request.Form.Files[0];
-            var data = _uploadHelper.Upload(files, "goods/");
+            var result = _uploadHelper.Upload(files, "goods/");
             //TinyMCE 指定的返回格式
-            return Ok(new { location = data });
+            return Ok(new { location = result.Data });
         }
         [HttpPost]
-        public IActionResult MultipleUploadImg()
+        public ApiResult MultipleUploadImg()
         {
             var files = Request.Form.Files;
             var data = _uploadHelper.Upload(files, "goods/");
             //TinyMCE 指定的返回格式
-            return Ok(new { location = data });
+            return data;
         }
     }
 }

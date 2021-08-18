@@ -51,7 +51,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
                 file.CopyTo(fs);
                 fs.Flush();
             }
-            return new ApiResult(data: fileName);
+            return new ApiResult(data: Path.Combine($"/Files/{prefix}/", fileName));
         }
 
         public ApiResult Upload(IFormFileCollection files, string prefix)
@@ -61,14 +61,13 @@ namespace ShenNius.Share.Infrastructure.FileManager
             foreach (var file in files)
             {
                 var fileName = WebHelper.ImgSuffixIsExists(file);
-                string fileFullName = path + "\\" + fileName;
-
+                string fileFullName = Path.Combine(path,fileName);
                 using (FileStream fs = File.Create(fileFullName))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-                list.Add(fileFullName);
+                list.Add(Path.Combine($"/Files/{prefix}/", fileName));
             }
             return new ApiResult(data: list);
         }

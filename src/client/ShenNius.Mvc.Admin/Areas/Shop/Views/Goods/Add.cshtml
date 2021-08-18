@@ -219,14 +219,13 @@
             height: 500,
             content_style: "img {max-width:100%;}",
             image_advtab: true,//开启图片上传的高级选项功能
-            images_upload_url: '/api/article/qiniuFile',//图片上传
+            images_upload_url: '/api/goods/UploadImg',//图片上传
             plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
             toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
         });
-        layui.use(['form', 'common', 'upload'], function () {
+        layui.use(['form', 'common'], function () {
             var form = layui.form,
                 $ = layui.$,
-                upload = layui.upload,
                 apiUtil = layui.common;
             // 当前弹出层，防止ID被覆盖
             var parentIndex = parent.layer.getFrameIndex(window.name);
@@ -267,22 +266,22 @@
                     data.specMany = specMany2;
                 } else {
                     var specSingle =  {
-                        goodsNo: data.field.goodsNo,
-                        linePrice: data.field.linePrice,
-                        goodsPrice: data.field.goodsPrice,
-                        goodsWeight: data.field.goodsWeight,
-                        stockNum: data.field.stockNum,
+                        goods_no: data.field.goodsNo,
+                        line_price: data.field.linePrice,
+                        goods_price: data.field.goodsPrice,
+                        goods_weight: data.field.goodsWeight,
+                        stock_num: data.field.stockNum,
                     };
                     data.field.specSingle=JSON.stringify(specSingle);
                 }                
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
                 data.field.deductStockType = $('input[name=deductStockType]:checked').val();
-                data.field.imgUrl = $(".div_img input").map(function () { return $(this).attr("value"); }).get().join(',');
-                if (data.field.imgUrl == "" || data.field.imgUrl == null) {
-                    layer.msg("商品图片至少需要上传一张！");
-                    return;
-                }
+                //data.field.imgUrl = $(".div_img input").map(function () { return $(this).attr("value"); }).get().join(',');
+                //if (data.field.imgUrl == "" || data.field.imgUrl == null) {
+                //   apiUtil.error("商品图片至少需要上传一张！");
+                //    return false;
+                //}
                 apiUtil.ajax('goods/add', data.field, "application/json", "post", function (res) {
                     apiUtil.success(res.msg);
                     parent.layer.close(parentIndex);
