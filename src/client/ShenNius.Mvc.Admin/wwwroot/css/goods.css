@@ -143,9 +143,17 @@
 }
 
 /*图片删除样式*/
-.del {
+.del .delete-img {
     color: white;
     background: red;
     font-weight: 600;
     font-size: 14px;
+}
+.layui-upload-img {
+    height: 100px;
+    width: 100%;
+}
+.div_img {
+float:left;
+margin-right:5px;
 }

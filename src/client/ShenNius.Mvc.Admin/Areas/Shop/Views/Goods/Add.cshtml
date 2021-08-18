@@ -172,7 +172,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" required>商品重量(Kg)</label>
                         <div class="layui-input-block">
-                            <input type="number" name="goodsWeight" maxlength="40" lay-verify="required" class="layui-input">
+                            <input type="number" name="goodsWeight" maxlength="40"  class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                         layer.msg('商品规格不能为空');
                         return false;
                     }
-                    data.specMany = specMany2;
+                    data.field.specMany = specMany2;
                 } else {
                     var specSingle =  {
                         goods_no: data.field.goodsNo,
@@ -277,11 +277,11 @@
                 data.field.specType = specType;
                 data.field.goodsStatus = $('input[name=goodsStatus]:checked').val();
                 data.field.deductStockType = $('input[name=deductStockType]:checked').val();
-                //data.field.imgUrl = $(".div_img input").map(function () { return $(this).attr("value"); }).get().join(',');
-                //if (data.field.imgUrl == "" || data.field.imgUrl == null) {
-                //   apiUtil.error("商品图片至少需要上传一张！");
-                //    return false;
-                //}
+                data.field.imgUrl = $(".div_img input").map(function () { return $(this).attr("value"); }).get().join(',');
+                if (data.field.imgUrl == "" || data.field.imgUrl == null) {
+                   apiUtil.error("商品图片至少需要上传一张！");
+                    return false;
+                }
                 apiUtil.ajax('goods/add', data.field, "application/json", "post", function (res) {
                     apiUtil.success(res.msg);
                     parent.layer.close(parentIndex);

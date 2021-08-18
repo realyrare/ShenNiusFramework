@@ -12,6 +12,7 @@ using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
 using SqlSugar;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 /*************************************
@@ -120,7 +121,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             // 保存规格
             if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
             {
-              var specSingle= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
+                var specSingle= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
                 input.GoodsSpecInput = specSingle;
                var goodsSpec = input.BuildGoodsSpec(goodsId);
                 if (null == goodsSpec)
@@ -142,6 +143,13 @@ namespace ShenNius.Share.Domain.Services.Shop
                 {
                     throw new FriendlyException("商品规格实体关系集合数据不能为空！");
                 }
+                //根据规格值反推规格组id
+               var specValues= await Db.Queryable<SpecValue>().Where(d => d.Status).ToListAsync();
+                foreach (var item in goodsSpecRels)
+                {
+                   var specId = specValues.Where(d => d.Status && d.Id == item.SpecValueId).Select(d=>d.SpecId);
+                    item.SpecId = specId.FirstOrDefault();
+                }
                 await Db.Insertable(goodsSpecRels).ExecuteReturnIdentityAsync();
             }
         }
@@ -159,7 +167,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 await Db.Deleteable<GoodsSpec>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
                 await Db.Deleteable<GoodsSpecRel>().Where(d => d.GoodsId == input.Id).ExecuteCommandAsync();
                 // 保存规格
-                await DealwithGoodsSpec(goodsId, input);
+                await DealwithGoodsSpec(input.Id, input);
                 Db.CommitTran();
             }
             catch (Exception e)

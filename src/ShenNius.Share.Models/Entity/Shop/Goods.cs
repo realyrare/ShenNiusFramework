@@ -75,7 +75,8 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// </summary>
 
         public int DeliveryId { get; set; }
-        /* status 为商品上架和下架状态，和删除是一样的状态*/ 
-
+        /* status 为商品上架和下架状态*/
+        public int GoodsStatus { get; set; }
+        public string  ImgUrl { get; set; }
     }
 }

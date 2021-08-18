@@ -21,7 +21,6 @@ namespace ShenNius.Share.Models.Dtos.Validators.Shop
             CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleFor(x => x.Id).NotNull().GreaterThan(0).WithMessage("分类id必须大于0");
             RuleFor(x => x.Name).NotEmpty().WithMessage("标题必须填写");
-            RuleFor(x => x.TenantId).NotNull().GreaterThan(0).WithMessage("租户id必须大于0");
             RuleFor(x => x.ModifyTime).NotNull().WithMessage("创建时间必须填写");
 
         }
