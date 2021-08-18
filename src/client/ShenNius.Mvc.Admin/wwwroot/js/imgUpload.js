@@ -1,7 +1,6 @@
 ﻿layui.use('upload', function () {
     var $ = layui.jquery,
     upload = layui.upload;
-
     upload.render({
         elem: "#btnUploadShowImg"
         , url: '/api/goods/MultipleUploadImg'

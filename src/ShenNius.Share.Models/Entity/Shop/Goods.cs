@@ -78,5 +78,10 @@ namespace ShenNius.Share.Models.Entity.Shop
         /* status 为商品上架和下架状态*/
         public int GoodsStatus { get; set; }
         public string  ImgUrl { get; set; }
+
+        /// <summary>
+        /// 商品多规格
+        /// </summary>
+        public string SpecMany { get; set; }
     }
 }
