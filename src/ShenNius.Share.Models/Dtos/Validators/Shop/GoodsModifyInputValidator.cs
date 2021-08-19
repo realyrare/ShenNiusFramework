@@ -19,8 +19,13 @@ namespace ShenNius.Share.Models.Dtos.Validators.Shop
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleFor(x => x.Name).NotEmpty().WithMessage("标题必须填写");
-            RuleFor(x => x.ModifyTime).NotNull().WithMessage("修改时间必须填写");
+            RuleFor(x => x.CreateTime).NotNull().WithMessage("创建时间必须填写");
             RuleFor(x => x.Content).NotEmpty().WithMessage("商品详情必须填写");
+            RuleFor(x => x.ImgUrl).NotEmpty().WithMessage("商品图片至少需要上传一张！");
+            RuleFor(x => x.DeductStockType).NotEmpty().WithMessage("库存计算方式必须选择！");
+            RuleFor(x => x.CategoryId).NotEmpty().GreaterThan(0).WithMessage("商品分类必须选择！");
+            RuleFor(x => x.SpecType).NotEmpty().WithMessage("库存计算方式必须选择！");
+            RuleFor(x => x.GoodsStatus).NotEmpty().WithMessage("商品状态必须选择！");
         }
     }
 }
