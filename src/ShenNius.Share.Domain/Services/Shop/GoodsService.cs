@@ -71,8 +71,20 @@ namespace ShenNius.Share.Domain.Services.Shop
                 SpecType=g.SpecType,
                 Id=g.Id,
                 TenantName= SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
-                TenantId=c.TenantId
+                TenantId=c.TenantId,
+                ImgUrl=g.ImgUrl
                 }).ToPageAsync(query.Page,query.Limit);
+            foreach (var item in datas.Items)
+            {
+                if (!string.IsNullOrEmpty(item.ImgUrl))
+                {
+                    var imgArry = item.ImgUrl.Split(',');
+                    if (imgArry.Length>0)
+                    {
+                        item.ImgUrl = imgArry[0];
+                    }                   
+                }
+            }
             return new ApiResult(datas);
         }
         public async Task<ApiResult<GoodsModifyInput>> DetailAsync(int id)

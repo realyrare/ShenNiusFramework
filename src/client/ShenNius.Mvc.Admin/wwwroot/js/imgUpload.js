@@ -20,7 +20,6 @@
                     var _this = this;
                     $(this).click(function () {
                         $(_this).parent('div').remove();
-
                     });
                 })
                 return;
