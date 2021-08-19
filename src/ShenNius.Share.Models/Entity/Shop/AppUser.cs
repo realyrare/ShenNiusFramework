@@ -2,7 +2,7 @@
 using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
-namespace Sugar.Enties
+namespace ShenNius.Share.Models.Entity.Shop
 {
     ///<summary>
     ///

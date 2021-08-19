@@ -31,7 +31,7 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// Default:0
            /// Nullable:False
            /// </summary>           
-           public int ImgUrl {get;set;}
+           public string ImgUrl {get;set;}
 
            /// <summary>
            /// Desc:库存计算方式(10下单减库存 20付款减库存)
