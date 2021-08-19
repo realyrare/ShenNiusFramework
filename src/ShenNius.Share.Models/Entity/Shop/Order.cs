@@ -119,6 +119,10 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// Nullable:False
            /// </summary>           
            public int ReceiptStatus {get;set;}
+        /// <summary>
+        ///   收获时间
+        /// </summary>
+        public DateTime ReceiptTime { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public string ReceiptStatusText
@@ -188,6 +192,13 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// </summary>           
            public int AppUserId {get;set;}
 
-
+        /// <summary>
+        /// 所有商品的总价
+        /// </summary>
+        public decimal AllTotalPrice { get; set; }
+        /// <summary>
+        /// 最终实际支付的费用
+        /// </summary>
+        public decimal AllPayPrice { get; set; }
     }
 }

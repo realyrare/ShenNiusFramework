@@ -101,7 +101,7 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// Default:0
            /// Nullable:False
            /// </summary>           
-           public object GoodsWeight {get;set;}
+           public double GoodsWeight {get;set;}
 
            /// <summary>
            /// Desc:购买数量
