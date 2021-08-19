@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
 namespace ShenNius.Share.Models.Entity.Shop
@@ -9,16 +10,8 @@ namespace ShenNius.Share.Models.Entity.Shop
     ///订单商品表（不用商品id关联是因为商品会存在更新问题）
     ///</summary>
     [SugarTable("shop_order_goods")]
-    public partial class OrderGoods
+    public partial class OrderGoods: BaseTenantEntity
     {          
-           /// <summary>
-           /// Desc:主键id
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           [SugarColumn(IsPrimaryKey=true,IsIdentity=true)]
-           public int Id {get;set;}
-
            /// <summary>
            /// Desc:商品id
            /// Default:0
@@ -137,34 +130,6 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// Nullable:False
            /// </summary>           
            public int AppUserId {get;set;}
-
-           /// <summary>
-           /// Desc:小程序id
-           /// Default:0
-           /// Nullable:False
-           /// </summary>           
-           public int TenantId {get;set;}
-
-           /// <summary>
-           /// Desc:创建时间
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public DateTime CreateTime {get;set;}
-
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:True
-           /// </summary>           
-           public DateTime? ModifyTime {get;set;}
-
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public bool Status {get;set;}
 
     }
 }

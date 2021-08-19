@@ -1,4 +1,5 @@
 ﻿using System;
+using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
 namespace ShenNius.Share.Models.Entity.Shop
@@ -7,15 +8,8 @@ namespace ShenNius.Share.Models.Entity.Shop
     ///
     ///</summary>
     [SugarTable("shop_order")]
-    public partial class Order
+    public partial class Order: BaseTenantEntity
     {          
-           /// <summary>
-           /// Desc:订单id
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           [SugarColumn(IsPrimaryKey=true,IsIdentity=true)]
-           public int Id {get;set;}
 
            /// <summary>
            /// Desc:订单号
@@ -122,33 +116,6 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// </summary>           
            public int AppUserId {get;set;}
 
-           /// <summary>
-           /// Desc:小程序id
-           /// Default:0
-           /// Nullable:False
-           /// </summary>           
-           public int TenantId {get;set;}
-
-           /// <summary>
-           /// Desc:创建时间
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public DateTime CreateTime {get;set;}
-
-           /// <summary>
-           /// Desc:更新时间
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public DateTime ModifyTime {get;set;}
-
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public bool Status {get;set;}
 
     }
 }

@@ -1,21 +1,14 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
-namespace ShenNius.Share.Models.Entity.Shop
+namespace Sugar.Enties
 {
     ///<summary>
-    ///订单地址表
+    ///
     ///</summary>
-    [SugarTable("shop_order_address")]
-    public partial class OrderAddress: BaseTenantEntity
+    [SugarTable("shop_appuser_address")]
+    public partial class AppUserAddress : BaseTenantEntity
     {         
-           /// <summary>
-           /// Desc:用户id
-           /// Default:0
-           /// Nullable:False
-           /// </summary>           
-           public int AppUserId {get;set;}
-
            /// <summary>
            /// Desc:收货人姓名
            /// Default:
@@ -59,10 +52,12 @@ namespace ShenNius.Share.Models.Entity.Shop
            public string Detail {get;set;}
 
            /// <summary>
-           /// Desc:订单id
+           /// Desc:用户id
            /// Default:0
            /// Nullable:False
            /// </summary>           
-           public int OrderId {get;set;}
+           public int AppUserId {get;set;}
+
+
     }
 }
