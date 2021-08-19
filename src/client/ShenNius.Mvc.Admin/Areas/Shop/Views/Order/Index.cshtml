@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = "订单管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <style type="text/css">
+        .layui-table-body .layui-table-cell {
+            height: 58px;
+            line-height: 58px;
+        }
+        .layui-table-page select {
+            height: 20px;
+        }
+        .tab-img {
+            height: 60px;
+            width: 60px;
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+    </style>
+}
+<div id="container">
+    <div class="list-wall">
+        <label>订单状态</label>
+        <div class="layui-form layui-input-inline">
+            <select id="orderStatus" lay-search="">
+                <option value="">全部</option>
+                <option value="10">新订单</option>
+                <option value="20">已取消</option>
+                <option value="30">已完成</option>
+            </select>
+        </div>
+        <label>付款状态</label>
+        <div class="layui-form layui-input-inline">
+            <select id="payStatus" lay-search="">
+                <option value="">全部</option>
+                <option value="10">待付款</option>
+                <option value="20">已付款</option>
+            </select>
+        </div>
+        <label>发货状态</label>
+        <div class="layui-form layui-input-inline">
+            <select id="deliveryStatus" lay-search="">
+                <option value="">全部</option>
+                <option value="10">待收货</option>
+                <option value="20">已收货</option>
+            </select>
+        </div>
+        <label>收货状态</label>
+        <div class="layui-form layui-input-inline">
+            <select id="receiptStatus" lay-search="">
+                <option value="">全部</option>
+                <option value="10">待发货</option>
+                <option value="20">已发货</option>
+            </select>
+        </div>
+        <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    section js{
+    <script>
+        layui.use(['form','table', 'common'], function () {
+            var
+                form = layui.form,
+                table = layui.table,
+                apiUtil = layui.common;
+            //layui button onclick必须这样写，不然会出现事件未定义；
+            window.existAuth = function (btnName) {
+                /*
+                 第一个参数是列表名称和数据库nameCode一定要对应;
+                 第二个参数是按钮名称和数据库的btnName也要对应的;
+                 event 阻止事件冒泡；
+                */
+                apiUtil.checkAuth("goods", btnName, event);
+            };
+            apiUtil.render({
+                elem: '#currentTableId',
+                url: 'goods/GetListPages',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                authorizeFields: true, // 字段权限开关
+                overflow: { // 默认所有表格都超出
+                    type: 'tips'
+                    , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                    , color: 'black' // 字体颜色
+                    , bgColor: 'white' // 背景色
+                    , header: true, // 表头支持 overflow
+                    total: true // 合计行支持 overflow
+                },
+                cols: [[
+                    { type: "checkbox", rowspan: "2", fixed: "left" },//多选框,fixed:"left"固定在左边
+                    { field: "orderNo", rowspan: "2", title: "订单号", width: 130 },
+                    { field: "appUserName", rowspan: "2", title: "买家", width: 90 },
+                    {
+                        field: "totalNum", rowspan: "2", title: "数量单价", templet: function (res) {
+                            return res.totalNum + "*" + res.goodsPrice;
+                        }
+                    },
+                    { field: "totalPrice", rowspan: "2", title: "付款", align: "center" },
+                    { colspan: "2", title: "商品信息", align: "center" },
+                    { colspan: "4", title: "交易状态", align: "center" },
+                    { rowspan: "2", title: '操作', templet: '#tool' }
+                ], [
+                    {
+                        field: "goodsName", title: "商品名称", align: "left", width: 260, templet: function (res) {
+
+                            if (res.imgUrl != null && res.imgUrl != "") {
+
+                                return '<a href=' + res.imgUrl + ' target="_blank"><img class="tab-img" src=' + res.imgUrl + '>' + res.goodsName + '</a>';
+                            }
+                            else {
+                                return "没图";
+                            }
+                        }
+                    },
+                    { field: 'createTime', width: 160, title: '创建时间', align: "center" },
+
+                    {
+                        field: "payStatusText", title: "支付状态", align: "center"
+                    },
+
+                    {
+                        field: "deliveryStatusText", rowspan: "2", title: "发货状态", align: "center"
+                    },
+                    {
+                        field: "receiptStatusText", rowspan: "2", title: "收货状态", align: "center"
+                    },
+                    {
+                        field: "orderStatusText", title: "订单状态", align: "center"
+                    },
+
+                ]],
+                parseData: function (res) {
+                    return apiUtil.parseDataFun(res);
+                }
+            });
+
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                var result = JSON.stringify(data.field);
+                //执行搜索重载
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        searchParams: result
+                    }
+                }, 'data');
+                return false;
+            });
+
+
+        });
+    </script>
+</div>
