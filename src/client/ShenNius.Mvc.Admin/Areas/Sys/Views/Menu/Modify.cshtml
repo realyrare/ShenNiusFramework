@@ -150,7 +150,7 @@
 </form>
 
 @section js{
-
+    <script src="~/js/bind-tree.js" asp-append-version="true"></script>
     <script>
 
         layui.use(['form', 'iconPickerFa',  'common'], function () {
@@ -257,26 +257,7 @@
                         });
                     }
                     return false;
-                });
-
-
-        function BindParentMenu(value) {
-            apiUtil.ajax('menu/getAllParentMenu', { }, "application/json", "get", function (res) {
-                if (res.statusCode == 200 && res.success == true) {
-                    if (res.data !== null) {
-                        var select = $("#parentId");
-                        for (var i = 0; i < res.data.length; i++) {
-                            var val = res.data[i].id;
-                            if (val === value)
-                                select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
-                            else
-                                select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
-                        }
-                        layui.form.render('select');
-                    }
-                }
-            });
-        }
+                });       
     });
 
     </script>

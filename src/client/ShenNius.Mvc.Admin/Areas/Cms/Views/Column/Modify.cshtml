@@ -6,9 +6,11 @@
             padding-right: 10px;
             line-height: 38px;
         }
+
         .layui-form-item .layui-textarea {
             width: 350px;
         }
+
         .layui-form-select {
             width: 350px;
         }
@@ -50,13 +52,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">栏目副标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="subTitle"  value="@Model.SubTitle" class="layui-input">
+                        <input type="text" name="subTitle" value="@Model.SubTitle" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">英文名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="enTitle"  value="@Model.EnTitle" lay-verify="required" lay-reqtext="英文名称不能为空" placeholder="请输入英文名称" class="layui-input">
+                        <input type="text" name="enTitle" value="@Model.EnTitle" lay-verify="required" lay-reqtext="英文名称不能为空" placeholder="请输入英文名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -82,6 +84,7 @@
     </div>
 </form>
 @section js{
+    <script src="~/js/bind-tree.js" asp-append-version="true"></script>
     <script>
 
             layui.use(['form',  'common'], function () {
@@ -126,24 +129,6 @@
                     }
                     return false;
                 });
-
-                function BindParentColumn(value) {
-                    apiUtil.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            if (res.data !== null) {
-                                var select = $("#parentId");
-                                for (var i = 0; i < res.data.length; i++) {
-                                    var val = res.data[i].id;
-                                    if (val === value)
-                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
-                                    else
-                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
-                                }
-                                layui.form.render('select');
-                            }
-                        }
-                    });
-                }
             });
 
     </script>

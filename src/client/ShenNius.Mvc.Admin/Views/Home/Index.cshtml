@@ -186,6 +186,8 @@
                     success: function (res) {
                         apiUtil.SessionRemove("globalCurrentUserInfo");
                         layer.msg('正在处理,即将退出...', function () {
+                            //清空浏览器缓存数据
+                            localStorage.clear();
                             window.location = '/sys/user/login';
                         });
                     }

@@ -210,6 +210,7 @@
     <script src="~/js/goodsSpec.js" asp-append-version="true"></script>
     <script src="~/js/art-template.js" asp-append-version="true"></script>
     <script src="~/js/imgUpload.js" asp-append-version="true"></script>
+    <script src="~/js/bind-tree.js" asp-append-version="true"></script>
     <!-- 商品多规格模板 -->
     @await Html.PartialAsync("~/Views/Shared/Templates/tpl_spec_many.cshtml")
     <script>
@@ -230,7 +231,7 @@
             // 当前弹出层，防止ID被覆盖
             var parentIndex = parent.layer.getFrameIndex(window.name);
 
-            BindParentColumn();
+            BindParentCategory();
             form.render();
 
             // 注册商品多规格组件
@@ -287,25 +288,7 @@
                     parent.layer.close(parentIndex);
                 });
                 return false;
-            });
-
-            function BindParentColumn(value) {
-                apiUtil.ajax('category/getAllParentcategory', {}, "application/json", "get", function (res) {
-                    if (res.statusCode == 200 && res.success == true) {
-                        if (res.data !== null) {
-                            var select = $("#categoryId");
-                            for (var i = 0; i < res.data.length; i++) {
-                                var val = res.data[i].id;
-                                if (val === value)
-                                    select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");
-                                else
-                                    select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");
-                            }
-                            layui.form.render('select');
-                        }
-                    }
-                });
-            }
+            });           
         });
 
     </script>
