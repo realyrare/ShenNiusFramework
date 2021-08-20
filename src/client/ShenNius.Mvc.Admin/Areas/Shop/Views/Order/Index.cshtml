@@ -154,7 +154,28 @@
                 return false;
             });
 
+            /**
+        * toolbar事件监听
+        */
+            table.on('toolbar(currentTableFilter)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'add') {
+                    var content = '/Order/Detail?id=' + data.id;
+                    layer.open({
+                        title: '订单详情',
+                        type: 2,
+                        shade: 0.2,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        zIndex: "10000",
+                        content: content,
+                        end: function () {
+                            refeshTable();
+                        }
+                    });
 
+                } 
+            });
         });
     </script>
 </div>

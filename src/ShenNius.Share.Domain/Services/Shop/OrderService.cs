@@ -24,6 +24,7 @@ namespace ShenNius.Share.Domain.Services.Shop
     public interface IOrderService : IBaseServer<Order>
     {
         Task<ApiResult> GetListPageAsync(KeyListTenantQuery query);
+        Task<ApiResult<OrderDetailOutput>> GetOrderDetailAsync(int orderId);
     }
     public class OrderService: BaseServer<Order>, IOrderService
     {

@@ -15,7 +15,7 @@ namespace ShenNius.Share.Models.Dtos.Output.Shop
     {
         public string GoodsImg { get; set; }
         public string GoodsName { get; set; }
-
+        public string GoodsAttr { get; set; }
         public int GoodsId { get; set; }
         public decimal GoodsPrice { get; set; }
         public double GoodsWeight { get; set; }

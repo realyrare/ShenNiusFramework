@@ -1,0 +1,321 @@
+﻿@{
+    ViewData["Title"] = "订单详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ShenNius.Share.Models.Dtos.Output.Shop.OrderDetailOutput
+@using ShenNius.Share.Models.Enums.Shop;
+@using ShenNius.Share.Models.Enums.Extension;
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+        <div class="am-u-sm-12">
+            @{
+                // 计算当前步骤位置
+                var progress = 2;
+                if (Model.PayStatus == PayStatusEnum.Paid.GetValue<int>()) { progress += 1; }
+                if (Model.DeliveryStatus == DeliveryStatusEnum.Sended.GetValue<int>()) { progress += 1; }
+                if (Model.ReceiptStatus == ReceiptStatusEnum.Received.GetValue<int>()) { progress += 1; }
+                if (Model.OrderStatus == OrderStatusEnum.Completed.GetValue<int>()) { progress += 1; }
+            }
+            <ul class="order-detail-progress progress-@(progress)">
+                <li>
+                    <span>下单时间</span>
+                    <div class="tip">@Model?.CreateTime.ToWebString()</div>
+                </li>
+                <li>
+                    <span>付款</span>
+                    @if (Model?.PayStatus == PayStatusEnum.Paid.GetValue<int>())
+                    {
+                        <div>
+                            <div class="tip">
+                                付款于 @Model?.PayTime.ToWebString()
+                            </div>
+                        </div>
+                    }
+                </li>
+                <li>
+                    <span>发货</span>
+                    @if (Model?.DeliveryStatus == DeliveryStatusEnum.Sended.GetValue<int>())
+                    {
+                        <div class="tip">
+                            发货于 @Model?.DeliveryTime.ToWebString()
+                        </div>
+                    }
+                </li>
+                <li>
+                    <span>收货</span>
+                    @if (Model?.ReceiptStatus == ReceiptStatusEnum.Received.GetValue<int>())
+                    {
+                        <div class="tip">
+                            收货于 @Model?.ReceiptTime.ToWebString()
+                        </div>
+                    }
+                </li>
+                <li>
+                    <span>完成</span>
+                    @if (Model?.OrderStatus == OrderStatusEnum.Completed.GetValue<int>())
+                    {
+                        <div class="tip">
+                            完成于 @Model?.ReceiptTime.ToWebString()
+                        </div>
+                    }
+                </li>
+            </ul>
+        </div>
+
+        <div class="widget-head am-cf">
+            <div class="widget-title am-fl">基本信息</div>
+        </div>
+        <div class="am-scrollable-horizontal">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th>实付款</th>
+                        <th>买家</th>
+                        <th>交易状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model?.OrderNo</td>
+                        <td>
+                            <p>￥@Model?.PayPrice</p>
+                            <p class="am-link-muted">(含运费：￥@Model?.ExpressPrice) </p>
+                        </td>
+
+                        <td>
+                            <p>@Model?.AppUserName</p>
+                            <p class="am-link-muted">(用户id：@Model.AppUserId )</p>
+                        </td>
+                        <td>
+                            <p>
+                                付款状态：
+                                <span>
+                                    @Model.PayStatusText
+                                </span>
+                            </p>
+                            <p>
+                                发货状态：
+                                <span> @Model.DeliveryStatusText</span>
+                            </p>
+                            <p>
+                                收货状态：
+                                <span>
+                                    @Model.ReceiptStatusText
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="widget-head am-cf">
+            <div class="widget-title am-fl">商品信息</div>
+        </div>
+        <div class="am-scrollable-horizontal">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>商品名称</th>
+                        <th>商品编码</th>
+                        <th>重量(Kg)</th>
+                        <th>单价</th>
+                        <th>购买数量</th>
+                        <th>商品总价</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var goods in Model.GoodsDetailList)
+                    {
+                        <tr>
+                            <td class="goods-detail am-text-middle">
+                                <div class="goods-image">
+                                    @if (!string.IsNullOrEmpty(goods.GoodsImg))
+                                    {
+                                        <img src="@(goods.GoodsImg.Split(',')[0])" alt="">
+                                    }
+                                </div>
+                                <div class="goods-info">
+                                    <p class="goods-title">@(goods.GoodsName)</p>
+                                    <p class="goods-spec am-link-muted">
+                                        @(goods.GoodsAttr)
+                                    </p>
+                                </div>
+                            </td>
+                            <td>@(goods.GoodsNo ?? "--")</td>
+                            <td>@(goods.GoodsWeight > 0 ? $"goods.GoodsWeight" : "--")</td>
+                            <td>￥@(goods.GoodsPrice)</td>
+                            <td>×@(goods.TotalNum)</td>
+                            <td>￥@(goods.TotalPrice)</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="6" class="am-text-right">总计金额：￥@Model.TotalPrice</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="widget-head am-cf">
+            <div class="widget-title am-fl">收货信息</div>
+        </div>
+        <div class="am-scrollable-horizontal">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>收货人</th>
+                        <th>收货电话</th>
+                        <th>收货地址</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@(Model.Address.Name)</td>
+                        <td>@(Model.Address.Phone)</td>
+                        <td>
+                            @(Model.Address.Province)
+                            @(Model.Address.City)
+                            @(Model.Address.Region)
+                            @(Model.Address.Detail)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @if (Model.PayStatus == PayStatusEnum.Paid.GetValue<int>())
+        {
+            <div>
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">付款信息</div>
+                </div>
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>应付款金额</th>
+                            <th>支付方式</th>
+                            <th>支付流水号</th>
+                            <th>付款状态</th>
+                            <th>付款时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>￥@(Model.PayPrice)</td>
+                            <td>微信支付</td>
+                            <td>@(Model.TransactionId ?? "--")</td>
+                            <td>
+                                <span class="am-badge @(Model.PayStatus == PayStatusEnum.Paid.GetValue<int>() ? "am-badge-success" : "")">
+                                    @(Model.PayStatus)
+                                </span>
+                            </td>
+                            <td>
+                                @(Model.PayTime)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if (Model.PayStatus == PayStatusEnum.Paid.GetValue<int>())
+        {
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">发货信息</div>
+            </div>
+            <!-- 去发货 -->
+            if (Model.DeliveryStatus == DeliveryStatusEnum.WaitForSending.GetValue<int>())
+            {
+                <form class="layui-form" action="" lay-filter="orderList-edit">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">物流公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="expressCompany" lay-verify="required" placeholder="如：顺丰速运、申通快递" class="layui-input">
+                            <small>如：顺丰速运、申通快递</small>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">物流单号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="expressNo" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="am-scrollable-horizontal">
+                    <table class="layui-table">
+                        <tbody>
+                            <tr>
+                                <th>物流公司</th>
+                                <th>物流单号</th>
+                                <th>发货状态</th>
+                                <th>发货时间</th>
+                            </tr>
+                            <tr>
+                                <td>@(Model.ExpressCompany)</td>
+                                <td>@(Model.ExpressNo)</td>
+                                <td>
+                                    <span class="am-badge @(Model.DeliveryStatus == DeliveryStatusEnum.WaitForSending.GetValue<int>() ? "am-badge-success" : "")">
+                                        @(Model.DeliveryStatusText)
+                                    </span>
+                                </td>
+                                <td>
+                                    @(Model.DeliveryTime)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section js{
+    <script>
+        layui.use(['form', 'common', 'element'], function () {
+            var form = layui.form,
+                element = layui.element,
+                $ = layui.jquery,
+                apiUtil = layui.common;
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+                apiUtil.ajax('order/modify', data.field, "application/json", "post", function (res) {
+                    if (res.statusCode == 200 && res.success == true) {
+                        apiUtil.success(res.msg);
+                    } else {
+                        apiUtil.error(res.msg);
+                    }
+                });
+            });
+        });
+    </script>
+}

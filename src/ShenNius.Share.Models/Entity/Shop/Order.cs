@@ -124,6 +124,7 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// </summary>
         public DateTime ReceiptTime { get; set; }
 
+
         [SugarColumn(IsIgnore = true)]
         public string ReceiptStatusText
         {
@@ -142,12 +143,6 @@ namespace ShenNius.Share.Models.Entity.Shop
             }
         }
 
-        /// <summary>
-        /// Desc:收货时间
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public DateTime ReceipTime {get;set;}
 
            /// <summary>
            /// Desc:订单状态(10进行中 20取消 21待取消 30已完成)
