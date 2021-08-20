@@ -195,10 +195,11 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// <summary>
         /// 所有商品的总价
         /// </summary>
-        public decimal AllTotalPrice { get; set; }
+      //  public decimal AllTotalPrice { get; set; }
         /// <summary>
         /// 最终实际支付的费用
         /// </summary>
-        public decimal AllPayPrice { get; set; }
+        //public decimal AllPayPrice { get; set; }
+        public int AppUserAddressId { get; set; }
     }
 }

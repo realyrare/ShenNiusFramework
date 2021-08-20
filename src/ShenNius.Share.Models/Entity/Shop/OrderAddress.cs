@@ -1,4 +1,5 @@
-﻿using ShenNius.Share.Models.Entity.Common;
+﻿
+using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
 
 namespace ShenNius.Share.Models.Entity.Shop

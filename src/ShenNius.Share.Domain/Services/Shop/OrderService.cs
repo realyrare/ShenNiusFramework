@@ -67,17 +67,18 @@ namespace ShenNius.Share.Domain.Services.Shop
         }
         public async Task<ApiResult<OrderDetailOutput>> GetOrderDetailAsync(int orderId)
         {
-            var model = await Db.Queryable<Order, AppUser>((o, u) => new object[] {
-                JoinType.Inner,o.AppUserId==u.Id,
+            var model = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] { 
+                JoinType.Inner,o.Id==og.OrderId,
+                JoinType.Inner,og.AppUserId==u.Id,
             })
-              .Where((o, u) => o.Id == orderId)
-             .Select((o, u) => new OrderDetailOutput()
+              .Where((o, og, u) => o.Id == orderId&&o.Status)
+             .Select((o, og, u) => new OrderDetailOutput()
              {
                  OrderNo = o.OrderNo,
                  Id = o.Id,
                  AppUserName = u.NickName,
                  AppUserId = u.Id,
-                 AddressId=u.AddressId,
+                 AppUserAddressId = u.AddressId,
                  OrderStatus = o.OrderStatus,
                  PayStatus = o.PayStatus,
                  DeliveryStatus = o.DeliveryStatus,
@@ -88,8 +89,9 @@ namespace ShenNius.Share.Domain.Services.Shop
                  ExpressNo = o.ExpressNo,
                  DeliveryTime = o.DeliveryTime,
                  ReceiptTime = o.ReceiptTime,
-                 AllPayPrice = o.AllPayPrice,
-                 AllTotalPrice = o.AllTotalPrice,
+                // AllPayPrice = o.AllPayPrice,
+                 // AllTotalPrice = o.AllTotalPrice,
+                 TotalPrice = og.TotalPrice,
                  CreateTime = o.CreateTime,
                  TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == o.TenantId).Select(s => s.Name),
              }).FirstAsync();
@@ -97,11 +99,11 @@ namespace ShenNius.Share.Domain.Services.Shop
             {
                 throw new FriendlyException($"订单详情实体数据为空！");
             }
-            //TODO  地址待调整确定
-            model.Address = await Db.Queryable<AppUserAddress>().Where(oa => oa.Id == model.AddressId)
+            //这里订单地址使用id关联，关于用户地址更新采用软删除，查询订单详情地址时包括统计在内的已删除的地址
+            model.Address = await Db.Queryable<AppUserAddress>().Where(oa => oa.Id == model.AppUserAddressId)
                .FirstAsync();
 
-            model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId).Select(d => new OrderGoodsDetailOutput
+            model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId&&d.Status).Select(d => new OrderGoodsDetailOutput
             {
                 GoodsImg = d.ImgUrl,
                 GoodsName = d.GoodsName,
