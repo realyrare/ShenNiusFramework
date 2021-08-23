@@ -59,7 +59,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
         {
             var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id&&g.TenantId==query.TenantId))
-                .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name==query.Key)
+                .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name.Contains(query.Key))
                 .OrderBy((g, c) => g.Id, OrderByType.Desc)
                 .Select((g, c) => new Goods() { 
                 Name=g.Name,
