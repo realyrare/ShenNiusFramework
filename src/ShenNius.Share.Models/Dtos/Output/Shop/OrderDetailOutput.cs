@@ -8,7 +8,7 @@ namespace ShenNius.Share.Models.Dtos.Output.Shop
   public  class OrderDetailOutput:Order
     {
         public string AppUserName { get; set; }
-        public AppUserAddress Address { get; set; } = new AppUserAddress();
+        public OrderAddress Address { get; set; } = new OrderAddress();
         public List<OrderGoodsDetailOutput> GoodsDetailList { get; set; } = new List<OrderGoodsDetailOutput>();
     }
     public class OrderGoodsDetailOutput

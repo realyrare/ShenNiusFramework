@@ -100,8 +100,8 @@ namespace ShenNius.Share.Domain.Services.Shop
             {
                 throw new FriendlyException($"订单详情实体数据为空！");
             }
-            //这里订单地址使用id关联，关于用户地址更新采用软删除，查询订单详情地址时包括统计在内的已删除的地址
-            model.Address = await Db.Queryable<AppUserAddress>().Where(oa => oa.Id == model.AppUserAddressId)
+            //这里订单地址不使用id关联，防止用户地址表里面的地址更新后发生配送错误
+            model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.Id == model.AppUserAddressId)
                .FirstAsync();
 
             model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId&&d.Status).Select(d => new OrderGoodsDetailOutput

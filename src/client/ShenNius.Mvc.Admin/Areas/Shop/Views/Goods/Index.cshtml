@@ -5,6 +5,24 @@
 }
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商品名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goodName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
@@ -88,14 +106,14 @@
 
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
-                var result = JSON.stringify(data.field);
+                //var result = JSON.stringify(data.field);
                 //执行搜索重载
                 table.reload('currentTableId', {
                     page: {
                         curr: 1
                     }
                     , where: {
-                        searchParams: result
+                        key: data.field.goodName
                     }
                 }, 'data');
                 return false;

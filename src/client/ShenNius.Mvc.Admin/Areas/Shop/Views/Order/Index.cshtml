@@ -19,59 +19,74 @@
         }
     </style>
 }
-<div id="container">
-    <div class="list-wall">
-        <label>订单状态</label>
-        <div class="layui-form layui-input-inline">
-            <select id="orderStatus" lay-search="">
-                <option value="">全部</option>
-                <option value="10">新订单</option>
-                <option value="20">已取消</option>
-                <option value="30">已完成</option>
-            </select>
-        </div>
-        <label>付款状态</label>
-        <div class="layui-form layui-input-inline">
-            <select id="payStatus" lay-search="">
-                <option value="">全部</option>
-                <option value="10">待付款</option>
-                <option value="20">已付款</option>
-            </select>
-        </div>
-        <label>发货状态</label>
-        <div class="layui-form layui-input-inline">
-            <select id="deliveryStatus" lay-search="">
-                <option value="">全部</option>
-                <option value="10">待收货</option>
-                <option value="20">已收货</option>
-            </select>
-        </div>
-        <label>收货状态</label>
-        <div class="layui-form layui-input-inline">
-            <select id="receiptStatus" lay-search="">
-                <option value="">全部</option>
-                <option value="10">待发货</option>
-                <option value="20">已发货</option>
-            </select>
-        </div>
-        <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
-        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label" required>订单号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="orderNo" autocomplete="off" class="layui-input" required>
+                            </div>
+                        </div>
+                        <label>订单状态</label>
+                        <div class="layui-form-label">
+                            <select id="orderStatus" lay-search="">
+                                <option value="">全部</option>
+                                <option value="10">新订单</option>
+                                <option value="20">已取消</option>
+                                <option value="30">已完成</option>
+                            </select>
+                        </div>
+                        <label>付款状态</label>
+                        <div class="layui-form-label">
+                            <select id="payStatus" lay-search="">
+                                <option value="">全部</option>
+                                <option value="10">待付款</option>
+                                <option value="20">已付款</option>
+                            </select>
+                        </div>
+                        <label>发货状态</label>
+                        <div class="layui-form-label">
+                            <select id="deliveryStatus" lay-search="">
+                                <option value="">全部</option>
+                                <option value="10">待收货</option>
+                                <option value="20">已收货</option>
+                            </select>
+                        </div>
+                        <label>收货状态</label>
+                        <div class="layui-form-label">
+                            <select id="receiptStatus" lay-search="">
+                                <option value="">全部</option>
+                                <option value="10">待发货</option>
+                                <option value="20">已发货</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail" onclick="existAuth('detail')">详情</a>
+        </script>
     </div>
-    section js{
+</div>
+@section js{
     <script>
-        layui.use(['form','table', 'common'], function () {
-            var
-                form = layui.form,
+        layui.use(['form', 'table', 'common'], function () {
+            var form = layui.form,
                 table = layui.table,
                 apiUtil = layui.common;
             //layui button onclick必须这样写，不然会出现事件未定义；
             window.existAuth = function (btnName) {
-                /*
-                 第一个参数是列表名称和数据库nameCode一定要对应;
-                 第二个参数是按钮名称和数据库的btnName也要对应的;
-                 event 阻止事件冒泡；
-                */
-                apiUtil.checkAuth("goods", btnName, event);
+                apiUtil.checkAuth("order", btnName, event);
             };
             apiUtil.render({
                 elem: '#currentTableId',
@@ -118,11 +133,9 @@
                         }
                     },
                     { field: 'createTime', width: 160, title: '创建时间', align: "center" },
-
                     {
                         field: "payStatusText", title: "支付状态", align: "center"
                     },
-
                     {
                         field: "deliveryStatusText", rowspan: "2", title: "发货状态", align: "center"
                     },
@@ -132,7 +145,6 @@
                     {
                         field: "orderStatusText", title: "订单状态", align: "center"
                     },
-
                 ]],
                 parseData: function (res) {
                     return apiUtil.parseDataFun(res);
@@ -141,14 +153,18 @@
 
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
-                var result = JSON.stringify(data.field);
+               // var result = JSON.stringify(data.field);
                 //执行搜索重载
                 table.reload('currentTableId', {
                     page: {
                         curr: 1
                     }
                     , where: {
-                        searchParams: result
+                        key: data.field.orderNo,
+                        orderStatus: data.field.orderStatus,
+                        payStatus: data.field.payStatus,
+                        deliveryStatus: data.field.deliveryStatus,
+                        receiptStatus: data.field.receiptStatus,
                     }
                 }, 'data');
                 return false;
@@ -159,7 +175,7 @@
         */
             table.on('toolbar(currentTableFilter)', function (obj) {
                 var data = obj.data;
-                if (obj.event === 'add') {
+                if (obj.event === 'detail') {
                     var content = '/Order/Detail?id=' + data.id;
                     layer.open({
                         title: '订单详情',
@@ -174,8 +190,8 @@
                         }
                     });
 
-                } 
+                }
             });
         });
     </script>
-</div>
+}
