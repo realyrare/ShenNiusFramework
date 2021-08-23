@@ -19,4 +19,8 @@ namespace ShenNius.Share.Models.Dtos.Common
     {        
         public int TenantId { get; set; }
     }
+    public class UploadInput
+    {
+        public string Directory { get; set; }
+    }
 }

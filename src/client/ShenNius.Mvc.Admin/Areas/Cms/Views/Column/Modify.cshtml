@@ -101,9 +101,9 @@
                 var id=@Model.Id;
                 if (id > 0)
                 {
-                    BindParentColumn(@Model.ParentId);
+                    apiUtil.BindParentColumn(@Model.ParentId);
                 } else {
-                    BindParentColumn();
+                    apiUtil.BindParentColumn();
                 }
                 form.render();
                 //监听提交

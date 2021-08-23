@@ -191,7 +191,7 @@
             var checkList = []; var id = @Model.MenuOutput.Id;
             if (id> 0)
             {
-                BindParentMenu(@Model.MenuOutput.ParentId);
+                apiUtil.BindParentMenu(@Model.MenuOutput.ParentId);
                 //将已经存在的按钮集合赋值
                 var jsonStr = '@Html.Raw(ViewBag.AlreadyBtns)';
                 if (jsonStr != null) {
@@ -203,12 +203,9 @@
                 //console.log("checkList", checkList);
             }
            else {
-               BindParentMenu();
+                apiUtil.BindParentMenu();
            }
-
-
             form.render();
-
             //拿到选中的所有checkbox
             form.on('checkbox(cbk)', function (data) {
                 console.log("value:" + data.value);

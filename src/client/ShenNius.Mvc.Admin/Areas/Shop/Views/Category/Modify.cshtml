@@ -96,7 +96,8 @@
                 //普通图片上传
                 var uploadInst = upload.render({
                     elem: '#test1'
-                    , url: apiUtil.apiUrl() + 'caregory/qiniuFile' //改成您自己的上传接口
+                    , url: apiUtil.apiUrl() + 'upload/File' //改成您自己的上传接口
+                    , data: { directory: "category"}    //额外传输的参数
                     , before: function (obj) {
                         //预读本地文件示例，不支持ie8
                         obj.preview(function (index, file, result) {
@@ -107,7 +108,6 @@
                         if (res.statusCode == 200 && res.success == true) {
                             $('#demo1').attr('src', res.data);
                             $('#IconSrc').val(res.data);
-                           // console.log("img:" + res.data);
                         }
                         //上传成功
                     }
@@ -123,9 +123,9 @@
                 var id=@Model.Id;
                 if (id > 0)
                 {
-                    BindParentColumn(@Model.ParentId);
+                    apiUtil.BindParentColumn(@Model.ParentId);
                 } else {
-                    BindParentColumn();
+                    apiUtil.BindParentColumn();
                 }
                 form.render();
                 //监听提交
@@ -150,25 +150,7 @@
                         });
                     }
                     return false;
-                });
-
-                function BindParentColumn(value) {
-                    apiUtil.ajax('Category/getAllParentCategory', {}, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            if (res.data !== null) {
-                                var select = $("#parentId");
-                                for (var i = 0; i < res.data.length; i++) {
-                                    var val = res.data[i].id;
-                                    if (val === value)
-                                        select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");  //添加option
-                                    else
-                                        select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");  //添加option
-                                }
-                                layui.form.render('select');
-                            }
-                        }
-                    });
-                }
+                });                
             });
 
     </script>

@@ -158,10 +158,10 @@
                 var type = "";
                 var id =@Model.Id;
                 if (id > 0) {
-                    BindParentColumn(@Model.ColumnId);
+                    apiUtil.BindParentColumn(@Model.ColumnId);
                     type = "edit";
                 } else {
-                    BindParentColumn();
+                    apiUtil.BindParentColumn();
                 }
                 //匹配内链
                 $("#btnHref").click(function () {
@@ -205,26 +205,7 @@
                         });
                     }
                     return false;
-                });
-
-                function BindParentColumn(value) {
-                    apiUtil.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
-                        if (res.statusCode == 200 && res.success == true) {
-                            if (res.data !== null) {
-                                var select = $("#columnId");
-                                for (var i = 0; i < res.data.length; i++) {
-                                    var val = res.data[i].id;
-                                    if (val === value)
-                                        select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");  //添加option
-                                    else
-                                        select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");  //添加option
-                                }
-                                layui.form.render('select');
-                            }
-                        }
-                    });
-                }
+                });                
             });
-
     </script>
 }

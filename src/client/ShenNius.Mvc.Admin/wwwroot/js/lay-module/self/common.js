@@ -132,26 +132,67 @@
         getCurrentUser: function () {
             var currentUser = tool.GetSession('globalCurrentUserInfo');
             return currentUser;
-        },                    
+        },  
+        /*绑定分类*/
+        BindParentCategory: function (value) {
+            tool.ajax('category/getAllParentcategory', {}, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    if (res.data !== null) {
+                        var select = $("#categoryId");
+                        for (var i = 0; i < res.data.length; i++) {
+                            var val = res.data[i].id;
+                            if (val === value)
+                                select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");
+                            else
+                                select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");
+                        }
+                        layui.form.render('select');
+                    }
+                }
+            });
+        },
+        /*绑定栏目*/
+        BindParentColumn: function (value) {
+            tool.ajax('column/getAllParentColumn', {}, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    if (res.data !== null) {
+                        var select = $("#parentId");
+                        for (var i = 0; i < res.data.length; i++) {
+                            var val = res.data[i].id;
+                            if (val === value)
+                                select.append("<option value='" + val + "' selected>" + res.data[i].title + "</option>");
+                            else
+                                select.append("<option value='" + val + "'>" + res.data[i].title + "</option>");
+                        }
+                        layui.form.render('select');
+                    }
+                }
+            });
+        },
+        /*绑定菜单*/
+        BindParentMenu: function (value) {
+            tool.ajax('menu/getAllParentMenu', {}, "application/json", "get", function (res) {
+                if (res.statusCode == 200 && res.success == true) {
+                    if (res.data !== null) {
+                        var select = $("#parentId");
+                        for (var i = 0; i < res.data.length; i++) {
+                            var val = res.data[i].id;
+                            if (val === value)
+                                select.append("<option value='" + val + "' selected>" + res.data[i].name + "</option>");
+                            else
+                                select.append("<option value='" + val + "'>" + res.data[i].name + "</option>");
+                        }
+                        layui.form.render('select');
+                    }
+                }
+            });
+            },
+
         getUrlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
-        },
-        formatdate: function (str) {
-            if (str) {
-                var d = eval('new ' + str.substr(1, str.length - 2));
-                var ar_date = [
-                    d.getFullYear(), d.getMonth() + 1, d.getDate()
-                ];
-                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
-                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
-
-                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
-            } else {
-                return "无信息";
-            }
-        },
+        },        
         SetSession: function (key, options) {
             localStorage.setItem(key, JSON.stringify(options));
         },
@@ -191,7 +232,7 @@
                     return true;
             }
             return false;
-        }
+        },
     };
     exports('common', tool);
 });
