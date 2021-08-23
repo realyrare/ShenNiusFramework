@@ -90,7 +90,7 @@
             };
             apiUtil.render({
                 elem: '#currentTableId',
-                url: 'goods/GetListPages',
+                url: 'order/GetListPages',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -123,7 +123,7 @@
                     {
                         field: "goodsName", title: "商品名称", align: "left", width: 260, templet: function (res) {
 
-                            if (res.imgUrl != null && res.imgUrl != "") {
+                            if (res.imgUrl != null && res.imgUrl != "" && res.imgUrl != undefined) {
 
                                 return '<a href=' + res.imgUrl + ' target="_blank"><img class="tab-img" src=' + res.imgUrl + '>' + res.goodsName + '</a>';
                             }

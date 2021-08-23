@@ -210,7 +210,6 @@
     <script src="~/js/goodsSpec.js" asp-append-version="true"></script>
     <script src="~/js/art-template.js" asp-append-version="true"></script>
     <script src="~/js/imgUpload.js" asp-append-version="true"></script>
-    <script src="~/js/bind-tree.js" asp-append-version="true"></script>
     <!-- 商品多规格模板 -->
     @await Html.PartialAsync("~/Views/Shared/Templates/tpl_spec_many.cshtml")
     <script>
@@ -231,7 +230,7 @@
             // 当前弹出层，防止ID被覆盖
             var parentIndex = parent.layer.getFrameIndex(window.name);
 
-            BindParentCategory();
+            apiUtil.BindParentCategory();
             form.render();
 
             // 注册商品多规格组件

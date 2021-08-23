@@ -150,9 +150,7 @@
 </form>
 
 @section js{
-    <script src="~/js/bind-tree.js" asp-append-version="true"></script>
     <script>
-
         layui.use(['form', 'iconPickerFa',  'common'], function () {
             var form = layui.form,
                      $ = layui.$,
@@ -173,12 +171,12 @@
                 limit: 12,
                 // 点击回调
                 click: function (data) {
-                    console.log(data);
+                   // console.log(data);
                     $("#Icon").val(data.icon);
                 },
                 // 渲染成功后的回调
                 success: function (d) {
-                    console.log(d);
+                  //  console.log(d);
 
                 }
             });

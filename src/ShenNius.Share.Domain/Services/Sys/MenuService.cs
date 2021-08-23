@@ -237,7 +237,8 @@ namespace ShenNius.Share.Domain.Services.Sys
                 Sort = menuModifyInput.Sort,
                 BtnCodeIds = menuModifyInput.BtnCodeIds,
                 Layer = layer,
-                ParentIdList = parentIdList
+                ParentIdList = parentIdList,
+                NameCode=menuModifyInput.NameCode
             }, d => d.Id == menuModifyInput.Id);
             return new ApiResult();
         }

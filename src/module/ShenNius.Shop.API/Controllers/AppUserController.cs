@@ -34,7 +34,7 @@ namespace ShenNius.Shop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ApiResult> GetListPages(KeyListTenantQuery query)
+        public async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
             var res = await _appUserService.GetPagesAsync(query.Page, query.Limit, d => d.TenantId == query.TenantId && d.Status == true, d => d.Id, false);
             var tenantService = HttpContext.RequestServices.GetService(typeof(ITenantService)) as ITenantService;

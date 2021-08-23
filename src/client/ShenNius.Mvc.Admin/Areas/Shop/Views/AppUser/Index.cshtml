@@ -34,13 +34,8 @@
                 table = layui.table,
                 apiUtil = layui.common;
             //layui button onclick必须这样写，不然会出现事件未定义；
-            window.existAuth = function (btnName) {
-                /*
-                 第一个参数是列表名称和数据库nameCode一定要对应;
-                 第二个参数是按钮名称和数据库的btnName也要对应的;
-                 event 阻止事件冒泡；
-                */
-                apiUtil.checkAuth("category", btnName, event);
+            window.existAuth = function (btnName) {              
+                apiUtil.checkAuth("appUser", btnName, event);
             };
             apiUtil.render({
                 elem: '#currentTableId',
@@ -82,8 +77,7 @@
                     { field: 'createTime', title: '创建时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
                 ]],
-                height: $(window).height() - 155,
-                limit: 1500,
+                limit: 15,
                 parseData: function (res) {
                     return apiUtil.parseDataFun(res);
                 }

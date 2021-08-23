@@ -31,11 +31,10 @@ namespace ShenNius.Shop.API.Controllers
 
         public AppUserAddressController(IAppUserAddressService appUserAddressService)
         {
-            this._appUserAddressService = appUserAddressService;
+            _appUserAddressService = appUserAddressService;
         }
-
         [HttpGet]
-        public  Task<ApiResult> GetListPages(KeyListTenantQuery query)
+        public  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
             return _appUserAddressService.GetListPageAsync(query);
         }

@@ -1,17 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.BaseController.Controllers;
-using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Models.Dtos.Common;
-using ShenNius.Share.Models.Dtos.Input.Shop;
-using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Dtos.Query.Shop;
-using ShenNius.Share.Models.Entity.Shop;
 using System.Threading.Tasks;
 
 namespace ShenNius.Shop.API.Controllers
@@ -32,7 +24,7 @@ namespace ShenNius.Shop.API.Controllers
         }
 
         [HttpGet]
-        public   Task<ApiResult> GetListPages(OrderKeyListTenantQuery query)
+        public Task<ApiResult> GetListPages([FromQuery]OrderKeyListTenantQuery query)
         {
             return  _OrderService.GetListPageAsync(query);
         }
