@@ -4,6 +4,7 @@ using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Output.Shop;
+using ShenNius.Share.Models.Dtos.Query.Shop;
 using ShenNius.Share.Models.Entity.Shop;
 using ShenNius.Share.Models.Entity.Sys;
 using SqlSugar;
@@ -23,18 +24,25 @@ namespace ShenNius.Share.Domain.Services.Shop
 {
     public interface IOrderService : IBaseServer<Order>
     {
-        Task<ApiResult> GetListPageAsync(KeyListTenantQuery query);
+        Task<ApiResult> GetListPageAsync(OrderKeyListTenantQuery query);
         Task<ApiResult<OrderDetailOutput>> GetOrderDetailAsync(int orderId);
     }
-    public class OrderService: BaseServer<Order>, IOrderService
+    public class OrderService : BaseServer<Order>, IOrderService
     {
-        public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery query)
+        public async Task<ApiResult> GetListPageAsync(OrderKeyListTenantQuery query)
         {
-            var data = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] { JoinType.Inner,o.Id==og.OrderId,
+            var data = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] { 
+                JoinType.Inner,o.Id==og.OrderId,
                 JoinType.Inner,og.AppUserId==u.Id,
             })
-                  .OrderBy((o, og, u) => o.Id, OrderByType.Desc)
-                  .Select((o, og, u) => new OrderListOutput()
+            .Where((o, og, u) => o.TenantId == query.TenantId)
+            .WhereIF(!string.IsNullOrEmpty(query.Key), (o, og, u) => o.OrderNo.Equals(query.Key))
+            .WhereIF(query.OrderStatus > 0, (o, og, u) => o.OrderStatus.Equals(query.OrderStatus))
+            .WhereIF(query.PayStatus > 0, (o, og, u) => o.PayStatus.Equals(query.OrderStatus))
+            .WhereIF(query.DeliveryStatus > 0, (o, og, u) => o.OrderStatus.Equals(query.DeliveryStatus))
+            .WhereIF(query.ReceiptStatus > 0, (o, og, u) => o.OrderStatus.Equals(query.ReceiptStatus))
+            .OrderBy((o, og, u) => o.Id, OrderByType.Desc)
+            .Select((o, og, u) => new OrderListOutput()
                   {
                       GoodsName = og.GoodsName,
                       GoodsId = og.GoodsId,
@@ -68,11 +76,11 @@ namespace ShenNius.Share.Domain.Services.Shop
         }
         public async Task<ApiResult<OrderDetailOutput>> GetOrderDetailAsync(int orderId)
         {
-            var model = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] { 
+            var model = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] {
                 JoinType.Inner,o.Id==og.OrderId,
                 JoinType.Inner,og.AppUserId==u.Id,
             })
-              .Where((o, og, u) => o.Id == orderId&&o.Status)
+              .Where((o, og, u) => o.Id == orderId && o.Status)
              .Select((o, og, u) => new OrderDetailOutput()
              {
                  OrderNo = o.OrderNo,
@@ -90,7 +98,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                  ExpressNo = o.ExpressNo,
                  DeliveryTime = o.DeliveryTime,
                  ReceiptTime = o.ReceiptTime,
-                // AllPayPrice = o.AllPayPrice,
+                 // AllPayPrice = o.AllPayPrice,
                  // AllTotalPrice = o.AllTotalPrice,
                  TotalPrice = og.TotalPrice,
                  CreateTime = o.CreateTime,
@@ -104,7 +112,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.Id == model.AppUserAddressId)
                .FirstAsync();
 
-            model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId&&d.Status).Select(d => new OrderGoodsDetailOutput
+            model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId && d.Status).Select(d => new OrderGoodsDetailOutput
             {
                 GoodsImg = d.ImgUrl,
                 GoodsName = d.GoodsName,
