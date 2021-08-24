@@ -13,7 +13,11 @@ namespace ShenNius.Share.Infrastructure.Common
         {
             _logger = logger;
         }
-        public LogHelper(string name) : this(LogManager.GetLogger(name))
+        /// <summary>
+        /// 如果调用构造函数，默认使用数据困记录日志，其他类型对照nlog.config查看
+        /// </summary>
+        /// <param name="name"></param>
+        public LogHelper(string name= "database") : this(LogManager.GetLogger(name))
         {
 
         }
@@ -23,7 +27,14 @@ namespace ShenNius.Share.Infrastructure.Common
         {
             Default = new LogHelper(LogManager.GetCurrentClassLogger());
         }
-
+        /// <summary>
+        /// 操作日志
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="Logger">业务类型</param>
+        /// <param name="msg">内容</param>
+        /// <param name="logLevel">log等级</param>
+        /// <param name="exception">异常信息</param>
         public void Process(string userName, string Logger, string msg, LogLevel logLevel, Exception exception=null)
         {
             LogEventInfo lei = new LogEventInfo();
@@ -34,7 +45,11 @@ namespace ShenNius.Share.Infrastructure.Common
             lei.Exception = exception;
             _logger.Log(lei);
         }
-
+        /// <summary>
+        /// 错误日志
+        /// </summary>
+        /// <param name="statusCode">状态码</param>
+        /// <param name="msg">具体内容</param>
         public void ProcessError(int statusCode, string msg)
         {
             LogEventInfo lei = new LogEventInfo();

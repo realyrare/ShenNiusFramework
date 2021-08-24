@@ -45,7 +45,7 @@ namespace ShenNius.Share.Infrastructure.Extensions
                 else
                 {
                     json.Msg = context.Exception.Message;
-                    LogHelper.Default.Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
+                   new LogHelper().Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
                 }
             }
             catch 

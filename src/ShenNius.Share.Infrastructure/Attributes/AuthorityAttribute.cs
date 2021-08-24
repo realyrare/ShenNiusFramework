@@ -121,7 +121,13 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"方式：{method} \n " +
                 $"参数：{qs}\n " +
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
-            LogHelper.Default.Process(userName, LogType, str,LogLevel.Trace);
+            try
+            {
+                new LogHelper().Process(userName, LogType, str, LogLevel.Trace);
+            }
+            catch 
+            {
+            }            
         }
     }
 }

@@ -16,6 +16,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using NLog;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
@@ -115,12 +116,6 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
             HttpContext.Session.SetString("vcode", vcode);
             var img = VerifyCode.DrawImage(vcode, 20, Color.White);
             return File(img, "image/gif");
-        }
-        [HttpGet]
-        public async Task Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            Response.Redirect("/sys/user/login/");
-        }
+        }       
     }
 }

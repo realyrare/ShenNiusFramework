@@ -263,7 +263,7 @@ namespace ShenNius.Sys.API.Controllers
                 ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
                 try
                 {
-                    LogHelper.Default.Process(loginInput.LoginName, "用户登录", $"登陆失败:{ex.Message}", LogLevel.Error, ex);
+                   new LogHelper().Process(loginInput.LoginName, "用户登录", $"登陆失败:{ex.Message}", LogLevel.Error, ex);
                 }
                 catch 
                 {
@@ -273,15 +273,23 @@ namespace ShenNius.Sys.API.Controllers
         }
 
         /// <summary>
-        /// jwt退出 用于前后端分离 
+        /// 退出
         /// </summary>
         /// <returns></returns>
+     
         [HttpPost]
-        public ApiResult LogOut()
+        public async Task Logout()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             _cacheHelper.Remove($"{KeyHelper.User.AuthMenu}:{_currentUserContext.Id}");
-            return new ApiResult(data: "/user/login");
+            try
+            {
+                new LogHelper().Process(_currentUserContext.Name, "login", $"{_currentUserContext.Name}成功退出系统！", LogLevel.Info);
+            }
+            catch
+            {
+
+            }
         }
         private string GetJwtToken(LoginOutput loginOutput)
         {
