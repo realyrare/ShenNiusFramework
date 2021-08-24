@@ -93,8 +93,9 @@ namespace ShenNius.Mvc.Admin
                         .SelectMany(x => x.Errors
                             .Select(p => p.ErrorMessage))
                         .ToList();
+                    // string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList())； 一次性把所有未验证的消息都取出来
                     var result = new ApiResult(
-                        msg: string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList()),
+                        msg:  errors.FirstOrDefault(),
                         statusCode: 400
                     );
                     return new BadRequestObjectResult(result);

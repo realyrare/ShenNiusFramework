@@ -1,10 +1,14 @@
 ﻿using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Repository.Extensions;
 using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Models.Entity.Sys;
+using SqlSugar;
 using System;
 using System.Threading.Tasks;
 
@@ -25,7 +29,7 @@ namespace ShenNius.Share.Domain.Services.Sys
         Task<ApiResult> RestoreAsync(DeletesInput deletesInput);
         Task<ApiResult> RealyDeleteAsync(DeletesInput deletesInput);
         Task<ApiResult> SoftDeleteAsync<TEntity>(DeletesTenantInput input, IBaseServer<TEntity> service) where TEntity : BaseTenantEntity, new();
-        
+        Task<ApiResult> GetPagesAsync(KeyListQuery query);
     }
     public class RecycleService : BaseServer<Recycle>, IRecycleService
     {
@@ -155,6 +159,23 @@ namespace ShenNius.Share.Domain.Services.Sys
                 return new ApiResult(e.Message, 500);
             }           
             return new ApiResult();
+        }
+
+        public async Task<ApiResult> GetPagesAsync(KeyListQuery query)
+        {
+          var datas=   await Db.Queryable<Recycle, User>((r,u)=>new JoinQueryInfos( JoinType.Inner, r.UserId==u.Id))
+                  .WhereIF(!string.IsNullOrEmpty(query.Key), (r, u) => r.Remark.Contains(query.Key))
+                .OrderBy((r, u) => r.Id, OrderByType.Desc)
+                .Select((r, u) => new 
+                {
+                    UserName = u.Name,                  
+                    CreateTime = r.CreateTime,
+                    Id = r.Id,
+                    r.TableType,
+                    Remark=r.Remark,
+                    TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == r.TenantId).Select(s => s.Name),
+                }).ToPageAsync(query.Page, query.Limit);
+            return new ApiResult(datas);
         }
     }
 }

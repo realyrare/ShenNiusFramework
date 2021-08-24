@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Entity.Sys;
-using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 /*************************************
@@ -41,15 +39,9 @@ namespace ShenNius.Sys.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ApiResult> GetListPages(int page, string key = null)
-        {
-            Expression<Func<Recycle, bool>> whereExpression = null;
-            if (!string.IsNullOrEmpty(key))
-            {
-                whereExpression = d => d.Remark.Contains(key);
-            }
-            var res = await _recycleService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
-            return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
+        public  Task<ApiResult> GetListPages([FromQuery] KeyListQuery query)
+        {           
+           return _recycleService.GetPagesAsync(query);          
         }
 
         /// <summary>
