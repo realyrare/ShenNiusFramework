@@ -37,12 +37,15 @@ namespace ShenNius.Share.Infrastructure.Common
         /// <param name="exception">异常信息</param>
         public void Process(string userName, string Logger, string msg, LogLevel logLevel, Exception exception=null)
         {
+            //string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             LogEventInfo lei = new LogEventInfo();
             lei.Properties["UserName"] = userName;
             lei.Properties["Logger"] = Logger;
             lei.Level = logLevel;
             lei.Message = msg;
             lei.Exception = exception;
+            //TODO
+            lei.Properties["Address"] = IpParseHelper.GetAddressByIP("");
             _logger.Log(lei);
         }
         /// <summary>

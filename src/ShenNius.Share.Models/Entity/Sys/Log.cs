@@ -24,7 +24,7 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// <summary>
         /// 时间
         /// </summary>
-        public DateTime Logged { get; set; }
+        public DateTime CreateTime { get; set; }
 
         /// <summary>
         /// 日志等级
@@ -65,6 +65,8 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// 浏览器信息
         /// </summary>
         public string Browser { get; set; }
+
+        public string Address { get; set; }
 
     }
 }

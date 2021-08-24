@@ -54,11 +54,14 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 return;
             }
             //当用户名为mhg时（超级管理员），不用验证权限。
-            var currentName = context.HttpContext.User.Identity.Name;
-            if (currentName.Equals("mhg"))
-            {
-                return;
-            }
+            #if DEBUG
+                        var currentName = context.HttpContext.User.Identity.Name;
+                        if (currentName.Equals("mhg"))
+                        {
+                            return;
+                        }
+            #endif
+
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
             //从缓存获得权限
