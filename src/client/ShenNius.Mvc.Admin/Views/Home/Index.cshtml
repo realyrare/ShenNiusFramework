@@ -179,28 +179,19 @@
                     content: '/sys/user/currentUserInfo',
                 });
             });
-            $('.login-out').on("click", function () {
-                apiUtil.ajax('user/Logout', {}, "", "post", function (res) {
-                    apiUtil.SessionRemove("globalCurrentUserInfo");
-                    layer.msg('正在处理,即将退出...', function () {
-                        //清空浏览器缓存数据
-                        localStorage.clear();
-                        window.location = '/sys/user/login';
-                    });
+            $('.login-out').on("click", function () {               
+                $.ajax({
+                    url: apiUtil.apiUrl()+"user/Logout",
+                    type: "post",
+                    success: function (res) {
+                        apiUtil.SessionRemove("globalCurrentUserInfo");
+                        layer.msg('正在处理,即将退出...', function () {
+                            //清空浏览器缓存数据
+                            localStorage.clear();
+                            window.location = '/sys/user/login';
+                        });
+                    }
                 });
-
-                //$.ajax({
-                //    url: "user/Logout",
-                //    type: "post",
-                //    success: function (res) {
-                //        apiUtil.SessionRemove("globalCurrentUserInfo");
-                //        layer.msg('正在处理,即将退出...', function () {
-                //            //清空浏览器缓存数据
-                //            localStorage.clear();
-                //            window.location = '/sys/user/login';
-                //        });
-                //    }
-                //});
             });
             function LoadSite() {
                 apiUtil.ajax('tenant/getList', {}, "application/json", "get", function (res) {

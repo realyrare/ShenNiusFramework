@@ -59,11 +59,6 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// <summary>
         /// 认证用户名
         /// </summary>
-        public string User { get; set; }
-
-        /// <summary>
-        /// 认证用户名
-        /// </summary>
         public string UserName { get; set; }
 
         /// <summary>

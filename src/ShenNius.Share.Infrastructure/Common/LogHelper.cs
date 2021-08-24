@@ -48,12 +48,12 @@ namespace ShenNius.Share.Infrastructure.Common
         /// <summary>
         /// 错误日志
         /// </summary>
-        /// <param name="statusCode">状态码</param>
+        /// <param name="Logger">业务类型</param>
         /// <param name="msg">具体内容</param>
-        public void ProcessError(int statusCode, string msg)
+        public void ProcessError(string Logger, string msg)
         {
             LogEventInfo lei = new LogEventInfo();
-            lei.Properties["Logger"] = Convert.ToString(statusCode);
+            lei.Properties["Logger"] = Logger;
             lei.Level = LogLevel.Error;
             lei.Message = msg;
             _logger.Log(lei);

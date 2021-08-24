@@ -58,7 +58,7 @@ namespace ShenNius.Share.Infrastructure.Common
                 #if DEBUG
                 Console.WriteLine($"Failed. Error: {ex.Message}");
                 #endif
-                LogHelper.Default.ProcessError(500, ex.Message);
+                LogHelper.Default.ProcessError("邮件发送", ex.Message);
             }
         }
         /// <summary>

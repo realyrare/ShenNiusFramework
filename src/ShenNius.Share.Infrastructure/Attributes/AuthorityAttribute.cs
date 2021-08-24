@@ -116,8 +116,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
 
             var qs = ActionArguments;
             var userName = context.HttpContext.User.Identity.Name;
-            var str = $"\n 方法： \n " +
-                $"地址：{url} \n " +
+            var str = $"地址：{url} \n " +
                 $"方式：{method} \n " +
                 $"参数：{qs}\n " +
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
