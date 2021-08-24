@@ -96,61 +96,10 @@ namespace ShenNius.Share.BaseController.Controllers
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Transaction]
-        public virtual async Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
+        public virtual  Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
         {
             var recycleService = HttpContext.RequestServices.GetService(typeof(IRecycleService)) as IRecycleService;
-            var userId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value);
-            var allTable = AppSettings.DbTable.Value;
-
-            var currentName = HttpContext.User.Identity.Name;
-            foreach (var item in deleteInput.Ids)
-            {
-                var res = await _service.UpdateAsync(d => new TEntity() { Status = false }, d => d.Id == item && d.TenantId == deleteInput.TenantId && d.Status == true);
-                if (res <= 0)
-                {
-                    var model = await _service.GetModelAsync(d => d.Id == item);
-                    if (model?.Id <= 0)
-                    {
-                        throw new FriendlyException($"根据传递的【{item}】参数查出来该条数据不存在！");
-                    }
-                    if (model.Status == false)
-                    {
-                        return new ApiResult("该条数据已经被删除了", 200);
-                    }
-                    throw new FriendlyException("删除失败了！");
-                }
-                var tableName = new TEntity().GetType().Name;
-                if (!string.IsNullOrEmpty(allTable))
-                {
-                    var allTableArry = allTable.Split(',');
-                    for (int j = 0; j < allTableArry.Length; j++)
-                    {
-                        if (allTableArry[j].Contains(tableName))
-                        {
-                            tableName = allTableArry[j];
-                            break;
-                        }
-                    }
-                }
-                var recycle = new Recycle()
-                {
-                    CreateTime = DateTime.Now,
-                    BusinessId = item,
-                    UserId = userId,
-                    TableType = tableName,
-                    TenantId = deleteInput.TenantId,
-                    Remark = $"用户名为【{HttpContext.User.Identity.Name}】删除了表【{tableName}】中id={item}的记录数据。",
-                    RestoreSql = $"update {tableName} set status=true where id={item} and TenantId={deleteInput.TenantId}",
-                    RealyDelSql = $"delete  from {tableName}  where id={item} and TenantId={deleteInput.TenantId}"
-                };
-                var i = await recycleService.AddAsync(recycle);
-                if (i <= 0)
-                {
-                    throw new FriendlyException("删除成功了，但是放进回收站时失败了！");
-                }
-            }
-            return new ApiResult();
+            return recycleService.SoftDeleteAsync(deleteInput, _service);           
         }
         /// <summary>
         /// 列表分页
