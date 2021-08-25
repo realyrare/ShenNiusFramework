@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <!--不编译Views文件夹-->
+	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
+	  <!--不输出到框架版本的目录-->
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <!--只使用中文语言包-->
+	  <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+	  <UserSecretsId>2449893f-2847-48ac-8028-acb4088c32d1</UserSecretsId>
+	  <!--只要不是语言包文件夹名称就行-->
   </PropertyGroup>
 
   <ItemGroup>
