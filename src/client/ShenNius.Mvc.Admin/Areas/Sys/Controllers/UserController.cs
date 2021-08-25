@@ -16,11 +16,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using NLog;
+
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-
+    [Area("sys")]
     public partial class UserController : Controller
     {
         private readonly IUserService _userService;

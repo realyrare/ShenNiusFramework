@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-
+    [Area("sys")]
     public class ConfigController : Controller
     {
         private readonly IConfigService _configService;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-
+    [Area("sys")]
     public class TenantController : Controller
     {
         private readonly ITenantService _tenantService;

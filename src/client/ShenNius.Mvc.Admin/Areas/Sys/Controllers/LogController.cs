@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-
+    [Area("sys")]
     public class LogController : Controller
     {
         private readonly ILogService _logService;

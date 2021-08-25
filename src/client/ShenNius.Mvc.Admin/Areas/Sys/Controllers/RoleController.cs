@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Model.Entity.Sys;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-  
+    [Area("sys")]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

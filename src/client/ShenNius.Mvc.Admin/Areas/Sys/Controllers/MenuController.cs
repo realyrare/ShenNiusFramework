@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
-
+    [Area("sys")]
     public class MenuController : Controller
     {
         private readonly IMenuService _menuService;

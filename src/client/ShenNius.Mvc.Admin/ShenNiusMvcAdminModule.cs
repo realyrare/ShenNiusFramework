@@ -23,6 +23,8 @@ using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.ModuleCore;
 using ShenNius.ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Attributes;
+using Microsoft.AspNetCore.DataProtection;
+using System.IO;
 
 namespace ShenNius.Mvc.Admin
 {
@@ -37,6 +39,8 @@ namespace ShenNius.Mvc.Admin
         {
             context.Services.AddDistributedMemoryCache();
             context.Services.AddSession();
+            //解决 Error unprotecting the session cookie.
+            context.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "DataProtection"));
             // 认证
             context.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
@@ -140,20 +144,24 @@ namespace ShenNius.Mvc.Admin
             // 路由映射
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapAreaControllerRoute(
-                name: "sys",
-                areaName: "sys",
-                pattern: "sys/{controller}/{action}/{id?}");
+                //endpoints.MapAreaControllerRoute(
+                //name: "sys",
+                //areaName: "sys",
+                //pattern: "sys/{controller}/{action}/{id?}");
 
-                endpoints.MapAreaControllerRoute(
-                name: "shop",
-                areaName: "shop",
-                pattern: "shop/{controller}/{action}/{id?}");
+                //endpoints.MapAreaControllerRoute(
+                //name: "shop",
+                //areaName: "shop",
+                //pattern: "shop/{controller}/{action}/{id?}");
 
-                endpoints.MapAreaControllerRoute(
-                name: "cms",
-                areaName: "cms",
-                pattern: "cms/{controller}/{action}/{id?}");
+                //endpoints.MapAreaControllerRoute(
+                //name: "cms",
+                //areaName: "cms",
+                //pattern: "cms/{controller}/{action}/{id?}");
+
+                endpoints.MapControllerRoute(
+       name: "MyArea",
+       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 //全局路由配置
                 endpoints.MapControllerRoute(
                      name: "default",
