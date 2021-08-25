@@ -25,6 +25,7 @@ namespace ShenNius.Shop.API.Controllers
     [ApiController]
     [Authorize]
     [MultiTenant]
+    [Log]
     public class AppUserAddressController : ControllerBase
     {
         private readonly IAppUserAddressService _appUserAddressService;

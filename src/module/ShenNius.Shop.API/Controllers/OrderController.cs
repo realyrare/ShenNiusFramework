@@ -15,6 +15,7 @@ namespace ShenNius.Shop.API.Controllers
     [ApiController]
     [Authorize]
     [MultiTenant]
+    [Log]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _OrderService;

@@ -8,6 +8,7 @@ using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Infrastructure.Attributes;
 
 /*************************************
 * 类名：ApiBaseController
@@ -33,6 +34,7 @@ namespace ShenNius.Share.BaseController.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
+    [Log]
     public abstract class ApiBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
        where TEntity : BaseEntity, new()
        where TDeleteInput : DeletesInput

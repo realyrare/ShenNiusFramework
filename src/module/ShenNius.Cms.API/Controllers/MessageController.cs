@@ -27,6 +27,7 @@ namespace ShenNius.Cms.API.Controllers
     [ApiController]
     [Authorize]
     [MultiTenant]
+    [Log]
     public class MessageController:ControllerBase
     {
         private readonly IMessageService _messageService;

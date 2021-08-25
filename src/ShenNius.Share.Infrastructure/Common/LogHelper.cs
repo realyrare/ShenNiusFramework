@@ -1,5 +1,7 @@
-﻿using NLog;
+﻿using Microsoft.AspNetCore.Http;
+using NLog;
 using System;
+using System.Linq;
 
 namespace ShenNius.Share.Infrastructure.Common
 {
@@ -26,6 +28,7 @@ namespace ShenNius.Share.Infrastructure.Common
         static LogHelper()
         {
             Default = new LogHelper(LogManager.GetCurrentClassLogger());
+           
         }
         /// <summary>
         /// 操作日志
@@ -37,16 +40,23 @@ namespace ShenNius.Share.Infrastructure.Common
         /// <param name="exception">异常信息</param>
         public void Process(string userName, string Logger, string msg, LogLevel logLevel, Exception exception=null)
         {
-            //string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            LogEventInfo lei = new LogEventInfo();
-            lei.Properties["UserName"] = userName;
-            lei.Properties["Logger"] = Logger;
-            lei.Level = logLevel;
-            lei.Message = msg;
-            lei.Exception = exception;
-            //TODO
-            lei.Properties["Address"] = IpParseHelper.GetAddressByIP("");
-            _logger.Log(lei);
+            try
+            {
+                var _accessor = new HttpContextAccessor();
+                string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                LogEventInfo lei = new LogEventInfo();
+                lei.Properties["UserName"] = userName;
+                lei.Properties["Logger"] = Logger;
+                lei.Level = logLevel;
+                lei.Message = msg;
+                lei.Exception = exception;
+                //TODO
+                lei.Properties["Address"] = IpParseHelper.GetAddressByIP(ip);
+                _logger.Log(lei);
+            }
+            catch
+            {
+            }          
         }
         /// <summary>
         /// 错误日志
@@ -63,8 +73,5 @@ namespace ShenNius.Share.Infrastructure.Common
         }
 
      
-
-
-
     }
 }
