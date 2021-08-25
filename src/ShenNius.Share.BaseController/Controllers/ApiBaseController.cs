@@ -34,7 +34,6 @@ namespace ShenNius.Share.BaseController.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
-    [Log]
     public abstract class ApiBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
        where TEntity : BaseEntity, new()
        where TDeleteInput : DeletesInput

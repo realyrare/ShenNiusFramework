@@ -22,6 +22,7 @@ using ShenNius.Shop.API;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.ModuleCore;
 using ShenNius.ModuleCore.Context;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Mvc.Admin
 {
@@ -48,6 +49,7 @@ namespace ShenNius.Mvc.Admin
             var mvcBuilder = context.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(typeof(LogAttribute));
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
 

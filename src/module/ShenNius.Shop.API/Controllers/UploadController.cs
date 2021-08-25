@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Models.Configs;
@@ -14,7 +13,6 @@ namespace ShenNius.Shop.API.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
-    [Log]
     public class UploadController : ControllerBase
     {
         private readonly IUploadHelper _uploadHelper;

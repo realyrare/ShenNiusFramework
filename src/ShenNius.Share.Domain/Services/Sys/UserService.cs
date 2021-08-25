@@ -12,6 +12,8 @@ using NLog;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using ShenNius.Share.Common;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Enums;
+using ShenNius.Share.Models.Enums.Extension;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -46,7 +48,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var loginModel = await GetModelAsync(d => d.Name.Equals(loginInput.LoginName) && d.Password.Equals(loginInput.Password));
             if (loginModel.Id == 0)
             {
-                new LogHelper().Process(loginModel.Name, "login", $"{loginModel.Name}登陆失败，用户名或密码错误！", LogLevel.Info);
+                new LogHelper().Process(loginModel.Name, LogEnum.Login.GetEnumText(), $"{loginModel.Name}登陆失败，用户名或密码错误！", LogLevel.Info);
                 return new ApiResult<LoginOutput>("用户名或密码错误", 500);
 
             }
@@ -60,7 +62,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             }, d => d.Id == loginModel.Id);
             var data = _mapper.Map<LoginOutput>(loginModel);
 
-            new LogHelper().Process(loginModel.Name, "login", $"{loginModel.Name}登陆成功！", LogLevel.Info);
+            new LogHelper().Process(loginModel.Name, LogEnum.Login.GetEnumText(), $"{loginModel.Name}登陆成功！", LogLevel.Info);
             WebHelper.SendEmail("神牛系统用户登录", $"当前名为{loginModel.Name}的用户在{DateTime.Now}成功登录神牛系统", loginModel.Name, loginModel.Email);
             return new ApiResult<LoginOutput>(data);
         }

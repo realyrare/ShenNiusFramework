@@ -25,7 +25,6 @@ namespace ShenNius.Shop.API.Controllers
     [ApiController]
     [Authorize]
     [MultiTenant]
-    [Log]
     public class AppUserController : ControllerBase
     {
         private readonly IAppUserService _appUserService;

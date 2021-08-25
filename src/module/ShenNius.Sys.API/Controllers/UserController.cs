@@ -25,7 +25,8 @@ using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Share.Infrastructure.Common;
 using NLog;
 using ShenNius.Share.Common;
-
+using ShenNius.Share.Models.Enums;
+using ShenNius.Share.Models.Enums.Extension;
 namespace ShenNius.Sys.API.Controllers
 {/// <summary>
  /// 用户控制器
@@ -263,7 +264,7 @@ namespace ShenNius.Sys.API.Controllers
                 ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
                 try
                 {
-                   new LogHelper().Process(loginInput.LoginName, "用户登录", $"登陆失败:{ex.Message}", LogLevel.Error, ex);
+                   new LogHelper().Process(loginInput.LoginName, LogEnum.Login.GetEnumText(), $"登陆失败:{ex.Message}", LogLevel.Error, ex);
                 }
                 catch 
                 {
@@ -284,7 +285,7 @@ namespace ShenNius.Sys.API.Controllers
             _cacheHelper.Remove($"{KeyHelper.User.AuthMenu}:{_currentUserContext.Id}");
             try
             {
-                new LogHelper().Process(_currentUserContext.Name, "login", $"{_currentUserContext.Name}成功退出系统！", LogLevel.Info);
+                new LogHelper().Process(_currentUserContext.Name, LogEnum.Login.GetEnumText(), $"{_currentUserContext.Name}成功退出系统！", LogLevel.Info);
             }
             catch
             {

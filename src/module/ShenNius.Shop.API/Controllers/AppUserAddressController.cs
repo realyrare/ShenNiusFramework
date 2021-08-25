@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Shop;
-using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
-using System.Linq;
 using System.Threading.Tasks;
 
 /*************************************
@@ -25,7 +22,6 @@ namespace ShenNius.Shop.API.Controllers
     [ApiController]
     [Authorize]
     [MultiTenant]
-    [Log]
     public class AppUserAddressController : ControllerBase
     {
         private readonly IAppUserAddressService _appUserAddressService;
