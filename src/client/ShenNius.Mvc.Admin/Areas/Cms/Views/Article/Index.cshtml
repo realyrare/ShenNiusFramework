@@ -8,7 +8,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">标题</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="title" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" autocomplete="off" class="layui-input" lay-verify="required">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -95,14 +95,14 @@
 
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
-                var result = JSON.stringify(data.field);
+               // var result = JSON.stringify(data.field);
                 //执行搜索重载
                 table.reload('currentTableId', {
                     page: {
                         curr: 1
                     }
                     , where: {
-                        searchParams: result
+                        key: data.field.title
                     }
                 }, 'data');
                 return false;
