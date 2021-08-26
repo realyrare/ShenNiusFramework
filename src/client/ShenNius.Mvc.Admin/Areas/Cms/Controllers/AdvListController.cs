@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
 {
+    [Area("shop")]
     public class AdvListController : Controller
     {
         private readonly IAdvListService _advListService;

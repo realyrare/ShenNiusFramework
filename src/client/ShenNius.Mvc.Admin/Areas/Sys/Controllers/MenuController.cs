@@ -19,7 +19,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         {
             _menuService = menuService;
             _configService = configService;
-            this._currentUserContext = currentUserContext;
+            _currentUserContext = currentUserContext;
         }
         [HttpGet]
         public IActionResult Index()

@@ -6,11 +6,13 @@ namespace ShenNius.Mvc.Admin.Controllers
     {
         [HttpGet]
         public IActionResult Index()
-        {
-           
-            
+        {        
             return View();
         }
-
+        [HttpGet("error.html")]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

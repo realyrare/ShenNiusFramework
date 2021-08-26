@@ -2,6 +2,7 @@
 
 namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
 {
+    [Area("shop")]
     public class AppUseraddressController : Controller
     {
         [HttpGet]

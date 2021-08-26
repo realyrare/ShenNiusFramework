@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
 {
+    [Area("shop")]
     public partial class KeywordController : Controller
     {
         private readonly IKeywordService _keywordService;
 
         public KeywordController(IKeywordService KeywordService)
         {
-            this._keywordService = KeywordService;
+            _keywordService = KeywordService;
         }
         [HttpGet]
         public IActionResult Index()

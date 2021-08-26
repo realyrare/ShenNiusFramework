@@ -12,7 +12,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 
         public TenantController(ITenantService tenantService)
         {
-            this._tenantService = tenantService;
+            _tenantService = tenantService;
         }
         [HttpGet]
         public IActionResult Index()

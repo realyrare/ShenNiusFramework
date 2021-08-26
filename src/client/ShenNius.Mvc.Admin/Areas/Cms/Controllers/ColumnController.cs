@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
 {
+    [Area("shop")]
     public class ColumnController : Controller
     {
         private readonly IColumnService _columnService;
 
         public ColumnController(IColumnService columnService)
         {
-            this._columnService = columnService;
+            _columnService = columnService;
         }
         [HttpGet]
         public IActionResult Index()

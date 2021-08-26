@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
 {
+    [Area("shop")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
 
         public CategoryController(ICategoryService categoryService)
         {
-            this._categoryService = categoryService;
+            _categoryService = categoryService;
         }
         [HttpGet]
         public IActionResult Index()

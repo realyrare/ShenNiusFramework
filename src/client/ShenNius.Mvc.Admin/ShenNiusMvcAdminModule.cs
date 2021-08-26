@@ -57,7 +57,6 @@ namespace ShenNius.Mvc.Admin
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
 
-
             mvcBuilder.AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -65,7 +64,10 @@ namespace ShenNius.Mvc.Admin
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
-            mvcBuilder.AddRazorRuntimeCompilation();
+        #if DEBUG
+                    mvcBuilder.AddRazorRuntimeCompilation();
+        #endif
+
             //把控制器当成服务 进行拦截
             mvcBuilder.AddControllersAsServices();
             // 路由配置
@@ -101,7 +103,7 @@ namespace ShenNius.Mvc.Admin
                         .ToList();
                     // string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList())； 一次性把所有未验证的消息都取出来
                     var result = new ApiResult(
-                        msg:  errors.FirstOrDefault(),
+                        msg: errors.FirstOrDefault(),
                         statusCode: 400
                     );
                     return new BadRequestObjectResult(result);
@@ -119,7 +121,7 @@ namespace ShenNius.Mvc.Admin
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/error.html");
                 app.UseHsts();
             }
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
@@ -133,10 +135,9 @@ namespace ShenNius.Mvc.Admin
                 ContentTypeProvider = new CustomerFileExtensionContentTypeProvider()
             });
             app.UseSession();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseStatusCodePagesWithReExecute("/Error");
+            app.UseStatusCodePagesWithReExecute("/error.html");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -160,13 +161,12 @@ namespace ShenNius.Mvc.Admin
                 //pattern: "cms/{controller}/{action}/{id?}");
 
                 endpoints.MapControllerRoute(
-       name: "MyArea",
-       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                name: "MyArea",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 //全局路由配置
                 endpoints.MapControllerRoute(
-                     name: "default",
-                       pattern: "{controller=home}/{action=index}/{id?}"
-                    );
+                name: "default",
+                pattern: "{controller=home}/{action=index}/{id?}");
                 //这里要说下，为啥地址要写 /api/xxx 
                 //因为我前后端分离了，而且使用的是代理模式，所以如果你不用/api/xxx的这个规则的话，会出现跨域问题，毕竟这个不是我的controller的路由，而且自己定义的路由
                 endpoints.MapHub<ChatHub>("/api/chatHub");

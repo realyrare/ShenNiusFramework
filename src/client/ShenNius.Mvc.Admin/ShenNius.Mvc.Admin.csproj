@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <!--不编译Views文件夹-->
-	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
+	  <!--不编译Views文件夹【windows下不编译views可以使用，linux因为area必须编译为dll】-->
+	  <!--<RazorCompileOnPublish>false</RazorCompileOnPublish>-->
 	  <!--不输出到框架版本的目录-->
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <!--只使用中文语言包-->

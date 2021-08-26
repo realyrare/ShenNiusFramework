@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
 {
+    [Area("shop")]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
