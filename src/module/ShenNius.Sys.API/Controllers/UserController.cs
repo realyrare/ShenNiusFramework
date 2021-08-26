@@ -75,7 +75,6 @@ namespace ShenNius.Sys.API.Controllers
         public IActionResult RemoveMenuCache(int userId)
         {
             //由于使用了匿名访问，必须前台传值用户id进来，后台拿不到用户当前的值。
-            var id2 = _currentUserContext.Id;
             //IMenuService:LoadLeftMenuTreesAsync:[1]  清理左侧树形菜单缓存
             _cacheHelper.Remove($"IMenuService:LoadLeftMenuTreesAsync:[{userId}]");
             return Ok(new { code = 1, msg = "服务端成功清理左侧树形菜单缓存" });
@@ -262,13 +261,7 @@ namespace ShenNius.Sys.API.Controllers
             catch (Exception ex)
             {
                 ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
-                try
-                {
-                   new LogHelper().Process(loginInput.LoginName, LogEnum.Login.GetEnumText(), $"登陆失败:{ex.Message}", LogLevel.Error, ex);
-                }
-                catch 
-                {
-                }
+                   new LogHelper().Process(loginInput.LoginName, LogEnum.Login.GetEnumText(), $"登陆失败:{ex.Message}", LogLevel.Error, ex);               
                 return result;            
             }            
         }
@@ -278,7 +271,7 @@ namespace ShenNius.Sys.API.Controllers
         /// </summary>
         /// <returns></returns>
      
-        [HttpPost]
+        [HttpPost, LogIgnore]
         public async Task Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
