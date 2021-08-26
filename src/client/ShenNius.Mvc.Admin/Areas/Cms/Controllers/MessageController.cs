@@ -2,7 +2,7 @@
 
 namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
 {
-    [Area("shop")]
+    [Area("cms")]
     public class MessageController : Controller
     {
         [HttpGet]

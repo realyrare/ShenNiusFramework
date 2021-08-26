@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
 {
-    [Area("shop")]
+    [Area("cms")]
     public class ColumnController : Controller
     {
         private readonly IColumnService _columnService;

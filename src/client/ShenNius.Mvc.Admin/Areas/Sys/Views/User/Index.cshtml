@@ -90,7 +90,7 @@
                     { field: 'mobile', width: 120, title: '手机号' },
                     {
                         field: 'isLogin', title: '是否登录', width: 120, templet: function (res) {
-                            if (isLogin == true) {
+                            if (res.isLogin == true) {
                                 return '<a href="javascript:void(0)" lay-event="edit" class="text-color">已登录</a>';
                             } else {
                                 return '<a href="javascript:void(0)" style="color:red;">未登录</a>';
