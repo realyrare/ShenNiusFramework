@@ -51,6 +51,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// 当前登录时间
         /// </summary>
         public DateTime? LastLoginTime { get; set; }
+        public bool IsLogin { get; set; } 
 
     }
 }

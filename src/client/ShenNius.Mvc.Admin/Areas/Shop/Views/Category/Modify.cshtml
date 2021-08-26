@@ -123,9 +123,9 @@
                 var id=@Model.Id;
                 if (id > 0)
                 {
-                    apiUtil.BindParentColumn(@Model.ParentId);
+                    apiUtil.BindParentCategory(@Model.ParentId);
                 } else {
-                    apiUtil.BindParentColumn();
+                    apiUtil.BindParentCategory();
                 }
                 form.render();
                 //监听提交

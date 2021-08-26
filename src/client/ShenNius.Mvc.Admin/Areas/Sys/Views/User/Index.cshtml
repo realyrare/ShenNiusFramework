@@ -83,11 +83,20 @@
                     { type: "checkbox", width: 50 },
                     { field: 'id', width: 80, title: 'ID', sort: true },
                     { field: 'name', width: 80, title: '用户名' },
-                    { field: 'trueName', title: '真实姓名' },
+                    { field: 'trueName', title: '真实姓名' ,width: 120,},
                     { field: 'ip', width: 80, title: 'IP' },
                     { field: 'address', width: 120, title: '地址' },
                     { field: 'email', width: 120, title: '邮箱' },
                     { field: 'mobile', width: 120, title: '手机号' },
+                    {
+                        field: 'isLogin', title: '是否登录', width: 120, templet: function (res) {
+                            if (isLogin == true) {
+                                return '<a href="javascript:void(0)" lay-event="edit" class="text-color">已登录</a>';
+                            } else {
+                                return '<a href="javascript:void(0)" style="color:red;">未登录</a>';
+                            }                            
+                        }
+                    },
                     { field: 'createTime', title: '创建时间' },
                     { field: 'lastLoginTime', title: '最后登录时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }

@@ -279,6 +279,8 @@ namespace ShenNius.Sys.API.Controllers
             try
             {
                 new LogHelper().Process(_currentUserContext.Name, LogEnum.Login.GetEnumText(), $"{_currentUserContext.Name}成功退出系统！", LogLevel.Info);
+                //设置用户退出
+               await _userService.UpdateAsync(d => new User() { IsLogin = false }, d => d.Id == _currentUserContext.Id);
             }
             catch
             {
