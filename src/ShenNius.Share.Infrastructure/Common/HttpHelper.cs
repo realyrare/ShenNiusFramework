@@ -1,6 +1,4 @@
-﻿using ShenNius.Layui.Admin.Model;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,23 +6,21 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShenNius.Layui.Admin.Common
+namespace ShenNius.Share.Infrastructure.Common
 {
     public class HttpHelper
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public readonly DomainConfig _domainConfig;
-        public HttpHelper(IHttpClientFactory httpClientFactory, IOptionsMonitor<DomainConfig> domainConfig)
+        public HttpHelper(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _domainConfig = domainConfig.CurrentValue;
         }
         public async Task<T> GetAsync<T>(string queryString, string token = null) where T : class
         {
             try
             {
                 var client = _httpClientFactory.CreateClient();
-                string url = _domainConfig.ApiHost + queryString;
+                string url = queryString;
                 if (!string.IsNullOrEmpty(token))
                 {
                     // 'Authorization': 'Bearer ' + token
@@ -48,16 +44,14 @@ namespace ShenNius.Layui.Admin.Common
                 }
                 return model ?? default;
             }
-            catch 
+            catch
             {
-               
                 return default;
             }
 
         }
         public async Task<T> PostAsync<T>(string url, string postData = null, string contentType = null, Dictionary<string, string> headers = null)
         {           
-                url = _domainConfig.ApiHost + url;
                 postData ??= "";
                 var client = _httpClientFactory.CreateClient();
                 client.Timeout = new TimeSpan(0, 0, 30);
