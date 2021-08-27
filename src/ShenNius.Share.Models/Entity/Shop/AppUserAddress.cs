@@ -57,6 +57,10 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// Nullable:False
            /// </summary>           
            public int AppUserId {get;set;}
+        /// <summary>
+        /// 是否默认地址 
+        /// </summary>
+        public bool IsDefault { get; set; }
 
 
     }

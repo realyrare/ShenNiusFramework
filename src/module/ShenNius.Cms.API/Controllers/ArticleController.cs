@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Models.Dtos.Common;
@@ -9,8 +8,6 @@ using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Domain.Repository;
-using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Domain.Services.Cms;
