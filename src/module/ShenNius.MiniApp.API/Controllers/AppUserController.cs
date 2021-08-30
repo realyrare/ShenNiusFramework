@@ -1,131 +1,120 @@
-﻿//using AutoMapper.Configuration;
-//using Microsoft.AspNetCore.Mvc;
-//using ShenNius.Layui.Admin.Common;
-//using ShenNius.Share.Domain.Services.Shop;
-//using ShenNius.Share.Infrastructure.Caches;
-//using ShenNius.Share.Models.Configs;
-//using ShenNius.Share.Models.Dtos.Input.Shop;
-//using ShenNius.Share.Models.Dtos.Output.MiniApp;
-//using System;
-//using System.Collections.Generic;
-//using System.Threading.Tasks;
-//using System.Web;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using ShenNius.Share.Common;
+using ShenNius.Share.Domain.Services.Shop;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Configurations;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Input.Shop;
+using ShenNius.Share.Models.Dtos.Output.MiniApp;
+using System;
+using System.Threading.Tasks;
 
-///*************************************
-//* 类名：AppUserController
-//* 作者：realyrare
-//* 邮箱：mhg215@yeah.net
-//* 时间：2021/8/27 16:37:29
-//*┌───────────────────────────────────┐　    
-//*│　   版权所有：神牛软件　　　　	     │
-//*└───────────────────────────────────┘
-//**************************************/
+/*************************************
+* 类名：AppUserController
+* 作者：realyrare
+* 邮箱：mhg215@yeah.net
+* 时间：2021/8/27 16:37:29
+*┌───────────────────────────────────┐　    
+*│　   版权所有：神牛软件　　　　	     │
+*└───────────────────────────────────┘
+**************************************/
+namespace ShenNius.MiniApp.API.Controllers
+{
+    [Route("api/MiniApp/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+        private readonly IAppUserService _appUserService;
+        private readonly ICacheHelper _cacheHelper;
+        private readonly IOrderService _orderService;
+        private readonly HttpHelper _httpHelper;
+        public UserController(IAppUserService appUserService, ICacheHelper cacheHelper, IOrderService orderService, HttpHelper httpHelper)
+        {
+            _appUserService = appUserService;
+            _cacheHelper = cacheHelper;
+            _orderService = orderService;
+            _httpHelper = httpHelper;
+        }
 
-//namespace ShenNius.MiniApp.API.Controllers
-//{
-//    [Route("api/MiniApp/[controller]")]
-//    [ApiController]
-//    public class UserController : ControllerBase
-//    {
-//        private readonly IAppUserService _memberService;
-//        private readonly ICacheHelper _cacheHelper;
-//        private readonly IOrderService _orderService;
-//        private readonly HttpHelper _httpHelper;
-//        private readonly IConfiguration _configuration;
+        [HttpPost("login")]
+        public async Task<ApiResult> Login([FromForm] AppUserLoginInput input)
+        {
+            var result = new ApiResult();
+            try
+            {
+                // 微信登录 获取session_key
+                if (string.IsNullOrEmpty(input.Code))
+                {
+                    throw new ArgumentNullException($"{nameof(input.Code)} code为空");
+                }
+                //微信登录，根据code获得openid
+                //var wxres = await WxTools.GetOpenId(input.Code);
+                var url = $"https://api.weixin.qq.com/sns/jscode2session?appid={AppSettings.MiniApp.AppId}&secret={AppSettings.MiniApp.AppSecret}&js_code={input.Code}&grant_type=authorization_code";
+                var res = await _httpHelper.GetAsync<HttpMiniUser>(url);
+                if (res == null)
+                {
+                    throw new ArgumentNullException("获取用户实体信息为空");
+                }
+                if (!string.IsNullOrEmpty(res.Errmsg))
+                {
+                    result.StatusCode = res.Errcode;
+                    result.Msg = res.Errmsg;
+                    return result;
+                }
+                // 自动注册用户
+                var userId = await WxAppLoginAndReg(res.Openid, input.UserInfo);
+                // 生成token (session3rd)
+                var token = WxToken(input.TenantId, res.Openid);
+                // 记录缓存, 7天
+                _cacheHelper.Set(token, res, TimeSpan.FromDays(7));
+                result.Data = new { userId, token };
 
-//        public UserController(IAppUserService memberService, ICacheHelper cacheHelper, IOrderService orderService, HttpHelper httpHelper, IConfiguration configuration)
-//        {
-//            _memberService = memberService;
-//            _cacheHelper = cacheHelper;
-//            _orderService = orderService;
-//            _httpHelper = httpHelper;
-//            _configuration = configuration;
-//        }
-
-//        [HttpPost("login")]
-//        public async Task<ApiResult> Login([FromForm] AppUserLoginInput input)
-//        {
-//            var result = new ApiResult();
-//            try
-//            {
-//                // 微信登录 获取session_key
-//                if (string.IsNullOrEmpty(input.Code))
-//                {
-//                    throw new ArgumentNullException($"{nameof(input.Code)} code为空");
-//                }
-
-//                //微信登录，根据code获得openid
-//                //var wxres = await WxTools.GetOpenId(input.Code);
-//                var url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + _configuration["WeiXin:AppID"] + "&secret=" + ConfigExtensions.Configuration["WeiXin:AppSecret"] + "&js_code=" + code + "&grant_type=authorization_code";
-//                //Logger.Default.Process("wxApp", "info", "GetOpenId:" + url);
-//                var resString = await _httpHelper.GetAsync<HttpMiniUser>(url);
-//                if (wxres == null)
-//                {
-//                    throw new ArgumentNullException("获取用户实体信息为空");
-//                }
-//                if (!string.IsNullOrEmpty(wxres.errmsg))
-//                {
-//                    result.StatusCode = wxres.errcode;
-//                    result.Msg = wxres.errmsg;
-//                    return result;
-//                }
-//                // 自动注册用户
-//                var userId = await WxAppLoginAndReg(wxres.openid, input.UserInfo);
-//                // 生成token (session3rd)
-//                var token = WxToken(input.TenantId, wxres.openid);
-//                // 记录缓存, 7天
-//                _cacheHelper.Set(token, wxres, TimeSpan.FromDays(7));
-//                result.Data = new { userId, token };
-
-//                return result;
-//            }
-//            catch (Exception e)
-//            {
-//                result.StatusCode = 500;
-//                result.Success = false;
-//                result.Message = e.Message;
-//                return result;
-//            }
-//        }
+                return result;
+            }
+            catch (Exception e)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.Msg = e.Message;
+                return result;
+            }
+        }
 
 
 
-//        private async Task<string> WxAppLoginAndReg(string openId, string userInfo)
-//        {
-//            var requestUser = JsonConvert.DeserializeObject<RequestUser>(userInfo.Replace("\\", ""));
-//            //先判断是否存在
-//            var dbRes = await _memberService.GetModelAsync(m => m.OpenId == openId);
+        private async Task<int> WxAppLoginAndReg(string openId, string userInfo)
+        {
+            var requestUser = JsonConvert.DeserializeObject<AppUserInput>(userInfo.Replace("\\", ""));
+            //先判断是否存在
+            var dbRes = await _appUserService.GetModelAsync(m => m.OpenId == openId);
+            if (dbRes?.Id != null)
+            {
+                dbRes.ModifyTime = DateTime.Now;
+            }
+            else
+            {
+                dbRes.CreateTime = DateTime.Now;
+            }
+            dbRes.NickName = requestUser.NickName;
+            dbRes.Gender = requestUser.Gender;
+            dbRes.AvatarUrl = requestUser.AvatarUrl;
+            dbRes.Country = requestUser.Country;
+            dbRes.Province = requestUser.Province;
+            dbRes.City = requestUser.City;
+            dbRes.OpenId = openId;
+            if (dbRes?.Id != null)
+            {
+                await _appUserService.UpdateAsync(dbRes);
+                return dbRes.Id;
+            }
+            return await _appUserService.AddAsync(dbRes);
 
-//            dbRes.Data.NickName = requestUser.NickName;
-//            dbRes.Data.Gender = requestUser.Gender;
-//            dbRes.Data.HeadPic = requestUser.AvatarUrl;
-//            dbRes.Data.Country = requestUser.Country;
-//            dbRes.Data.Province = requestUser.Province;
-//            dbRes.Data.City = requestUser.City;
-//            dbRes.Data.LoginTime = DateTime.Now;
-//            dbRes.Data.OpenId = openId;
-//            if (dbRes.Data != null && !string.IsNullOrEmpty(dbRes.Data.Guid))
-//            {
-//                await _memberService.UpdateAsync(dbRes.Data);
-//                return dbRes.Data.Guid;
-//            }
-
-//            //不存在，来注册
-//            dbRes.Data.Guid = Guid.NewGuid().ToString();
-//            dbRes.Data.Grade = "ce8691a1-2e7f-4866-abdc-36d0cb21aa97";
-//            dbRes.Data.LoginName = "匿名：" + Utils.Number(6);
-//            dbRes.Data.LoginPwd = DES3Encrypt.EncryptString("123456");
-//            dbRes.Data.RegTime = DateTime.Now;
-//            //保存到数据库
-//            var sign = await _memberService.AddAsync(dbRes.Data);
-
-//            return dbRes.Data.Guid;
-//        }
-//        private string WxToken(uint wxappId, string openId)
-//        {
-//            return $"{wxappId}_{DateTime.Now.ConvertToTimeStamp()}_{openId}_{Guid.NewGuid()}_${KeyHelper.EncryptKey}".GetMd5();
-//        }
-
-
-//    }
-//}
+        }
+        private string WxToken(int tenantId, string openId)
+        {
+            return Md5Crypt.Encrypt($"{tenantId}_{DateTime.Now}_{openId}_{Guid.NewGuid()}_${KeyHelper.EncryptKey}");
+        }
+    }
+}

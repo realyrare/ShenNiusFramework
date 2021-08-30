@@ -57,5 +57,11 @@ namespace ShenNius.Share.Infrastructure.Configurations
             /// </summary>
             public static string AuthCode => _config["Email:AuthCode"];
         }
+
+        public static class MiniApp
+        {
+            public static string AppId => _config["WeiXin:AppID"];
+            public static string AppSecret => _config["WeiXin:AppSecret"];
+        }
     }
 }

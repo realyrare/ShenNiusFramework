@@ -26,5 +26,9 @@
             public const string LoginKey = "loginKey";
 
         }
+        /// <summary>
+        ///  密码密钥
+        /// </summary>
+        public const string EncryptKey = "fenfenlg_salt_SmTRx";
     }
 }
