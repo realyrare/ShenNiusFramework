@@ -22,15 +22,12 @@ namespace ShenNius.Shop.API.Controllers
 
     public class AppUserAddressController : MiniAppBaseController
     {
-        private readonly IAppUserAddressService _appUserAddressService;
-        private readonly IAppUserService _appUserService;
-
-        public AppUserAddressController(IAppUserAddressService appUserAddressService, IAppUserService appUserService)
+        private readonly IAppUserAddressService _appUserAddressService;   
+        public AppUserAddressController(IAppUserAddressService appUserAddressService)
         {
             _appUserAddressService = appUserAddressService;
-            _appUserService = appUserService;
         }
-       
+
         private Tuple<string, string, string> GetNamesBySplitRegions(string regionName)
         {
             if (string.IsNullOrEmpty(regionName))
@@ -43,27 +40,24 @@ namespace ShenNius.Shop.API.Controllers
         [HttpGet("lists")]
         public async Task<IActionResult> Lists()
         {
-            var member = await _appUserService.GetModelAsync(d => d.OpenId == appUser.Openid);
-            var addressList = await _appUserAddressService.GetListAsync(d => d.Status == false && d.AppUserId == member.Id);
+            var addressList = await _appUserAddressService.GetListAsync(d => d.Status == false && d.AppUserId == HttpWx.AppUserId);
             return Json(addressList);
         }
         [HttpGet("detail")]
         public async Task<IActionResult> Detail(int addressId)
         {
-            var member = await _appUserService.GetModelAsync(d => d.OpenId == appUser.Openid);
-            var addressModel = await _appUserAddressService.GetModelAsync(d => d.Status == false && d.AppUserId == member.Id && d.Id.Equals(addressId));
+            var addressModel = await _appUserAddressService.GetModelAsync(d => d.Status == false && d.AppUserId == HttpWx.AppUserId && d.Id.Equals(addressId));
             return Json(addressModel);
         }
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromForm] AddressInput input)
         {
-            var member = await _appUserService.GetModelAsync(d => d.OpenId == appUser.Openid && d.Status);
             var tupleValue = GetNamesBySplitRegions(input.Region);
             AppUserAddress model = new AppUserAddress()
             {
-               
+
                 CreateTime = DateTime.Now,
-                AppUserId = member.Id,
+                AppUserId = HttpWx.AppUserId,
                 Status = false,
                 Name = input.Name,
                 Detail = input.Detail,
@@ -78,7 +72,6 @@ namespace ShenNius.Shop.API.Controllers
         [HttpPost("edit")]
         public async Task<IActionResult> Edit([FromForm] AddressInput input)
         {
-            var member = await _appUserService.GetModelAsync(d => d.OpenId == appUser.Openid && d.Status);
             var tupleValue = GetNamesBySplitRegions(input.Region);
             var sign = await _appUserAddressService.UpdateAsync(d => new AppUserAddress()
             {
@@ -89,27 +82,24 @@ namespace ShenNius.Shop.API.Controllers
                 Region = tupleValue.Item3,
                 Phone = input.Phone,
                 ModifyTime = DateTime.Now
-            }, d => d.Status == false && d.Id == input.AddressId && d.AppUserId == member.Id);           
+            }, d => d.Status == false && d.Id == input.AddressId && d.AppUserId == HttpWx.AppUserId);
             return Json(sign);
-
         }
 
         [HttpPost("delete")]
         public async Task<ApiResult> Delete([FromForm] int addressId)
-        {           
-            var sign = await _appUserAddressService.UpdateAsync(d=>new AppUserAddress() {Status =false},d=>d.Id==addressId);
+        {
+            var sign = await _appUserAddressService.UpdateAsync(d => new AppUserAddress() { Status = false }, d => d.Id == addressId);
             return new ApiResult(sign);
         }
         [HttpPost("setIsDefault")]
         public async Task<IActionResult> SetDefault([FromForm] string addressId)
         {
-            var member = await _appUserService.GetModelAsync(d => d.OpenId == appUser.Openid && d.Status);
-
             //把有默认地址的取消
-            var result = await _appUserAddressService.UpdateAsync(d => new AppUserAddress() { IsDefault = false }, d => d.Status == true && d.AppUserId == member.Id);
+            var result = await _appUserAddressService.UpdateAsync(d => new AppUserAddress() { IsDefault = false }, d => d.Status == true && d.AppUserId == HttpWx.AppUserId);
 
             //设置当前新的默认地址
-            result = await _appUserAddressService.UpdateAsync(d => new AppUserAddress() { IsDefault = true }, d => d.Status == true && d.Id == member.Id && d.Id.Equals(addressId));
+            result = await _appUserAddressService.UpdateAsync(d => new AppUserAddress() { IsDefault = true }, d => d.Status == true && d.Id == HttpWx.AppUserId && d.Id.Equals(addressId));
             return Json(result);
         }
     }

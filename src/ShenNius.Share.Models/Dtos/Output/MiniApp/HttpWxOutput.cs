@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：HttpMiniUser
@@ -15,7 +12,7 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Output.MiniApp
 {
-    public class HttpMiniUser
+    public class HttpWxOutput
     {
         [JsonProperty("errcode")]
         public int Errcode { get; set; } = 0;
@@ -36,5 +33,11 @@ namespace ShenNius.Share.Models.Dtos.Output.MiniApp
         /// </summary>
         [JsonProperty("unionid")]
         public string Unionid { get; set; }
+
+    }
+    public class HttpWxUserOutput : HttpWxOutput
+    {
+        public int AppUserId { get; set; }
+        public int TenantId { get; set; }
     }
 }

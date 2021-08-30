@@ -28,13 +28,11 @@ namespace ShenNius.MiniApp.API.Controllers
     {
         private readonly IAppUserService _appUserService;
         private readonly ICacheHelper _cacheHelper;
-        private readonly IOrderService _orderService;
         private readonly HttpHelper _httpHelper;
-        public UserController(IAppUserService appUserService, ICacheHelper cacheHelper, IOrderService orderService, HttpHelper httpHelper)
+        public UserController(IAppUserService appUserService, ICacheHelper cacheHelper,  HttpHelper httpHelper)
         {
             _appUserService = appUserService;
             _cacheHelper = cacheHelper;
-            _orderService = orderService;
             _httpHelper = httpHelper;
         }
 
@@ -52,7 +50,7 @@ namespace ShenNius.MiniApp.API.Controllers
                 //微信登录，根据code获得openid
                 //var wxres = await WxTools.GetOpenId(input.Code);
                 var url = $"https://api.weixin.qq.com/sns/jscode2session?appid={AppSettings.MiniApp.AppId}&secret={AppSettings.MiniApp.AppSecret}&js_code={input.Code}&grant_type=authorization_code";
-                var res = await _httpHelper.GetAsync<HttpMiniUser>(url);
+                var res = await _httpHelper.GetAsync<HttpWxOutput>(url);
                 if (res == null)
                 {
                     throw new ArgumentNullException("获取用户实体信息为空");
@@ -68,7 +66,9 @@ namespace ShenNius.MiniApp.API.Controllers
                 // 生成token (session3rd)
                 var token = WxToken(input.TenantId, res.Openid);
                 // 记录缓存, 7天
-                _cacheHelper.Set(token, res, TimeSpan.FromDays(7));
+                HttpWxUserOutput wxUserOutput = (HttpWxUserOutput)res;
+                wxUserOutput.AppUserId = userId;
+                _cacheHelper.Set(token, wxUserOutput, TimeSpan.FromDays(7));
                 result.Data = new { userId, token };
 
                 return result;

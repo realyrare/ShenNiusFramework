@@ -6,6 +6,7 @@ using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Shop;
+using ShenNius.Share.Models.Dtos.Output.Shop;
 using ShenNius.Share.Models.Entity.Shop;
 using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Models.Enums.Extension;
@@ -13,6 +14,7 @@ using ShenNius.Share.Models.Enums.Shop;
 using SqlSugar;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 /*************************************
@@ -46,6 +48,12 @@ namespace ShenNius.Share.Domain.Services.Shop
         Task<ApiResult> AddSpecAsync(SpecValuesInput input);
 
         Task<ApiResult> GetListPageAsync(KeyListTenantQuery query);
+        /// <summary>
+        /// 小程序首页
+        /// </summary>
+        /// <param name="pageQuery"></param>
+        /// <returns></returns>
+        Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, bool>> where);
     }
     public class GoodsService : BaseServer<Goods>, IGoodsService
     {
@@ -55,7 +63,41 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             _mapper = mapper;
         }
+        public async Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, bool>> where)
+        {
+            var datas = await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId))
+                .Where((g, c)=>g.Status&&g.GoodsStatus==10)
+                .WhereIF(where!=null,where)
+              .OrderBy((g, c) => g.Id, OrderByType.Desc)
+              .Select((g, c) => new GoodsOutput()
+              {
+                  Name = g.Name,
+                  CategoryName = c.Name,
+                  SalesActual = g.SalesActual,
+                  Id = g.Id,
+                  ImgUrl = g.ImgUrl
+              }).ToPageAsync(query.Page, query.Limit);
+            foreach (var item in datas.Items)
+            {
+                if (!string.IsNullOrEmpty(item.ImgUrl))
+                {
+                    var imgArry = item.ImgUrl.Split(',');
+                    if (imgArry.Length > 0)
+                    {
+                        item.ImgUrl = imgArry[0];
+                    }
+                }
+                var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == item.Id).FirstAsync();
+                if (goodsSpec!=null)
+                {
+                    item.GoodsPrice = goodsSpec.GoodsPrice;
+                    item.GoodsSales = goodsSpec.GoodsSales;
+                    item.LinePrice = goodsSpec.LinePrice;
+                }
+            }
 
+            return new ApiResult(datas);
+        }
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
         {
             var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id&&g.TenantId==query.TenantId))

@@ -19,11 +19,12 @@ using System.Net;
 
 namespace ShenNius.MiniApp.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+   // [Route("api/[controller]/[action]")]
+    [Route("api/MiniApp/[controller]")]
     [ApiController]
     public class MiniAppBaseController : Controller
     {
-        public HttpMiniUser appUser { get; set; }
+        public HttpWxUserOutput HttpWx { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -38,8 +39,8 @@ namespace ShenNius.MiniApp.API.Controllers
                 return;
             }
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
-            appUser = cache.Get<HttpMiniUser>(token);
-            if (appUser == null)
+            HttpWx = cache.Get<HttpWxUserOutput>(token);
+            if (HttpWx == null)
             {
                 context.Result = new JsonResult(new ApiResult()
                 {
