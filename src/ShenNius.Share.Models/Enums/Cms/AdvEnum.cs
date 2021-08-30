@@ -10,7 +10,7 @@
 *└───────────────────────────────────┘
 **************************************/
 
-namespace ShenNius.Share.Models.Enums
+namespace ShenNius.Share.Models.Enums.Cms
 {
     public enum AdvEnum
     {
@@ -28,6 +28,11 @@ namespace ShenNius.Share.Models.Enums
         /// 优秀博客
         /// </summary>
         [Description("优秀博客")]
-        GoodBlog =2
+        GoodBlog =2,
+        /// <summary>
+        /// 小程序
+        /// </summary>
+        [Description("小程序")]
+        MiniApp = 3
     }
 }
