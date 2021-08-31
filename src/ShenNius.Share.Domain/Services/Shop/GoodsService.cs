@@ -53,7 +53,12 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// </summary>
         /// <param name="pageQuery"></param>
         /// <returns></returns>
-        Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, bool>> where);
+        Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, Category, GoodsSpec, object>> orderBywhere, OrderByType sort, Expression<Func<Goods, Category, GoodsSpec, bool>> where = null);
+        /// <summary>
+        /// 立即购买
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult> GetBuyNowAsync(int goodsId, int goodsNum, string goodsNo, int tenantId);
     }
     public class GoodsService : BaseServer<Goods>, IGoodsService
     {
@@ -63,13 +68,38 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             _mapper = mapper;
         }
-        public async Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, bool>> where)
+        public async Task<ApiResult> GetBuyNowAsync(int goodsId,int goodsNum, string goodsNo, int tenantId)
         {
-            var datas = await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId))
-                .Where((g, c)=>g.Status&&g.GoodsStatus==10)
+          var model=  await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId && gc.GoodsNo == goodsNo))
+                .Where((g, gc) => g.TenantId == tenantId&&g.Id==goodsId&&gc.Id==goodsId)
+                .Select((g, gc) => new {
+                g.Id,
+                g.ImgUrl,
+                gc.GoodsNo,
+                gc.GoodsPrice
+                }).FirstAsync();
+
+            if (model?.Id == null)
+            {
+                return new ApiResult("未找到该商品");
+            }
+
+            var totalPrice = model.GoodsPrice * goodsNum;
+            return new ApiResult(new
+            {
+                GoodsList = model, //单价*数量 
+                OrderTotalPrice = totalPrice
+            });
+          
+        }
+        public async Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, Category, GoodsSpec, object>> orderBywhere, OrderByType sort,Expression<Func<Goods, Category, GoodsSpec, bool>> where=null )
+        {
+            var datas = await Db.Queryable<Goods, Category, GoodsSpec>((g, c,gc) => new JoinQueryInfos(
+                JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId,JoinType.Inner,g.Id==gc.GoodsId))
+                .Where((g, c, gc) =>g.Status&&g.GoodsStatus==10)
                 .WhereIF(where!=null,where)
-              .OrderBy((g, c) => g.Id, OrderByType.Desc)
-              .Select((g, c) => new GoodsOutput()
+              .OrderBy(orderBywhere, OrderByType.Desc)
+              .Select((g, c, gc) => new GoodsOutput()
               {
                   Name = g.Name,
                   CategoryName = c.Name,
@@ -95,7 +125,6 @@ namespace ShenNius.Share.Domain.Services.Shop
                     item.LinePrice = goodsSpec.LinePrice;
                 }
             }
-
             return new ApiResult(datas);
         }
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)

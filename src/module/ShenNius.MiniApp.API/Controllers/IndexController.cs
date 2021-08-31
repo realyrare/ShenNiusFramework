@@ -14,6 +14,7 @@ using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Enums.Cms;
+using SqlSugar;
 using System.Threading.Tasks;
 
 namespace ShenNius.MiniApp.API.Controllers
@@ -32,9 +33,9 @@ namespace ShenNius.MiniApp.API.Controllers
         public async Task<ApiResult> Page()
         {
             var query = new ListTenantQuery() { Page=1,Limit=4,TenantId= HttpWx.TenantId};
-            var newest = await _goodsService.GetByWherePageAsync(query, d => d.Status);
+            var newest = await _goodsService.GetByWherePageAsync(query, (g, c, gc) => g.Id,OrderByType.Desc);
             query.Limit = 10;
-            var best = await _goodsService.GetByWherePageAsync(query, d => d.Status);
+            var best = await _goodsService.GetByWherePageAsync(query, (g, c, gc) =>gc.GoodsSales, OrderByType.Desc);
           
             var items = await _advListService.GetListAsync(d=>d.Type==AdvEnum.MiniApp);
 
