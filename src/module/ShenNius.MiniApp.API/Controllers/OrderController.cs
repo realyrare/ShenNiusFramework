@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Output.Shop;
 using System.Threading.Tasks;
 
 namespace ShenNius.MiniApp.API.Controllers
@@ -36,6 +37,32 @@ namespace ShenNius.MiniApp.API.Controllers
         {
            return   _orderGoodsService.ReceiptAsync(orderId, HttpWx.AppUserId);
 
+        }
+
+        /// <summary>
+        /// 小程序订单列表
+        /// </summary>
+        /// <param name="dataType">订单类型</param>
+        /// <returns></returns>
+        [HttpGet("getlist")]
+        public  Task<ApiResult> GetList(string dataType)
+        {
+           return _orderGoodsService.GetListAsync(HttpWx.AppUserId, dataType);
+
+        }
+        [HttpGet("detail")]
+        public  Task<ApiResult<OrderDetailOutput>> Detail(int orderId)
+        {
+            return  _orderService.GetOrderDetailAsync(orderId);
+        }
+        /// <summary>
+        /// 立马就买
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("BuyNow")]
+        public  Task<ApiResult> BuyNow([FromForm] int goodsId, [FromForm] int goodsNum, [FromForm] int goodsSkuId)
+        {
+            return  _orderGoodsService.BuyNowAsync(goodsId, goodsNum, goodsSkuId, HttpWx.AppUserId);
         }
     }
 }

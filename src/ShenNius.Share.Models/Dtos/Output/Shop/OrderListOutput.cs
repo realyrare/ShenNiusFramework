@@ -1,8 +1,6 @@
 ﻿using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
 using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：OrderListOutput
