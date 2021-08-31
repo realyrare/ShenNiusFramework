@@ -12,5 +12,9 @@
         public string Password { get; set; }
 
         public string NumberGuid { get; set; }
+        /// <summary>
+        /// 确定再次登录
+        /// </summary>
+        public bool ConfirmLogin { get; set; }
     }
 }

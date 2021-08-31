@@ -30,11 +30,10 @@
                 dataType: 'json', //服务器返回json格式数据
                 type: method, //HTTP请求类型  
                 success: function (data) {
-                    if (data.statusCode == 200 && data.success == true) {
+                    if (data.statusCode == 200) {
                         callFun(data);
-                    } else {
-                        toastr.error(data.msg);
-                        return false;
+                    } else {                        
+                            toastr.error(data.msg);                                    
                     }                   
                 },
                 error: function (e) {

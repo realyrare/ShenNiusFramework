@@ -214,7 +214,7 @@ namespace ShenNius.Sys.API.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<ApiResult<LoginOutput>> MvcLogin([FromForm]LoginInput loginInput)
+        public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody]LoginInput loginInput)
         {         
             try
             {
@@ -226,7 +226,7 @@ namespace ShenNius.Sys.API.Controllers
                 var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
                 loginInput.Password = ras.Decrypt(loginInput.Password);
                var  result = await _userService.LoginAsync(loginInput);
-                if (result.StatusCode == 500)
+                if (result.StatusCode == 500|| (result.StatusCode == 200&&result.Success==false))
                 {
                     result.Data = new LoginOutput();
                     return result;

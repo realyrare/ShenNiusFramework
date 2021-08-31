@@ -50,12 +50,14 @@ namespace ShenNius.Share.Domain.Services.Sys
             {
                 new LogHelper().Process(loginModel?.Name, LogEnum.Login.GetEnumText(), $"{loginModel?.Name}登陆失败，用户名或密码错误！", LogLevel.Info);
                 return new ApiResult<LoginOutput>("用户名或密码错误", 500);
-
             }
-            if (loginModel.IsLogin)
+            if (!loginInput.ConfirmLogin)
             {
-                return new ApiResult<LoginOutput>($"该用户[{loginInput.LoginName}]已经登录，此时强行登录，其他地方会被挤下线！", 500);
-            }
+                if (loginModel.IsLogin)
+                {
+                    return new ApiResult<LoginOutput>($"该用户[{loginInput.LoginName}]已经登录，此时强行登录，其他地方会被挤下线！", 200);
+                }
+            }            
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParseHelper.GetAddressByIP(ip);
             await UpdateAsync(d => new User()

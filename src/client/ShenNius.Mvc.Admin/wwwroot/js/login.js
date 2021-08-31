@@ -14,33 +14,27 @@ layui.use(['jquery', 'form', 'common'], function () {
             lineColor: '#7ec7fd'
         });
     });
-
-    // 登录过期的时候，跳出ifram框架
-    if (top.location != self.location) top.location = self.location;
-
-    // 进行登录操作
-    form.on('submit(login)', function (data) {
-        if (data.field.captcha == '') {
-            layer.msg('验证码不能为空');
-            return false;
-        }
-        var crypt = new JSEncrypt();
-        crypt.setPrivateKey(data.field.privateKey);
-        var enc = crypt.encrypt(data.field.password);
-        // $("#password").val(enc);
-        data.field.password = enc;
-        //console.log("password:" + data.field.password)
-
-        $("#btnlogin").text("正在登陆中...");
-        $("#btnlogin").attr('disabled', 'disabled');
-        $.ajax({
-            url: "/api/user/mvcLogin",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: data.field,
-            success: function (res) {
-                //console.log("resmsg:" + res.msg);
-                if (res.statusCode == 200 && res.success == true) {
+    function login(data) {
+        os.ajax('user/mvcLogin', data, "application/json", "post", function (res) {
+            if (res.statusCode == 200) {
+                if (res.success == false) {
+                    if (res.msg.indexOf("已经登录") != -1) {
+                        layer.confirm(res.msg, /*{ icon: 3, title: '提示' },*/ {
+                            btn: ['继续登录', '取消']
+                        }, function (index) {
+                            data.confirmLogin = true;
+                            layer.close(index);
+                            //此处请求后台程序，下方是成功后的前台处理……
+                            var index = layer.load(0, { shade: [0.7, '#393D49'] }, { shadeClose: true }); //0代表加载的风格，支持0-2
+                            login(data);
+                        }, function (index) {
+                            //取消事件
+                            $("#btnlogin").text("立即登录");
+                            $("#btnlogin").attr('disabled', false);
+                            layer.close(index);
+                        });
+                    }
+                } else {
                     if (res.data.menuAuthOutputs == null || res.data.menuAuthOutputs.length <= 0) {
                         os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                         return;
@@ -56,19 +50,33 @@ layui.use(['jquery', 'form', 'common'], function () {
                             window.location.href = "/home/index#" + rurl;
                         }
                     }, 500);
-                } else {
-                    $("#btnlogin").text("立即登录");
-                    $("#btnlogin").attr('disabled', false);
-                    os.error(res.msg);
                 }
-            },
-            error: function (e) {
-                var res = $.parseJSON(e.responseText);
-                console.log("erro object:" + e.responseText);
+            } else {
+                $("#btnlogin").text("立即登录");
+                $("#btnlogin").attr('disabled', false);
                 os.error(res.msg);
-                return;
-            },
+            }
         });
+    }
+    // 登录过期的时候，跳出ifram框架
+    if (top.location != self.location) top.location = self.location;
+
+    // 进行登录操作
+    form.on('submit(login)', function (data) {
+        if (data.field.captcha == '') {
+            layer.msg('验证码不能为空');
+            return false;
+        }
+        var crypt = new JSEncrypt();
+        crypt.setPrivateKey(data.field.privateKey);
+        var enc = crypt.encrypt(data.field.password);
+        // $("#password").val(enc);
+        data.field.password = enc;
+        //console.log("password:" + data.field.password)
+        data.field.confirmLogin = false;
+        $("#btnlogin").text("正在登录中...");
+        $("#btnlogin").attr('disabled', 'disabled');
+        login(data.field);
         return false;
     });
     $(window).resize(
