@@ -1,6 +1,7 @@
 ﻿
 @model ShenNius.Share.Models.Entity.Cms.AdvList
 @using ShenNius.Share.Models.Enums.Cms;
+@using ShenNius.Share.Models.Enums.Extension;
     @section css{
         <style>
             .layui-form-item .layui-input {
@@ -48,17 +49,17 @@
                         <label class="layui-form-label required">类型</label>
                         <div class="layui-input-block">
                             <select name="type" id="parentId" lay-verify="parentId" lay-filter="parentId">
-                                @foreach (var item in (Dictionary<AdvEnum, string>)ViewBag.Dic)
+                                @foreach (var item in (Dictionary<int, string>)ViewBag.Dic)
                                 {
-                                    if (item.Key == Model.Type)
+                                    if (item.Key == (int)Model.Type)
                                     {
                                         <option value="@item.Key" selected>@item.Value</option>
                                     }
                                     else
                                     {
-                                        <option value="@item.Key" >@item.Value</option>
-                                    }                                    
-                                }                               
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
@@ -80,15 +81,22 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <label class="layui-form-label ">链接地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="LinkUrl"  value="@Model.LinkUrl"  class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
                         <label class="layui-form-label required">排序</label>
                         <div class="layui-input-block">
                             <input type="number" name="sort" value="@Model.Sort" lay-verify="required" l class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label required">描述信息</label>
+                        <label class="layui-form-label ">描述信息</label>
                         <div class="layui-input-block">
-                            <textarea name="summary" lay-verify="required" value="@Model.Summary" class="layui-textarea" placeholder="请输入描述信息"></textarea>
+                            <textarea name="summary"  value="@Model.Summary" class="layui-textarea" placeholder="请输入描述信息"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">

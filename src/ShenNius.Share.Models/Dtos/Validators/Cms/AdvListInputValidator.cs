@@ -20,7 +20,7 @@ namespace ShenNius.Share.Models.Dtos.Validators.Cms
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage("标题必须填写");
             RuleFor(x => x.Target).NotEmpty().WithMessage("跳转方式必须填写");
-            RuleFor(x => x.Type).NotEmpty().WithMessage("类型必须填写");
+            //RuleFor(x => x.Type).NotEmpty().GreaterThan(0).WithMessage("类型必须填写");
             RuleFor(x => x.ImgUrl).NotEmpty().WithMessage("图片地址必须填写");
         }
     }

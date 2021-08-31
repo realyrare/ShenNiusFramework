@@ -27,12 +27,12 @@ namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
         {
             AdvList model = id == 0 ? new AdvList() : await _advListService.GetModelAsync(d => d.Id == id && d.Status);
 
-            Dictionary<AdvEnum, string> dic = new Dictionary<AdvEnum, string>
+            Dictionary<int, string> dic = new Dictionary<int, string>
             {
-                { AdvEnum.FriendlyLink, AdvEnum.FriendlyLink.GetEnumText() },
-                 { AdvEnum.Slideshow, AdvEnum.Slideshow.GetEnumText() },
-                  { AdvEnum.GoodBlog, AdvEnum.GoodBlog.GetEnumText() },
-                   { AdvEnum.MiniApp, AdvEnum.MiniApp.GetEnumText() },
+                { AdvEnum.FriendlyLink.GetValue<int>(), AdvEnum.FriendlyLink.GetEnumText() },
+                 { AdvEnum.Slideshow.GetValue<int>(), AdvEnum.Slideshow.GetEnumText() },
+                  { AdvEnum.GoodBlog.GetValue<int>(), AdvEnum.GoodBlog.GetEnumText() },
+                   { AdvEnum.MiniApp.GetValue<int>(), AdvEnum.MiniApp.GetEnumText() },
             };
             ViewBag.Dic = dic;
             return View(model);

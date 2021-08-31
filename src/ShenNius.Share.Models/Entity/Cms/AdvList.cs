@@ -43,6 +43,10 @@ namespace ShenNius.Share.Models.Entity.Cms
                 {
                     name= AdvEnum.GoodBlog.GetEnumText();
                 }
+                if (Type == AdvEnum.MiniApp)
+                {
+                    name = AdvEnum.MiniApp.GetEnumText();
+                }
                 return name;
             }
         }
