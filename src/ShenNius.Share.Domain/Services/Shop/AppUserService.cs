@@ -2,7 +2,7 @@
 using ShenNius.Share.Models.Entity.Shop;
 
 /*************************************
-* 类名：OrderGoodsService
+* 类名：AppUserService
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
 * 时间：2021/8/20 11:53:40

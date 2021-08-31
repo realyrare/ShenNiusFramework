@@ -13,6 +13,7 @@ using ShenNius.Share.Domain.Services.Cms;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
+using ShenNius.Share.Models.Enums.Cms;
 using System.Threading.Tasks;
 
 namespace ShenNius.MiniApp.API.Controllers
@@ -35,7 +36,7 @@ namespace ShenNius.MiniApp.API.Controllers
             query.Limit = 10;
             var best = await _goodsService.GetByWherePageAsync(query, d => d.Status);
           
-            var items = await _advListService.GetListAsync(d=>d.Type==1);
+            var items = await _advListService.GetListAsync(d=>d.Type==AdvEnum.MiniApp);
 
             return new ApiResult(new { newest, best, items });
         }

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Enums.Cms;
 
 /*************************************
 * 类名：IndexController
@@ -246,7 +247,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
             return new ApiResult(result);
         }
         [HttpGet]
-        public async Task<ApiResult> GetAdvList(int siteId, int type)
+        public async Task<ApiResult> GetAdvList(int siteId, AdvEnum type)
         {
             var advList = await _advlistService.GetListAsync(x => x.Status == true && x.TenantId == siteId && x.Type == type, x => x.Sort, false);
             return new ApiResult(advList);

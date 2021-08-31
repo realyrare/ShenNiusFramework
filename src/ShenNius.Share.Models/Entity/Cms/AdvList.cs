@@ -23,7 +23,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public int Type { get; set; }
+        public AdvEnum Type { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public string TypeName
@@ -31,15 +31,15 @@ namespace ShenNius.Share.Models.Entity.Cms
             get
             {
                 string name = "";
-                if (Type == AdvEnum.FriendlyLink.GetValue<int>())
+                if (Type == AdvEnum.FriendlyLink)
                 {
                     name = AdvEnum.FriendlyLink.GetEnumText();
                 }
-                if (Type == AdvEnum.Slideshow.GetValue<int>())
+                if (Type == AdvEnum.Slideshow)
                 {
                     name= AdvEnum.Slideshow.GetEnumText();
                 }
-                if (Type == AdvEnum.GoodBlog.GetValue<int>())
+                if (Type == AdvEnum.GoodBlog)
                 {
                     name= AdvEnum.GoodBlog.GetEnumText();
                 }
