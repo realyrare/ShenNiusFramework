@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Mvc.Admin.Controllers
 {
+    [LogIgnore]
     public class HomeController : Controller
     {
         [HttpGet]

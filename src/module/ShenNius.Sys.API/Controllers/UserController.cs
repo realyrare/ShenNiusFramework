@@ -213,7 +213,7 @@ namespace ShenNius.Sys.API.Controllers
             return result;
         }
 
-        [HttpPost, AllowAnonymous]
+        [HttpPost, AllowAnonymous, LogIgnore]
         public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody]LoginInput loginInput)
         {         
             try

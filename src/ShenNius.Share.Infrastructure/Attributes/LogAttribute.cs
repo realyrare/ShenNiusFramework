@@ -23,13 +23,12 @@ namespace ShenNius.Share.Infrastructure.Attributes
         public string LogType { get; set; }
         private string ActionArguments { get; set; }
         private Stopwatch Stopwatch { get; set; }
-
+        object logIgnore = null;
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            base.OnActionExecuting(context);
-           
+                     
             var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;         
-            var logIgnore = controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(LogIgnoreAttribute), false).FirstOrDefault();
+             logIgnore = controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(LogIgnoreAttribute), false).FirstOrDefault();
             if (logIgnore!=null)
             {
                 return;
@@ -37,11 +36,16 @@ namespace ShenNius.Share.Infrastructure.Attributes
             ActionArguments = JsonConvert.SerializeObject(context.ActionArguments);
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
+            base.OnActionExecuting(context);
         }
 
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
+            if (logIgnore != null)
+            {
+                return;
+            }
             base.OnActionExecuted(context);
             Stopwatch.Stop();
 
