@@ -50,7 +50,11 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         public string SpecSingle { get; set; }
         public GoodsSpecInput  GoodsSpecInput { get; set; }
         
-
+        /// <summary>
+        /// 但规格构建实体数据
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
         public GoodsSpec BuildGoodsSpec(int goodsId)
         {
             GoodsSpecInput.CreateTime = CreateTime;
@@ -59,7 +63,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
             GoodsSpecInput.SpecSkuId = null;
           return  CreateGoodsSpecEntity(GoodsSpecInput);         
         }
-
+       
         private GoodsSpec CreateGoodsSpecEntity(GoodsSpecInput input)
         {
             GoodsSpec goodsSpec = new GoodsSpec()
@@ -67,7 +71,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
                 CreateTime = input.CreateTime,
                 TenantId = input.TenantId,
                 GoodsId = input.GoodsId,
-                SpecSkuId = null,
+                SpecSkuId = input.SpecSkuId,
                 GoodsPrice = input.GoodsPrice,
                 LinePrice = input.LinePrice,
                 GoodsNo = input.GoodsNo,
@@ -76,7 +80,11 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
             };
             return goodsSpec;
         }
-
+        /// <summary>
+        /// 多规格构建实体数据
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
         public List<GoodsSpec> BuildGoodsSpecs(int goodsId)
         {
             var list = new List<GoodsSpec>();
