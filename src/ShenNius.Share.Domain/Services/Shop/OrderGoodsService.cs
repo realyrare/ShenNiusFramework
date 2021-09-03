@@ -67,8 +67,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         }
 
         public async Task<ApiResult> GetListAsync(int appUserId ,string dataType)
-        {
-        
+        {        
             var data = await Db.Queryable<Order, OrderGoods>((o, od) => new object[] {
                 JoinType.Inner,o.Id==od.OrderId,
 
