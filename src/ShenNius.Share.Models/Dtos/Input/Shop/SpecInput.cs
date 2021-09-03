@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShenNius.Share.Models.Dtos.Common;
+using System;
 using System.Collections.Generic;
 using System.Web;
 
@@ -14,20 +15,18 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
-    public class SpecInput
+    public class SpecInput: GlobalTenantInput
     {
         public string  SpecName { get; set; }
         public string  SpecValue { get; set; }
-        public int TenantId { get; set; }
     }
     /// <summary>
     /// 根据规格组id添加规格值
     /// </summary>
-    public class SpecValuesInput
+    public class SpecValuesInput : GlobalTenantInput
     {
         public int SpecId { get; set; }
         public string SpecValue { get; set; }
-        public int TenantId { get; set; }
     }
 
 }
