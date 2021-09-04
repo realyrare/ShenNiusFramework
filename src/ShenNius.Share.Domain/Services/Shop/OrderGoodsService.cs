@@ -100,6 +100,8 @@ namespace ShenNius.Share.Domain.Services.Shop
 
             return new ApiResult(data);
         }
+
+
         /// <summary>
         /// TODO 需要修改
         /// </summary>
@@ -110,44 +112,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <returns></returns>
         public async Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId)
         {
-          
-            Goods goodsModel = await _goodsService.GetModelAsync(d => d.Id == goodsId && d.Status);
-            if (goodsModel?.Id==null)
-            {
-                throw new FriendlyException($"此商品{goodsId}没有查找到对应的商品信息");
-            }
-            if (goodsModel.GoodsStatus == GoodsStatusEnum.SoldOut.GetValue<int>())
-            {
-                throw new FriendlyException($"此商品已经下架");
-            }
-            GoodsSpec goodsSpec = null;
-            if (!string.IsNullOrEmpty(specSkuId))
-            {
-                //多规格
-                // var skuIds = specSkuId.Split('_');
-                // List<int> ids = new List<int>();
-                // for (int i = 0; i < skuIds.Length; i++)
-                // {
-                //     ids.Add(Convert.ToInt32(skuIds[i]));
-                // }
-                // //根据skuid查出对应的商品id
-                //var goodsIds =await Db.Queryable<GoodsSpecRel>().Where(d => d.Status && ids.Contains(d.SpecValueId)).Select(d=>d.GoodsId).ToListAsync();
-                // if (goodsIds.Count>0)
-                // {
-                //     var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && goodsIds.Contains(d.GoodsId)).FirstAsync();
-
-                // }
-                 goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId && d.SpecSkuId.Equals(specSkuId)).FirstAsync();               
-            }
-            else {
-                 goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId).FirstAsync();
-            }
-
-            if (!(goodsSpec.StockNum > 0 & goodsSpec.StockNum > goodsNum))
-            {
-                throw new ArgumentNullException($"商品库存不存，目前仅剩{goodsSpec.StockNum}件");
-            }
-
+          var  goodsData=await _goodsService. GoodInfoIsExist(goodsId, goodsNum, specSkuId, appUserId);
             var addressModel = await _appUserAddressService.GetModelAsync(d =>d.AppUserId == appUserId && d.IsDefault == true);
          
             try
@@ -169,19 +134,19 @@ namespace ShenNius.Share.Domain.Services.Shop
                 OrderGoods orderGoods = new OrderGoods()
                 {
                     GoodsId = goodsId,
-                    GoodsName = goodsModel.Name,
-                    GoodsPrice = goodsSpec.GoodsPrice,
-                    LinePrice = goodsSpec.LinePrice,
+                    GoodsName = goodsData.Item1.Name,
+                    GoodsPrice = goodsData.Item2.GoodsPrice,
+                    LinePrice = goodsData.Item2.LinePrice,
                     CreateTime = DateTime.Now,
-                    GoodsNo = goodsSpec.GoodsNo,
-                    Content = goodsModel.Content,
-                    ImgUrl = goodsModel.ImgUrl,
+                    GoodsNo = goodsData.Item2.GoodsNo,
+                    Content = goodsData.Item1.Content,
+                    ImgUrl = goodsData.Item1.ImgUrl,
                     AppUserId = appUserId,
                     TotalNum = goodsNum,
-                    TotalPrice = goodsSpec.GoodsPrice * goodsNum,
+                    TotalPrice = goodsData.Item2.GoodsPrice * goodsNum,
                     //PayPrice = goodsModel.Data.GoodsSpecInput.GoodsPrice * goodsNum,
-                    SpecType = goodsModel.SpecType,
-                    GoodsAttr = JsonConvert.SerializeObject(goodsModel.SpecMany),
+                    SpecType = goodsData.Item1.SpecType,
+                    GoodsAttr = JsonConvert.SerializeObject(goodsData.Item1.SpecMany),
                     OrderId = orderId
                 };
                 await Db.Insertable(orderGoods).ExecuteCommandAsync();

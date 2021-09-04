@@ -59,6 +59,15 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// </summary>
         /// <returns></returns>
         Task<ApiResult> GetBuyNowAsync(int goodsId, int goodsNum, string goodsNo, int tenantId);
+        /// <summary>
+        /// 商品信息判断（添加购物车，下单共用）
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <param name="goodsNum"></param>
+        /// <param name="specSkuId"></param>
+        /// <param name="appUserId"></param>
+        /// <returns></returns>
+        Task<Tuple<Goods, GoodsSpec>> GoodInfoIsExist(int goodsId, int goodsNum, string specSkuId, int appUserId);
     }
     public class GoodsService : BaseServer<Goods>, IGoodsService
     {
@@ -68,6 +77,50 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             _mapper = mapper;
         }
+
+        
+        public async Task<Tuple<Goods, GoodsSpec>> GoodInfoIsExist(int goodsId, int goodsNum, string specSkuId, int appUserId)
+        {
+            Goods goodsModel = await GetModelAsync(d => d.Id == goodsId && d.Status);
+            if (goodsModel?.Id == null)
+            {
+                throw new FriendlyException($"此商品{goodsId}没有查找到对应的商品信息");
+            }
+            if (goodsModel.GoodsStatus == GoodsStatusEnum.SoldOut.GetValue<int>())
+            {
+                throw new FriendlyException($"此商品已经下架");
+            }
+            GoodsSpec goodsSpec = null;
+            if (!string.IsNullOrEmpty(specSkuId))
+            {
+                //多规格
+                // var skuIds = specSkuId.Split('_');
+                // List<int> ids = new List<int>();
+                // for (int i = 0; i < skuIds.Length; i++)
+                // {
+                //     ids.Add(Convert.ToInt32(skuIds[i]));
+                // }
+                // //根据skuid查出对应的商品id
+                //var goodsIds =await Db.Queryable<GoodsSpecRel>().Where(d => d.Status && ids.Contains(d.SpecValueId)).Select(d=>d.GoodsId).ToListAsync();
+                // if (goodsIds.Count>0)
+                // {
+                //     var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && goodsIds.Contains(d.GoodsId)).FirstAsync();
+
+                // }
+                goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId && d.SpecSkuId.Equals(specSkuId)).FirstAsync();
+            }
+            else
+            {
+                goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId).FirstAsync();
+            }
+
+            if (!(goodsSpec.StockNum > 0 & goodsSpec.StockNum > goodsNum))
+            {
+                throw new ArgumentNullException($"商品库存不存，目前仅剩{goodsSpec.StockNum}件");
+            }
+            return new Tuple<Goods, GoodsSpec>(goodsModel, goodsSpec);
+        }
+
         public async Task<ApiResult> GetBuyNowAsync(int goodsId,int goodsNum, string goodsNo, int tenantId)
         {
           var model=  await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId && gc.GoodsNo == goodsNo))
@@ -76,14 +129,18 @@ namespace ShenNius.Share.Domain.Services.Shop
                 g.Id,
                 g.ImgUrl,
                 gc.GoodsNo,
-                gc.GoodsPrice
+                gc.GoodsPrice,
+                gc.StockNum
                 }).FirstAsync();
 
             if (model?.Id == null)
             {
                 return new ApiResult("未找到该商品");
             }
-
+            if (!(model.StockNum > 0 & model.StockNum > goodsNum))
+            {
+                throw new ArgumentNullException($"商品库存不存，目前仅剩{model.StockNum}件");
+            }
             var totalPrice = model.GoodsPrice * goodsNum;
             return new ApiResult(new
             {
@@ -105,7 +162,10 @@ namespace ShenNius.Share.Domain.Services.Shop
                   CategoryName = c.Name,
                   SalesActual = g.SalesActual,
                   Id = g.Id,
-                  ImgUrl = g.ImgUrl
+                  ImgUrl = g.ImgUrl,
+                  GoodsPrice = gc.GoodsPrice,
+            GoodsSales = gc.GoodsSales,
+            LinePrice = gc.LinePrice,
               }).ToPageAsync(query.Page, query.Limit);
             foreach (var item in datas.Items)
             {
@@ -117,13 +177,13 @@ namespace ShenNius.Share.Domain.Services.Shop
                         item.ImgUrl = imgArry[0];
                     }
                 }
-                var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == item.Id).FirstAsync();
-                if (goodsSpec!=null)
-                {
-                    item.GoodsPrice = goodsSpec.GoodsPrice;
-                    item.GoodsSales = goodsSpec.GoodsSales;
-                    item.LinePrice = goodsSpec.LinePrice;
-                }
+                //var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == item.Id).FirstAsync();
+                //if (goodsSpec!=null)
+                //{
+                //    item.GoodsPrice = goodsSpec.GoodsPrice;
+                //    item.GoodsSales = goodsSpec.GoodsSales;
+                //    item.LinePrice = goodsSpec.LinePrice;
+                //}
             }
             return new ApiResult(datas);
         }
