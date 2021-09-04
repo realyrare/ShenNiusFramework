@@ -1,12 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Input.Shop;
 using ShenNius.Share.Models.Dtos.Output.Shop;
 using ShenNius.Share.Models.Entity.Shop;
 using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
 using SqlSugar;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 /*************************************
@@ -26,17 +31,18 @@ namespace ShenNius.Share.Domain.Services.Shop
         Task<ApiResult> ReceiptAsync(int orderId, int appUserId);
         Task<ApiResult> CancelOrderAsync(int orderId, int goodsId, int appUserId);
         Task<ApiResult> GetListAsync(int appUserId, string dataType);
-        Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, int goodsSkuId, int appUserId);
+        Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId);
     }
     public class OrderGoodsService : BaseServer<OrderGoods>, IOrderGoodsService
     {
         private readonly IAppUserAddressService _appUserAddressService;
         private readonly IGoodsService _goodsService;
-
-        public OrderGoodsService(IAppUserAddressService appUserAddressService,IGoodsService goodsService )
+        private readonly IMapper _mapper;     
+        public OrderGoodsService(IAppUserAddressService appUserAddressService,IGoodsService goodsService, IMapper mapper )
         {
-            this._appUserAddressService = appUserAddressService;
-            this._goodsService = goodsService;
+            _appUserAddressService = appUserAddressService;
+            _goodsService = goodsService;
+            _mapper = mapper;
         }
         public async Task<ApiResult> ReceiptAsync(int orderId, int appUserId)
         {
@@ -102,15 +108,48 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <param name="goodsSkuId"></param>
         /// <param name="appUserId"></param>
         /// <returns></returns>
-        public async Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, int goodsSkuId, int appUserId)
+        public async Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId)
         {
-           // var goodsModel = await Db.Queryable<Goods>().Where(d => d.Status == true &&d.GoodsStatus==GoodsStatusEnum.PutAway.GetValue<int>() && d.Id.Equals(goodsId)).FirstAsync();
-            var goodsModel = await _goodsService.DetailAsync(goodsId);
-            var addressModel = await _appUserAddressService.GetModelAsync(d =>d.AppUserId == appUserId && d.IsDefault == true);
-            if (goodsModel == null)
+          
+            Goods goodsModel = await _goodsService.GetModelAsync(d => d.Id == goodsId && d.Status);
+            if (goodsModel?.Id==null)
             {
-                throw new ArgumentNullException("商品实体信息为空！");
+                throw new FriendlyException($"此商品{goodsId}没有查找到对应的商品信息");
             }
+            if (goodsModel.GoodsStatus == GoodsStatusEnum.SoldOut.GetValue<int>())
+            {
+                throw new FriendlyException($"此商品已经下架");
+            }
+            GoodsSpec goodsSpec = null;
+            if (!string.IsNullOrEmpty(specSkuId))
+            {
+                //多规格
+                // var skuIds = specSkuId.Split('_');
+                // List<int> ids = new List<int>();
+                // for (int i = 0; i < skuIds.Length; i++)
+                // {
+                //     ids.Add(Convert.ToInt32(skuIds[i]));
+                // }
+                // //根据skuid查出对应的商品id
+                //var goodsIds =await Db.Queryable<GoodsSpecRel>().Where(d => d.Status && ids.Contains(d.SpecValueId)).Select(d=>d.GoodsId).ToListAsync();
+                // if (goodsIds.Count>0)
+                // {
+                //     var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && goodsIds.Contains(d.GoodsId)).FirstAsync();
+
+                // }
+                 goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId && d.SpecSkuId.Equals(specSkuId)).FirstAsync();               
+            }
+            else {
+                 goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.Status && d.GoodsId == goodsId).FirstAsync();
+            }
+
+            if (!(goodsSpec.StockNum > 0 & goodsSpec.StockNum > goodsNum))
+            {
+                throw new ArgumentNullException($"商品库存不存，目前仅剩{goodsSpec.StockNum}件");
+            }
+
+            var addressModel = await _appUserAddressService.GetModelAsync(d =>d.AppUserId == appUserId && d.IsDefault == true);
+         
             try
             {
                 Db.Ado.BeginTran();
@@ -130,19 +169,19 @@ namespace ShenNius.Share.Domain.Services.Shop
                 OrderGoods orderGoods = new OrderGoods()
                 {
                     GoodsId = goodsId,
-                    GoodsName = goodsModel.Data.Name,
-                    GoodsPrice = goodsModel.Data.GoodsSpecInput.GoodsPrice,
-                    LinePrice = goodsModel.Data.GoodsSpecInput.LinePrice,
+                    GoodsName = goodsModel.Name,
+                    GoodsPrice = goodsSpec.GoodsPrice,
+                    LinePrice = goodsSpec.LinePrice,
                     CreateTime = DateTime.Now,
-                    GoodsNo = goodsModel.Data.GoodsSpecInput.GoodsNo,
-                    Content = goodsModel.Data.Content,
-                    ImgUrl = goodsModel.Data.ImgUrl,
+                    GoodsNo = goodsSpec.GoodsNo,
+                    Content = goodsModel.Content,
+                    ImgUrl = goodsModel.ImgUrl,
                     AppUserId = appUserId,
                     TotalNum = goodsNum,
-                    TotalPrice = goodsModel.Data.GoodsSpecInput.GoodsPrice * goodsNum,
+                    TotalPrice = goodsSpec.GoodsPrice * goodsNum,
                     //PayPrice = goodsModel.Data.GoodsSpecInput.GoodsPrice * goodsNum,
-                    SpecType = goodsModel.Data.SpecType,
-                    GoodsAttr = JsonConvert.SerializeObject(goodsModel.Data.SpecMany),
+                    SpecType = goodsModel.SpecType,
+                    GoodsAttr = JsonConvert.SerializeObject(goodsModel.SpecMany),
                     OrderId = orderId
                 };
                 await Db.Insertable(orderGoods).ExecuteCommandAsync();

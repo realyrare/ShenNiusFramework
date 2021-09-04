@@ -69,7 +69,7 @@ namespace ShenNius.MiniApp.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("BuyNow")]
-        public  Task<ApiResult> BuyNow([FromForm] int goodsId, [FromForm] int goodsNum, [FromForm] int goodsSkuId)
+        public  Task<ApiResult> BuyNow([FromForm] int goodsId, [FromForm] int goodsNum, [FromForm] string goodsSkuId)
         {
             return  _orderGoodsService.BuyNowAsync(goodsId, goodsNum, goodsSkuId, HttpWx.AppUserId);
         }
@@ -96,15 +96,15 @@ namespace ShenNius.MiniApp.API.Controllers
         /// <param name="wxappId"></param>
         /// <returns></returns>
         [HttpGet("Statistics")]
-        public async Task<ApiResult> Statistics(int wxappId)
+        public async Task<ApiResult> Statistics()
         {
           var appUser=  await _appUserService.GetModelAsync(d => d.Status && d.Id == HttpWx.AppUserId);
-            var paymentCount = await GetOrderCount(wxappId, "payment");
-            var receivedCount = await GetOrderCount(wxappId, "received");
-            return new ApiResult(new { userInfo = appUser, orderCount = new { payment = paymentCount, received = receivedCount } }));
+            var paymentCount = await GetOrderCount("payment");
+            var receivedCount = await GetOrderCount("received");
+            return new ApiResult(new { userInfo = appUser, orderCount = new { payment = paymentCount, received = receivedCount } });
         }
 
-        private async Task<int> GetOrderCount(int wxappId, string type = "all")
+        private async Task<int> GetOrderCount(string type = "all")
         {
             Expression<Func<Order, bool>> where = null;
             switch (type)
