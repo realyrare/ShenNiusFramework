@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
@@ -78,7 +79,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             _mapper = mapper;
         }
 
-        
+
         public async Task<Tuple<Goods, GoodsSpec>> GoodInfoIsExist(int goodsId, int goodsNum, string specSkuId, int appUserId)
         {
             Goods goodsModel = await GetModelAsync(d => d.Id == goodsId && d.Status);
@@ -121,17 +122,17 @@ namespace ShenNius.Share.Domain.Services.Shop
             return new Tuple<Goods, GoodsSpec>(goodsModel, goodsSpec);
         }
 
-        public async Task<ApiResult> GetBuyNowAsync(int goodsId,int goodsNum, string goodsNo, int tenantId)
+        public async Task<ApiResult> GetBuyNowAsync(int goodsId, int goodsNum, string goodsNo, int tenantId)
         {
-          var model=  await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId && gc.GoodsNo == goodsNo))
-                .Where((g, gc) => g.TenantId == tenantId&&g.Id==goodsId&&gc.Id==goodsId)
-                .Select((g, gc) => new {
-                g.Id,
-                g.ImgUrl,
-                gc.GoodsNo,
-                gc.GoodsPrice,
-                gc.StockNum
-                }).FirstAsync();
+            var model = await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId && gc.GoodsNo == goodsNo))
+                  .Where((g, gc) => g.TenantId == tenantId && g.Id == goodsId && gc.Id == goodsId)
+                  .Select((g, gc) => new {
+                      g.Id,
+                      g.ImgUrl,
+                      gc.GoodsNo,
+                      gc.GoodsPrice,
+                      gc.StockNum
+                  }).FirstAsync();
 
             if (model?.Id == null)
             {
@@ -147,14 +148,14 @@ namespace ShenNius.Share.Domain.Services.Shop
                 GoodsList = model, //单价*数量 
                 OrderTotalPrice = totalPrice
             });
-          
+
         }
-        public async Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, Category, GoodsSpec, object>> orderBywhere, OrderByType sort,Expression<Func<Goods, Category, GoodsSpec, bool>> where=null )
+        public async Task<ApiResult> GetByWherePageAsync(ListTenantQuery query, Expression<Func<Goods, Category, GoodsSpec, object>> orderBywhere, OrderByType sort, Expression<Func<Goods, Category, GoodsSpec, bool>> where = null)
         {
-            var datas = await Db.Queryable<Goods, Category, GoodsSpec>((g, c,gc) => new JoinQueryInfos(
-                JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId,JoinType.Inner,g.Id==gc.GoodsId))
-                .Where((g, c, gc) =>g.Status&&g.GoodsStatus==10)
-                .WhereIF(where!=null,where)
+            var datas = await Db.Queryable<Goods, Category, GoodsSpec>((g, c, gc) => new JoinQueryInfos(
+                JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId, JoinType.Inner, g.Id == gc.GoodsId))
+                .Where((g, c, gc) => g.Status && g.GoodsStatus == 10)
+                .WhereIF(where != null, where)
               .OrderBy(orderBywhere, OrderByType.Desc)
               .Select((g, c, gc) => new GoodsOutput()
               {
@@ -164,51 +165,37 @@ namespace ShenNius.Share.Domain.Services.Shop
                   Id = g.Id,
                   ImgUrl = g.ImgUrl,
                   GoodsPrice = gc.GoodsPrice,
-            GoodsSales = gc.GoodsSales,
-            LinePrice = gc.LinePrice,
+                  GoodsSales = gc.GoodsSales,
+                  LinePrice = gc.LinePrice,
               }).ToPageAsync(query.Page, query.Limit);
             foreach (var item in datas.Items)
             {
-                if (!string.IsNullOrEmpty(item.ImgUrl))
-                {
-                    var imgArry = item.ImgUrl.Split(',');
-                    if (imgArry.Length > 0)
-                    {
-                        item.ImgUrl = imgArry[0];
-                    }
-                }               
+                item.ImgUrl = !string.IsNullOrEmpty(item.ImgUrl) ? item.ImgUrl.Split(',')[0] : "";
             }
             return new ApiResult(datas);
         }
-        public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery  query)
+        public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery query)
         {
-            var datas =await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id&&g.TenantId==query.TenantId))
+            var datas = await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId))
                 .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name.Contains(query.Key))
                 .OrderBy((g, c) => g.Id, OrderByType.Desc)
-                .Select((g, c) => new Goods() { 
-                Name=g.Name,
-                CategoryName=c.Name,
-                CreateTime=g.CreateTime,
-                DeductStockType=g.DeductStockType,
-                SalesInitial=g.SalesInitial,
-                SalesActual=g.SalesActual,
-                SpecType=g.SpecType,
-                Id=g.Id,
-                TenantName= SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
-                TenantId=c.TenantId,
-                ImgUrl=g.ImgUrl
-                }).ToPageAsync(query.Page,query.Limit);
+                .Select((g, c) => new Goods() {
+                    Name = g.Name,
+                    CategoryName = c.Name,
+                    CreateTime = g.CreateTime,
+                    DeductStockType = g.DeductStockType,
+                    SalesInitial = g.SalesInitial,
+                    SalesActual = g.SalesActual,
+                    SpecType = g.SpecType,
+                    Id = g.Id,
+                    TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
+                    TenantId = c.TenantId,
+                    ImgUrl = g.ImgUrl
+                }).ToPageAsync(query.Page, query.Limit);
             foreach (var item in datas.Items)
             {
-                if (!string.IsNullOrEmpty(item.ImgUrl))
-                {
-                    var imgArry = item.ImgUrl.Split(',');
-                    if (imgArry.Length>0)
-                    {
-                        item.ImgUrl = imgArry[0];
-                    }                   
-                }
-            }
+                item.ImgUrl = !string.IsNullOrEmpty(item.ImgUrl) ? item.ImgUrl.Split(',')[0] : "";
+            }        
             return new ApiResult(datas);
         }
         public async Task<ApiResult<GoodsModifyInput>> DetailAsync(int id)

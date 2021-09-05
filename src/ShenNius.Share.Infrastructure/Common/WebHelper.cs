@@ -181,5 +181,6 @@ namespace ShenNius.Share.Infrastructure.Common
                 ChildNode(list, newlist, result[i].Id);
             }
         }
+       
     }
 }
