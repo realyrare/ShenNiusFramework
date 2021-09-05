@@ -73,6 +73,15 @@ namespace ShenNius.MiniApp.API.Controllers
         {
             return  _orderGoodsService.BuyNowAsync(goodsId, goodsNum, goodsSkuId, HttpWx.AppUserId);
         }
+        /// <summary>
+        /// 购物车结算
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("CartBuy")]
+        public Task<ApiResult> CartBuy()
+        {
+            return _orderGoodsService.CartBuyAsync(HttpWx.AppUserId);
+        }
 
         /// <summary>
         /// 获取用户已经添加的收获地址

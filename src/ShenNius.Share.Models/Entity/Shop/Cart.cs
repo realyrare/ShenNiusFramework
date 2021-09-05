@@ -3,7 +3,7 @@ using SqlSugar;
 
 namespace ShenNius.Share.Models.Entity.Shop
 {
-    [SugarTable("shop_appuser")]
+    [SugarTable("shop_cart")]
    public class Cart : BaseTenantEntity
     {
         public int GoodsNum { get; set; }

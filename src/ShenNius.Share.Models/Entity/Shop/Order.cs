@@ -10,29 +10,29 @@ namespace ShenNius.Share.Models.Entity.Shop
     ///
     ///</summary>
     [SugarTable("shop_order")]
-    public partial class Order: BaseTenantEntity
-    {          
+    public partial class Order : BaseTenantEntity
+    {
 
-           /// <summary>
-           /// Desc:订单号
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string OrderNo {get;set;}
+        /// <summary>
+        /// Desc:订单号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string OrderNo { get; set; }
 
-           /// <summary>
-           /// Desc:商品总金额
-           /// Default:0.00
-           /// Nullable:False
-           /// </summary>           
-           public decimal TotalPrice {get;set;}
+        /// <summary>
+        /// Desc:商品总金额
+        /// Default:0.00
+        /// Nullable:False
+        /// </summary>           
+        public decimal TotalPrice { get; set; }
 
-           /// <summary>
-           /// Desc:订单实付款金额
-           /// Default:0.00
-           /// Nullable:False
-           /// </summary>           
-           public decimal PayPrice {get;set;}
+        /// <summary>
+        /// Desc:订单实付款金额
+        /// Default:0.00
+        /// Nullable:False
+        /// </summary>           
+        public decimal PayPrice { get; set; }
 
         /// <summary>
         /// Desc:付款状态(10未付款 20已付款)
@@ -41,7 +41,10 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// </summary> 
         public int PayStatus { get; set; }
         [SugarColumn(IsIgnore = true)]
-        public string PayStatusText { get {
+        public string PayStatusText
+        {
+            get
+            {
                 string name = "";
                 if (PayStatus == PayStatusEnum.WaitForPay.GetValue<int>())
                 {
@@ -52,42 +55,43 @@ namespace ShenNius.Share.Models.Entity.Shop
                     name = PayStatusEnum.Paid.GetEnumText();
                 }
                 return name;
-            } }
+            }
+        }
 
-           /// <summary>
-           /// Desc:付款时间
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public DateTime PayTime {get;set;}
+        /// <summary>
+        /// Desc:付款时间
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public DateTime PayTime { get; set; }
 
-           /// <summary>
-           /// Desc:运费金额
-           /// Default:0.00
-           /// Nullable:False
-           /// </summary>           
-           public decimal ExpressPrice {get;set;}
+        /// <summary>
+        /// Desc:运费金额
+        /// Default:0.00
+        /// Nullable:False
+        /// </summary>           
+        public decimal ExpressPrice { get; set; }
 
-           /// <summary>
-           /// Desc:物流公司
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string ExpressCompany {get;set;}
+        /// <summary>
+        /// Desc:物流公司
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string ExpressCompany { get; set; }
 
-           /// <summary>
-           /// Desc:物流单号
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string ExpressNo {get;set;}
+        /// <summary>
+        /// Desc:物流单号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string ExpressNo { get; set; }
 
-           /// <summary>
-           /// Desc:发货状态(10未发货 20已发货)
-           /// Default:10
-           /// Nullable:False
-           /// </summary>           
-           public int DeliveryStatus {get;set;}
+        /// <summary>
+        /// Desc:发货状态(10未发货 20已发货)
+        /// Default:10
+        /// Nullable:False
+        /// </summary>           
+        public int DeliveryStatus { get; set; }
         [SugarColumn(IsIgnore = true)]
         public string DeliveryStatusText
         {
@@ -111,14 +115,14 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime DeliveryTime {get;set;}
+        public DateTime DeliveryTime { get; set; }
 
-           /// <summary>
-           /// Desc:收货状态(10未收货 20已收货)
-           /// Default:10
-           /// Nullable:False
-           /// </summary>           
-           public int ReceiptStatus {get;set;}
+        /// <summary>
+        /// Desc:收货状态(10未收货 20已收货)
+        /// Default:10
+        /// Nullable:False
+        /// </summary>           
+        public int ReceiptStatus { get; set; }
         /// <summary>
         ///   收获时间
         /// </summary>
@@ -144,12 +148,12 @@ namespace ShenNius.Share.Models.Entity.Shop
         }
 
 
-           /// <summary>
-           /// Desc:订单状态(10进行中 20取消 21待取消 30已完成)
-           /// Default:10
-           /// Nullable:False
-           /// </summary>           
-           public int OrderStatus {get;set;}
+        /// <summary>
+        /// Desc:订单状态(10进行中 20取消 21待取消 30已完成)
+        /// Default:10
+        /// Nullable:False
+        /// </summary>           
+        public int OrderStatus { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public string OrderStatusText
@@ -178,31 +182,31 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string TransactionId {get;set;}
+        public string TransactionId { get; set; }
 
-           /// <summary>
-           /// Desc:用户id
-           /// Default:0
-           /// Nullable:False
-           /// </summary>           
-           public int AppUserId {get;set;}
+        /// <summary>
+        /// Desc:用户id
+        /// Default:0
+        /// Nullable:False
+        /// </summary>           
+        public int AppUserId { get; set; }
 
-        public OrderAddress BuildOrderAddress(AppUserAddress appUserAddress,int orderId)
+        public OrderAddress BuildOrderAddress(AppUserAddress appUserAddress, int orderId)
         {
-            if (appUserAddress==null|| orderId<=0)
+            if (appUserAddress == null || orderId <= 0)
             {
                 throw new ArgumentNullException(nameof(appUserAddress));
             }
             OrderAddress orderAddress = new OrderAddress()
             {
-                Name=appUserAddress.Name,
-                Phone=appUserAddress.Phone,
-                City=appUserAddress.City,
-                Detail=appUserAddress.Detail,
-                Region=appUserAddress.Region,
-                AppUserId=appUserAddress.AppUserId,
-                OrderId= orderId,
-                Province=appUserAddress.Province
+                Name = appUserAddress.Name,
+                Phone = appUserAddress.Phone,
+                City = appUserAddress.City,
+                Detail = appUserAddress.Detail,
+                Region = appUserAddress.Region,
+                AppUserId = appUserAddress.AppUserId,
+                OrderId = orderId,
+                Province = appUserAddress.Province
             };
             return orderAddress;
         }
@@ -220,9 +224,9 @@ namespace ShenNius.Share.Models.Entity.Shop
             };
             return order;
         }
-        public OrderGoods BuildOrderGoods(Goods goods,GoodsSpec goodsSpec,int  goodsNum)
+        public OrderGoods BuildOrderGoods(Goods goods, GoodsSpec goodsSpec, int goodsNum)
         {
-            if (goods==null|| goodsSpec==null)
+            if (goods == null || goodsSpec == null)
             {
                 throw new ArgumentNullException(nameof(goods));
             }

@@ -32,12 +32,13 @@ namespace ShenNius.Share.Domain.Services.Shop
         Task<ApiResult> CancelOrderAsync(int orderId, int goodsId, int appUserId);
         Task<ApiResult> GetListAsync(int appUserId, string dataType);
         Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId);
+        Task<ApiResult> CartBuyAsync(int appUserId);
     }
     public class OrderGoodsService : BaseServer<OrderGoods>, IOrderGoodsService
     {
         private readonly IAppUserAddressService _appUserAddressService;
         private readonly IGoodsService _goodsService;
-        private readonly IMapper _mapper;     
+        private readonly IMapper _mapper;
         public OrderGoodsService(IAppUserAddressService appUserAddressService,IGoodsService goodsService, IMapper mapper )
         {
             _appUserAddressService = appUserAddressService;
@@ -51,11 +52,9 @@ namespace ShenNius.Share.Domain.Services.Shop
         }
         public async Task<ApiResult> CancelOrderAsync(int orderId, int goodsId, int appUserId)
         {
-
             try
             {
                 Db.Ado.BeginTran();
-
                 await Db.Deleteable<OrderGoods>().Where(d => d.OrderId == orderId && d.GoodsId == goodsId && d.AppUserId == appUserId).ExecuteCommandAsync();
                 var orderGoodsModel = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId && d.AppUserId == appUserId).FirstAsync();
                 if (orderGoodsModel == null)
@@ -103,11 +102,11 @@ namespace ShenNius.Share.Domain.Services.Shop
 
 
         /// <summary>
-        /// TODO 需要修改
+        /// 立马购买
         /// </summary>
         /// <param name="goodsId"></param>
         /// <param name="goodsNum"></param>
-        /// <param name="goodsSkuId"></param>
+        /// <param name="specSkuId"></param>
         /// <param name="appUserId"></param>
         /// <returns></returns>
         public async Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId)
@@ -146,7 +145,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public async Task<ApiResult> AddByCartAsync(int appUserId)
+        public async Task<ApiResult> CartBuyAsync(int appUserId)
         {
             try
             {
@@ -156,8 +155,12 @@ namespace ShenNius.Share.Domain.Services.Shop
                 var goodsList = await _goodsService.GetListAsync(l => l.Status == true && inCludeGoods.Contains(l.Id));
                 var addressModel = await _appUserAddressService.GetModelAsync(d => d.AppUserId == appUserId && d.IsDefault == true);
                 Order order = new Order();
-                order = order.BuildOrder(appUserId);               
-                var orderId = await Db.Insertable(order).ExecuteReturnIdentityAsync();
+                order = order.BuildOrder(appUserId);
+                order.Id = await Db.Insertable(order).ExecuteReturnIdentityAsync();
+
+                var orderAddress = order.BuildOrderAddress(addressModel, order.Id);
+                await Db.Insertable(orderAddress).ExecuteCommandAsync();
+
                 int cartExistGoodsNum = 0; decimal totalPrice = 0, payPrice = 0;
                 List<OrderGoods> orderGoodsList = new List<OrderGoods>();
 
@@ -170,18 +173,11 @@ namespace ShenNius.Share.Domain.Services.Shop
                     payPrice += goodsData.Item2.GoodsPrice * cartExistGoodsNum;
                     orderGoodsList.Add(orderGoods);
                 }
-                //foreach (var item in goodsList)
-                //{
-                   
-                //    //TODO 要根据商品是否多规格来判断商品的价格；
-                //    OrderGoods orderGoods = order.BuildOrderGoods(goodsData.Item1, goodsData.Item2, goodsNum);                  
-                //    totalPrice += item.SalePrice * cartExistGoodsNum;
-                //    payPrice += item.SalePrice * cartExistGoodsNum;
-                //    orderGoodsList.Add(orderGoods);
-                //}
+              
                 await Db.Insertable(orderGoodsList).ExecuteCommandAsync();
+
                 //订单表统计最终支付的费用
-                await Db.Updateable<Order>().SetColumns(d => new Order() { PayPrice = totalPrice, TotalPrice = payPrice }).Where(d => d.Id == orderId).ExecuteCommandAsync();
+                await Db.Updateable<Order>().SetColumns(d => new Order() { PayPrice = totalPrice, TotalPrice = payPrice }).Where(d => d.Id == order.Id).ExecuteCommandAsync();
                 Db.Ado.CommitTran();
                 return new ApiResult();
             }
