@@ -118,40 +118,19 @@ namespace ShenNius.Share.Domain.Services.Shop
             try
             {
                 Db.Ado.BeginTran();
-                Order order = new Order()
-                {
-                    AppUserId = appUserId,
-                    AppUserAddressId = addressModel.Id,
-                    OrderNo = DateTime.Now.ToString("yyyyMMddss") + new Random().Next(1, 9999).GetHashCode(),
-                    OrderStatus = OrderStatusEnum.NewOrder.GetValue<int>(),
-                    PayStatus = PayStatusEnum.WaitForPay.GetValue<int>(),
-                    DeliveryStatus = DeliveryStatusEnum.WaitForSending.GetValue<int>(),
-                    //DeliveryTime = DateTime.Now,
-                    CreateTime = DateTime.Now
-                };
-                var orderId = await Db.Insertable(order).ExecuteReturnIdentityAsync();
+                Order order = new Order();
+                order= order.BuildOrder(appUserId);
+                order.Id = await Db.Insertable(order).ExecuteReturnIdentityAsync();
 
-                OrderGoods orderGoods = new OrderGoods()
-                {
-                    GoodsId = goodsId,
-                    GoodsName = goodsData.Item1.Name,
-                    GoodsPrice = goodsData.Item2.GoodsPrice,
-                    LinePrice = goodsData.Item2.LinePrice,
-                    CreateTime = DateTime.Now,
-                    GoodsNo = goodsData.Item2.GoodsNo,
-                    Content = goodsData.Item1.Content,
-                    ImgUrl = goodsData.Item1.ImgUrl,
-                    AppUserId = appUserId,
-                    TotalNum = goodsNum,
-                    TotalPrice = goodsData.Item2.GoodsPrice * goodsNum,
-                    //PayPrice = goodsModel.Data.GoodsSpecInput.GoodsPrice * goodsNum,
-                    SpecType = goodsData.Item1.SpecType,
-                    GoodsAttr = JsonConvert.SerializeObject(goodsData.Item1.SpecMany),
-                    OrderId = orderId
-                };
+                OrderGoods orderGoods = order.BuildOrderGoods(goodsData.Item1, goodsData.Item2, goodsNum);
+               
                 await Db.Insertable(orderGoods).ExecuteCommandAsync();
+
+              var orderAddress= order.BuildOrderAddress(addressModel, order.Id);
+
+                await Db.Insertable(orderAddress).ExecuteCommandAsync();
                 //订单表统计最终支付的费用
-                await Db.Updateable<Order>().SetColumns(d => new Order() { TotalPrice = orderGoods.TotalPrice, PayPrice= orderGoods.TotalPrice }).Where(d => d.Id == orderId).ExecuteCommandAsync();
+                await Db.Updateable<Order>().SetColumns(d => new Order() { TotalPrice = orderGoods.TotalPrice, PayPrice= orderGoods.TotalPrice }).Where(d => d.Id == order.Id).ExecuteCommandAsync();
                 Db.Ado.CommitTran();
                 return new ApiResult();
             }
@@ -159,6 +138,57 @@ namespace ShenNius.Share.Domain.Services.Shop
             {
                 Db.Ado.RollbackTran();
                 return new ApiResult(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 购物车结算
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public async Task<ApiResult> AddByCartAsync(int appUserId)
+        {
+            try
+            {
+                Db.Ado.BeginTran();
+                var cartList = await Db.Queryable<Cart>().Where(d => d.AppUserId.Equals(appUserId)).ToListAsync();
+                var inCludeGoods = cartList.Select(d => d.GoodsId).ToList();
+                var goodsList = await _goodsService.GetListAsync(l => l.Status == true && inCludeGoods.Contains(l.Id));
+                var addressModel = await _appUserAddressService.GetModelAsync(d => d.AppUserId == appUserId && d.IsDefault == true);
+                Order order = new Order();
+                order = order.BuildOrder(appUserId);               
+                var orderId = await Db.Insertable(order).ExecuteReturnIdentityAsync();
+                int cartExistGoodsNum = 0; decimal totalPrice = 0, payPrice = 0;
+                List<OrderGoods> orderGoodsList = new List<OrderGoods>();
+
+                foreach (var item in cartList)
+                {
+                    cartExistGoodsNum = cartList.Where(d => d.GoodsId.Equals(item.Id)).Select(d => d.GoodsNum).FirstOrDefault();
+                    var goodsData = await _goodsService.GoodInfoIsExist(item.GoodsId, cartExistGoodsNum, item.SpecSkuId, appUserId);
+                    OrderGoods orderGoods = order.BuildOrderGoods(goodsData.Item1, goodsData.Item2, cartExistGoodsNum);
+                    totalPrice += goodsData.Item2.GoodsPrice * cartExistGoodsNum;
+                    payPrice += goodsData.Item2.GoodsPrice * cartExistGoodsNum;
+                    orderGoodsList.Add(orderGoods);
+                }
+                //foreach (var item in goodsList)
+                //{
+                   
+                //    //TODO 要根据商品是否多规格来判断商品的价格；
+                //    OrderGoods orderGoods = order.BuildOrderGoods(goodsData.Item1, goodsData.Item2, goodsNum);                  
+                //    totalPrice += item.SalePrice * cartExistGoodsNum;
+                //    payPrice += item.SalePrice * cartExistGoodsNum;
+                //    orderGoodsList.Add(orderGoods);
+                //}
+                await Db.Insertable(orderGoodsList).ExecuteCommandAsync();
+                //订单表统计最终支付的费用
+                await Db.Updateable<Order>().SetColumns(d => new Order() { PayPrice = totalPrice, TotalPrice = payPrice }).Where(d => d.Id == orderId).ExecuteCommandAsync();
+                Db.Ado.CommitTran();
+                return new ApiResult();
+            }
+            catch (Exception ex)
+            {
+                Db.Ado.RollbackTran();
+                throw ex;
             }
         }
     }

@@ -176,14 +176,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                     {
                         item.ImgUrl = imgArry[0];
                     }
-                }
-                //var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == item.Id).FirstAsync();
-                //if (goodsSpec!=null)
-                //{
-                //    item.GoodsPrice = goodsSpec.GoodsPrice;
-                //    item.GoodsSales = goodsSpec.GoodsSales;
-                //    item.LinePrice = goodsSpec.LinePrice;
-                //}
+                }               
             }
             return new ApiResult(datas);
         }

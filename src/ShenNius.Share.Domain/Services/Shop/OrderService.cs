@@ -87,7 +87,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                  Id = o.Id,
                  AppUserName = u.NickName,
                  AppUserId = u.Id,
-                 AppUserAddressId = u.AddressId,
+               //  AppUserAddressId = u.AddressId,
                  OrderStatus = o.OrderStatus,
                  PayStatus = o.PayStatus,
                  DeliveryStatus = o.DeliveryStatus,
@@ -98,19 +98,17 @@ namespace ShenNius.Share.Domain.Services.Shop
                  ExpressNo = o.ExpressNo,
                  DeliveryTime = o.DeliveryTime,
                  ReceiptTime = o.ReceiptTime,
-                 // AllPayPrice = o.AllPayPrice,
-                 // AllTotalPrice = o.AllTotalPrice,
                  TotalPrice = og.TotalPrice,
                  CreateTime = o.CreateTime,
                  TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == o.TenantId).Select(s => s.Name),
+               
              }).FirstAsync();
             if (model == null)
             {
                 throw new FriendlyException($"订单详情实体数据为空！");
             }
             //这里订单地址不使用id关联，防止用户地址表里面的地址更新后发生配送错误
-            model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.Id == model.AppUserAddressId)
-               .FirstAsync();
+            model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.AppUserId == model.AppUserId&&oa.OrderId==model.Id).FirstAsync();
 
             model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId && d.Status).Select(d => new OrderGoodsDetailOutput
             {

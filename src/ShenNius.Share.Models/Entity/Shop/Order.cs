@@ -187,14 +187,63 @@ namespace ShenNius.Share.Models.Entity.Shop
            /// </summary>           
            public int AppUserId {get;set;}
 
-        /// <summary>
-        /// 所有商品的总价
-        /// </summary>
-      //  public decimal AllTotalPrice { get; set; }
-        /// <summary>
-        /// 最终实际支付的费用
-        /// </summary>
-        //public decimal AllPayPrice { get; set; }
-        public int AppUserAddressId { get; set; }
+        public OrderAddress BuildOrderAddress(AppUserAddress appUserAddress,int orderId)
+        {
+            if (appUserAddress==null|| orderId<=0)
+            {
+                throw new ArgumentNullException(nameof(appUserAddress));
+            }
+            OrderAddress orderAddress = new OrderAddress()
+            {
+                Name=appUserAddress.Name,
+                Phone=appUserAddress.Phone,
+                City=appUserAddress.City,
+                Detail=appUserAddress.Detail,
+                Region=appUserAddress.Region,
+                AppUserId=appUserAddress.AppUserId,
+                OrderId= orderId,
+                Province=appUserAddress.Province
+            };
+            return orderAddress;
+        }
+
+        public Order BuildOrder(int appUserId)
+        {
+            Order order = new Order()
+            {
+                AppUserId = appUserId,
+                OrderNo = DateTime.Now.ToString("yyyyMMddss") + new Random().Next(1, 9999).GetHashCode(),
+                OrderStatus = OrderStatusEnum.NewOrder.GetValue<int>(),
+                PayStatus = PayStatusEnum.WaitForPay.GetValue<int>(),
+                DeliveryStatus = DeliveryStatusEnum.WaitForSending.GetValue<int>(),
+                CreateTime = DateTime.Now
+            };
+            return order;
+        }
+        public OrderGoods BuildOrderGoods(Goods goods,GoodsSpec goodsSpec,int  goodsNum)
+        {
+            if (goods==null|| goodsSpec==null)
+            {
+                throw new ArgumentNullException(nameof(goods));
+            }
+            OrderGoods orderGoods = new OrderGoods()
+            {
+                GoodsId = goods.Id,
+                GoodsName = goods.Name,
+                GoodsPrice = goodsSpec.GoodsPrice,
+                LinePrice = goodsSpec.LinePrice,
+                CreateTime = DateTime.Now,
+                GoodsNo = goodsSpec.GoodsNo,
+                Content = goods.Content,
+                ImgUrl = goods.ImgUrl,
+                AppUserId = AppUserId,
+                TotalNum = goodsNum,
+                TotalPrice = goodsSpec.GoodsPrice * goodsNum,
+                SpecType = goods.SpecType,
+                GoodsAttr = goods.SpecMany,
+                OrderId = Id
+            };
+            return orderGoods;
+        }
     }
 }

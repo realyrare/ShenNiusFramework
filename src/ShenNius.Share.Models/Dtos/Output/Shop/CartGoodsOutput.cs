@@ -38,5 +38,10 @@ namespace ShenNius.Share.Models.Dtos.Output.Shop
         public int SpecType { get; set; }
 
         public string SpecSkuId { get; set; }
+
+        /// <summary>
+        /// 商品多规格
+        /// </summary>
+        public string SpecMany { get; set; }
     }
 }

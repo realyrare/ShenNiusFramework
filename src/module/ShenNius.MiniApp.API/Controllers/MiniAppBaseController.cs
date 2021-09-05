@@ -22,6 +22,7 @@ namespace ShenNius.MiniApp.API.Controllers
    // [Route("api/[controller]/[action]")]
     [Route("api/MiniApp/[controller]")]
     [ApiController]
+   
     public class MiniAppBaseController : Controller
     {
         public HttpWxUserOutput HttpWx { get; set; }

@@ -49,7 +49,8 @@ namespace ShenNius.Share.Domain.Services.Shop
                    SpecType=g.SpecType,
                    LinePrice= gc.LinePrice,
                    GoodsSales= gc.GoodsSales,
-                   SalesActual=g.SalesActual
+                   SalesActual=g.SalesActual,
+                   SpecMany=g.SpecMany
                }).ToListAsync();
 
             double totalPrice = 0;
@@ -59,16 +60,11 @@ namespace ShenNius.Share.Domain.Services.Shop
                 var cartGoodsNum = cartList.Where(d => d.GoodsId == item.GoodsId).Select(d => d.GoodsNum).FirstOrDefault();
                 item.OrderTotalNum = cartGoodsNum;
                 totalPrice += (double)item.GoodsPrice * cartGoodsNum;
-                if (item.SpecType == SpecTypeEnum.Single.GetValue<int>())
+                if (item.SpecType == SpecTypeEnum.Multi.GetValue<int>())
+                {
+                    //显示规格组和值
 
-                {
-                    
-                }
-                else
-                {
-                   //显示规格组和值
-                    
-                }
+                }               
             }
             return new ApiResult(new
             {
