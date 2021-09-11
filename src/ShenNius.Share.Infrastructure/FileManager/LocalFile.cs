@@ -77,11 +77,11 @@ namespace ShenNius.Share.Infrastructure.FileManager
             string path;
             if (!string.IsNullOrEmpty(prefix))
             {
-                path = string.Concat(_webHostEnvironment.ContentRootPath, $"\\wwwroot\\Files\\{prefix}");
+                path = string.Concat(_webHostEnvironment.WebRootPath, $"Files\\{prefix}");
             }
             else
             {
-                path = string.Concat(_webHostEnvironment.ContentRootPath, $"\\wwwroot\\Files");
+                path = string.Concat(_webHostEnvironment.WebRootPath, "Files");
             }
 
             if (!Directory.Exists(path))
