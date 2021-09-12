@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Models.Configs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -32,12 +33,12 @@ namespace ShenNius.Share.Infrastructure.FileManager
 
         public ApiResult Delete(string filename)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ApiResult List(string prefix, string marker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ApiResult Upload(IFormFile file, string prefix)
@@ -61,29 +62,31 @@ namespace ShenNius.Share.Infrastructure.FileManager
             foreach (var file in files)
             {
                 var fileName = WebHelper.ImgSuffixIsExists(file);
-                string fileFullName = Path.Combine(path,fileName);
+                string fileFullName = Path.Combine(path, fileName);
                 using (FileStream fs = File.Create(fileFullName))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-                list.Add(Path.Combine($"/Files/{prefix}/", fileName));
+                list.Add(Path.Combine($"/Files/{prefix}", fileName));
+
             }
             return new ApiResult(data: list);
         }
 
         private string CreateDirectory(string prefix)
         {
+            /*在windos平台中，path结尾可以包含“\”字符，
+           但在linux中则会出问题，会将‘\’字符作为文件夹名称的一部分。*/
             string path;
             if (!string.IsNullOrEmpty(prefix))
             {
-                path = string.Concat(_webHostEnvironment.WebRootPath, $"\\Files\\{prefix}");
+                path = string.Concat(_webHostEnvironment.WebRootPath, $"/Files/{prefix}");
             }
             else
             {
-                path = string.Concat(_webHostEnvironment.WebRootPath, "\\Files");
-            }
-
+                path = string.Concat(_webHostEnvironment.WebRootPath, "/Files");
+            }           
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
