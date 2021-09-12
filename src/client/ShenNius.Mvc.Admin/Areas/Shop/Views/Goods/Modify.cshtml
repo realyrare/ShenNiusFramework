@@ -6,7 +6,6 @@
 @model ShenNius.Share.Models.Dtos.Input.Shop.GoodsModifyInput
 @using ShenNius.Share.Models.Enums.Shop;
 @using ShenNius.Share.Models.Enums.Extension;
-@using ShenNius.Share.Infrastructure.Configurations;
 @section css{
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/goods.css" rel="stylesheet" asp-append-version="true" />
@@ -245,7 +244,7 @@
             height: 500,
             content_style: "img {max-width:100%;}",
             image_advtab: true,//开启图片上传的高级选项功能
-            images_upload_url: '/api/article/UploadImg',//图片上传
+            images_upload_url: '/api/goods/UploadImg',//图片上传
             plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
             toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
         });

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.BaseController.Controllers;
 using ShenNius.Share.Domain.Repository;
@@ -62,10 +63,10 @@ namespace ShenNius.Shop.API.Controllers
             return Ok(new { location = result.Data });
         }
         [HttpPost]
-        public ApiResult MultipleUploadImg()
+        public ApiResult MultipleUploadImg([FromForm] IFormCollection formData)
         {
-            var files = Request.Form.Files;
-            var data = _uploadHelper.Upload(files, "goods/");
+           // var files = Request.Form.Files;
+            var data = _uploadHelper.Upload(formData.Files, "goods/");
             //TinyMCE 指定的返回格式
             return data;
         }
