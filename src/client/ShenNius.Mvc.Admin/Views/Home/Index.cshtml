@@ -117,6 +117,7 @@
     </div>
 </div>
 @section js{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script>
         layui.use(['jquery', 'layer', 'miniAdmin', 'common', 'form'], function () {
             var $ = layui.jquery,
@@ -126,7 +127,6 @@
                 miniAdmin = layui.miniAdmin;
             //"api/init.json?v=12",
             var options = {
-
                 iniUrl: "menu/LoadLeftMenuTrees", // 初始化接口"menu/load-left-menu-trees",//
                 clearUrl: "user/removeMenuCache?userId=" + apiUtil.getCurrentUser().id, // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位
@@ -139,11 +139,27 @@
             };
             miniAdmin.render(options);
             LoadSite();
+            var connection = new signalR.HubConnectionBuilder().withUrl("/userLoginNotifiHub").build();
+            connection.start().then(function () {
+                console.log("连接成功");
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+            connection.on("ReceiveMessage", function (userId, isLogin) {
+                if (apiUtil.getCurrentUser().id == userId && isLogin == true) {
+                    layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
+                        //清空浏览器缓存数据
+                        apiUtil.SessionRemove("globalCurrentUserInfo");
+                        localStorage.clear();
+                        window.location = '/sys/user/login';
+                    });
+                }                                          
+            });
             $("body").on("click", ".setCurrent", function () {
                 var id = $(this).attr("value");
                 var value = $(this).text();
-                console.log("id:" + id);
-                console.log("id2:" + value);
+               // console.log("id:" + id);
+               // console.log("id2:" + value);
                 setCurrentSite(id, value);
             })
             function setCurrentSite(currentSiteId, value) {

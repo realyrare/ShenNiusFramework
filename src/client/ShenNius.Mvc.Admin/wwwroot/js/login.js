@@ -1,7 +1,6 @@
 ﻿function changeSrcCode() {
     $("#captchaPic").attr("src", $("#captchaPic").attr("src") + 1);// 取得img属性 得到src地址给它+1 是为了每次变换验证码
 };
-
 layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,
@@ -34,6 +33,16 @@ layui.use(['jquery', 'form', 'common'], function () {
                         return;
                     }
                     os.SetSession('globalCurrentUserInfo', res.data);
+                    //使用signalr发送当前用户已经登录的信息
+                    var connection = new signalR.HubConnectionBuilder().withUrl("/userLoginNotifiHub").build();
+                    connection.start().then(function () {
+                        connection.invoke("SaveCurrentUserInfo", res.data.id, true).catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
