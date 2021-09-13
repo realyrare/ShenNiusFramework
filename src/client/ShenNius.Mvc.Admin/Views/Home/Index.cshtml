@@ -184,8 +184,8 @@
                     url: apiUtil.apiUrl()+"user/Logout",
                     type: "post",
                     success: function (res) {
-                        apiUtil.SessionRemove("globalCurrentUserInfo");
-                        layer.msg('正在处理,即将退出...', function () {
+                        apiUtil.SessionRemove("globalCurrentUserInfo");                        
+                        layer.msg('正在处理,即将退出...', { icon: 1, time: 3000, shift: 6 }, function () {
                             //清空浏览器缓存数据
                             localStorage.clear();
                             window.location = '/sys/user/login';

@@ -8,12 +8,6 @@ layui.use(['jquery', 'form', 'common'], function () {
         os = layui.common;
     layer = layui.layer;
 
-    $(document).ready(function () {
-        $('.layui-container').particleground({
-            dotColor: '#7ec7fd',
-            lineColor: '#7ec7fd'
-        });
-    });
     function login(data) {
         os.ajax('user/mvcLogin', data, "application/json", "post", function (res) {
             if (res.statusCode == 200) {
