@@ -49,7 +49,7 @@
 6.   ShenNius.Share.BaseController 对服务层CRUD的抽象处理，模块只需按规则建立对应的CRUD实体，API接口自动生成。
 7.   ShenNius.Sys.API  基于RBAC的权限API。(已完成)
 8.   ShenNius.Cms.API  基于Cms的API （已完成）
-9.   ShenNius.Shop.API  基于Cms的API （待完成）
+9.   ShenNius.Shop.API  基于商城的API （已完成）
 10.   ShenNius.API.Hosting API的宿主，所有API目前都放在这个里面托管，这也是魅力所在，可以Sys和Cms API各自托管使用独立的宿主，主要看业务量。拆合很容易。
 11.  ShenNius.Layui.Admin 基于layui的后台管理。
 #### 参与贡献
