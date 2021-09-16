@@ -4,7 +4,8 @@
 layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,
-        os = layui.common;
+        os = layui.common,
+    //mysignalR = layui.mysignalR,
     layer = layui.layer;
 
     function login(data) {
@@ -34,15 +35,11 @@ layui.use(['jquery', 'form', 'common'], function () {
                     }
                     os.SetSession('globalCurrentUserInfo', res.data);
                     //使用signalr发送当前用户已经登录的信息
-                    var connection = new signalR.HubConnectionBuilder().withUrl("/userLoginNotifiHub").build();
-                    connection.start().then(function () {
-                        connection.invoke("SaveCurrentUserInfo", res.data.id, true).catch(function (err) {
-                            return console.error(err.toString());
-                        });
-                    }).catch(function (err) {
-                        return console.error(err.toString());
-                    });
-
+                    try {
+                        SaveCurrentUserInfo(res.data.id);
+                    } catch  {
+                          
+                    }                                     
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');

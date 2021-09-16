@@ -118,6 +118,7 @@
 </div>
 @section js{
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/lay-module/mysignalR.js" asp-append-version="true"></script>
     <script>
         layui.use(['jquery', 'layer', 'miniAdmin', 'common', 'form'], function () {
             var $ = layui.jquery,
@@ -139,12 +140,7 @@
             };
             miniAdmin.render(options);
             LoadSite();
-            var connection = new signalR.HubConnectionBuilder().withUrl("/userLoginNotifiHub").build();
-            connection.start().then(function () {
-                console.log("连接成功");
-            }).catch(function (err) {
-                return console.error(err.toString());
-            });
+          
             connection.on("ReceiveMessage", function (userId, isLogin) {
                 if (apiUtil.getCurrentUser().id == userId && isLogin == true) {
                     layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
@@ -153,13 +149,13 @@
                         localStorage.clear();
                         window.location = '/sys/user/login';
                     });
-                }                                          
+                }
             });
             $("body").on("click", ".setCurrent", function () {
                 var id = $(this).attr("value");
                 var value = $(this).text();
-               // console.log("id:" + id);
-               // console.log("id2:" + value);
+                // console.log("id:" + id);
+                // console.log("id2:" + value);
                 setCurrentSite(id, value);
             })
             function setCurrentSite(currentSiteId, value) {
@@ -195,12 +191,12 @@
                     content: '/sys/user/currentUserInfo',
                 });
             });
-            $('.login-out').on("click", function () {               
+            $('.login-out').on("click", function () {
                 $.ajax({
-                    url: apiUtil.apiUrl()+"user/Logout",
+                    url: apiUtil.apiUrl() + "user/Logout",
                     type: "post",
                     success: function (res) {
-                        apiUtil.SessionRemove("globalCurrentUserInfo");                        
+                        apiUtil.SessionRemove("globalCurrentUserInfo");
                         layer.msg('正在处理,即将退出...', { icon: 1, time: 3000, shift: 6 }, function () {
                             //清空浏览器缓存数据
                             localStorage.clear();
