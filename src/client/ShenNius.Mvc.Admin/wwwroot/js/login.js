@@ -5,7 +5,6 @@ layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
         $ = layui.jquery,
         os = layui.common,
-    //mysignalR = layui.mysignalR,
     layer = layui.layer;
 
     function login(data) {

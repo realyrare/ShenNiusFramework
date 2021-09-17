@@ -25,24 +25,27 @@ namespace ShenNius.Share.Infrastructure.Hubs
        解决方案：过期时间存入浏览器localstrage；轮询增加一个hub连接到客户端，客户端发送给服务端更新。暂不处理
         */
         public static Dictionary<int, CurrentUserHub> currentUsers = new Dictionary<int, CurrentUserHub>();
-        public  Task SaveCurrentUserInfo(int  userId,bool isLogin)
+        public  async Task SaveCurrentUserInfo(int  userId,bool isLogin)
         {
             if (currentUsers.ContainsKey(userId))
             {
                 //如果是同一个用户且是不同的客户端登录，那么给客户端发送通知（下线）
-                if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId)&&isLogin==true)
+                if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId) && isLogin == true)
                 {
                     //向指定的用户发送
-                    return Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId, isLogin);
+                    await Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId, currentUsers[userId].ConnectionId);
                 }
-                currentUsers[userId].UserId = userId;
-                currentUsers[userId].IsLogin = isLogin;
-                currentUsers[userId].ConnectionId = Context.ConnectionId;
+                else {
+                    currentUsers[userId].UserId = userId;
+                    currentUsers[userId].IsLogin = isLogin;
+                    currentUsers[userId].ConnectionId = Context.ConnectionId;
+
+                }               
             }
             else {
                 currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin,ConnectionId= Context.ConnectionId });
             }
-            return Task.FromResult(0);
+           
         }
     }
     public class CurrentUserHub
