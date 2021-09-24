@@ -140,18 +140,23 @@
             };
             miniAdmin.render(options);
             LoadSite();
-          
-            connection.on("ReceiveMessage", function (userId, isLogin) {
-                console.log("id:" + userId);
-                if (apiUtil.getCurrentUser().id == userId) {
-                    layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
-                        //清空浏览器缓存数据
-                        apiUtil.SessionRemove("globalCurrentUserInfo");
-                        localStorage.clear();
-                        window.location = '/sys/user/login';
-                    });
-                }
-            });
+            try {
+                connection.on("ReceiveMessage", function (res) {
+                  var obj=  JSON.parse(res);
+                    console.log("id:" + obj.userId);
+                    if (apiUtil.getCurrentUser().id == obj.userId) {
+                        layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
+                            //清空浏览器缓存数据
+                            apiUtil.SessionRemove("globalCurrentUserInfo");
+                            localStorage.clear();
+                            window.location = '/sys/user/login';
+                        });
+                    }
+                });
+            } catch (e) {
+                console.log("异常:" + e.toString());
+            }
+            
             $("body").on("click", ".setCurrent", function () {
                 var id = $(this).attr("value");
                 var value = $(this).text();
