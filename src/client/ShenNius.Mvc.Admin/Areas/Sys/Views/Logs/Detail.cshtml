@@ -1,0 +1,66 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model ShenNius.Share.Models.Entity.Sys.Log
+
+<style>
+    .layui-form-item .layui-input {
+        width: 350px;
+        padding-right: 10px;
+        line-height: 38px;
+    }
+
+    .layui-form-item .layui-textarea {
+        width: 350px;
+    }
+</style>
+<form class="layui-form" action="" lay-filter="user-edit">
+    <div class="layuimini-container layuimini-page-anim">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                @if (Model.Id > 0)
+                {
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" lay-verify="id" value="@Model.Id" disabled class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">创建时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="CreateTime" lay-verify="logged" value="@Model.CreateTime.ToWebString()" disabled class="layui-input">
+                        </div>
+                    </div>
+                }
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userName" value="@Model.UserName" disabled="disabled" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">操作内容</label>
+                    <div class="layui-input-block">                       
+                        <textarea name="Message" readonly lay-verify="required" class="layui-textarea" placeholder="请输入备注信息">@Model.Message</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label required">浏览器信息</label>
+                    <div class="layui-input-block">
+                        <textarea name="browser" readonly lay-verify="required" class="layui-textarea" placeholder="请输入备注信息">@Model.Browser</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label required">异常信息</label>
+                    <div class="layui-input-block">
+                        <textarea name="exception" readonly lay-verify="required" class="layui-textarea" placeholder="请输入备注信息">@Model.Exception</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

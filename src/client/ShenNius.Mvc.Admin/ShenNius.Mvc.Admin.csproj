@@ -118,6 +118,9 @@
     <None Include="Areas\Shop\Views\Shared\_Layout.cshtml" />
     <None Include="Areas\Sys\Views\Config\Index.cshtml" />
     <None Include="Areas\Sys\Views\Config\Modify.cshtml" />
+    <None Include="Areas\Sys\Views\Logs\Detail.cshtml" />
+    <None Include="Areas\Sys\Views\Logs\Echarts.cshtml" />
+    <None Include="Areas\Sys\Views\Logs\Index.cshtml" />
     <None Include="Areas\Sys\Views\Menu\Index.cshtml" />
     <None Include="Areas\Sys\Views\Menu\Modify.cshtml" />
     <None Include="Areas\Sys\Views\Recycle\Index.cshtml" />

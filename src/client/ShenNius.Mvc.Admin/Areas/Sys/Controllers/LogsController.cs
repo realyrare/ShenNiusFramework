@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
     [Area("sys")]
-    public class LogController : Controller
+    public class LogsController : Controller
     {
         private readonly ILogService _logService;
-        public LogController(ILogService logService)
+        public LogsController(ILogService logService)
         {
             _logService = logService;
         }
