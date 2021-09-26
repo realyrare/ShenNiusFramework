@@ -118,8 +118,8 @@
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 if (obj.event === 'add') {
-                    var content = '/config/modify';
-                    var index = layer.open({
+                    var content = '/sys/config/modify';
+                  layer.open({
                         title: '添加字典',
                         type: 2,
                         shade: 0.2,
@@ -167,7 +167,7 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var content = '/sys/config/modify?id=' + data.id;
-                    var index = layer.open({
+                   layer.open({
                         title: '编辑字典',
                         type: 2,
                         shade: 0.2,
@@ -180,7 +180,7 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除吗', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
                         apiUtil.ajax('config/deletes', { ids: listIds }, "application/json", "delete", function (res) {
