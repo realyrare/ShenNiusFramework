@@ -141,10 +141,9 @@
             miniAdmin.render(options);
             LoadSite();
             try {
-                connection.on("ReceiveMessage", function (res) {
-                  var obj=  JSON.parse(res);
-                    console.log("id:" + obj.userId);
-                    if (apiUtil.getCurrentUser().id == obj.userId) {
+                connection.on("ReceiveMessage", function (userId) {
+                    console.log("id:" + userId);
+                    if (apiUtil.getCurrentUser().id == userId) {
                         layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
                             //清空浏览器缓存数据
                             apiUtil.SessionRemove("globalCurrentUserInfo");

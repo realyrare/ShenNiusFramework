@@ -33,7 +33,7 @@ namespace ShenNius.Share.Infrastructure.Hubs
                 if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId) && isLogin == true)
                 {
                     //向指定的用户发送
-                    await Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", currentUsers[userId].ConnectionId, userId);
+                    await Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId);
                 }
                 else {
                     currentUsers[userId].UserId = userId;
