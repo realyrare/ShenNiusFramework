@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Sys.API.Controllers
 {
-    public class LogController : ApiControllerBase
+    public class LogsController : ApiControllerBase
     {
         private readonly ILogService _logService;
-        public LogController(ILogService logService)
+        public LogsController(ILogService logService)
         {
             _logService = logService;
         }
