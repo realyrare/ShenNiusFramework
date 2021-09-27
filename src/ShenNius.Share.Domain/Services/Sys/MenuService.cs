@@ -363,7 +363,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             };
             if (!AppSettings.Jwt.Value)
             {
-                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/log/echarts" };
+                model.HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/logs/echarts" };
             }
             List<MenuInfo> menuInfos = new List<MenuInfo>();
             foreach (var item in allMenus)
