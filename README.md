@@ -56,17 +56,28 @@
 11.  ShenNius.Layui.Admin 基于layui的后台管理。
 
 #### 效果图
+  #### 权限管理模块
 ![用户列表](https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png "sys-user.png")
 ![权限菜单](https://images.gitee.com/uploads/images/2021/0925/235838_37691e67_1173871.png "sys-menu.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0925/235909_4c7185de_1173871.png "sys-menu-edit.png")
+![日志](https://images.gitee.com/uploads/images/2021/0927/220143_65141036_1173871.png "sys-log.png")
+![角色列表](https://images.gitee.com/uploads/images/2021/0927/220202_2220b39c_1173871.png "sys-role.png")
+![角色赋予权限菜单](https://images.gitee.com/uploads/images/2021/0927/220220_98eeadcf_1173871.png "sys-role-menu.png")
+![多租户列表](https://images.gitee.com/uploads/images/2021/0927/220246_a7f94f1e_1173871.png "sys-tenant.png")
+![字典管理](https://images.gitee.com/uploads/images/2021/0927/220307_c9bedea9_1173871.png "sys-config.png")
+![404页面](https://images.gitee.com/uploads/images/2021/0927/220323_f940ac46_1173871.png "404.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png "1.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164910_4917a1c1_1173871.png "2.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164921_d6dff912_1173871.png "3.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164934_1b63bf8f_1173871.png "4.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164943_44d2dacd_1173871.png "5.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165019_be2d1343_1173871.png "api-1.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165031_41b05a14_1173871.png "api-2.PNG")
-
+  #### CMS系统模块
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0927/220844_6f81e7f8_1173871.png "article.png")
+![文章编辑](https://images.gitee.com/uploads/images/2021/0927/220609_911f705d_1173871.png "article-editpng.png")
+![文章栏目将](https://images.gitee.com/uploads/images/2021/0927/220630_db845562_1173871.png "column.png")
+![广告列表](https://images.gitee.com/uploads/images/2021/0927/220643_c0c4885d_1173871.png "adv.png")
+![广告添加](https://images.gitee.com/uploads/images/2021/0927/220704_d03f4bc4_1173871.png "adv-add.png")
+  #### 商城系统模块
+![商品列表](https://images.gitee.com/uploads/images/2021/0927/220934_03c65880_1173871.png "goods.png")
+![商品列表2](https://images.gitee.com/uploads/images/2021/0927/220950_1b6df0a5_1173871.png "goods-2.png")
+![商品编辑](https://images.gitee.com/uploads/images/2021/0927/221005_423e3c97_1173871.png "goods-edit.png")
+![商品分类](https://images.gitee.com/uploads/images/2021/0927/221028_39281d75_1173871.png "category.png")
 #### QQ群：
 
 878303823（dotnet根据地）
