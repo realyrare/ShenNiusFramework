@@ -56,7 +56,7 @@
 11.  ShenNius.Layui.Admin 基于layui的后台管理。
 
 #### 效果图
-##权限管理模块
+  ####权限管理模块
 ![用户列表](https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png "sys-user.png")
 ![权限菜单](https://images.gitee.com/uploads/images/2021/0925/235838_37691e67_1173871.png "sys-menu.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0925/235909_4c7185de_1173871.png "sys-menu-edit.png")
@@ -67,13 +67,12 @@
 ![字典管理](https://images.gitee.com/uploads/images/2021/0927/220307_c9bedea9_1173871.png "sys-config.png")
 ![404页面](https://images.gitee.com/uploads/images/2021/0927/220323_f940ac46_1173871.png "404.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png "1.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164910_4917a1c1_1173871.png "2.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164921_d6dff912_1173871.png "3.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164934_1b63bf8f_1173871.png "4.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164943_44d2dacd_1173871.png "5.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165019_be2d1343_1173871.png "api-1.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/165031_41b05a14_1173871.png "api-2.PNG")
-
+  ####CMS系统模块
+![文章列表](https://images.gitee.com/uploads/images/2021/0927/220553_63dca2b4_1173871.png "article-editpng.png")
+![文章编辑](https://images.gitee.com/uploads/images/2021/0927/220609_911f705d_1173871.png "article-editpng.png")
+![文章栏目将](https://images.gitee.com/uploads/images/2021/0927/220630_db845562_1173871.png "column.png")
+![广告列表](https://images.gitee.com/uploads/images/2021/0927/220643_c0c4885d_1173871.png "adv.png")
+![广告添加](https://images.gitee.com/uploads/images/2021/0927/220704_d03f4bc4_1173871.png "adv-add.png")
 #### QQ群：
 
 878303823（dotnet根据地）
