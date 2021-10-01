@@ -57,6 +57,7 @@
 
 #### 效果图
   #### 权限管理模块
+![登录](https://images.gitee.com/uploads/images/2021/1001/200307_6fa1bb44_1173871.png "QQ截图20210927213829_gaitubao_1399x787.png")
 ![用户列表](https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png "sys-user.png")
 ![权限菜单](https://images.gitee.com/uploads/images/2021/0925/235838_37691e67_1173871.png "sys-menu.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0925/235909_4c7185de_1173871.png "sys-menu-edit.png")
