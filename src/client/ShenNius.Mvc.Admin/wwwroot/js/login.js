@@ -33,12 +33,12 @@ layui.use(['jquery', 'form', 'common'], function () {
                         return;
                     }
                     os.SetSession('globalCurrentUserInfo', res.data);
-                    //使用signalr发送当前用户已经登录的信息
-                    try {
-                        SaveCurrentUserInfo(res.data.id);
-                    } catch  {
+                    ////使用signalr发送当前用户已经登录的信息
+                    //try {
+                    //    SaveCurrentUserInfo(res.data.id);
+                    //} catch  {
                           
-                    }                                     
+                    //}                                     
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
