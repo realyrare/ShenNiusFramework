@@ -10,6 +10,7 @@ using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
+using ShenNius.Share.Infrastructure.TimedTask;
 using ShenNius.Share.Models.Configs;
 using System;
 
@@ -28,6 +29,7 @@ namespace ShenNius.Share.Infrastructure
                );
                 context.Services.AddAuthorizationSetup(context.Configuration);
             }
+           // context.Services.AddHostedService<TimedBackgroundService>();
             //context.Services.AddCap(x =>
             //{
             //    x.UseRabbitMQ(z =>

@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Wechat.API", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Mvc.Admin", "src\client\ShenNius.Mvc.Admin\ShenNius.Mvc.Admin.csproj", "{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.MiniApp.API", "src\module\ShenNius.MiniApp.API\ShenNius.MiniApp.API.csproj", "{B7A4FC57-8D41-4BFF-9F01-E256FFC85909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.MiniApp.API", "src\module\ShenNius.MiniApp.API\ShenNius.MiniApp.API.csproj", "{B7A4FC57-8D41-4BFF-9F01-E256FFC85909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
