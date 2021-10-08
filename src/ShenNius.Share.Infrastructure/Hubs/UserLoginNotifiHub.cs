@@ -30,27 +30,28 @@ namespace ShenNius.Share.Infrastructure.Hubs
         {
             if (currentUsers.ContainsKey(userId))
             {
-                await Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId);
+                
                 //如果是同一个用户且是不同的客户端登录，那么给客户端发送通知（下线）
-                //if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId) && isLogin == true)
-                //{
-                //    //向指定的用户发送
-                  
-                //    //await Clients.User(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId);
-                //}
-                //else
-                //{
-                //    currentUsers[userId].UserId = userId;
-                //    currentUsers[userId].IsLogin = isLogin;
-                //    currentUsers[userId].ConnectionId = Context.ConnectionId;
-                //}
+                if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId) && isLogin == true)
+                {
+                    //向指定的用户发送
+                    await Clients.Client(currentUsers[userId].ConnectionId).SendAsync("ReceiveMessage", userId);
+                }
+                else
+                {
+                    currentUsers[userId].UserId = userId;
+                    currentUsers[userId].IsLogin = isLogin;
+                    currentUsers[userId].ConnectionId = Context.ConnectionId;
+                }
             }
             else
             {
                 currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin, ConnectionId = Context.ConnectionId });
             }
-
-
+        }
+        public string GetConnectionId()
+        {
+            return Context.ConnectionId;
         }
     }
     public class CurrentUserHub

@@ -141,9 +141,16 @@
             miniAdmin.render(options);
             LoadSite();
             try {
+                var temp = "";
+                //使用signalr发送当前用户已经登录的信息
+                if (temp !="onlyOne") {
+                     var currentUserId= apiUtil.getCurrentUser().id;
+                SaveCurrentUserInfo(currentUserId);
+                
                 connection.on("ReceiveMessage", function (userId) {
                     console.log("id:" + userId);
-                    if (apiUtil.getCurrentUser().id == userId) {
+                    if (currentUserId == userId) {
+                        temp = "onlyOne";
                         layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
                             //清空浏览器缓存数据
                             apiUtil.SessionRemove("globalCurrentUserInfo");
@@ -152,6 +159,7 @@
                         });
                     }
                 });
+                }                             
             } catch (e) {
                 console.log("异常:" + e.toString());
             }

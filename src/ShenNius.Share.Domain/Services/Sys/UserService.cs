@@ -14,6 +14,8 @@ using ShenNius.Share.Common;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Enums;
 using ShenNius.Share.Models.Enums.Extension;
+using Microsoft.AspNetCore.SignalR;
+using ShenNius.Share.Infrastructure.Hubs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -32,15 +34,12 @@ namespace ShenNius.Share.Domain.Services.Sys
         private readonly IHttpContextAccessor _accessor;
         private readonly ICurrentUserContext _currentUserContext;
 
-
         public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
             _accessor = httpContextAccessor;
             _currentUserContext = currentUserContext;
         }
-
-
 
         public async Task<ApiResult<LoginOutput>> LoginAsync(LoginInput loginInput)
         {
@@ -57,7 +56,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     return new ApiResult<LoginOutput>($"该用户[{loginInput.LoginName}]已经登录，此时强行登录，其他地方会被挤下线！", 200);
                 }
-            }            
+            }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParseHelper.GetAddressByIP(ip);
             await UpdateAsync(d => new User()
