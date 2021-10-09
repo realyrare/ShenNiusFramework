@@ -32,8 +32,8 @@ layui.use(['jquery', 'form', 'common'], function () {
                         os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                         return;
                     }
-                    os.SetSession('globalCurrentUserInfo', res.data);
-                                                     
+                     //如果当前用户已经登录过，在新的token生成之前则把它当前的token缓存移除掉                   
+                   os.SetSession('globalCurrentUserInfo', res.data);                                                                        
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');

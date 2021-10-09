@@ -82,8 +82,7 @@
                     { field: 'level', title: '日志等级', width: 80 },
                     { field: 'userName', title: '用户名' },
                     { field: 'callsite', title: 'url', width: 200 },
-                    { field: 'ip', title: 'IP' },
-                    { field: 'address', title: '位置' },
+                    { field: 'ip', title: 'IP' },    
                     { field: 'logger', title: '操作类型' },
                     { field: 'message', title: '操作内容' },
                     { field: 'createTime', title: '创建时间' },
@@ -110,7 +109,13 @@
                 }, 'data');
                 return false;
             });
-
+            function refeshTable() {
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                }, 'data');
+            };
             /**
              * toolbar事件监听
              */
@@ -131,7 +136,7 @@
                                 if (res.statusCode == 200 && res.success == true) {
                                     layer.msg(res.msg);
                                     layer.close(index);
-                                    parent.location.reload();
+                                    refeshTable();
                                 } else {
                                     layer.msg(res.msg);
                                 }
@@ -169,7 +174,7 @@
                             if (res.statusCode == 200 && res.success == true) {
                                 layer.msg(res.msg);
                                 layer.close(index);
-                                parent.location.reload();
+                                refeshTable();
                             } else {
                                 layer.msg(res.msg);
                             }

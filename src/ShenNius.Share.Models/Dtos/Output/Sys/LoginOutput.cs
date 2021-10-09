@@ -13,6 +13,10 @@ namespace ShenNius.Share.Models.Dtos.Input
         public string  TrueName { get; set; }
         public string  Token { get; set; }
         /// <summary>
+        /// 是否已经登录
+        /// </summary>
+        public bool IsLogin { get; set; }
+        /// <summary>
         /// 权限
         /// </summary>
         public List<MenuAuthOutput> MenuAuthOutputs { get; set; } = new List<MenuAuthOutput>();

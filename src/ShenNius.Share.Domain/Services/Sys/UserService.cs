@@ -16,6 +16,7 @@ using ShenNius.Share.Models.Enums;
 using ShenNius.Share.Models.Enums.Extension;
 using Microsoft.AspNetCore.SignalR;
 using ShenNius.Share.Infrastructure.Hubs;
+using ShenNius.Share.Infrastructure.Caches;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -33,12 +34,13 @@ namespace ShenNius.Share.Domain.Services.Sys
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _accessor;
         private readonly ICurrentUserContext _currentUserContext;
-
-        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext)
+        private readonly ICacheHelper _cacheHelper;
+        public UserService(IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUserContext currentUserContext, ICacheHelper cacheHelper)
         {
             _mapper = mapper;
             _accessor = httpContextAccessor;
             _currentUserContext = currentUserContext;
+            _cacheHelper = cacheHelper;
         }
 
         public async Task<ApiResult<LoginOutput>> LoginAsync(LoginInput loginInput)
@@ -59,15 +61,15 @@ namespace ShenNius.Share.Domain.Services.Sys
             }
             string ip = _accessor.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             string address = IpParseHelper.GetAddressByIP(ip);
+            var lastLoginTime = DateTime.Now;
             await UpdateAsync(d => new User()
             {
-                LastLoginTime = DateTime.Now,
+                LastLoginTime = lastLoginTime,
                 Ip = ip,
                 Address = address,
                 IsLogin=true
             }, d => d.Id == loginModel.Id);
             var data = _mapper.Map<LoginOutput>(loginModel);
-
             new LogHelper().Process(loginModel.Name, LogEnum.Login.GetEnumText(), $"{loginModel.Name}登陆成功！", LogLevel.Info);
             WebHelper.SendEmail("神牛系统用户登录", $"当前时间为{DateTime.Now}：有名为{loginModel.Name}的用户在{address}成功登录神牛系统", loginModel?.Name, loginModel?.Email);
             return new ApiResult<LoginOutput>(data);

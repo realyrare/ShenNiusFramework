@@ -238,6 +238,7 @@ namespace ShenNius.Sys.API.Controllers
                     throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                 }
                 result.Data.MenuAuthOutputs = menuAuths;
+             
                 var identity = new ClaimsPrincipal(
                    new ClaimsIdentity(new[]
                        {
@@ -255,6 +256,7 @@ namespace ShenNius.Sys.API.Controllers
                     IsPersistent = true,
                     AllowRefresh = false
                 });
+               
                 _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
                 return result;
             }

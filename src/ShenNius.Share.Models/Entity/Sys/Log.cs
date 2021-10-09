@@ -66,7 +66,5 @@ namespace ShenNius.Share.Models.Entity.Sys
         /// </summary>
         public string Browser { get; set; }
 
-        public string Address { get; set; }
-
     }
 }

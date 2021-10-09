@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,7 +47,7 @@ namespace ShenNius.Share.Infrastructure.Hubs
             }
             else
             {
-                currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin, ConnectionId = Context.ConnectionId });
+                currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin, ConnectionId = Context.ConnectionId ,LastLoginTime=DateTime.Now});
             }
         }
         public string GetConnectionId()

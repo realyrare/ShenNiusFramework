@@ -153,9 +153,9 @@
                         temp = "onlyOne";
                         layer.msg('您已被挤下线，该账号已在另一地方登录！', { icon: 1, time: 3000, shift: 6 }, function () {
                             //清空浏览器缓存数据
-                            apiUtil.SessionRemove("globalCurrentUserInfo");
-                            localStorage.clear();
-                            window.location = '/sys/user/login';
+                            //apiUtil.SessionRemove("globalCurrentUserInfo");
+                            // localStorage.clear();
+                            window.location.href = '/sys/user/login';
                         });
                     }
                 });
