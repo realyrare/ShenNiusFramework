@@ -20,7 +20,7 @@ using System.Net;
 namespace ShenNius.MiniApp.API.Controllers
 {
    // [Route("api/[controller]/[action]")]
-    [Route("api/MiniApp/[controller]")]
+    [Route("api/MiniApp/[controller]/[action]")]
     [ApiController]
    
     public class MiniAppBaseController : Controller

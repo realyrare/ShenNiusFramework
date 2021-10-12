@@ -6,6 +6,7 @@ using ShenNius.Share.Domain.Services.Sys;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Sys.API.Controllers
 {

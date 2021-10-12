@@ -6,17 +6,20 @@
 
   <ItemGroup>
     <Compile Remove="Client\**" />
+    <Compile Remove="JsonWebToken\**" />
     <EmbeddedResource Remove="Client\**" />
+    <EmbeddedResource Remove="JsonWebToken\**" />
     <None Remove="Client\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Attributes\AuthorityAttribute.cs" />
-    <Compile Remove="Attributes\LogAttribute.cs" />
+    <None Remove="JsonWebToken\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="JsonWebToken\ApiResponseHandler.cs" />
+    <Compile Include="JsonWebToken\JwtHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>

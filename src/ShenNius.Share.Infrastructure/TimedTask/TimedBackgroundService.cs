@@ -3,10 +3,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ShenNius.Share.Infrastructure.Hubs;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 /*************************************
 * 类名：TimedBackgroundService

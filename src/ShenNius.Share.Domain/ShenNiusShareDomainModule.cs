@@ -28,7 +28,7 @@ namespace ShenNius.Share.Domain
             context.Services.AddScoped<DbContext>();
 
             //注入泛型BaseServer
-            context.Services.AddTransient(typeof(IBaseServer<>), typeof(BaseServer<>));
+            context.Services.AddScoped(typeof(IBaseServer<>), typeof(BaseServer<>));
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
@@ -51,11 +51,11 @@ namespace ShenNius.Share.Domain
                     var interfaceType = item.GetInterfaces();
                     if (interfaceType.Length == 1)
                     {
-                        services.AddTransient(interfaceType[0], item);
+                        services.AddScoped(interfaceType[0], item);
                     }
                     if (interfaceType.Length > 1)
                     {
-                        services.AddTransient(interfaceType[1], item);
+                        services.AddScoped(interfaceType[1], item);
                     }
                 }
             }
