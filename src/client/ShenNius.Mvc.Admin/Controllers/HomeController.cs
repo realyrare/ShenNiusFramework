@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Sys.API;
 
 namespace ShenNius.Mvc.Admin.Controllers
 {

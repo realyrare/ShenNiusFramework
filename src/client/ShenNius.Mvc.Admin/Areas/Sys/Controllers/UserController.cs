@@ -15,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Sys.API;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {

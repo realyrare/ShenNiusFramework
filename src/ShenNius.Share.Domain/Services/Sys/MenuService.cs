@@ -17,6 +17,7 @@ using ShenNius.Share.Infrastructure.Configurations;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
+    
     public interface IMenuService : IBaseServer<Menu>
     {
         Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId);

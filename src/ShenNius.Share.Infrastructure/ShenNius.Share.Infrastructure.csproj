@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="Attributes\AuthorityAttribute.cs" />
+    <Compile Remove="Attributes\LogAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>

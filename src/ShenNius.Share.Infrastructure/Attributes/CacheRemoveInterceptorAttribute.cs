@@ -1,9 +1,9 @@
 ﻿using AspectCore.DynamicProxy;
-using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using ShenNius.Share.Infrastructure.Caches;
 /*************************************
 * 类名：CacheDeleteInterceptorAttribute
 * 作者：realyrare

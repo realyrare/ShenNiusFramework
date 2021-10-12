@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.MiniApp.API", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Share.RabbitMq", "src\framework\toolkit\ShenNius.Share.RabbitMq\ShenNius.Share.RabbitMq.csproj", "{9F657E9B-4EEE-4446-8DB3-2FC38853EB47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShenNius.Share.Caches", "src\framework\toolkit\ShenNius.Share.Caches\ShenNius.Share.Caches.csproj", "{143B09CE-D0B1-4703-AFEB-149B512CFEA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShenNius.Share.Caches", "src\framework\toolkit\ShenNius.Share.Caches\ShenNius.Share.Caches.csproj", "{665916FB-F474-4A60-ADC0-295608202D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,10 +123,10 @@ Global
 		{9F657E9B-4EEE-4446-8DB3-2FC38853EB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F657E9B-4EEE-4446-8DB3-2FC38853EB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F657E9B-4EEE-4446-8DB3-2FC38853EB47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{143B09CE-D0B1-4703-AFEB-149B512CFEA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{143B09CE-D0B1-4703-AFEB-149B512CFEA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{143B09CE-D0B1-4703-AFEB-149B512CFEA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{143B09CE-D0B1-4703-AFEB-149B512CFEA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665916FB-F474-4A60-ADC0-295608202D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665916FB-F474-4A60-ADC0-295608202D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665916FB-F474-4A60-ADC0-295608202D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665916FB-F474-4A60-ADC0-295608202D93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,7 +154,7 @@ Global
 		{F3B1B302-AA2C-4BDF-A5C6-CC87C708A754} = {1DC9C5B1-B32F-45BE-8CB8-E76BEA3253E3}
 		{B7A4FC57-8D41-4BFF-9F01-E256FFC85909} = {BAFEFD43-8009-49AD-812E-6750DED4CE59}
 		{9F657E9B-4EEE-4446-8DB3-2FC38853EB47} = {94E54389-C585-4526-BE85-0FC56C760FD5}
-		{143B09CE-D0B1-4703-AFEB-149B512CFEA6} = {94E54389-C585-4526-BE85-0FC56C760FD5}
+		{665916FB-F474-4A60-ADC0-295608202D93} = {94E54389-C585-4526-BE85-0FC56C760FD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D888E66E-172A-4435-B12D-57395F104070}

@@ -10,6 +10,7 @@ using ShenNius.ModuleCore.Context;
 
 namespace ShenNius.Share.Domain
 {
+
     public class ShenNiusShareDomainModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
