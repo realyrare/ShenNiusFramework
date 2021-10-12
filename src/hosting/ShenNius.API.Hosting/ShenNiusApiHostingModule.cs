@@ -18,11 +18,13 @@ using ShenNius.Cms.API;
 using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.ModuleCore;
 using ShenNius.ModuleCore.Context;
+using ShenNius.Shop.API;
 
 namespace ShenNius.API.Hosting
 {
     [DependsOn(
         typeof(ShenNiusCmsApiModule),
+        typeof(ShenNiusShopApiModule),
         typeof(ShenNiusSysApiModule)
         )]
     public class ShenNiusApiHostingModule : AppModule
