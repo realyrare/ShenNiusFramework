@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Attributes\AuthorityAttribute.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="index.html" />
   </ItemGroup>
 
