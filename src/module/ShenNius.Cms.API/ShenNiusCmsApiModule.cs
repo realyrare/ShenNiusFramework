@@ -1,12 +1,10 @@
-﻿using ShenNius.Share.Infrastructure;
-using ShenNius.Share.Domain;
-using ShenNius.ModuleCore;
+﻿using ShenNius.ModuleCore;
 using ShenNius.ModuleCore.Context;
+using ShenNius.Share.BaseController;
 
 namespace ShenNius.Cms.API
 {
-    [DependsOn(typeof(ShenNiusShareDomainModule),
-         typeof(ShenNiusShareInfrastructureModule)
+    [DependsOn(typeof(ShenNiusShareBaseControllerModule)
       )]
     public class ShenNiusCmsApiModule : AppModule
     {
