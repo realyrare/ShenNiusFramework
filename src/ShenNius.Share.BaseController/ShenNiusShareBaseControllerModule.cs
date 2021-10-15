@@ -14,9 +14,9 @@ using ShenNius.ModuleCore;
 
 namespace ShenNius.Share.BaseController
 {
-    [DependsOn(typeof(ShenNiusShareDomainModule),
-       typeof(ShenNiusShareInfrastructureModule)
-    )]
+    //[DependsOn(typeof(ShenNiusShareDomainModule),
+    //   typeof(ShenNiusShareInfrastructureModule)
+    //)]
     public class ShenNiusShareBaseControllerModule : AppModule
     {
     }

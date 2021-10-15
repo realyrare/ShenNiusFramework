@@ -25,18 +25,103 @@ using ShenNius.ModuleCore.Context;
 using ShenNius.Share.Infrastructure.Attributes;
 using Microsoft.AspNetCore.DataProtection;
 using System.IO;
+using ShenNius.Share.Domain.Repository;
+using System;
+using AutoMapper;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Domain;
+using ShenNius.Share.Infrastructure.Configurations;
+using AspectCore.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.FileManager;
 
 namespace ShenNius.Mvc.Admin
 {
-    [DependsOn(
-         typeof(ShenNiusShopApiModule),
-          typeof(ShenNiusCmsApiModule),
-          typeof(ShenNiusSysApiModule)
-          )]
+    //[DependsOn(
+    //     typeof(ShenNiusShopApiModule),
+    //      typeof(ShenNiusCmsApiModule),
+    //      typeof(ShenNiusSysApiModule)
+    //      )]
     public class ShenNiusMvcAdminModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)
         {
+
+            string connectionStr = context.Configuration["ConnectionStrings:MySql"];          
+            DbContext._connectionStr = connectionStr;
+            WebHelper.InjectAssembly(context.Services, "ShenNius.Share.Domain");
+            context.Services.AddAutoMapper(typeof(AutomapperProfile));
+            context.Services.AddHttpContextAccessor();
+            //事务使用AOP 所以注入下。
+            context.Services.AddScoped<DbContext>();
+            //注入泛型BaseServer
+            context.Services.AddScoped(typeof(IBaseServer<>), typeof(BaseServer<>));
+
+
+            if (AppSettings.Jwt.Value)
+            {
+                context.Services.AddSwaggerSetup();
+                //注入MiniProfiler
+                context.Services.AddMiniProfiler(options =>
+                    options.RouteBasePath = "/profiler"
+               );
+                context.Services.AddAuthorizationSetup(context.Configuration);
+            }
+            // context.Services.AddHostedService<TimedBackgroundService>();
+            //context.Services.AddCap(x =>
+            //{
+            //    x.UseRabbitMQ(z =>
+            //    {
+            //        z.HostName = context.Configuration["RabbitMQ:HostName"];
+            //        z.UserName = context.Configuration["RabbitMQ:UserName"];
+            //        z.Port = Convert.ToInt32(context.Configuration["RabbitMQ:Port"]);
+            //        z.Password = context.Configuration["RabbitMQ:Password"];
+            //    });
+            //});
+
+            //健康检查服务
+            context.Services.AddHealthChecks();
+            context.Services.ConfigureDynamicProxy(o =>
+            {
+                //添加AOP的配置
+            });
+
+            //redis和cache配置
+            var redisConfiguration = context.Configuration.GetSection("Redis");
+            context.Services.Configure<RedisOption>(redisConfiguration);
+            RedisOption redisOption = redisConfiguration.Get<RedisOption>();
+            if (redisOption != null && redisOption.Enable)
+            {
+                var options = new RedisCacheOptions
+                {
+                    InstanceName = redisOption.InstanceName,
+                    Configuration = redisOption.Connection
+                };
+                var redis = new RedisCacheHelper(options, redisOption.Database);
+                context.Services.AddSingleton(redis);
+                context.Services.AddSingleton<ICacheHelper>(redis);
+            }
+            else
+            {
+                context.Services.AddMemoryCache();
+                context.Services.AddScoped<ICacheHelper, MemoryCacheHelper>();
+            }
+            //是否启用本地文件上传 选择性注入
+            var enableLocalFile = Convert.ToBoolean(context.Configuration["LocalFile:IsEnable"]);
+            if (enableLocalFile)
+            {
+                context.Services.AddScoped<IUploadHelper, LocalFile>();
+            }
+            else
+            {
+                //七牛云配置信息读取
+                context.Services.Configure<QiNiuOss>(context.Configuration.GetSection("QiNiuOss"));
+                context.Services.AddScoped<IUploadHelper, QiniuCloud>();
+            }
+
+
             context.Services.AddDistributedMemoryCache();
             context.Services.AddSession();
             //解决 Error unprotecting the session cookie.
@@ -124,6 +209,18 @@ namespace ShenNius.Mvc.Admin
                 app.UseExceptionHandler("/error.html");
                 app.UseHsts();
             }
+
+            if (AppSettings.Jwt.Value)
+            {
+                app.UseMiniProfiler();
+                app.UseSwaggerMiddle();
+            }
+            //加入健康检查中间件
+            app.UseHealthChecks("/health");
+            NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
+            NLog.LogManager.Configuration.Variables["connectionString"] = context.Configuration["ConnectionStrings:MySql"];
+
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
             // 转发将标头代理到当前请求，配合 Nginx 使用，获取用户真实IP
             app.UseForwardedHeaders(new ForwardedHeadersOptions

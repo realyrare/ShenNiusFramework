@@ -22,11 +22,11 @@ using ShenNius.Shop.API;
 
 namespace ShenNius.API.Hosting
 {
-    [DependsOn(
-        typeof(ShenNiusCmsApiModule),
-        typeof(ShenNiusShopApiModule),
-        typeof(ShenNiusSysApiModule)
-        )]
+    //[DependsOn(
+    //    typeof(ShenNiusCmsApiModule),
+    //    typeof(ShenNiusShopApiModule),
+    //    typeof(ShenNiusSysApiModule)
+    //    )]
     public class ShenNiusApiHostingModule : AppModule
     {
         public override void OnConfigureServices(ServiceConfigurationContext context)

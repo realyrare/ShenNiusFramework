@@ -12,6 +12,7 @@
 	<ItemGroup>
 	  <Compile Remove="Controllers\ApiControllerBase.cs" />
 	  <Compile Remove="Controllers\KeywordController.cs" />
+	  <Compile Remove="ShenNiusShopApiModule.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\ShenNius.Share.BaseController\ShenNius.Share.BaseController.csproj" />
