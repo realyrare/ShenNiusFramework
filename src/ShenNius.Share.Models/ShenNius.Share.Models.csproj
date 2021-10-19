@@ -13,18 +13,19 @@
     <Compile Remove="Dtos\Configs\**" />
     <Compile Remove="Entity\Order\**" />
     <Compile Remove="Entity\Product\**" />
-    <Compile Remove="Event\**" />
     <Compile Remove="Maps\**" />
     <EmbeddedResource Remove="Dtos\Configs\**" />
     <EmbeddedResource Remove="Entity\Order\**" />
     <EmbeddedResource Remove="Entity\Product\**" />
-    <EmbeddedResource Remove="Event\**" />
     <EmbeddedResource Remove="Maps\**" />
     <None Remove="Dtos\Configs\**" />
     <None Remove="Entity\Order\**" />
     <None Remove="Entity\Product\**" />
-    <None Remove="Event\**" />
     <None Remove="Maps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Event\" />
   </ItemGroup>
 	<ItemGroup>
 	
