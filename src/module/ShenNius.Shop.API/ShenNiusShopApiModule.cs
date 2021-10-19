@@ -1,11 +1,9 @@
 ﻿using ShenNius.ModuleCore;
-using ShenNius.Share.Domain;
-using ShenNius.Share.Infrastructure;
+using ShenNius.Share.BaseController;
 
 namespace ShenNius.Shop.API
 {
-    [DependsOn(typeof(ShenNiusShareDomainModule),
-         typeof(ShenNiusShareInfrastructureModule)
+    [DependsOn(typeof(ShenNiusShareBaseControllerModule)
       )]
     public class ShenNiusShopApiModule:AppModule
     {
