@@ -6,7 +6,7 @@ namespace ShenNius.Share.Domain.Repository
 {
     public class DbContext
     {
-        internal static string _connectionStr = string.Empty;
+        public static string _connectionStr = string.Empty;
         public DbContext()
         {
             Db = new SqlSugarClient(new ConnectionConfig()

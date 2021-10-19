@@ -1,5 +1,6 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using MimeKit;
 using ShenNius.Share.Common;
 using ShenNius.Share.Infrastructure.Configurations;
@@ -8,13 +9,39 @@ using ShenNius.Share.Models.Entity.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ShenNius.Share.Infrastructure.Common
 {
     public class WebHelper
-    {  
+    {
+        /// <summary>
+        /// 自动注册服务——获取程序集中的实现类对应的多个接口
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblyName"></param>
+        public static void InjectAssembly(IServiceCollection services, string assemblyName)
+        {
+            if (!string.IsNullOrEmpty(assemblyName))
+            {
+                Assembly assembly = Assembly.Load(assemblyName);
+                List<Type> ts = assembly.GetTypes().Where(u => u.IsClass && !u.IsAbstract && !u.IsGenericType).ToList();
+                foreach (var item in ts.Where(s => !s.IsInterface))
+                {
+                    var interfaceType = item.GetInterfaces();
+                    if (interfaceType.Length == 1)
+                    {
+                        services.AddScoped(interfaceType[0], item);
+                    }
+                    if (interfaceType.Length > 1)
+                    {
+                        services.AddScoped(interfaceType[1], item);
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 邮件发送
         /// </summary>

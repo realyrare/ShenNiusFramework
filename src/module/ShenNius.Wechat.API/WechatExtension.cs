@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Senparc.CO2NET;
 using Senparc.CO2NET.AspNet;
 using Senparc.Weixin;
@@ -10,16 +10,15 @@ using Senparc.Weixin.Entities;
 using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.MessageHandlers.Middleware;
 using Senparc.Weixin.RegisterServices;
-using ShenNius.ModuleCore;
-using ShenNius.ModuleCore.Context;
-using ShenNius.ModuleCore.Extensions;
-using ShenNius.Share.BaseController;
+using System;
+using System.Collections.Generic;
+using System.Web;
 
 /*************************************
-* 类名：ShenNiusWechatApiModule
+* 类名：WechatExtension
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net
-* 时间：2021/6/8 19:39:08
+* 时间：2021/10/19 19:17:14
 *┌───────────────────────────────────┐　    
 *│　   版权所有：神牛软件　　　　	     │
 *└───────────────────────────────────┘
@@ -27,28 +26,19 @@ using ShenNius.Share.BaseController;
 
 namespace ShenNius.Wechat.API
 {
-    [DependsOn(typeof(ShenNiusShareBaseControllerModule)
-    )]
-    public class ShenNiusWechatApiModule : AppModule
+    public static class WechatExtension
     {
-        public override void OnConfigureServices(ServiceConfigurationContext context)
+        public static void AddWechatSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            context.Services.AddMemoryCache()//使用本地缓存必须添加
-                    .AddSenparcWeixinServices(context.Configuration);//Senparc.Weixin 注册（必须）           
+            services.AddMemoryCache()//使用本地缓存必须添加
+                       .AddSenparcWeixinServices(configuration);//Senparc.Weixin 注册（必须）    
         }
-        public override void OnApplicationInitialization(ApplicationInitializationContext context)
-        {
-            var app = context.GetApplicationBuilder();
-            var env = ServiceProviderServiceExtensions.GetRequiredService<IWebHostEnvironment>(context.ServiceProvider);
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-          
+        public static void UseWechat(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
+        {     
             // IOptions<SenparcSetting> senparcSetting, IOptions<SenparcWeixinSetting> senparcWeixinSetting
             //注册 Senparc.Weixin 及基础库
-            var senparcSetting = context.Configuration.GetValue<SenparcSetting>("SenparcSetting");
-            var senparcWeixinSetting = context.Configuration.GetValue<SenparcWeixinSetting>("SenparcWeixinSetting");
+            var senparcSetting = configuration.GetValue<SenparcSetting>("SenparcSetting");
+            var senparcWeixinSetting = configuration.GetValue<SenparcWeixinSetting>("SenparcWeixinSetting");
 
             //注册 Senparc.Weixin 及基础库
             var registerService = app.UseSenparcGlobal(env, senparcSetting, _ => { }, true)
