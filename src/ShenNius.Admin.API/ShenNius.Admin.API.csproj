@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\ShenNius.Share.Domain\ShenNius.Share.Domain.csproj" />
+	  <ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Controllers\Wechat\" />
+	</ItemGroup>
+</Project>

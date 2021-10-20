@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ShenNius.Share.BaseController\ShenNius.Share.BaseController.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Senparc.Weixin.MP.Middleware" Version="0.3.400" />
   </ItemGroup>
 
