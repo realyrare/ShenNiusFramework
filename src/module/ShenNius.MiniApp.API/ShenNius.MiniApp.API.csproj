@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\framework\core\ShenNius.ModuleCore\ShenNius.ModuleCore.csproj" />
     <ProjectReference Include="..\..\ShenNius.Share.Domain\ShenNius.Share.Domain.csproj" />
   </ItemGroup>
 
