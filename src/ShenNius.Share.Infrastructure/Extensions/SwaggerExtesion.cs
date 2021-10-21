@@ -106,7 +106,7 @@ namespace ShenNius.Share.Infrastructure.Extensions
     {
         public  Stream GetStream()
         {
-            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.Share.Infrastructure.index.html");
+            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.API.Hosting.index.html");
         }
     }
 }

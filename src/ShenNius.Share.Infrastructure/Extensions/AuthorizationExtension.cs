@@ -15,6 +15,11 @@ namespace ShenNius.Share.Infrastructure.Extensions
 {
     public static class AuthorizationExtension
     {
+        /// <summary>
+        /// jwt认证
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
         public static void AddAuthorizationSetup(this IServiceCollection services, IConfiguration configuration)
         {
             if (services == null) throw new FriendlyException(nameof(services));

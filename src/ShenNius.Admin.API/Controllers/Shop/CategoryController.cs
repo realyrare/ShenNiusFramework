@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Admin.API.Controllers;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Models.Configs;

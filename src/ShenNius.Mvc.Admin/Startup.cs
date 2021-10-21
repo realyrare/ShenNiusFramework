@@ -53,15 +53,6 @@ namespace ShenNius.Mvc.Admin
             //注入泛型BaseServer
             services.AddScoped(typeof(IBaseServer<>), typeof(BaseServer<>));
 
-            if (AppSettings.Jwt.Value)
-            {
-                services.AddSwaggerSetup();
-                //注入MiniProfiler
-                services.AddMiniProfiler(options =>
-                     options.RouteBasePath = "/profiler"
-                );
-                services.AddAuthorizationSetup(Configuration);
-            }
             //健康检查服务
             services.AddHealthChecks();
             services.ConfigureDynamicProxy(o =>
@@ -89,6 +80,7 @@ namespace ShenNius.Mvc.Admin
                 services.AddMemoryCache();
                 services.AddScoped<ICacheHelper, MemoryCacheHelper>();
             }
+
             //是否启用本地文件上传 选择性注入
             var enableLocalFile = Convert.ToBoolean(Configuration["LocalFile:IsEnable"]);
             if (enableLocalFile)
@@ -186,12 +178,6 @@ namespace ShenNius.Mvc.Admin
             {
                 app.UseExceptionHandler("/error.html");
                 app.UseHsts();
-            }
-
-            if (AppSettings.Jwt.Value)
-            {
-                app.UseMiniProfiler();
-                app.UseSwaggerMiddle();
             }
             //加入健康检查中间件
             app.UseHealthChecks("/health");

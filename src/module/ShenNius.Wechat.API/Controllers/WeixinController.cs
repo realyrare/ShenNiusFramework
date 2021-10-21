@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.Entities.Request;
 

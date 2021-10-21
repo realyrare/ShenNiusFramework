@@ -17,7 +17,6 @@ using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Common;
-using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Infrastructure.Hubs;
@@ -48,16 +47,14 @@ namespace ShenNius.API.Hosting
 
             //注入泛型BaseServer
             services.AddScoped(typeof(IBaseServer<>), typeof(BaseServer<>));
-
-            if (AppSettings.Jwt.Value)
-            {
-                services.AddSwaggerSetup();
+          
+            services.AddSwaggerSetup();
                 //注入MiniProfiler
-                services.AddMiniProfiler(options =>
+            services.AddMiniProfiler(options =>
                      options.RouteBasePath = "/profiler"
-                );
-                services.AddAuthorizationSetup(Configuration);
-            }
+            );
+            services.AddAuthorizationSetup(Configuration);
+
             //健康检查服务
             services.AddHealthChecks();
             services.ConfigureDynamicProxy(o =>
@@ -101,9 +98,6 @@ namespace ShenNius.API.Hosting
 
             services.AddDistributedMemoryCache();
             services.AddSession();
-  
-            // 认证
-
             services.AddSignalR();
             var mvcBuilder = services.AddControllers(options =>
             {
@@ -174,12 +168,9 @@ namespace ShenNius.API.Hosting
                 app.UseExceptionHandler("/error.html");
                 app.UseHsts();
             }
-
-            if (AppSettings.Jwt.Value)
-            {
-                app.UseMiniProfiler();
-                app.UseSwaggerMiddle();
-            }
+          
+             app.UseMiniProfiler();
+             app.UseSwaggerMiddle();
             //加入健康检查中间件
             app.UseHealthChecks("/health");
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
