@@ -1,0 +1,4022 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=gb2312"> 
+    <title></title>
+    <style type="text/css">
+        .styledb
+        {
+            font-size: 14px;
+        }
+        .styletab
+        {
+            font-size: 14px;
+            padding-top: 15px;
+        }
+        a
+        {
+            color: #015FB6;
+        }
+        a:link, a:visited, a:active
+        {
+            color: #015FB6;
+            text-decoration: none;
+        }
+        a:hover
+        {
+            color: #E33E06;
+        }
+.footable > thead > tr > th,.footable > thead > tr > td {
+position: relative;
+}
+.footable {
+border-spacing: 0;
+width: 100%;
+border: solid #ccc 1px;
+-moz-border-radius: 6px;
+ -webkit-border-radius: 6px;
+border-radius: 6px;
+font-family: 'trebuchet MS' , 'Lucida sans' , Arial;
+ font-size: 12px;
+color: #444;
+}
+.footable.breakpoint > tbody > tr > td.expand {
+ background: url('img/plus.png') no-repeat 5px center;
+  padding-left: 40px;
+}
+.footable.breakpoint > tbody > tr.footable-detail-show > td.expand {
+ background: url('img/minus.png') no-repeat 5px center;
+}
+.footable.breakpoint > tbody > tr.footable-row-detail {
+ background: #eee;
+}
+.footable > tbody > tr:hover {
+background: #fbf8e9;
+}
+.footable.breakpoint > tbody > tr:hover:not(.footable-row-detail) {
+cursor: pointer;
+}
+.footable > tbody > tr > td, .footable > thead > tr > th {
+border-left: 1px solid #ccc;
+ border-top: 1px solid #ccc;
+ padding: 10px;
+ text-align: left;
+}
+.footable > thead > tr > th, .footable > thead > tr > td {
+background-color: #dce9f9;
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+ background-image: -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image: -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image: -o-linear-gradient(top, #ebf3fc, #dce9f9);
+  background-image: linear-gradient(to bottom, #ebf3fc, #dce9f9);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+  border-top: none;
+ text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+.footable > thead > tr > th:first-child, .footable > thead > tr > td:first-child {
+ -moz-border-radius: 6px 0 0 0;
+ -webkit-border-radius: 6px 0 0 0;
+ border-radius: 6px 0 0 0;
+}
+.footable > thead > tr > th:last-child, .footable > thead > tr > td:last-child {
+-moz-border-radius: 0 6px 0 0;
+-webkit-border-radius: 0 6px 0 0;
+border-radius: 0 6px 0 0;
+}
+.footable > thead > tr > th:only-child, .footable > thead > tr > td:only-child {
+  -moz-border-radius: 6px 6px 0 0;
+ -webkit-border-radius: 6px 6px 0 0;
+ border-radius: 6px 6px 0 0;
+}
+.footable > tbody > tr:last-child > td:first-child {
+  -moz-border-radius: 0 0 0 6px;
+ -webkit-border-radius: 0 0 0 6px;
+ border-radius: 0 0 0 6px;
+}
+.footable > tbody > tr:last-child > td:last-child {
+ -moz-border-radius: 0 0 6px 0;
+ -webkit-border-radius: 0 0 6px 0;
+border-radius: 0 0 6px 0;
+}
+.footable > tbody img {
+vertical-align:middle;
+} 
+    </style>
+</head>
+<body>
+    <div> 
+<div>
+<div id='cms_advlist' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">cms_advlist  （内容广告表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Title</td>
+<td>广告位名称</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Type</td>
+<td>广告位类型</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Status</td>
+<td>是否启用</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'1'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>ImgUrl</td>
+<td>图片地址</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>LinkUrl</td>
+<td>链接地址</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Target</td>
+<td>打开窗口类型</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>IsTimeLimit</td>
+<td>是否启用时间显示</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>BeginTime</td>
+<td>开始时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>EndTime</td>
+<td>结束时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>Sort</td>
+<td>排序</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>Summary</td>
+<td>广告位说明</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='cms_article' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">cms_article  （内容文章表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Status</td>
+<td>是否启用</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>ColumnId</td>
+<td>栏目ID</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Title</td>
+<td>文章标题</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>TitleColor</td>
+<td>文章标题颜色</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>SubTitle</td>
+<td>文章副标题</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Author</td>
+<td>作者</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Source</td>
+<td>来源</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>IsLink</td>
+<td>是否外链</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr>
+<td>11</td>
+<td>LinkUrl</td>
+<td>外部链接地址</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>Tag</td>
+<td>文章标签</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>ThumImg</td>
+<td>文章缩略图</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>VideoUrl</td>
+<td>视频链接地址</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>IsTop</td>
+<td>是否置顶</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>IsHot</td>
+<td>是否热点</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr>
+<td>17</td>
+<td>IsComment</td>
+<td>是否允许评论</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>18</td>
+<td>Audit</td>
+<td>审核状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'1'</td>
+</tr>
+<tr>
+<td>19</td>
+<td>KeyWord</td>
+<td>Seo关键字</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>20</td>
+<td>Summary</td>
+<td>文章摘要</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Content</td>
+<td>文章内容</td>
+<td>mediumtext</td>
+<td>16777215</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>22</td>
+<td>Hits</td>
+<td>点击量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>23</td>
+<td>ModifyTime</td>
+<td>编辑时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>24</td>
+<td>CreateTime</td>
+<td>添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>25</td>
+<td>DeleteTime</td>
+<td>删除到回收站时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='cms_column' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">cms_column  （内容栏目表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Status</td>
+<td>是否启用</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Title</td>
+<td>栏目标题</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>EnTitle</td>
+<td>英文栏位名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>SubTitle</td>
+<td>栏位副标题</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ParentId</td>
+<td>父栏目</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>ParentList</td>
+<td>&nbsp;</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Layer</td>
+<td>栏位等级</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Attr</td>
+<td>栏位属性</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ImgUrl</td>
+<td>栏位图片</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>Keyword</td>
+<td>关键词</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Summary</td>
+<td>描述</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='cms_keyword' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">cms_keyword  （内链匹配关键字表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Title</td>
+<td>标题</td>
+<td>varchar</td>
+<td>250</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Url</td>
+<td>Url</td>
+<td>varchar</td>
+<td>300</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Status</td>
+<td>是否伪删除</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='cms_message' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">cms_message  （留言表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Types</td>
+<td>业务类型</td>
+<td>varchar</td>
+<td>11</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Email</td>
+<td>联系邮箱</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Status</td>
+<td>状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Content</td>
+<td>内容</td>
+<td>text</td>
+<td>65535</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>UserId</td>
+<td>用户ID</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>UserName</td>
+<td>用户名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>IP</td>
+<td>IP地址</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ParentId</td>
+<td>父ID</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>CreateTime</td>
+<td>添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>BusinessId</td>
+<td>业务Id和types一起使用</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Address</td>
+<td>地址</td>
+<td>varchar</td>
+<td>150</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_appuser' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_appuser  （商城用户表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>OpenId</td>
+<td>微信openid(唯一标示)</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>NickName</td>
+<td>微信昵称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>AvatarUrl</td>
+<td>微信头像</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Gender</td>
+<td>性别</td>
+<td>tinyint</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Country</td>
+<td>国家</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Province</td>
+<td>省份</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>City</td>
+<td>城市</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>AddressId</td>
+<td>默认收货地址Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Status</td>
+<td>状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_appuser_address' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_appuser_address  （商城用户地址表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Name</td>
+<td>收货人姓名</td>
+<td>varchar</td>
+<td>30</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Phone</td>
+<td>联系电话</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Province</td>
+<td>所在省份id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>City</td>
+<td>所在城市id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Region</td>
+<td>所在区id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Detail</td>
+<td>详细地址</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>AppUserId</td>
+<td>小程序用户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>Status</td>
+<td>状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_category' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_category  （商品分类表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Name</td>
+<td>分类名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ParentId</td>
+<td>上级分类id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>IconSrc</td>
+<td>图标地址</td>
+<td>varchar</td>
+<td>11</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>TenantId</td>
+<td>小程序租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Status</td>
+<td>是否伪删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Layer</td>
+<td>层级</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>ParentList</td>
+<td>父元素集合</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_goods' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_goods  （商品表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Name</td>
+<td>商品名称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CategoryId</td>
+<td>商品分类id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>SpecType</td>
+<td>商品规格(10单规格 20多规格)</td>
+<td>tinyint</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DeductStockType</td>
+<td>库存计算方式(10下单减库存 20付款减库存)</td>
+<td>tinyint</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>20</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Content</td>
+<td>商品详情</td>
+<td>longtext</td>
+<td>4294967295</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>SalesInitial</td>
+<td>初始销量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>SalesActual</td>
+<td>实际销量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>DeliveryId</td>
+<td>配送模板id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Status</td>
+<td>是否删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>GoodsStatus</td>
+<td>商品状态</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>ImgUrl</td>
+<td>商品多图，以逗号隔开</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>SpecMany</td>
+<td>商品多规格字符串</td>
+<td>varchar</td>
+<td>3500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_goods_spec' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_goods_spec  （商品规格表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>商品规格id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>GoodsId</td>
+<td>商品id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GoodsNo</td>
+<td>商品编码</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>GoodsPrice</td>
+<td>商品价格</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>LinePrice</td>
+<td>商品划线价</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>StockNum</td>
+<td>当前库存数量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>GoodsSales</td>
+<td>商品销量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>GoodsWeight</td>
+<td>商品重量(Kg)</td>
+<td>double</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>TenantId</td>
+<td>小程序多租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>SpecSkuId</td>
+<td>商品Sku</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_goods_spec_rel' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_goods_spec_rel  （商品规格关系引用表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>GoodsId</td>
+<td>商品id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SpecId</td>
+<td>规格组id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>SpecValueId</td>
+<td>规格值id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>TenantId</td>
+<td>小程序多租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_order' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_order  （订单表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>订单id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>OrderNo</td>
+<td>订单号</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>TotalPrice</td>
+<td>商品总金额</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>PayPrice</td>
+<td>订单实付款金额</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PayStatus</td>
+<td>付款状态(10未付款 20已付款)</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>10</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>PayTime</td>
+<td>付款时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ExpressPrice</td>
+<td>运费金额</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>ExpressCompany</td>
+<td>物流公司</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ExpressNo</td>
+<td>物流单号</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>DeliveryStatus</td>
+<td>发货状态(10未发货 20已发货)</td>
+<td>tinyint</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>10</td>
+</tr>
+<tr>
+<td>11</td>
+<td>DeliveryTime</td>
+<td>发货时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>ReceiptStatus</td>
+<td>收货状态(10未收货 20已收货)</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>10</td>
+</tr>
+<tr>
+<td>13</td>
+<td>ReceipTime</td>
+<td>收货时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>OrderStatus</td>
+<td>订单状态(10进行中 20取消 21待取消 30已完成)</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>10</td>
+</tr>
+<tr>
+<td>15</td>
+<td>TransactionId</td>
+<td>微信支付交易号</td>
+<td>varchar</td>
+<td>30</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>AppUserId</td>
+<td>小程序用户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>17</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>18</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>19</td>
+<td>ModifyTime</td>
+<td>更新时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>20</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_order_address' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_order_address  （商品订单地址表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>AppUserId</td>
+<td>小程序用户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Name</td>
+<td>收货人姓名</td>
+<td>varchar</td>
+<td>30</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Phone</td>
+<td>联系电话</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Province</td>
+<td>所在省份id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>City</td>
+<td>所在城市id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Region</td>
+<td>所在区id</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Detail</td>
+<td>详细地址</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>OrderId</td>
+<td>订单id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Status</td>
+<td>状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_order_goods' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_order_goods  （订单商品表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>GoodsId</td>
+<td>商品id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GoodsName</td>
+<td>商品名称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>ImgUrl</td>
+<td>商品封面图id</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DeductStockType</td>
+<td>库存计算方式(10下单减库存 20付款减库存)</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>20</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>SpecType</td>
+<td>规格类型(10单规格 20多规格)</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>SpecSkuId</td>
+<td>商品sku标识</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>GoodsSpecId</td>
+<td>商品规格id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>GoodsAttr</td>
+<td>商品规格信息</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Content</td>
+<td>商品详情</td>
+<td>longtext</td>
+<td>4294967295</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>GoodsNo</td>
+<td>商品编码</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>GoodsPrice</td>
+<td>商品价格</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>13</td>
+<td>LinePrice</td>
+<td>商品划线价</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>GoodsWeight</td>
+<td>商品重量(Kg)</td>
+<td>double</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>15</td>
+<td>TotalNum</td>
+<td>购买数量</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>TotalPrice</td>
+<td>商品总价</td>
+<td>decimal</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>17</td>
+<td>OrderId</td>
+<td>订单id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>18</td>
+<td>AppUserId</td>
+<td>小程序用户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>19</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>20</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>21</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>22</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_spec' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_spec  （商品规格表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>规格组id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Name</td>
+<td>规格组名称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='shop_spec_value' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">shop_spec_value  （商品规格值表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>规格值id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Value</td>
+<td>规格值</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SpecId</td>
+<td>规格组id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>TenantId</td>
+<td>小程序租户id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_config' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_config  （系统字典表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>ParentId</td>
+<td>父Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Name</td>
+<td>字典值——名称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>EnName</td>
+<td>字典值——英文名称</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Summary</td>
+<td>字典值——描述</td>
+<td>varchar</td>
+<td>1000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>CreateTime</td>
+<td>字典值——添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ModifyTime</td>
+<td>字典值——修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Type</td>
+<td>类型</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Status</td>
+<td>删除状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_log' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_log  （系统日志表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Application</td>
+<td>应用</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Level</td>
+<td>日志级别</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Message</td>
+<td>内容</td>
+<td>longtext</td>
+<td>4294967295</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Logger</td>
+<td>创建时间</td>
+<td>varchar</td>
+<td>250</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Callsite</td>
+<td>&nbsp;</td>
+<td>varchar</td>
+<td>512</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Exception</td>
+<td>异常</td>
+<td>varchar</td>
+<td>512</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>IP</td>
+<td>IP</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>UserName</td>
+<td>用户名</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Browser</td>
+<td>浏览器</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_menu' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_menu  （系统权限表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>ParentId</td>
+<td>菜单父级</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ParentIdList</td>
+<td>菜单父级集合</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Name</td>
+<td>菜单名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>NameCode</td>
+<td>菜单名称标识</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Url</td>
+<td>菜单Url</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Icon</td>
+<td>菜单图标</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Sort</td>
+<td>菜单排序</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Layer</td>
+<td>层级</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Status</td>
+<td>菜单状态 true=正常 false=不显示</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'1'</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>CreateTime</td>
+<td>添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>HttpMethod</td>
+<td>http请求方式</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>BtnCodeIds</td>
+<td>按钮Id集合</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_recycle' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_recycle  （信息回收站表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>TableType</td>
+<td>表类型</td>
+<td>varchar</td>
+<td>11</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Remark</td>
+<td>备注</td>
+<td>varchar</td>
+<td>300</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>UserId</td>
+<td>系统用户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>BusinessId</td>
+<td>业务Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>TenantId</td>
+<td>租户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>RestoreSql</td>
+<td>要还原的sql语句</td>
+<td>varchar</td>
+<td>300</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>9</td>
+<td>RealyDelSql</td>
+<td>彻底删除的sql语句</td>
+<td>varchar</td>
+<td>300</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_role' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_role  （系统角色表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Status</td>
+<td>是否删除</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Name</td>
+<td>名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Description</td>
+<td>描述</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CreateTime</td>
+<td>添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_r_role_menu' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_r_role_menu  （系统角色菜单中间表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>RoleId</td>
+<td>角色Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MenuId</td>
+<td>菜单Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>IsPass</td>
+<td>是否通过</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>BtnCodeIds</td>
+<td>按钮Id集合</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Status</td>
+<td>是否删除</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_r_user_role' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_r_user_role  （用户角色中间表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>UserId</td>
+<td>用户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>RoleId</td>
+<td>角色Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Status</td>
+<td>是否删除</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_tenant' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_tenant  （多租户表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>UserId</td>
+<td>系统用户Id</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Name</td>
+<td>网站名称</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>Url</td>
+<td>网站域名</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Logo</td>
+<td>网站Logo</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Summary</td>
+<td>网站描述</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Tel</td>
+<td>公司电话</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Fax</td>
+<td>公司传真</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Email</td>
+<td>公司人事邮箱</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>QQ</td>
+<td>公司客服QQ</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>11</td>
+<td>WeiXin</td>
+<td>微信公众号图片</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>WeiBo</td>
+<td>微博链接地址或者二维码</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Address</td>
+<td>公司地址</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>Code</td>
+<td>网站备案号其它等信息</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Title</td>
+<td>网站SEO标题</td>
+<td>varchar</td>
+<td>255</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>Keyword</td>
+<td>网站SEO关键字</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Description</td>
+<td>网站SEO描述</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>18</td>
+<td>Copyright</td>
+<td>网站版权等信息</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Status</td>
+<td>网站开启关闭状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>b'1'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>20</td>
+<td>CloseInfo</td>
+<td>如果状态关闭，请输入关闭网站原因</td>
+<td>varchar</td>
+<td>2000</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>21</td>
+<td>IsDel</td>
+<td>是否删除</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>22</td>
+<td>IsCurrent</td>
+<td>是否当前租户</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'0'</td>
+</tr>
+<tr>
+<td>23</td>
+<td>CreateTime</td>
+<td>创建时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>24</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+<div>
+<div id='sys_user' style="padding: 5px;margin-top:10px;font-size: 14px;font-family: 'trebuchet MS' , 'Lucida sans' , Arial;">sys_user  （系统用户表） </div>
+ <table class="footable" >
+<thead><tr>
+<th  style="width:5%" >序号</th>
+<th  style="width:19%" >字段</th>
+<th  style="width:27%" >说明</th>
+<th  style="width:8%" >数据类型</th>
+<th  style="width:6%" >长度</th>
+<th  style="width:6%" >自增</th>
+<th  style="width:6%" >主键</th>
+<th  style="width:6%" >允许空</th>
+<th  style="width:20%" >默认值</th>
+</tr> </thead><tbody>
+<tr>
+<td>1</td>
+<td>Id</td>
+<td>主键</td>
+<td>int</td>
+<td>&nbsp;</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>2</td>
+<td>Name</td>
+<td>登录账号</td>
+<td>varchar</td>
+<td>30</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Password</td>
+<td>登录密码</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>4</td>
+<td>TrueName</td>
+<td>姓名</td>
+<td>varchar</td>
+<td>20</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HeadImg</td>
+<td>头像</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>6</td>
+<td>Sex</td>
+<td>性别</td>
+<td>varchar</td>
+<td>10</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Mobile</td>
+<td>手机号码</td>
+<td>varchar</td>
+<td>15</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>8</td>
+<td>Status</td>
+<td>是否状态</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>b'1'</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Email</td>
+<td>邮箱</td>
+<td>varchar</td>
+<td>50</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>10</td>
+<td>Remark</td>
+<td>描述</td>
+<td>varchar</td>
+<td>500</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CreateTime</td>
+<td>添加时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>12</td>
+<td>LastLoginTime</td>
+<td>最后登陆时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Address</td>
+<td>登录地址</td>
+<td>varchar</td>
+<td>200</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>14</td>
+<td>ModifyTime</td>
+<td>修改时间</td>
+<td>datetime</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Ip</td>
+<td>IP地址</td>
+<td>varchar</td>
+<td>100</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+<tr style="background-color:#F6F6F6;">
+<td>16</td>
+<td>IsLogin</td>
+<td>当前是否登录</td>
+<td>bit</td>
+<td>&nbsp;</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+</div>
+    </div>
+</body>
+</html>
