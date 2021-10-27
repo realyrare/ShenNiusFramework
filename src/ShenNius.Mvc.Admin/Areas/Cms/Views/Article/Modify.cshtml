@@ -39,7 +39,6 @@
                         <input type="checkbox" name="isHot" @(Model.IsHot ? "checked=''" : "") lay-skin="primary" title="是否热点">
 
                         <input type="checkbox" name="isComment" @(Model.IsComment ? "checked=''" : "") lay-skin="primary" title="是否允许评论">
-                        <input type="checkbox" name="isRecycle" @(Model.IsRecycle ? "checked=''" : "") lay-skin="primary" title="是否在回收站">
                     </div>
                 </div>
 
@@ -184,7 +183,6 @@
                     data.field.isTop = data.field.isTop === 'on' ? true : false;
                     data.field.isHot = data.field.isHot === 'on' ? true : false;
                     data.field.isComment = data.field.isComment === 'on' ? true : false;
-                    data.field.isRecycle = data.field.isRecycle === 'on' ? true : false;
                     if (data.field.id>0) {
                         apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
