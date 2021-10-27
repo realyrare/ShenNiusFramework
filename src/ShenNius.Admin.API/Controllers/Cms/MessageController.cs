@@ -27,7 +27,7 @@ namespace ShenNius.Admin.API.Controllers.Cms
     [ApiController]
     [Authorize]
     [MultiTenant]
-    public class MessageController:ControllerBase
+    public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
         public MessageController(IMessageService messageService)
@@ -35,7 +35,7 @@ namespace ShenNius.Admin.API.Controllers.Cms
             this._messageService = messageService;
         }
         [HttpGet]
-        public  async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
+        public async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
             Expression<Func<Message, bool>> whereExpression = d => d.Status == true;
             if (keywordListTenantQuery.TenantId > 0)
@@ -48,14 +48,14 @@ namespace ShenNius.Admin.API.Controllers.Cms
             }
             var res = await _messageService.GetPagesAsync(keywordListTenantQuery.Page, keywordListTenantQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
-        }  
+        }
         /// <summary>
         /// 批量真实删除
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public  async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
+        public async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
         {
             var res = await _messageService.DeleteAsync(deleteInput.Ids);
             if (res <= 0)

@@ -21,7 +21,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
         {
             _categoryService = categoryService;
         }
-       
+
         /// <summary>
         /// 分类列表
         /// </summary>

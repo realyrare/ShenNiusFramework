@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Admin.API.Controllers;
+using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Services.Cms;
 using ShenNius.Share.Infrastructure.FileManager;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
-using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Domain.Services.Cms;
 
 /*************************************
 * 类名：ArticleController
@@ -37,9 +36,9 @@ namespace ShenNius.Admin.API.Controllers.Cms
         }
 
         [HttpGet]
-        public override  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query )
+        public override Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
-           return _articleService.GetPagesAsync(query);
+            return _articleService.GetPagesAsync(query);
         }
         [HttpPost, AllowAnonymous]
         public IActionResult QiniuFile()

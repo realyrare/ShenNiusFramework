@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Admin.API.Controllers;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Infrastructure.FileManager;
@@ -23,16 +22,16 @@ namespace ShenNius.Admin.API.Controllers.Shop
         private readonly IGoodsService _goodsService;
         private readonly IUploadHelper _uploadHelper;
 
-        public GoodsController(IBaseServer<Goods> service, IMapper mapper, IGoodsService  goodsService, IUploadHelper uploadHelper) : base(service, mapper)
+        public GoodsController(IBaseServer<Goods> service, IMapper mapper, IGoodsService goodsService, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _goodsService = goodsService;
             _uploadHelper = uploadHelper;
         }
 
         [HttpGet]
-        public override  Task<ApiResult> GetListPages(KeyListTenantQuery query)
+        public override Task<ApiResult> GetListPages(KeyListTenantQuery query)
         {
-            return  _goodsService.GetListPageAsync(query);
+            return _goodsService.GetListPageAsync(query);
         }
         [HttpPost]
         public override Task<ApiResult> Add([FromBody] GoodsInput input)
@@ -47,7 +46,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
         [HttpPost]
         public Task<ApiResult> AddSpec([FromForm] SpecInput input)
         {
-         return  _goodsService.AddSpecAsync(input);
+            return _goodsService.AddSpecAsync(input);
         }
         [HttpPost]
         public Task<ApiResult> AddSpecValue([FromForm] SpecValuesInput input)
@@ -65,7 +64,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
         [HttpPost]
         public ApiResult MultipleUploadImg([FromForm] IFormCollection formData)
         {
-           // var files = Request.Form.Files;
+            // var files = Request.Form.Files;
             var data = _uploadHelper.Upload(formData.Files, "goods/");
             //TinyMCE 指定的返回格式
             return data;

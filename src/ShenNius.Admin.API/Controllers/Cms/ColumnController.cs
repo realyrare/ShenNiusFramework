@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Admin.API.Controllers;
+using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Services.Cms;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Cms;
-using ShenNius.Share.Domain.Services.Cms;
-using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using ShenNius.Share.Models.Configs;
 
 /*************************************
 * 类名：ColumnController
@@ -34,21 +33,21 @@ namespace ShenNius.Admin.API.Controllers.Cms
         [AllowAnonymous]
         public ApiResult GetTestCache()
         {
-          var str=  _columnService.GetTest();
+            var str = _columnService.GetTest();
             return new ApiResult(str);
         }
         [HttpGet]
-        public override  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
+        public override Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
-           return _columnService.GetListPagesAsync(keywordListTenantQuery);
+            return _columnService.GetListPagesAsync(keywordListTenantQuery);
         }
         [HttpPost]
-        public override  Task<ApiResult> Add([FromBody] ColumnInput columnInput)
+        public override Task<ApiResult> Add([FromBody] ColumnInput columnInput)
         {
             return _columnService.AddToUpdateAsync(columnInput);
         }
         [HttpPut]
-        public override  Task<ApiResult> Modify([FromBody] ColumnModifyInput columnModifyInput)
+        public override Task<ApiResult> Modify([FromBody] ColumnModifyInput columnModifyInput)
         {
             return _columnService.ModifyAsync(columnModifyInput);
         }
@@ -57,9 +56,9 @@ namespace ShenNius.Admin.API.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public  Task<ApiResult> GetAllParentColumn()
+        public Task<ApiResult> GetAllParentColumn()
         {
-            return  _columnService.GetAllParentColumnAsync();
+            return _columnService.GetAllParentColumnAsync();
         }
     }
 }

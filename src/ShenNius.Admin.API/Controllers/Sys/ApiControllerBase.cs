@@ -8,6 +8,6 @@ namespace ShenNius.Admin.API.Controllers.Sys
     [Authorize]
     public abstract class ApiControllerBase : ControllerBase
     {
-        
+
     }
 }

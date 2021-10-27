@@ -16,10 +16,10 @@ namespace ShenNius.Admin.API.Controllers.Shop
     public class UploadController : ControllerBase
     {
         private readonly IUploadHelper _uploadHelper;
-        public UploadController( IUploadHelper uploadHelper) 
+        public UploadController(IUploadHelper uploadHelper)
         {
             _uploadHelper = uploadHelper;
-        }       
+        }
         [HttpPost]
         public ApiResult File([FromBody] UploadInput input)
         {

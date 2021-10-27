@@ -18,16 +18,16 @@ namespace ShenNius.Admin.API.Controllers.Shop
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _OrderService;
-        public OrderController(IOrderService  OrderService)
+        public OrderController(IOrderService OrderService)
         {
             _OrderService = OrderService;
         }
 
         [HttpGet]
-        public Task<ApiResult> GetListPages([FromQuery]OrderKeyListTenantQuery query)
+        public Task<ApiResult> GetListPages([FromQuery] OrderKeyListTenantQuery query)
         {
-            return  _OrderService.GetListPageAsync(query);
+            return _OrderService.GetListPageAsync(query);
         }
-        
+
     }
 }

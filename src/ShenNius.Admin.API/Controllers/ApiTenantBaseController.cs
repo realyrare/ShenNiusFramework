@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
-using ShenNius.Share.Domain.Repository;
-using System.Threading.Tasks;
-using ShenNius.Share.Domain.Services.Sys;
 using System.Linq;
-using ShenNius.Share.Models.Configs;
+using System.Threading.Tasks;
 
 /*************************************
 * 类名：ApiBaseController
@@ -92,10 +92,10 @@ namespace ShenNius.Admin.API.Controllers
         /// <param name="deleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public virtual  Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
+        public virtual Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
         {
             var recycleService = HttpContext.RequestServices.GetService(typeof(IRecycleService)) as IRecycleService;
-            return recycleService.SoftDeleteAsync(deleteInput, _service);           
+            return recycleService.SoftDeleteAsync(deleteInput, _service);
         }
         /// <summary>
         /// 列表分页
@@ -107,7 +107,7 @@ namespace ShenNius.Admin.API.Controllers
         {
             var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.TenantId == listQuery.TenantId && d.Status == true, d => d.Id, false);
             var tenantService = HttpContext.RequestServices.GetService(typeof(ITenantService)) as ITenantService;
-           var tenantList= await tenantService.GetListAsync(d=>d.Status);
+            var tenantList = await tenantService.GetListAsync(d => d.Status);
             foreach (var item in res.Items)
             {
                 item.TenantName = tenantList.Where(d => d.Id == item.TenantId).Select(d => d.Name).FirstOrDefault();

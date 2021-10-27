@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Admin.API.Controllers.Sys
 {
@@ -24,7 +24,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             _mapper = mapper;
             _r_Role_MenuService = r_Role_MenuService;
         }
-        [HttpDelete,Authority(Module = nameof(Role), Method = nameof(Button.Delete))]
+        [HttpDelete, Authority(Module = nameof(Role), Method = nameof(Button.Delete))]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
@@ -37,7 +37,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             {
                 whereExpression = d => d.Name.Contains(key);
             }
-            var res = await _roleService.GetPagesAsync(page, 15, whereExpression, d=>d.Id,false);
+            var res = await _roleService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
         /// <summary>
@@ -49,7 +49,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         [HttpGet]
         public async Task<ApiResult> GetListPagesByUser(int page, int userId)
         {
-          return  await _roleService.GetListPagesAsync(page, userId);           
+            return await _roleService.GetListPagesAsync(page, userId);
         }
         [HttpGet]
         public async Task<ApiResult> Detail(int id)
@@ -63,7 +63,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         }
         [HttpGet]
         public async Task<ApiResult> List()
-        {            
+        {
             var data = await _roleService.GetListAsync();
             return new ApiResult(data: data);
         }
@@ -81,7 +81,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
         }
 
-        [HttpPut,Authority(Module = nameof(Role), Method = nameof(Button.Edit))]
+        [HttpPut, Authority(Module = nameof(Role), Method = nameof(Button.Edit))]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {
             return new ApiResult(await _roleService.UpdateAsync(d => new Role()

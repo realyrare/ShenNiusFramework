@@ -9,20 +9,19 @@
 **************************************/
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShenNius.Admin.API.Controllers;
-using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Infrastructure.FileManager;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Domain.Repository;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using ShenNius.Share.Infrastructure.FileManager;
 
 namespace ShenNius.Admin.API.Controllers.Sys
 {
@@ -31,10 +30,10 @@ namespace ShenNius.Admin.API.Controllers.Sys
         private readonly IBaseServer<Tenant> _service;
         private readonly ICacheHelper _cacheHelper;
         private readonly IUploadHelper _uploadHelper;
-        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper,  IUploadHelper uploadHelper) : base(service, mapper)
+        public TenantController(IBaseServer<Tenant> service, IMapper mapper, ICacheHelper cacheHelper, IUploadHelper uploadHelper) : base(service, mapper)
         {
             _service = service;
-            _cacheHelper = cacheHelper;        
+            _cacheHelper = cacheHelper;
             this._uploadHelper = uploadHelper;
         }
         [HttpGet]
@@ -105,12 +104,12 @@ namespace ShenNius.Admin.API.Controllers.Sys
             var res = await _service.GetPagesAsync(keyListQuery.Page, keyListQuery.Limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-       
+
         [HttpPost, AllowAnonymous]
         public ApiResult QiniuFile()
         {
             var files = Request.Form.Files[0];
-            var data = _uploadHelper.Upload(files, "tenant/"); 
+            var data = _uploadHelper.Upload(files, "tenant/");
             return new ApiResult(data: data);
         }
     }

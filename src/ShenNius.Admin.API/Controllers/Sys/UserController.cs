@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
-using ShenNius.Share.Models.Configs;
+using NLog;
+using ShenNius.Share.Common;
+using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Infrastructure.Hubs;
 using ShenNius.Share.Infrastructure.JsonWebToken;
+using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Input.Sys;
+using ShenNius.Share.Models.Enums;
+using ShenNius.Share.Models.Enums.Extension;
+using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Models.Dtos.Input;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Infrastructure.Extensions;
-using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Model.Entity.Sys;
-using System.Linq.Expressions;
-using ShenNius.Share.Infrastructure.Caches;
-using StackExchange.Profiling;
-using Microsoft.AspNetCore.SignalR;
-using ShenNius.Share.Infrastructure.Hubs;
-using ShenNius.Share.Infrastructure.Common;
-using NLog;
-using ShenNius.Share.Common;
-using ShenNius.Share.Models.Enums;
-using ShenNius.Share.Models.Enums.Extension;
 namespace ShenNius.Admin.API.Controllers.Sys
 {/// <summary>
  /// 用户控制器
@@ -51,7 +51,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// <param name="cacheHelper"></param>
         /// <param name="currentUserContext"></param>
         /// <param name="hubContext"></param>
-        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext,IHubContext<ChatHub> hubContext)
+        public UserController(IOptions<JwtSetting> jwtSetting, IUserService userService, IR_User_RoleService r_User_RoleService, IMenuService menuService, ICacheHelper cacheHelper, ICurrentUserContext currentUserContext, IHubContext<ChatHub> hubContext)
         {
             _jwtSetting = jwtSetting;
             _userService = userService;
@@ -71,7 +71,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             var html = MiniProfiler.Current.RenderIncludes(HttpContext);
             return Ok(html.Value);
         }
-        [HttpGet,AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public IActionResult RemoveMenuCache(int userId)
         {
             //由于使用了匿名访问，必须前台传值用户id进来，后台拿不到用户当前的值。
@@ -84,7 +84,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method =nameof(Button.Add))]
+        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Add))]
         public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
@@ -108,7 +108,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         }
         [HttpGet]
         public async Task<ApiResult> GetUser(int id)
-        {           
+        {
             return await _userService.GetUserAsync(id);
         }
         /// <summary>
@@ -207,15 +207,15 @@ namespace ShenNius.Admin.API.Controllers.Sys
             result.Data.Token = token;
             //向所有人发送
             //await _hubContext.Clients.All.SendAsync("ReceiveMessage", "欢迎您登录神牛系统平台");
-            
+
             //向当前登录的用户发送欢迎信息
             await _hubContext.Clients.User(result.Data.Id.ToString()).SendAsync("ReceiveMessage", $"欢迎{loginInput.LoginName}登录神牛系统平台");
             return result;
         }
 
         [HttpPost, AllowAnonymous, LogIgnore]
-        public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody]LoginInput loginInput)
-        {         
+        public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody] LoginInput loginInput)
+        {
             try
             {
                 var rsaKey = _cacheHelper.Get<List<string>>($"{KeyHelper.User.LoginKey}:{loginInput?.NumberGuid}");
@@ -225,8 +225,8 @@ namespace ShenNius.Admin.API.Controllers.Sys
                 }
                 var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
                 loginInput.Password = ras.Decrypt(loginInput.Password);
-               var  result = await _userService.LoginAsync(loginInput);
-                if (result.StatusCode == 500|| (result.StatusCode == 200&&result.Success==false))
+                var result = await _userService.LoginAsync(loginInput);
+                if (result.StatusCode == 500 || (result.StatusCode == 200 && result.Success == false))
                 {
                     result.Data = new LoginOutput();
                     return result;
@@ -238,7 +238,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
                     throw new FriendlyException("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                 }
                 result.Data.MenuAuthOutputs = menuAuths;
-             
+
                 var identity = new ClaimsPrincipal(
                    new ClaimsIdentity(new[]
                        {
@@ -256,23 +256,23 @@ namespace ShenNius.Admin.API.Controllers.Sys
                     IsPersistent = true,
                     AllowRefresh = false
                 });
-               
+
                 _cacheHelper.Remove($"{KeyHelper.User.LoginKey}:{loginInput.NumberGuid}");
                 return result;
             }
             catch (Exception ex)
             {
                 ApiResult<LoginOutput> result = new ApiResult<LoginOutput>(msg: $"登陆失败，请重新刷新浏览器登录！{ex.Message}");
-                   new LogHelper().Process(loginInput.LoginName, LogEnum.Login.GetEnumText(), $"登陆失败:{ex.Message}", LogLevel.Error, ex);               
-                return result;            
-            }            
+                new LogHelper().Process(loginInput.LoginName, LogEnum.Login.GetEnumText(), $"登陆失败:{ex.Message}", LogLevel.Error, ex);
+                return result;
+            }
         }
 
         /// <summary>
         /// 退出
         /// </summary>
         /// <returns></returns>
-     
+
         [HttpPost, LogIgnore]
         public async Task Logout()
         {
@@ -282,7 +282,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             {
                 new LogHelper().Process(_currentUserContext.Name, LogEnum.Login.GetEnumText(), $"{_currentUserContext.Name}成功退出系统！", LogLevel.Info);
                 //设置用户退出
-               await _userService.UpdateAsync(d => new User() { IsLogin = false }, d => d.Id == _currentUserContext.Id);
+                await _userService.UpdateAsync(d => new User() { IsLogin = false }, d => d.Id == _currentUserContext.Id);
             }
             catch
             {

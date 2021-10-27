@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Common;
-using ShenNius.Share.Domain.Repository;
 using System.Threading.Tasks;
-using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Infrastructure.Attributes;
 
 /*************************************
 * 类名：ApiBaseController
@@ -61,14 +60,14 @@ namespace ShenNius.Admin.API.Controllers
         [HttpGet]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
-            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d =>d.Status == true, d => d.Id, false);
+            var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.Status == true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
         [HttpGet]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
-            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id&&d.Status==true);
+            var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.Status == true);
             return new ApiResult(data: res);
         }
         [HttpPost]

@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Cms;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Caches;
-using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Cms;
 using ShenNius.Share.Models.Entity.Cms;
+using ShenNius.Share.Models.Enums.Cms;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -13,9 +16,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
-using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Models.Enums.Cms;
 
 /*************************************
 * 类名：IndexController
@@ -62,7 +62,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> GetAllColumn(int siteId)
         {
-         var data = await GetColumnAsync(siteId);
+            var data = await GetColumnAsync(siteId);
             return new ApiResult(data);
         }
         /// <summary>
@@ -208,9 +208,9 @@ namespace ShenNius.Blog.API.Controllers.Cms
                     expression = (ca, cc) => ca.ColumnId == childColumnModel.Id;
                 }
             }
-          
-             var  query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
-         
+
+            var query = await _articleService.GetArtcileByConditionAsync(expression, page, 15);
+
             return new ApiResult(new
             {
                 ArticleList = query.Items,

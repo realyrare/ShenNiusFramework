@@ -33,15 +33,15 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// <param name="commonDeleteInput"></param>
         /// <returns></returns>
         [HttpDelete]
-        public  Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
+        public Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
-            return  _recycleService.RealyDeleteAsync(commonDeleteInput);
+            return _recycleService.RealyDeleteAsync(commonDeleteInput);
         }
 
         [HttpGet]
-        public  Task<ApiResult> GetListPages([FromQuery] KeyListQuery query)
-        {           
-           return _recycleService.GetPagesAsync(query);          
+        public Task<ApiResult> GetListPages([FromQuery] KeyListQuery query)
+        {
+            return _recycleService.GetPagesAsync(query);
         }
 
         /// <summary>

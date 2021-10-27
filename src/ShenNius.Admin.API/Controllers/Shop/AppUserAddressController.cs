@@ -31,7 +31,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
             _appUserAddressService = appUserAddressService;
         }
         [HttpGet]
-        public  Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
+        public Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
             return _appUserAddressService.GetListPageAsync(query);
         }
