@@ -28,18 +28,18 @@ namespace ShenNius.Share.Domain.Services.Shop
     {
         public async Task<ApiResult> GetListPageAsync(KeyListTenantQuery query)
         {
-            var data = await Db.Queryable<AppUserAddress,  AppUser>((d,  u) => new object[] { JoinType.Inner,d.Id==u.AddressId&&d.Status
-            }).Where((d, u)=>d.TenantId==query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key),(d,u)=>d.Name.Equals(query.Key))
+            var data = await Db.Queryable<AppUserAddress, AppUser>((d, u) => new object[] { JoinType.Inner,d.Id==u.AddressId&&d.Status
+            }).Where((d, u) => d.TenantId == query.TenantId).WhereIF(!string.IsNullOrEmpty(query.Key), (d, u) => d.Name.Equals(query.Key))
                 .OrderBy((d, u) => d.Id, OrderByType.Desc)
                 .Select((d, u) => new AppUserAddressOutput()
                 {
-                    Name=d.Name,
-                    Province=d.Province,
-                    City=d.City,
-                    Detail=d.Detail,
-                    Region=d.Region,
-                    CreateTime=d.CreateTime,
-                    AppUserName=u.NickName,
+                    Name = d.Name,
+                    Province = d.Province,
+                    City = d.City,
+                    Detail = d.Detail,
+                    Region = d.Region,
+                    CreateTime = d.CreateTime,
+                    AppUserName = u.NickName,
                     TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == d.TenantId).Select(s => s.Name),
                 }).ToPageAsync(query.Page, query.Limit);
             return new ApiResult(data);

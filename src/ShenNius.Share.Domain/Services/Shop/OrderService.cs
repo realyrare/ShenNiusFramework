@@ -2,7 +2,6 @@
 using ShenNius.Share.Domain.Repository.Extensions;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Output.Shop;
 using ShenNius.Share.Models.Dtos.Query.Shop;
 using ShenNius.Share.Models.Entity.Shop;
@@ -31,7 +30,7 @@ namespace ShenNius.Share.Domain.Services.Shop
     {
         public async Task<ApiResult> GetListPageAsync(OrderKeyListTenantQuery query)
         {
-            var data = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] { 
+            var data = await Db.Queryable<Order, OrderGoods, AppUser>((o, og, u) => new object[] {
                 JoinType.Inner,o.Id==og.OrderId,
                 JoinType.Inner,og.AppUserId==u.Id,
             })
@@ -43,24 +42,24 @@ namespace ShenNius.Share.Domain.Services.Shop
             .WhereIF(query.ReceiptStatus > 0, (o, og, u) => o.OrderStatus.Equals(query.ReceiptStatus))
             .OrderBy((o, og, u) => o.Id, OrderByType.Desc)
             .Select((o, og, u) => new OrderListOutput()
-                  {
-                      GoodsName = og.GoodsName,
-                      GoodsId = og.GoodsId,
-                      CreateTime = o.CreateTime,
-                      ImgUrl = og.ImgUrl,
-                      OrderNo = o.OrderNo,
-                      OrderId = o.Id,
-                      AppUserName = u.NickName,
-                      AppUserId = u.Id,
-                      OrderStatus = o.OrderStatus,
-                      PayStatus = o.PayStatus,
-                      DeliveryStatus = o.DeliveryStatus,
-                      ReceiptStatus = o.ReceiptStatus,
-                      TotalNum = og.TotalNum,
-                      GoodsPrice = og.GoodsPrice,
-                      TotalPrice = og.TotalPrice,
-                      TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == o.TenantId).Select(s => s.Name),
-                  }).ToPageAsync(query.Page, query.Limit);
+            {
+                GoodsName = og.GoodsName,
+                GoodsId = og.GoodsId,
+                CreateTime = o.CreateTime,
+                ImgUrl = og.ImgUrl,
+                OrderNo = o.OrderNo,
+                OrderId = o.Id,
+                AppUserName = u.NickName,
+                AppUserId = u.Id,
+                OrderStatus = o.OrderStatus,
+                PayStatus = o.PayStatus,
+                DeliveryStatus = o.DeliveryStatus,
+                ReceiptStatus = o.ReceiptStatus,
+                TotalNum = og.TotalNum,
+                GoodsPrice = og.GoodsPrice,
+                TotalPrice = og.TotalPrice,
+                TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == o.TenantId).Select(s => s.Name),
+            }).ToPageAsync(query.Page, query.Limit);
             foreach (var item in data.Items)
             {
                 if (!string.IsNullOrEmpty(item.ImgUrl))
@@ -87,7 +86,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                  Id = o.Id,
                  AppUserName = u.NickName,
                  AppUserId = u.Id,
-               //  AppUserAddressId = u.AddressId,
+                 //  AppUserAddressId = u.AddressId,
                  OrderStatus = o.OrderStatus,
                  PayStatus = o.PayStatus,
                  DeliveryStatus = o.DeliveryStatus,
@@ -101,14 +100,14 @@ namespace ShenNius.Share.Domain.Services.Shop
                  TotalPrice = og.TotalPrice,
                  CreateTime = o.CreateTime,
                  TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == o.TenantId).Select(s => s.Name),
-               
+
              }).FirstAsync();
             if (model == null)
             {
                 throw new FriendlyException($"订单详情实体数据为空！");
             }
             //这里订单地址不使用id关联，防止用户地址表里面的地址更新后发生配送错误
-            model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.AppUserId == model.AppUserId&&oa.OrderId==model.Id).FirstAsync();
+            model.Address = await Db.Queryable<OrderAddress>().Where(oa => oa.AppUserId == model.AppUserId && oa.OrderId == model.Id).FirstAsync();
 
             model.GoodsDetailList = await Db.Queryable<OrderGoods>().Where(d => d.OrderId == orderId && d.Status).Select(d => new OrderGoodsDetailOutput
             {

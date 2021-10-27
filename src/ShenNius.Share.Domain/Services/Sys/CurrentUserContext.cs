@@ -44,12 +44,12 @@ namespace ShenNius.Share.Domain.Services.Sys
     public class CurrentUserContext : ICurrentUserContext
     {
         private readonly IHttpContextAccessor _accessor;
-     
+
         public CurrentUserContext(IHttpContextAccessor accessor)
         {
             _accessor = accessor;
-            
-    
+
+
         }
         public string Name => GetName();
 

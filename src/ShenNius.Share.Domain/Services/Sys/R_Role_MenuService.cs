@@ -1,12 +1,12 @@
-﻿using ShenNius.Share.Infrastructure.Extensions;
+﻿using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -38,13 +38,13 @@ namespace ShenNius.Share.Domain.Services.Sys
         public async Task<ApiResult> SetBtnPermissionsAsync(RoleMenuBtnInput input)
         {
             //根据角色和菜单查询内容
-       
-            var model =await GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
-            if (model.Id<=0)
+
+            var model = await GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
+            if (model.Id <= 0)
             {
                 throw new FriendlyException("您还没有授权当前菜单功能模块");
             }
-            if (model.BtnCodeIds!=null)
+            if (model.BtnCodeIds != null)
             {
                 //判断授权还是取消
                 var list = model.BtnCodeIds.ToList();
@@ -52,7 +52,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     //不包含则添加。包含放任不管
                     if (!list.Contains(input.BtnCodeId))
-                    {                      
+                    {
                         list.Add(input.BtnCodeId);
                     }
                 }
@@ -64,17 +64,17 @@ namespace ShenNius.Share.Domain.Services.Sys
                         list.Remove(input.BtnCodeId);
                     }
                 }
-                model.BtnCodeIds =list.ToArray();
+                model.BtnCodeIds = list.ToArray();
             }
             else
             {
-                string [] arry= new string[]{ input.BtnCodeId};
+                string[] arry = new string[] { input.BtnCodeId };
                 //增加
                 model.BtnCodeIds = arry;
             }
-          var sign=  await UpdateAsync(d => new R_Role_Menu() { BtnCodeIds = model.BtnCodeIds,ModifyTime=DateTime.Now }, d => d.MenuId == input.MenuId && d.RoleId == input.RoleId);
+            var sign = await UpdateAsync(d => new R_Role_Menu() { BtnCodeIds = model.BtnCodeIds, ModifyTime = DateTime.Now }, d => d.MenuId == input.MenuId && d.RoleId == input.RoleId);
             return new ApiResult(sign);
-          
+
         }
     }
 }

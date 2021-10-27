@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Share.Domain.Repository
 {
-    public interface IBaseServer<T> where T:class, new()
+    public interface IBaseServer<T> where T : class, new()
     {
         #region 同步版本
         /// <summary>
@@ -61,8 +61,8 @@ namespace ShenNius.Share.Domain.Repository
 		/// </summary>
 		/// <param name="param">Pageparam</param>
 		/// <returns></returns>
-		Page<T> GetPages(int page,int limit);
-      
+		Page<T> GetPages(int page, int limit);
+
         /// <summary>
         /// 分页
         /// </summary>
@@ -72,7 +72,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="orderExpression">排序条件</param>
         /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
-        Page<T> GetPages(int page,int limit, Expression<Func<T, bool>> whereExpression,
+        Page<T> GetPages(int page, int limit, Expression<Func<T, bool>> whereExpression,
             Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
         Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression,
-            Expression<Func<T, object>> orderExpression,  bool isAsc);
+            Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>
         /// 获得列表
@@ -201,7 +201,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <returns></returns>
         Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression);
 
-     
+
 
         /// <summary>
         /// 获得列表
@@ -215,7 +215,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="page">当前页</param>
         /// <param name="limit">一页多少条</param>
         /// <returns></returns>
-		Task<Page<T>> GetPagesAsync(int page,int limit);
+		Task<Page<T>> GetPagesAsync(int page, int limit);
 
         Task<Page<T>> GetPagesAsync(int page, int limit, Expression<Func<T, object>> orderExpression, bool isAsc);
         /// <summary>
@@ -227,7 +227,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="orderExpression">排序条件</param>
         /// <param name="isAsc">是否升序</param>
         /// <returns></returns>
-        Task<Page<T>> GetPagesAsync(int page,int limit, Expression<Func<T, bool>> whereExpression,
+        Task<Page<T>> GetPagesAsync(int page, int limit, Expression<Func<T, bool>> whereExpression,
             Expression<Func<T, object>> orderExpression, bool isAsc);
 
         /// <summary>

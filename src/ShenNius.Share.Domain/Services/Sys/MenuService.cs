@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
-using ShenNius.Share.Infrastructure.Caches;
-using ShenNius.Share.Infrastructure.Extensions;
-using ShenNius.Share.Infrastructure.Common;
-using ShenNius.Share.Model.Entity.Sys;
-using ShenNius.Share.Models.Dtos.Input.Sys;
-using ShenNius.Share.Models.Entity.Sys;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
+using ShenNius.Share.Infrastructure.Attributes;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Configurations;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Input.Sys;
+using ShenNius.Share.Models.Entity.Sys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ShenNius.Share.Infrastructure.Attributes;
-using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Infrastructure.Configurations;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
-    
+
     public interface IMenuService : IBaseServer<Menu>
     {
         Task<ApiResult> BtnCodeByMenuIdAsync(int menuId, int roleId);
@@ -57,15 +57,15 @@ namespace ShenNius.Share.Domain.Services.Sys
             {
                 var allRoleMenus = await GetCurrentMenuByUser(userId);
                 var allMenuIds = allRoleMenus.Select(d => d.MenuId).ToList();
-                var configs = await Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)&&m.Status).ToListAsync();
-                var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id)) .ToListAsync();
+                var configs = await Db.Queryable<Config>().Where(m => m.Type == nameof(Button) && m.Status).ToListAsync();
+                var query = await Db.Queryable<Menu>().Where(d => d.Status).WhereIF(allMenuIds.Count > 0, d => allMenuIds.Contains(d.Id)).ToListAsync();
 
                 foreach (var item in query)
                 {
                     var model = allRoleMenus.FirstOrDefault(d => d.MenuId == item.Id);
                     if (model != null)
                     {
-                        if (item.BtnCodeIds==null|| item.BtnCodeIds.Length<=0)
+                        if (item.BtnCodeIds == null || item.BtnCodeIds.Length <= 0)
                         {
                             continue;
                         }
@@ -91,7 +91,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                         }
                     }
                 }
-               
+
                 //把当前用户拥有的权限存入到缓存里面
                 data = _mapper.Map<List<MenuAuthOutput>>(query);
                 _cache.Set($"{KeyHelper.User.AuthMenu}:{userId}", data);
@@ -106,7 +106,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                           {
                               var codeList = cache.Get(t =>
                               {
-                                  return Db.Queryable<Config>().Where(m => m.Type ==nameof(Button)).ToList();
+                                  return Db.Queryable<Config>().Where(m => m.Type == nameof(Button)).ToList();
                               });
                               var list = new List<string>();
                               if (it.BtnCodeIds != null)
@@ -123,7 +123,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                           })
                    //这里的一页1500条 是为了显示菜单树形的关系。
                    .ToPageAsync(page, 1500);
-           
+
             var result = new List<Menu>();
             if (!string.IsNullOrEmpty(key))
             {
@@ -239,7 +239,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 BtnCodeIds = menuModifyInput.BtnCodeIds,
                 Layer = layer,
                 ParentIdList = parentIdList,
-                NameCode=menuModifyInput.NameCode
+                NameCode = menuModifyInput.NameCode
             }, d => d.Id == menuModifyInput.Id);
             return new ApiResult();
         }
@@ -310,8 +310,8 @@ namespace ShenNius.Share.Domain.Services.Sys
                 var menuTreeOutput = new MenuTreeOutput()
                 {
                     Id = item.Id,
-                    Title = item.Name,              
-                    Checked = existMenuId.FirstOrDefault(d => d == item.Id)>0,
+                    Title = item.Name,
+                    Checked = existMenuId.FirstOrDefault(d => d == item.Id) > 0,
                     Children = AddChildNode(allMenus, item.Id, existMenuId),
                 };
                 list.Add(menuTreeOutput);
@@ -328,7 +328,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     Id = item.Id,
                     Title = item.Name,
-                    Checked = existMenuId.FirstOrDefault(d => d == item.Id)> 0,
+                    Checked = existMenuId.FirstOrDefault(d => d == item.Id) > 0,
                     Children = AddChildNode(data, item.Id, existMenuId)
                 };
                 list.Add(menuTreeOutput);
@@ -358,7 +358,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var allMenus = await GetListAsync(d => d.Status && allMenuIds.Contains(d.Id));
 
             var model = new MenuTreeInitOutput()
-            {               
+            {
                 HomeInfo = new HomeInfo() { Title = "首页", Href = "/sys/log-echarts" },
                 LogoInfo = new LogoInfo() { Title = "神牛系统平台", Image = "/images/logo.jpg?v=999", Href = "" },
             };

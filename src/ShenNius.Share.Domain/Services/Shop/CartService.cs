@@ -24,7 +24,7 @@ namespace ShenNius.Share.Domain.Services.Shop
     public interface ICartService : IBaseServer<Cart>
     {
         Task<ApiResult> AddAsync(int goodsId, int goodsNum, int appUserId, string specSkuId);
-        Task<ApiResult> GetListsAsync(int appUserId,int tenantId);
+        Task<ApiResult> GetListsAsync(int appUserId, int tenantId);
     }
     public class CartService : BaseServer<Cart>, ICartService
     {
@@ -34,23 +34,23 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             _goodsService = goodsService;
         }
-       public async Task<ApiResult> GetListsAsync(int appUserId, int tenantId)
+        public async Task<ApiResult> GetListsAsync(int appUserId, int tenantId)
         {
             var cartList = await GetListAsync(l => l.AppUserId == appUserId);
             var inCludeGoods = cartList.Select(d => d.GoodsId).ToList();
-           
+
             var goodsList = await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId))
                .Where((g, gc) => g.TenantId == tenantId)
                .Select((g, gc) => new CartGoodsOutput
                {
-                   GoodsId= g.Id,
-                   ImgUrl= g.ImgUrl,
-                   GoodsPrice= gc.GoodsPrice,
-                   SpecType=g.SpecType,
-                   LinePrice= gc.LinePrice,
-                   GoodsSales= gc.GoodsSales,
-                   SalesActual=g.SalesActual,
-                   SpecMany=g.SpecMany
+                   GoodsId = g.Id,
+                   ImgUrl = g.ImgUrl,
+                   GoodsPrice = gc.GoodsPrice,
+                   SpecType = g.SpecType,
+                   LinePrice = gc.LinePrice,
+                   GoodsSales = gc.GoodsSales,
+                   SalesActual = g.SalesActual,
+                   SpecMany = g.SpecMany
                }).ToListAsync();
 
             double totalPrice = 0;
@@ -64,7 +64,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 {
                     //显示规格组和值
 
-                }               
+                }
             }
             return new ApiResult(new
             {
@@ -72,14 +72,14 @@ namespace ShenNius.Share.Domain.Services.Shop
                 OrderTotalPrice = totalPrice
             });
         }
-        public async Task<ApiResult> AddAsync(int goodsId, int goodsNum,int appUserId,string specSkuId)
+        public async Task<ApiResult> AddAsync(int goodsId, int goodsNum, int appUserId, string specSkuId)
         {
             var goodsData = await _goodsService.GoodInfoIsExist(goodsId, goodsNum, specSkuId, appUserId);
             var isExistCartModel = await GetModelAsync(l => l.AppUserId == appUserId && l.GoodsId == goodsId);
             if (isExistCartModel?.Id > 0)
             {
                 goodsNum += isExistCartModel.GoodsNum;
-                await UpdateAsync(d => new Cart() { GoodsNum = goodsNum,SpecSkuId=specSkuId, ModifyTime = DateTime.Now }, d => d.Id == isExistCartModel.Id&&d.AppUserId==appUserId);
+                await UpdateAsync(d => new Cart() { GoodsNum = goodsNum, SpecSkuId = specSkuId, ModifyTime = DateTime.Now }, d => d.Id == isExistCartModel.Id && d.AppUserId == appUserId);
             }
             else
             {
@@ -90,7 +90,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                     ModifyTime = DateTime.Now,
                     AppUserId = appUserId,
                     GoodsNum = goodsNum,
-                    SpecSkuId=specSkuId
+                    SpecSkuId = specSkuId
                 };
                 await AddAsync(model);
             }

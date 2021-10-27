@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
-using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Models.Dtos.Input.Shop;
-using ShenNius.Share.Models.Dtos.Output.Shop;
 using ShenNius.Share.Models.Entity.Shop;
 using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
@@ -39,7 +35,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         private readonly IAppUserAddressService _appUserAddressService;
         private readonly IGoodsService _goodsService;
         private readonly IMapper _mapper;
-        public OrderGoodsService(IAppUserAddressService appUserAddressService,IGoodsService goodsService, IMapper mapper )
+        public OrderGoodsService(IAppUserAddressService appUserAddressService, IGoodsService goodsService, IMapper mapper)
         {
             _appUserAddressService = appUserAddressService;
             _goodsService = goodsService;
@@ -71,8 +67,8 @@ namespace ShenNius.Share.Domain.Services.Shop
             }
         }
 
-        public async Task<ApiResult> GetListAsync(int appUserId ,string dataType)
-        {        
+        public async Task<ApiResult> GetListAsync(int appUserId, string dataType)
+        {
             var data = await Db.Queryable<Order, OrderGoods>((o, od) => new object[] {
                 JoinType.Inner,o.Id==od.OrderId,
 
@@ -80,7 +76,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             .WhereIF(dataType == "payment", (o, od) => o.PayStatus == PayStatusEnum.WaitForPay.GetValue<int>())
             .WhereIF(dataType == "delivery", (o, od) => o.DeliveryStatus == DeliveryStatusEnum.WaitForSending.GetValue<int>() && o.PayStatus == PayStatusEnum.Paid.GetValue<int>())
             .WhereIF(dataType == "received", (o, od) => o.ReceiptStatus == ReceiptStatusEnum.WaitForReceiving.GetValue<int>() && o.PayStatus == PayStatusEnum.Paid.GetValue<int>() && o.DeliveryStatus == DeliveryStatusEnum.Sended.GetValue<int>())
-            .Select((o, od) => new 
+            .Select((o, od) => new
             {
                 CreateTime = o.CreateTime,
                 OrderNo = o.OrderNo,
@@ -111,25 +107,25 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <returns></returns>
         public async Task<ApiResult> BuyNowAsync(int goodsId, int goodsNum, string specSkuId, int appUserId)
         {
-          var  goodsData=await _goodsService. GoodInfoIsExist(goodsId, goodsNum, specSkuId, appUserId);
-            var addressModel = await _appUserAddressService.GetModelAsync(d =>d.AppUserId == appUserId && d.IsDefault == true);
-         
+            var goodsData = await _goodsService.GoodInfoIsExist(goodsId, goodsNum, specSkuId, appUserId);
+            var addressModel = await _appUserAddressService.GetModelAsync(d => d.AppUserId == appUserId && d.IsDefault == true);
+
             try
             {
                 Db.Ado.BeginTran();
                 Order order = new Order();
-                order= order.BuildOrder(appUserId);
+                order = order.BuildOrder(appUserId);
                 order.Id = await Db.Insertable(order).ExecuteReturnIdentityAsync();
 
                 OrderGoods orderGoods = order.BuildOrderGoods(goodsData.Item1, goodsData.Item2, goodsNum);
-               
+
                 await Db.Insertable(orderGoods).ExecuteCommandAsync();
 
-              var orderAddress= order.BuildOrderAddress(addressModel, order.Id);
+                var orderAddress = order.BuildOrderAddress(addressModel, order.Id);
 
                 await Db.Insertable(orderAddress).ExecuteCommandAsync();
                 //订单表统计最终支付的费用
-                await Db.Updateable<Order>().SetColumns(d => new Order() { TotalPrice = orderGoods.TotalPrice, PayPrice= orderGoods.TotalPrice }).Where(d => d.Id == order.Id).ExecuteCommandAsync();
+                await Db.Updateable<Order>().SetColumns(d => new Order() { TotalPrice = orderGoods.TotalPrice, PayPrice = orderGoods.TotalPrice }).Where(d => d.Id == order.Id).ExecuteCommandAsync();
                 Db.Ado.CommitTran();
                 return new ApiResult();
             }
@@ -173,7 +169,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                     payPrice += goodsData.Item2.GoodsPrice * cartExistGoodsNum;
                     orderGoodsList.Add(orderGoods);
                 }
-              
+
                 await Db.Insertable(orderGoodsList).ExecuteCommandAsync();
 
                 //订单表统计最终支付的费用
