@@ -8,7 +8,10 @@
 
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
+#### 特别申明
+ **single分支为单体分支；git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 
+ **module-master 分支为模块化分支；git clone -b module-master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 #### 软件架构
  整体框架分为服务层、基础设施层，实体层，展现层。
 
@@ -39,7 +42,7 @@
 
 #### 安装教程
 
-1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git
+1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
 2.  在mysql上创建数据库shenniusdb，然后执行源码db文件下的sql语句，以最近日期为准。
 3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.jsonwen文件信息。
 
@@ -51,6 +54,7 @@
 4.   ShenNius.Admin.API 有对服务层CRUD的抽象处理，模块只需按规则建立对应的CRUD实体，API接口自动生成。
 5.   ShenNius.API.Hosting 前后端分离的API。
 6.   ShenNius.Mvc.Admin 基于layui的后台管理包含CMS、商城，权限管理。
+
 
 #### 效果图
   #### 权限管理模块
