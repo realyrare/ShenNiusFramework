@@ -8,8 +8,12 @@
 
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
+
 #### 软件架构
- 整体框架分为服务层、基础设施层，实体层，展现层，很多人都使用过三层架构，该架构是从三层架构上面简化而来，去掉了以前三层架构中的数据访问层，配合顺手的ORM，不管开发API还是mvc效率和性能都是杠杠的。
+ 整体框架分为服务层、基础设施层，实体层，展现层。
+
+ 很多人都使用过三层架构，该架构是从三层架构上面简化而来，去掉了以前三层架构中的数据访问层，配合顺手的ORM，不管开发API还是mvc效率和性能都是杠杠的。
+
  以后整体架构会向DDD发展，逐步缓慢的演进，为解决业务需求会把实体层的贫血模型更改为充血模型，这是当下的任务。
 
 #### 使用技术
@@ -35,7 +39,7 @@
 
 #### 安装教程
 
-1.  git clone -b single https://git.oschina.net/oschina/android-app.git
+1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git
 2.  在mysql上创建数据库shenniusdb，然后执行源码db文件下的sql语句，以最近日期为准。
 3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.jsonwen文件信息。
 
