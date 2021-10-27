@@ -20,7 +20,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-          var model=await _logService.GetModelAsync(d => d.Id == id);
+            var model = await _logService.GetModelAsync(d => d.Id == id);
             return View(model);
         }
         [HttpGet]

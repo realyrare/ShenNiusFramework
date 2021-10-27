@@ -19,10 +19,10 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
             return View();
         }
         [HttpGet]
-        public async Task< IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-          var model=await _orderService.GetOrderDetailAsync(id);
-            if (model==null)
+            var model = await _orderService.GetOrderDetailAsync(id);
+            if (model == null)
             {
                 return NotFound();
             }

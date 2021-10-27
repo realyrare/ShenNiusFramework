@@ -17,7 +17,7 @@ namespace ShenNius.Mvc.Admin
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }) 
+                })
             //用AspectCore替换默认的IOC容器
             .UseServiceProviderFactory(new DynamicProxyServiceProviderFactory())
             .UseNLog();//加入nlog日志;;

@@ -8,7 +8,7 @@ namespace ShenNius.Mvc.Admin.Controllers
     {
         [HttpGet]
         public IActionResult Index()
-        {        
+        {
             return View();
         }
         [HttpGet("error.html")]

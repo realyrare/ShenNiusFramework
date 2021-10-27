@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Common;
 using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
-using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Model.Entity.Sys;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using System;
@@ -14,7 +15,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ShenNius.Share.Infrastructure.Attributes;
 
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
@@ -55,7 +55,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> Modify(int id=0)
+        public async Task<IActionResult> Modify(int id = 0)
         {
             User model = null;
             if (id == 0)
@@ -64,8 +64,8 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
             }
             else
             {
-                model = await _userService.GetModelAsync(d => d.Id == id&&d.Status);
-            }            
+                model = await _userService.GetModelAsync(d => d.Id == id && d.Status);
+            }
             return View(model);
         }
         [HttpGet]
@@ -81,9 +81,9 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 userOutput.Name = HttpContext.User.Identity.Name;
-                userOutput.Id =Convert.ToInt32( HttpContext.User.Claims.Where(d => d.Type == JwtRegisteredClaimNames.Sid).Select(d => d.Value).FirstOrDefault());
-                userOutput. Mobile = HttpContext.User.Claims.Where(d => d.Type == "mobile").Select(d => d.Value).FirstOrDefault();
-                userOutput. Email = HttpContext.User.Claims.Where(d => d.Type == ClaimTypes.Email).Select(d => d.Value).FirstOrDefault();
+                userOutput.Id = Convert.ToInt32(HttpContext.User.Claims.Where(d => d.Type == JwtRegisteredClaimNames.Sid).Select(d => d.Value).FirstOrDefault());
+                userOutput.Mobile = HttpContext.User.Claims.Where(d => d.Type == "mobile").Select(d => d.Value).FirstOrDefault();
+                userOutput.Email = HttpContext.User.Claims.Where(d => d.Type == ClaimTypes.Email).Select(d => d.Value).FirstOrDefault();
                 userOutput.TrueName = HttpContext.User.Claims.Where(d => d.Type == "trueName").Select(d => d.Value).FirstOrDefault();
             }
             else
@@ -115,6 +115,6 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
             HttpContext.Session.SetString("vcode", vcode);
             var img = VerifyCode.DrawImage(vcode, 20, Color.White);
             return File(img, "image/gif");
-        }       
+        }
     }
 }

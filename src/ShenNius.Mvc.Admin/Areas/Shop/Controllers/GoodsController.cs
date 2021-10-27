@@ -10,7 +10,7 @@ namespace ShenNius.Mvc.Admin.Areas.Shop.Controllers
     {
         private readonly IGoodsService _goodsService;
         private readonly IConfigService _configService;
-        public GoodsController(IGoodsService  goodsService,IConfigService configService)
+        public GoodsController(IGoodsService goodsService, IConfigService configService)
         {
             _goodsService = goodsService;
             _configService = configService;

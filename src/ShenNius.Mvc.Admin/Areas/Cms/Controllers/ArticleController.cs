@@ -10,7 +10,7 @@ namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
     {
         private readonly IArticleService _articleService;
 
-        public ArticleController(IArticleService articleService) 
+        public ArticleController(IArticleService articleService)
         {
             _articleService = articleService;
         }
@@ -20,7 +20,7 @@ namespace ShenNius.Mvc.Admin.Areas.Cms.Controllers
             return View();
         }
         [HttpGet]
-        public async Task< IActionResult> Modify(int id=0)
+        public async Task<IActionResult> Modify(int id = 0)
         {
             var model = id == 0 ? new Article() : await _articleService.GetModelAsync(d => d.Id == id && d.Status);
             return View(model);

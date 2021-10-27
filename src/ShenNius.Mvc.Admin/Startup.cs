@@ -20,7 +20,6 @@ using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Common;
-using ShenNius.Share.Infrastructure.Configurations;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
 using ShenNius.Share.Infrastructure.Hubs;
@@ -57,8 +56,8 @@ namespace ShenNius.Mvc.Admin
             services.AddHealthChecks();
             services.ConfigureDynamicProxy(o =>
              {
-                //添加AOP的配置
-            });
+                 //添加AOP的配置
+             });
 
             //redis和cache配置
             var redisConfiguration = Configuration.GetSection("Redis");
@@ -131,10 +130,10 @@ namespace ShenNius.Mvc.Admin
             // 路由配置
             services.AddRouting(options =>
              {
-                // 设置URL为小写
-                // options.LowercaseUrls = true;
-                // 在生成的URL后面添加斜杠
-                options.AppendTrailingSlash = true;
+                 // 设置URL为小写
+                 // options.LowercaseUrls = true;
+                 // 在生成的URL后面添加斜杠
+                 options.AppendTrailingSlash = true;
                  options.LowercaseQueryStrings = true;
              });
             // FluentValidation 统一请求参数验证          
@@ -159,11 +158,11 @@ namespace ShenNius.Mvc.Admin
                          .SelectMany(x => x.Errors
                              .Select(p => p.ErrorMessage))
                          .ToList();
-                    // string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList())； 一次性把所有未验证的消息都取出来
-                    var result = new ApiResult(
-                         msg: errors.FirstOrDefault(),
-                         statusCode: 400
-                     );
+                     // string.Join(",", errors.Select(e => string.Format("{0}", e)).ToList())； 一次性把所有未验证的消息都取出来
+                     var result = new ApiResult(
+                          msg: errors.FirstOrDefault(),
+                          statusCode: 400
+                      );
                      return new BadRequestObjectResult(result);
                  };
              });

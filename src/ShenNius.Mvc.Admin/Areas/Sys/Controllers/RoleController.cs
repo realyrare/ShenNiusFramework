@@ -20,9 +20,9 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         }
         //
         [HttpGet]
-        public async Task<IActionResult> Modify(int id=0)
+        public async Task<IActionResult> Modify(int id = 0)
         {
-            Role model = id==0?new Role() : await _roleService.GetModelAsync(d => d.Id == id);
+            Role model = id == 0 ? new Role() : await _roleService.GetModelAsync(d => d.Id == id);
             return View(model);
         }
         [HttpGet]
