@@ -18,7 +18,7 @@ namespace ShenNius.Share.Models.Dtos.Validators.Cms
     {
         public TenantCurrentInputValidator()
         {
-            RuleFor(x =>x.Id).NotEmpty().WithMessage("Id不能为空!");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Id不能为空!");
         }
     }
 }

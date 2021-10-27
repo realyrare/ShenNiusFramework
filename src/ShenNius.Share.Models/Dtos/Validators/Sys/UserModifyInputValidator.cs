@@ -7,7 +7,7 @@ namespace ShenNius.Share.Models.Dtos.Validators
     {
         public UserModifyInputValidator()
         {
-             CascadeMode = CascadeMode.StopOnFirstFailure;
+            CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleFor(x => x.Id).NotEmpty().WithMessage("用户Id必须传递");
             RuleFor(x => x.Name).NotEmpty().WithMessage("请填写用户名称");
             RuleFor(x => x.Password).NotEmpty().WithMessage("请填写用户密码");

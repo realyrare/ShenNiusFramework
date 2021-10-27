@@ -3,7 +3,7 @@ using ShenNius.Share.Models.Dtos.Input.Cms;
 
 namespace ShenNius.Share.Models.Dtos.Validators.Cms
 {
-    public  class ArticleInputValidator : AbstractValidator<ArticleInput>
+    public class ArticleInputValidator : AbstractValidator<ArticleInput>
     {
         public ArticleInputValidator()
         {

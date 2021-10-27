@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Validators.Sys
 {
-  public  class PermissionsInputValidator : AbstractValidator<PermissionsInput>
+    public class PermissionsInputValidator : AbstractValidator<PermissionsInput>
     {
         public PermissionsInputValidator()
         {

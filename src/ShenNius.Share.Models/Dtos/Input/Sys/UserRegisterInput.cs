@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Models.Dtos.Input
+﻿namespace ShenNius.Share.Models.Dtos.Input
 {
-   public class UserRegisterInput
+    public class UserRegisterInput
     {
         /// <summary>
         /// 登录账号

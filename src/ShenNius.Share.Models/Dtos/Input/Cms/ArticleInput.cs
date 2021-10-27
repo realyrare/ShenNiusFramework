@@ -3,7 +3,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class ArticleInput: GlobalTenantInput
+    public class ArticleInput : GlobalTenantInput
     {
 
         /// <summary>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Models.Dtos.Input.Sys
+﻿namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-   public class PermissionsInput
+    public class PermissionsInput
     {
         public int RoleId { get; set; }
 

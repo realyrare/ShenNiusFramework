@@ -5,8 +5,8 @@ using System;
 namespace ShenNius.Share.Model.Entity.Sys
 {
     [SugarTable("Sys_User")]
-    public class User: BaseEntity
-    { 
+    public class User : BaseEntity
+    {
         /// <summary>
         /// 登录账号
         /// </summary>
@@ -51,7 +51,7 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// 当前登录时间
         /// </summary>
         public DateTime? LastLoginTime { get; set; }
-        public bool IsLogin { get; set; } 
+        public bool IsLogin { get; set; }
 
     }
 }

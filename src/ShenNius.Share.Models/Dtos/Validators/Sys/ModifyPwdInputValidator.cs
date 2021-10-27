@@ -3,7 +3,7 @@ using ShenNius.Share.Models.Dtos.Input;
 
 namespace ShenNius.Share.Models.Dtos.Validators
 {
-    public  class ModifyPwdInputValidator : AbstractValidator<ModifyPwdInput>
+    public class ModifyPwdInputValidator : AbstractValidator<ModifyPwdInput>
     {
         public ModifyPwdInputValidator()
         {

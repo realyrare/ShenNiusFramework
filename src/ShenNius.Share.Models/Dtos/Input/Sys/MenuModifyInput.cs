@@ -27,7 +27,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
         /// Nullable:True
         /// </summary>           
         public string Url { get; set; }
-  
+
         /// <summary>
         /// Desc:
         /// Default:

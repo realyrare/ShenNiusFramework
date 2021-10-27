@@ -14,7 +14,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class AdvListModifyInput: GlobalTenantInput
+    public class AdvListModifyInput : GlobalTenantInput
     {
         public int Id { get; set; }
         /// <summary>

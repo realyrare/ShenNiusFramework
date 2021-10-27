@@ -14,9 +14,9 @@ using SqlSugar;
 namespace ShenNius.Share.Models.Entity.Shop
 {
     [SugarTable("shop_category")]
-    public class Category: BaseTenantTreeEntity
+    public class Category : BaseTenantTreeEntity
     {
-        public string  IconSrc { get; set; }
-        public string  Name { get; set; }
+        public string IconSrc { get; set; }
+        public string Name { get; set; }
     }
 }

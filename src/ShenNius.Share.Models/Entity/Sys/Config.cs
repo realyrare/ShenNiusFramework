@@ -1,7 +1,6 @@
 ﻿
 using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
 
 namespace ShenNius.Share.Model.Entity.Sys
 {
@@ -9,7 +8,7 @@ namespace ShenNius.Share.Model.Entity.Sys
     /// 字典表
     ///</summary>
     [SugarTable("Sys_Config")]
-    public partial class Config: BaseEntity
+    public partial class Config : BaseEntity
     {
         /// <summary>
         /// Desc:字典类型标识
@@ -37,8 +36,8 @@ namespace ShenNius.Share.Model.Entity.Sys
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string Summary { get; set; }       
-        public string  Type { get; set; }
+        public string Summary { get; set; }
+        public string Type { get; set; }
 
     }
 }

@@ -1,7 +1,4 @@
 ﻿using ShenNius.Share.Models.Dtos.Common;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：SpecInput
@@ -15,10 +12,10 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
-    public class SpecInput: GlobalTenantInput
+    public class SpecInput : GlobalTenantInput
     {
-        public string  SpecName { get; set; }
-        public string  SpecValue { get; set; }
+        public string SpecName { get; set; }
+        public string SpecValue { get; set; }
     }
     /// <summary>
     /// 根据规格组id添加规格值

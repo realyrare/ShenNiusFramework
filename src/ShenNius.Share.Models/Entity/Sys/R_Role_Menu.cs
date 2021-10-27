@@ -1,6 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
 
 namespace ShenNius.Share.Models.Entity.Sys
 {
@@ -8,7 +7,7 @@ namespace ShenNius.Share.Models.Entity.Sys
     ///
     ///</summary>
     [SugarTable("Sys_R_Role_Menu")]
-    public partial class R_Role_Menu: BaseEntity
+    public partial class R_Role_Menu : BaseEntity
     {
         /// <summary>
         /// Desc:

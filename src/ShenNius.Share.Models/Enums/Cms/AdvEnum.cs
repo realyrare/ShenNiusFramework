@@ -18,7 +18,7 @@ namespace ShenNius.Share.Models.Enums.Cms
         /// 友情链接
         /// </summary>
         [Description("友情链接")]
-        FriendlyLink =0,
+        FriendlyLink = 0,
         /// <summary>
         /// 轮播图
         /// </summary>
@@ -28,7 +28,7 @@ namespace ShenNius.Share.Models.Enums.Cms
         /// 优秀博客
         /// </summary>
         [Description("优秀博客")]
-        GoodBlog =2,
+        GoodBlog = 2,
         /// <summary>
         /// 小程序
         /// </summary>

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace ShenNius.Share.Models.Enums
 {
-  public  enum LogEnum
+    public enum LogEnum
     {
         /// <summary>
         /// 保存或添加

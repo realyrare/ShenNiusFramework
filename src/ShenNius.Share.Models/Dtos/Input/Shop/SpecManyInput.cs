@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：SpecMany
@@ -49,7 +47,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
     }
 
 
-    public class SpecValueInput 
+    public class SpecValueInput
     {
         [JsonProperty("spec_id")]
         public int SpecValueId { get; set; }
@@ -86,7 +84,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
     }
 
 
-    public class GoodsSpecInput 
+    public class GoodsSpecInput
     {
         public int GoodsSpecId { get; set; }
 

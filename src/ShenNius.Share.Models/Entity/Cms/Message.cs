@@ -5,7 +5,7 @@ namespace ShenNius.Share.Models.Entity.Cms
 {
 
     [SugarTable("Cms_Message")]
-   public class Message: BaseTenantEntity
+    public class Message : BaseTenantEntity
     {
         public int BusinessId { get; set; }
         public string Types { get; set; }

@@ -48,7 +48,7 @@ namespace ShenNius.Share.Models.Entity.Common
         public string TenantName { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime CreateTime { get; set; }
-        public bool Status { get; set; } =  true;
+        public bool Status { get; set; } = true;
     }
 
 
@@ -56,7 +56,7 @@ namespace ShenNius.Share.Models.Entity.Common
     /// 所有多租户数据库(分类，栏目，菜单等树形结构使用)实体基类
     /// </summary>
     public class BaseTenantTreeEntity : BaseTenantEntity
-    {     
+    {
         // Desc:栏位集合    
         public string ParentList { get; set; }
         /// Desc:栏位等级     

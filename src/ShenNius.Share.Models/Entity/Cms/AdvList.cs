@@ -1,8 +1,8 @@
-﻿using System;
-using ShenNius.Share.Models.Entity.Common;
+﻿using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Models.Enums.Cms;
 using ShenNius.Share.Models.Enums.Extension;
 using SqlSugar;
+using System;
 namespace ShenNius.Share.Models.Entity.Cms
 {
     /// <summary>
@@ -16,7 +16,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:-
         /// Nullable:False
         /// </summary>
-        public string Title {get;set;}
+        public string Title { get; set; }
 
         /// <summary>
         /// Desc:广告位类型
@@ -37,11 +37,11 @@ namespace ShenNius.Share.Models.Entity.Cms
                 }
                 if (Type == AdvEnum.Slideshow)
                 {
-                    name= AdvEnum.Slideshow.GetEnumText();
+                    name = AdvEnum.Slideshow.GetEnumText();
                 }
                 if (Type == AdvEnum.GoodBlog)
                 {
-                    name= AdvEnum.GoodBlog.GetEnumText();
+                    name = AdvEnum.GoodBlog.GetEnumText();
                 }
                 if (Type == AdvEnum.MiniApp)
                 {
@@ -55,14 +55,14 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public string ImgUrl {get;set;}
+        public string ImgUrl { get; set; }
 
         /// <summary>
         /// Desc:链接地址
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public string LinkUrl {get;set;}
+        public string LinkUrl { get; set; }
 
         /// <summary>
         /// Desc:打开窗口类型
@@ -83,14 +83,14 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public DateTime? BeginTime {get;set;}
+        public DateTime? BeginTime { get; set; }
 
         /// <summary>
         /// Desc:结束时间
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public DateTime? EndTime {get;set;}
+        public DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Desc:排序

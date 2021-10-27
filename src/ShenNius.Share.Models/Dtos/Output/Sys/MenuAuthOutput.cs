@@ -1,6 +1,6 @@
 ﻿namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-    public  class MenuAuthOutput
+    public class MenuAuthOutput
     {
         public int Id { get; set; }
         public int ParentId { get; set; }

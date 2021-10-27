@@ -3,7 +3,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
-    public class CategoryInput: GlobalTenantInput
+    public class CategoryInput : GlobalTenantInput
     {
         public DateTime CreateTime { get; set; } = DateTime.Now;
         public int ParentId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-    public  class ConfigInput
+    public class ConfigInput
     {
         public string Name { get; set; }
 

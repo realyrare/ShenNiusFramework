@@ -1,8 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：Goods_Spec
@@ -20,7 +17,7 @@ namespace ShenNius.Share.Models.Entity.Shop
     public class GoodsSpec : BaseTenantEntity
     {
         public int GoodsId { get; set; }
-        public string  GoodsNo { get; set; }
+        public string GoodsNo { get; set; }
         public decimal GoodsPrice { get; set; }
         /// <summary>
         /// 商品划线价
@@ -36,6 +33,6 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// 商品spu标识
         /// </summary>
         public string SpecSkuId { get; set; }
-        
+
     }
 }

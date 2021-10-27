@@ -1,7 +1,5 @@
 ﻿using ShenNius.Share.Model.Entity.Sys;
-using System;
 using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：MenuOutput
@@ -23,5 +21,5 @@ namespace ShenNius.Share.Models.Dtos.Output.Sys
         public Menu MenuOutput { get; set; }
         public List<Config> ConfigOutputs { get; set; }
     }
- 
+
 }

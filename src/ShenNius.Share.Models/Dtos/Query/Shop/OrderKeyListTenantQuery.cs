@@ -1,7 +1,4 @@
 ﻿using ShenNius.Share.Models.Dtos.Common;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：OrderKeyListTenantQuery
@@ -15,7 +12,7 @@ using System.Web;
 
 namespace ShenNius.Share.Models.Dtos.Query.Shop
 {
-    public class OrderKeyListTenantQuery: KeyListTenantQuery
+    public class OrderKeyListTenantQuery : KeyListTenantQuery
     {
         /// <summary>
         /// Desc:付款状态(10未付款 20已付款)
