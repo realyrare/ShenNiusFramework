@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-/*************************************
+﻿/*************************************
 * 类名：GoodsOutput
 * 作者：realyrare
 * 邮箱：mhg215@yeah.net

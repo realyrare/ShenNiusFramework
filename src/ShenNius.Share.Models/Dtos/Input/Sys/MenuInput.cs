@@ -4,7 +4,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
     public class MenuInput
     {
-     
+
         /// <summary>
         /// Desc:
         /// Default:0

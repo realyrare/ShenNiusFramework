@@ -3,7 +3,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
-    public  class CategoryModifyInput : GlobalTenantInput
+    public class CategoryModifyInput : GlobalTenantInput
     {
         public int Id { get; set; }
         public int ParentId { get; set; }

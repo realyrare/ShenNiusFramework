@@ -18,11 +18,11 @@ namespace ShenNius.Share.Models.Dtos.Validators.Cms
         public TenantInputValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
-            RuleFor(x =>x.Title).NotEmpty().WithMessage("标题必须填写");
+            RuleFor(x => x.Title).NotEmpty().WithMessage("标题必须填写");
             RuleFor(x => x.Name).NotEmpty().WithMessage("站点名称必须填写");
             RuleFor(x => x.Keyword).NotEmpty().WithMessage("站点关键字必须填写");
             RuleFor(x => x.Description).NotEmpty().WithMessage("站点描述必须填写");
-            RuleFor(x => x.Email).NotEmpty().WithMessage("站点邮箱必须填写");           
+            RuleFor(x => x.Email).NotEmpty().WithMessage("站点邮箱必须填写");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 using XC.RSAUtil;
 
 namespace ShenNius.Share.Common
@@ -9,7 +9,8 @@ namespace ShenNius.Share.Common
     /// RSA加密解密
     /// https://github.com/stulzq/RSAUtil
     /// </summary>
-    public class RSACrypt {
+    public class RSACrypt
+    {
 
         private readonly RsaPkcs1Util _RsaUtil;
         private readonly Encoding _encoding;
@@ -33,8 +34,8 @@ namespace ShenNius.Share.Common
         /// <param name="publicKey">公钥</param>
         public RSACrypt(string privateKey, string publicKey)
         {
-            _encoding = Encoding.UTF8; 
-             _RsaUtil = new RsaPkcs1Util(_encoding, publicKey, privateKey,1024);
+            _encoding = Encoding.UTF8;
+            _RsaUtil = new RsaPkcs1Util(_encoding, publicKey, privateKey, 1024);
         }
 
         /// <summary>

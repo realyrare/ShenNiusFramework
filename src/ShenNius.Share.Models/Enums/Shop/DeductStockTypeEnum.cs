@@ -23,6 +23,6 @@ namespace ShenNius.Share.Models.Enums.Shop
         ///付款减库存
         /// </summary>
         [Description("付款减库存")]
-        Pay =20
+        Pay = 20
     }
 }

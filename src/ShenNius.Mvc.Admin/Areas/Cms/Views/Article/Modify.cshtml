@@ -1,0 +1,209 @@
+﻿@model Article
+@section css{
+    @*<link href="~/css/article.css" rel="stylesheet" />*@
+    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+}
+<div id="container">
+    <form class="layui-form form-cus form-back" action="" id="app" lay-filter="column-edit">
+        <div class="panel-body">
+            <div class="panel-addpic">
+                <div class="text">基本属性</div>
+                <div class="form-cur-wall">
+                    <label>所属栏目：</label>
+                    <div class="layui-input-block">
+                        <select name="columnId" id="columnId" lay-verify="required" lay-search="">
+                            <option value="0">父级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>作者：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="author" value="@Model.Author" placeholder="" maxlength="30" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>来源：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="source" value="@Model.Source" maxlength="40" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">内容属性：</label>
+                    <div class="layui-input-block">
+
+                        <input type="checkbox" name="audit" @(Model.Audit ? "checked=''" : "") lay-skin="primary" title="审核状态">
+                        <input type="checkbox" name="isTop" @(Model.IsTop ? "checked=''" : "") lay-skin="primary" title="是否推荐">
+                        <input type="checkbox" name="isHot" @(Model.IsHot ? "checked=''" : "") lay-skin="primary" title="是否热点">
+
+                        <input type="checkbox" name="isComment" @(Model.IsComment ? "checked=''" : "") lay-skin="primary" title="是否允许评论">
+                    </div>
+                </div>
+
+
+                <div class="text else">扩展属性</div>
+                <div class="form-cur-wall">
+                    <label>文章标签：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tag" value="@Model.Tag" placeholder="以逗号隔开" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>转向连接：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="linkUrl" value="@Model.LinkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                @if (Model.Id > 0)
+                {
+                    <div class="text else">文章Id</div>
+                    <div class="form-cur-wall">
+                        <label>Id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" value="@Model.Id" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                }
+                <div style="height:50px;"></div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" value="@Model.Title" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="subTitle" value="@Model.SubTitle" maxlength="500" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO关键词</label>
+                        <div class="layui-input-block">
+                            <textarea name="keyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔">@Model.KeyWord</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="summary" class="layui-textarea" style="min-height: 60px;" placeholder="SEO描述，填写利于抓取，最多200个字">@Html.Raw(Model.Summary)</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">文章内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="content" name="content" placeholder="请输入内容" class="layui-textarea">@Html.Raw(Model.Content)</textarea>
+                    </div>
+                </div>
+            </div>
+            @*<div class="layui-row">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">文章图片</label>
+                <div id="zyupload" class="zyupload" style="margin-left:108px;"></div>
+            </div>
+        </div>*@
+          
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                    <button type="button" id="btnHref" class="layui-btn layui-btn-primary btn-open-close">一键匹配內链</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section js{
+    <script src="/lib/tinymce/tinymce.min.js"></script>
+    <script src="/lib/tinymce/langs/zh_CN.js"></script>
+    <script>
+       
+    tinymce.init({
+        selector: '#content',
+        auto_focus: true,
+        height: 400,
+        content_style: "img {max-width:100%;}",
+        image_advtab: true,//开启图片上传的高级选项功能
+        images_upload_url:  '/api/article/qiniuFile',//图片上传
+
+        plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help ',
+        toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
+    });
+            layui.use(['form',  'common'], function () {
+                var form = layui.form,
+                    $ = layui.$,
+                    apiUtil = layui.common;
+
+                /**
+                 * 初始化表单，要加上，不然刷新部分组件可能会不加载
+                 */
+                // 当前弹出层，防止ID被覆盖
+                var parentIndex =  parent.layer.getFrameIndex(window.name);
+                var type = "";
+                var id =@Model.Id;
+                if (id > 0) {
+                    apiUtil.BindParentColumn(@Model.ColumnId);
+                    type = "edit";
+                } else {
+                    apiUtil.BindParentColumn();
+                }
+                //匹配内链
+                $("#btnHref").click(function () {
+                    var content = tinyMCE.editors[0].getContent();
+                    apiUtil.ajax('keyword/content-replace', { content,type}, "application/json", "post", function (res) {
+                        if (res.statusCode == 200 && res.success == true) {
+                            var editor = tinymce.get('content');
+                            editor.setContent(res.data);
+                            apiUtil.success(res.msg);
+                        } else {
+                            apiUtil.error(res.msg);
+                        }
+                    });
+                });
+                form.render();
+                //监听提交
+                form.on('submit(saveBtn)', function (data) {
+                    data.field.content = tinyMCE.editors[0].getContent();
+                    data.field.audit = data.field.audit === 'on' ? true : false;
+                    data.field.isTop = data.field.isTop === 'on' ? true : false;
+                    data.field.isHot = data.field.isHot === 'on' ? true : false;
+                    data.field.isComment = data.field.isComment === 'on' ? true : false;
+                    if (data.field.id>0) {
+                        apiUtil.ajax('article/modify', data.field, "application/json", "put", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    } else {
+                        apiUtil.ajax('article/add', data.field, "application/json", "post", function (res) {
+                            if (res.statusCode == 200 && res.success == true) {
+                                apiUtil.success(res.msg);
+                                parent.layer.close(parentIndex);
+                            } else {
+                                apiUtil.error(res.msg);
+                            }
+                        });
+                    }
+                    return false;
+                });                
+            });
+    </script>
+}

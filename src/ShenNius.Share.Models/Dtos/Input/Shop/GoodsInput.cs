@@ -34,7 +34,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         public int DeliveryId { get; set; }
 
         public DateTime CreateTime { get; set; } = DateTime.Now;
-    
+
         /// <summary>
         /// 商品状态
         /// </summary>
@@ -48,8 +48,8 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
         /// 单规格
         /// </summary>
         public string SpecSingle { get; set; }
-        public GoodsSpecInput  GoodsSpecInput { get; set; }
-        
+        public GoodsSpecInput GoodsSpecInput { get; set; }
+
         /// <summary>
         /// 但规格构建实体数据
         /// </summary>
@@ -61,9 +61,9 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
             GoodsSpecInput.TenantId = TenantId;
             GoodsSpecInput.GoodsId = goodsId;
             GoodsSpecInput.SpecSkuId = null;
-          return  CreateGoodsSpecEntity(GoodsSpecInput);         
+            return CreateGoodsSpecEntity(GoodsSpecInput);
         }
-       
+
         private GoodsSpec CreateGoodsSpecEntity(GoodsSpecInput input)
         {
             GoodsSpec goodsSpec = new GoodsSpec()
@@ -94,7 +94,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
                 specList.GoodsSpec.SpecSkuId = specList.SpecSkuId;
                 specList.GoodsSpec.GoodsId = goodsId;
                 specList.GoodsSpec.CreateTime = CreateTime;
-                specList.GoodsSpec.TenantId = TenantId;               
+                specList.GoodsSpec.TenantId = TenantId;
                 var goodsSpec = CreateGoodsSpecEntity(specList.GoodsSpec);
                 list.Add(goodsSpec);
             }
@@ -114,7 +114,7 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
                 foreach (var goodsSpecRelDto in specList.GoodsSpecRels)
                 {
                     goodsSpecRelDto.GoodsId = goodsId;
-                    goodsSpecRelDto.CreateTime = CreateTime;                 
+                    goodsSpecRelDto.CreateTime = CreateTime;
                     goodsSpecRelDto.TenantId = TenantId;
                     GoodsSpecRel model = new GoodsSpecRel()
                     {

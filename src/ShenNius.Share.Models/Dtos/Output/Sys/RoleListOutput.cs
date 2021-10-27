@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Models.Dtos.Input.Sys
+﻿namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-  public  class RoleListOutput
+    public class RoleListOutput
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -18,21 +18,21 @@ namespace ShenNius.Share.Models.Enums.Shop
         /// 短信通知
         /// </summary>
         [Description("短信通知")]
-        Sms=0,
+        Sms = 0,
         /// <summary>
         /// 上传设置
         /// </summary>
         [Description("上传设置")]
-        Storage=1,
+        Storage = 1,
         /// <summary>
         /// 商城设置
         /// </summary>
         [Description("商城设置")]
-        Store=2,
+        Store = 2,
         /// <summary>
         /// 交易设置
         /// </summary>
         [Description("交易设置")]
-        Trade=3
+        Trade = 3
     }
 }

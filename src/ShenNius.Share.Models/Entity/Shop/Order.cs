@@ -1,8 +1,8 @@
-﻿using System;
-using ShenNius.Share.Models.Entity.Common;
+﻿using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Models.Enums.Extension;
 using ShenNius.Share.Models.Enums.Shop;
 using SqlSugar;
+using System;
 
 namespace ShenNius.Share.Models.Entity.Shop
 {

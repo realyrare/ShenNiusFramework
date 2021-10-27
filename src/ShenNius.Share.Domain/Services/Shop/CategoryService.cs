@@ -11,7 +11,6 @@ using ShenNius.Share.Models.Entity.Sys;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 /*************************************
@@ -96,28 +95,28 @@ namespace ShenNius.Share.Domain.Services.Shop
             }
             return new ApiResult(data);
         }
-        
+
         public async Task<ApiResult> GetListPagesAsync(KeyListTenantQuery query)
-        {           
-            var res = await Db.Queryable<Category>().Where(d=>d.Status&&d.TenantId==query.TenantId)
+        {
+            var res = await Db.Queryable<Category>().Where(d => d.Status && d.TenantId == query.TenantId)
                .WhereIF(!string.IsNullOrEmpty(query.Key), c => c.Name.Contains(query.Key))
                .OrderBy(c => c.Id, OrderByType.Desc)
                .Select(c => new Category()
                {
                    Id = c.Id,
-                   TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id ==c.TenantId).Select(s => s.Name),
+                   TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
                    Name = c.Name,
                    CreateTime = c.CreateTime,
                    Layer = c.Layer,
                    ModifyTime = c.ModifyTime,
-                   IconSrc=c.IconSrc
+                   IconSrc = c.IconSrc
                })
                .ToPageAsync(query.Page, query.Limit);
             var result = new List<Category>();
             if (!string.IsNullOrEmpty(query.Key))
             {
                 var menuModel = await GetModelAsync(m => m.Name.Contains(query.Key));
-              WebHelper.ChildNode(res.Items, result, menuModel.ParentId);
+                WebHelper.ChildNode(res.Items, result, menuModel.ParentId);
             }
             else
             {
@@ -131,9 +130,10 @@ namespace ShenNius.Share.Domain.Services.Shop
                 }
                 return new ApiResult(data: new { count = res.TotalItems, items = result });
             }
-            else {
+            else
+            {
                 return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
-            }           
+            }
         }
 
     }

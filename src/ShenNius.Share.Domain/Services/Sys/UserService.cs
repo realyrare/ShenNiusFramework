@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using ShenNius.Share.Infrastructure.Common;
-using ShenNius.Share.Model.Entity.Sys;
-using ShenNius.Share.Models.Dtos.Input;
+using NLog;
+using ShenNius.Share.Common;
 using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Common;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Configs;
+using ShenNius.Share.Models.Dtos.Input;
+using ShenNius.Share.Models.Dtos.Output.Sys;
+using ShenNius.Share.Models.Enums;
+using ShenNius.Share.Models.Enums.Extension;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ShenNius.Share.Infrastructure.Extensions;
-using NLog;
-using ShenNius.Share.Models.Dtos.Output.Sys;
-using ShenNius.Share.Common;
-using ShenNius.Share.Models.Configs;
-using ShenNius.Share.Models.Enums;
-using ShenNius.Share.Models.Enums.Extension;
-using Microsoft.AspNetCore.SignalR;
-using ShenNius.Share.Infrastructure.Hubs;
-using ShenNius.Share.Infrastructure.Caches;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {
@@ -67,7 +65,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 LastLoginTime = lastLoginTime,
                 Ip = ip,
                 Address = address,
-                IsLogin=true
+                IsLogin = true
             }, d => d.Id == loginModel.Id);
             var data = _mapper.Map<LoginOutput>(loginModel);
             new LogHelper().Process(loginModel.Name, LogEnum.Login.GetEnumText(), $"{loginModel.Name}登陆成功！", LogLevel.Info);
@@ -128,7 +126,7 @@ namespace ShenNius.Share.Domain.Services.Sys
             var i = await UpdateAsync(d => new User() { Password = modifyPwdInput.ConfirmPassword }, d => d.Id == modifyPwdInput.Id);
             return new ApiResult(i);
         }
-       
+
         public async Task<ApiResult> GetUserAsync(int id)
         {
             var model = await GetModelAsync(d => d.Id == id);

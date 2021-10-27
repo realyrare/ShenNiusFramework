@@ -27,7 +27,10 @@ namespace ShenNius.Share.Models.Entity.Shop
         /// </summary>
         public int SpecType { get; set; }
         [SugarColumn(IsIgnore = true)]
-        public  string SpecTypeText { get{
+        public string SpecTypeText
+        {
+            get
+            {
                 string name = "";
                 if (SpecType == SpecTypeEnum.Single.GetValue<int>())
                 {
@@ -36,9 +39,9 @@ namespace ShenNius.Share.Models.Entity.Shop
                 if (SpecType == SpecTypeEnum.Multi.GetValue<int>())
                 {
                     name = SpecTypeEnum.Multi.GetEnumText();
-                }                
+                }
                 return name;
-            }        
+            }
         }
         /// <summary>
         /// 库存计算方式
@@ -77,7 +80,7 @@ namespace ShenNius.Share.Models.Entity.Shop
         public int DeliveryId { get; set; }
         /* status 为商品上架和下架状态*/
         public int GoodsStatus { get; set; }
-        public string  ImgUrl { get; set; }
+        public string ImgUrl { get; set; }
 
         /// <summary>
         /// 商品多规格

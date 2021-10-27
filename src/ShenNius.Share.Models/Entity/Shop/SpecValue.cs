@@ -16,7 +16,7 @@ namespace ShenNius.Share.Models.Entity.Shop
     [SugarTable("shop_Spec_Value")]
     public class SpecValue : BaseTenantEntity
     {
-        public string  Value { get; set; }
+        public string Value { get; set; }
         public int SpecId { get; set; }
     }
 }

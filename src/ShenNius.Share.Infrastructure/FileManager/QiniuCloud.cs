@@ -26,7 +26,7 @@ using System.IO;
 
 namespace ShenNius.Share.Infrastructure.FileManager
 {
-    public class QiniuCloud: IUploadHelper
+    public class QiniuCloud : IUploadHelper
     {
         private readonly QiNiuOss _qiNiuOssModel;
         public QiniuCloud(IOptionsMonitor<QiNiuOss> qiNiuOssModel)
@@ -39,7 +39,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
         /// <param name="prefix">指定前缀，只有资源名匹配该前缀的资源会被列出</param>
         /// <param name="marker">上一次列举返回的位置标记，作为本次列举的起点信息</param>
         /// <returns></returns>
-        public  ApiResult List(string prefix = "case", string marker = "")
+        public ApiResult List(string prefix = "case", string marker = "")
         {
             Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 设置存储区域
@@ -63,7 +63,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
         /// </summary>
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
-        public  ApiResult Delete(string filename)
+        public ApiResult Delete(string filename)
         {
             Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 设置存储区域
@@ -120,14 +120,14 @@ namespace ShenNius.Share.Infrastructure.FileManager
                 }
                 else
                 {
-                    list.Add(_qiNiuOssModel.ImgDomain+saveKey);
+                    list.Add(_qiNiuOssModel.ImgDomain + saveKey);
 
                 }
             }
             //HttpResult result = um.UploadFile(localFile, saveKey, token);        
             return new ApiResult(data: list);
         }
-        public  ApiResult Upload(IFormFile file, string prefix)
+        public ApiResult Upload(IFormFile file, string prefix)
         {
 
             // 生成(上传)凭证时需要使用此Mac
@@ -170,7 +170,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
         /// </summary>
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
-        private  string GetToken()
+        private string GetToken()
         {
             Mac mac = new Mac(_qiNiuOssModel.Ak, _qiNiuOssModel.Sk);
             // 上传策略，参见 

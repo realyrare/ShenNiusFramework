@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Sys;
-using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -27,22 +26,22 @@ namespace ShenNius.Share.Infrastructure.Attributes
         /// 权限动作
         /// </summary>
         public string Method { get; set; }
-     
+
         public override void OnActionExecuting(ActionExecutingContext context)
-        {          
+        {
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 ReturnResult(context, "很抱歉,您未登录！", StatusCodes.Status401Unauthorized);
                 return;
             }
             //当用户名为mhg时（超级管理员），不用验证权限。
-            #if DEBUG
-                        var currentName = context.HttpContext.User.Identity.Name;
-                        if (currentName.Equals("mhg"))
-                        {
-                            return;
-                        }
-            #endif
+#if DEBUG
+            var currentName = context.HttpContext.User.Identity.Name;
+            if (currentName.Equals("mhg"))
+            {
+                return;
+            }
+#endif
 
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
@@ -53,15 +52,15 @@ namespace ShenNius.Share.Infrastructure.Attributes
             {
                 ReturnResult(context, "不好意思，您没有该按钮操作权限，请联系系统管理员！", StatusCodes.Status403Forbidden);
                 return;
-            }                    
+            }
             var model = list.FirstOrDefault(d => d.NameCode == Module.Trim().ToLower());
             if (model == null)
             {
                 ReturnResult(context, "不好意思，您没有该列表操作权限", StatusCodes.Status403Forbidden);
                 return;
             }
-       
-            if (string.IsNullOrEmpty(Method))         
+
+            if (string.IsNullOrEmpty(Method))
             {
                 base.OnActionExecuting(context);
                 return;
@@ -73,7 +72,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 {
                     if (arryBtn.FirstOrDefault(d => d == Method.ToLower()) == null)
                     {
-                        ReturnResult(context,"不好意思，您没有该按钮操作权限", StatusCodes.Status403Forbidden);
+                        ReturnResult(context, "不好意思，您没有该按钮操作权限", StatusCodes.Status403Forbidden);
                         return;
                     }
                 }
@@ -88,9 +87,9 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore
             };
-            context.Result = new JsonResult(new ApiResult(msg, statusCodes), setting);                     
+            context.Result = new JsonResult(new ApiResult(msg, statusCodes), setting);
         }
-       
+
     }
-   
+
 }

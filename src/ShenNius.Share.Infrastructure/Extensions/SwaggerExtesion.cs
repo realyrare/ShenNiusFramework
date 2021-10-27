@@ -11,9 +11,9 @@ using System.Runtime.InteropServices;
 
 namespace ShenNius.Share.Infrastructure.Extensions
 {
-    public static  class SwaggerExtesion
+    public static class SwaggerExtesion
     {
-      
+
         public static void AddSwaggerSetup(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
@@ -72,7 +72,7 @@ namespace ShenNius.Share.Infrastructure.Extensions
         }
 
         public static void UseSwaggerMiddle(this IApplicationBuilder app)
-        
+
         {
             app.UseSwagger();
             var getStream = new ProfilerSwagger().GetStream();
@@ -91,22 +91,22 @@ namespace ShenNius.Share.Infrastructure.Extensions
                 c.EnableValidator();
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShenNius API v1");
                 c.RoutePrefix = string.Empty;
-                if (getStream!=null)
+                if (getStream != null)
                 {
-                    c.IndexStream = ()=> getStream;
+                    c.IndexStream = () => getStream;
                 }
-               
-            });          
-        }       
+
+            });
+        }
     }
     /// <summary>
     /// swagger 中配置MiniProfiler只能使用实例方法
     /// </summary>
     public class ProfilerSwagger
     {
-        public  Stream GetStream()
+        public Stream GetStream()
         {
-            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.Share.Infrastructure.index.html");
+            return GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ShenNius.API.Hosting.index.html");
         }
     }
 }

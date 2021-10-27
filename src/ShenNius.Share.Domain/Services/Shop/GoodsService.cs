@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
-using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
@@ -126,7 +125,8 @@ namespace ShenNius.Share.Domain.Services.Shop
         {
             var model = await Db.Queryable<Goods, GoodsSpec>((g, gc) => new JoinQueryInfos(JoinType.Inner, g.Id == gc.GoodsId && gc.GoodsNo == goodsNo))
                   .Where((g, gc) => g.TenantId == tenantId && g.Id == goodsId && gc.Id == goodsId)
-                  .Select((g, gc) => new {
+                  .Select((g, gc) => new
+                  {
                       g.Id,
                       g.ImgUrl,
                       gc.GoodsNo,
@@ -179,7 +179,8 @@ namespace ShenNius.Share.Domain.Services.Shop
             var datas = await Db.Queryable<Goods, Category>((g, c) => new JoinQueryInfos(JoinType.Inner, g.CategoryId == c.Id && g.TenantId == query.TenantId))
                 .WhereIF(!string.IsNullOrEmpty(query.Key), (g, c) => g.Name.Contains(query.Key))
                 .OrderBy((g, c) => g.Id, OrderByType.Desc)
-                .Select((g, c) => new Goods() {
+                .Select((g, c) => new Goods()
+                {
                     Name = g.Name,
                     CategoryName = c.Name,
                     CreateTime = g.CreateTime,
@@ -195,7 +196,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             foreach (var item in datas.Items)
             {
                 item.ImgUrl = !string.IsNullOrEmpty(item.ImgUrl) ? item.ImgUrl.Split(',')[0] : "";
-            }        
+            }
             return new ApiResult(datas);
         }
         public async Task<ApiResult<GoodsModifyInput>> DetailAsync(int id)
@@ -203,17 +204,17 @@ namespace ShenNius.Share.Domain.Services.Shop
             Goods goods = await GetModelAsync(d => d.Id == id && d.Status);
 
             if (goods == null) throw new FriendlyException($"此商品{id}没有查找对应的商品信息");
-           var model= _mapper.Map<GoodsModifyInput>(goods);
-              
+            var model = _mapper.Map<GoodsModifyInput>(goods);
+
             model.GoodsSpecInput = new GoodsSpecInput();
             if (model.SpecType == SpecTypeEnum.Single.GetValue<int>())
             {
-                var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == id).FirstAsync();                 
+                var goodsSpec = await Db.Queryable<GoodsSpec>().Where(d => d.GoodsId == id).FirstAsync();
                 model.GoodsSpecInput = _mapper.Map<GoodsSpecInput>(goodsSpec);
             }
             return new ApiResult<GoodsModifyInput>(model);
         }
-  
+
         public async Task<ApiResult> AddAsync(GoodsInput input)
         {
             try
@@ -230,7 +231,7 @@ namespace ShenNius.Share.Domain.Services.Shop
             {
                 Db.RollbackTran();
                 return new ApiResult(e.Message);
-            }          
+            }
             return new ApiResult();
         }
         /// <summary>
@@ -239,14 +240,14 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <param name="goodsId"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        private async Task DealwithGoodsSpec(int goodsId, GoodsInput input) 
+        private async Task DealwithGoodsSpec(int goodsId, GoodsInput input)
         {
             // 保存规格
             if (input.SpecType == SpecTypeEnum.Single.GetValue<int>())
             {
-                var specSingle= JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
+                var specSingle = JsonConvert.DeserializeObject<GoodsSpecInput>(input.SpecSingle);
                 input.GoodsSpecInput = specSingle;
-               var goodsSpec = input.BuildGoodsSpec(goodsId);
+                var goodsSpec = input.BuildGoodsSpec(goodsId);
                 if (null == goodsSpec)
                 {
                     throw new FriendlyException("商品规格实体数据不能为空！");
@@ -267,18 +268,18 @@ namespace ShenNius.Share.Domain.Services.Shop
                     throw new FriendlyException("商品规格实体关系集合数据不能为空！");
                 }
                 //根据规格值反推规格组id
-               var specValues= await Db.Queryable<SpecValue>().Where(d => d.Status).ToListAsync();
+                var specValues = await Db.Queryable<SpecValue>().Where(d => d.Status).ToListAsync();
                 foreach (var item in goodsSpecRels)
                 {
-                   var specId = specValues.Where(d => d.Status && d.Id == item.SpecValueId).Select(d=>d.SpecId);
+                    var specId = specValues.Where(d => d.Status && d.Id == item.SpecValueId).Select(d => d.SpecId);
                     item.SpecId = specId.FirstOrDefault();
                 }
                 await Db.Insertable(goodsSpecRels).ExecuteReturnIdentityAsync();
             }
         }
         public async Task<ApiResult> ModifyAsync(GoodsModifyInput input)
-        {           
-            var goods = await GetModelAsync(d => d.Id == input.Id); 
+        {
+            var goods = await GetModelAsync(d => d.Id == input.Id);
             if (goods == null) throw new FriendlyException($"此商品{input.Id}没有查找对应的商品信息");
             try
             {
@@ -298,7 +299,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 Db.RollbackTran();
                 return new ApiResult(e.Message);
             }
-            return new ApiResult();        
+            return new ApiResult();
         }
         /// <summary>
         /// 添加规格组名称和值
@@ -308,20 +309,20 @@ namespace ShenNius.Share.Domain.Services.Shop
         public async Task<ApiResult> AddSpecAsync(SpecInput input)
         {
             // 判断规格组是否存在
-            var specId =await Db.Queryable<Spec>().Where(d => d.Name.Equals(input.SpecName)).Select(d=>d.Id).FirstAsync();
-            if (specId==0)
+            var specId = await Db.Queryable<Spec>().Where(d => d.Name.Equals(input.SpecName)).Select(d => d.Id).FirstAsync();
+            if (specId == 0)
             {
                 var specModel = new Spec
                 {
                     Name = input.SpecName,
                     TenantId = input.TenantId,
-                    CreateTime = DateTime.Now     
+                    CreateTime = DateTime.Now
                 };
                 specId = await Db.Insertable(specModel).ExecuteReturnIdentityAsync();
-            }        
-            var specValueId = await  Db.Queryable<SpecValue>().Where(d => d.Value.Equals(input.SpecValue) && d.SpecId == specId).Select(d => d.Id).FirstAsync();
+            }
+            var specValueId = await Db.Queryable<SpecValue>().Where(d => d.Value.Equals(input.SpecValue) && d.SpecId == specId).Select(d => d.Id).FirstAsync();
             // 判断规格值是否存在
-           
+
             if (specValueId == 0)
             {
                 var specValueModel = new SpecValue
@@ -342,7 +343,7 @@ namespace ShenNius.Share.Domain.Services.Shop
         /// <returns></returns>
         public async Task<ApiResult> AddSpecAsync(SpecValuesInput input)
         {
-            var specValueId = await Db.Queryable<SpecValue>().Where(d => d.Value.Equals(input.SpecValue) && d.SpecId == input.SpecId).Select(d => d.Id).FirstAsync();         
+            var specValueId = await Db.Queryable<SpecValue>().Where(d => d.Value.Equals(input.SpecValue) && d.SpecId == input.SpecId).Select(d => d.Id).FirstAsync();
             if (specValueId == 0)
             {
                 var specValueModel = new SpecValue
@@ -354,7 +355,7 @@ namespace ShenNius.Share.Domain.Services.Shop
                 };
                 specValueId = await Db.Insertable(specValueModel).ExecuteReturnIdentityAsync();
             }
-            return new ApiResult(data: new {specValueId });
+            return new ApiResult(data: new { specValueId });
         }
     }
 }

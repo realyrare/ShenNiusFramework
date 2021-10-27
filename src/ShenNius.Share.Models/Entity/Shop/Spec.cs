@@ -1,8 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Web;
 
 /*************************************
 * 类名：Spec
@@ -19,6 +16,6 @@ namespace ShenNius.Share.Models.Entity.Shop
     [SugarTable("shop_Spec")]
     public class Spec : BaseTenantEntity
     {
-        public string  Name { get; set; }
+        public string Name { get; set; }
     }
 }

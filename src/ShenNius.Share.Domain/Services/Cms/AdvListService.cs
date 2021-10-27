@@ -5,8 +5,6 @@ using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Entity.Cms;
 using ShenNius.Share.Models.Entity.Sys;
 using SqlSugar;
-using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 /*************************************
@@ -32,17 +30,18 @@ namespace ShenNius.Share.Domain.Services.Cms
         {
             var res = await Db.Queryable<AdvList>().Where(d => d.Status && d.TenantId == query.TenantId)
                 .WhereIF(!string.IsNullOrEmpty(query.Key), d => d.Title.Contains(query.Key)).Select(
-                d=>new AdvList() {
+                d => new AdvList()
+                {
                     TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == d.TenantId).Select(s => s.Name),
-                    Id=d.Id,
-                    CreateTime=d.CreateTime,
-                    Type=d.Type,
-                    ModifyTime=d.ModifyTime,
-                    Status=d.Status,
-                    Summary=d.Summary,
-                    Title=d.Title
+                    Id = d.Id,
+                    CreateTime = d.CreateTime,
+                    Type = d.Type,
+                    ModifyTime = d.ModifyTime,
+                    Status = d.Status,
+                    Summary = d.Summary,
+                    Title = d.Title
                 }
-                ).ToPageAsync(query.Page,query.Limit);
+                ).ToPageAsync(query.Page, query.Limit);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
     }

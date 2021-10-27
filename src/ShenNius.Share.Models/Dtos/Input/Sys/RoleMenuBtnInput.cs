@@ -1,6 +1,6 @@
 ﻿namespace ShenNius.Share.Models.Dtos.Input.Sys
 {
-    public  class RoleMenuBtnInput
+    public class RoleMenuBtnInput
     {
         public int RoleId { get; set; }
 

@@ -82,9 +82,9 @@ namespace ShenNius.Share.Infrastructure.Common
             }
             catch (Exception ex)
             {
-                #if DEBUG
+#if DEBUG
                 Console.WriteLine($"Failed. Error: {ex.Message}");
-                #endif
+#endif
                 LogHelper.Default.ProcessError("邮件发送", ex.Message);
             }
         }
@@ -170,7 +170,7 @@ namespace ShenNius.Share.Infrastructure.Common
         /// <param name="id">树形id</param>
         /// <param name="getDataCallback">回调函数</param>
         /// <returns></returns>
-        public static async Task<Tuple<int, string>> DealTreeData<T>(int parentId, int id, Func<Task<T>> getDataCallback) where T: BaseTenantTreeEntity
+        public static async Task<Tuple<int, string>> DealTreeData<T>(int parentId, int id, Func<Task<T>> getDataCallback) where T : BaseTenantTreeEntity
         {
             string parentIdList = ""; int layer = 0;
             if (parentId > 0)
@@ -201,13 +201,13 @@ namespace ShenNius.Share.Infrastructure.Common
         public static void ChildNode<T>(List<T> list, List<T> newlist, int parentId) where T : BaseTenantTreeEntity
         {
             var result = list.Where(p => p.ParentId == parentId).OrderBy(p => p.Layer).ToList();
-            if (!result.Any()) return ;
+            if (!result.Any()) return;
             for (int i = 0; i < result.Count; i++)
             {
                 newlist.Add(result[i]);
                 ChildNode(list, newlist, result[i].Id);
             }
         }
-       
+
     }
 }

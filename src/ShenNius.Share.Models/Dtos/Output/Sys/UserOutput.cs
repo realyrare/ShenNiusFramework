@@ -2,7 +2,7 @@
 {
     public class UserOutput
     {
-       
+
         public int Id { get; set; }
 
         /// <summary>

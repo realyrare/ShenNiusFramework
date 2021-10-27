@@ -26,7 +26,7 @@ namespace ShenNius.Share.Common
                     strResult = strResult?.Substring(8, 16);
                 }
                 return strResult;
-            }            
+            }
         }
         #endregion
 

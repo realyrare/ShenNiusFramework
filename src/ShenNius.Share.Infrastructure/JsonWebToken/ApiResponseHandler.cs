@@ -27,7 +27,7 @@ namespace ShenNius.Share.Infrastructure.JsonWebToken
             Response.ContentType = "application/json";
             Response.StatusCode = StatusCodes.Status401Unauthorized;
             //await Response.WriteAsync(JsonConvert.SerializeObject(new ApiResult<string>(null, statusCode:StatusCodes.Status401Unauthorized ,success:false, msg: "很抱歉，您无权访问该接口，请确保已经登录!"), setting));
-            await Response.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ApiResult<string>(msg: "很抱歉，您无权访问该接口，请确保已经登录!",statusCode: StatusCodes.Status401Unauthorized ), setting));
+            await Response.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ApiResult<string>(msg: "很抱歉，您无权访问该接口，请确保已经登录!", statusCode: StatusCodes.Status401Unauthorized), setting));
         }
 
         protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)

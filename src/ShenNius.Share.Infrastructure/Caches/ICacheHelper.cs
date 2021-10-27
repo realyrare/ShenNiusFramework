@@ -25,7 +25,7 @@ namespace ShenNius.Share.Infrastructure.Caches
 
         void Remove(string key);
 
-        T GetOrSet<T>(string key, Func<T> getDataCallback, TimeSpan? exp=null);
+        T GetOrSet<T>(string key, Func<T> getDataCallback, TimeSpan? exp = null);
         Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> getDataCallback, TimeSpan? exp = null);
     }
 }

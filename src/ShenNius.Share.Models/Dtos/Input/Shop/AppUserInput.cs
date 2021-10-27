@@ -12,12 +12,12 @@ namespace ShenNius.Share.Models.Dtos.Input.Shop
 {
     public class AppUserInput
     {
-            public string NickName { get; set; }
-            public byte Gender { get; set; }
-            public string Language { get; set; }
-            public string City { get; set; }
-            public string Province { get; set; }
-            public string Country { get; set; }
-            public string AvatarUrl { get; set; }
+        public string NickName { get; set; }
+        public byte Gender { get; set; }
+        public string Language { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string Country { get; set; }
+        public string AvatarUrl { get; set; }
     }
 }

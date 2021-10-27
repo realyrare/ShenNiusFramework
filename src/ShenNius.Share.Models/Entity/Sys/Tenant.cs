@@ -1,6 +1,5 @@
 ﻿using ShenNius.Share.Models.Entity.Common;
 using SqlSugar;
-using System;
 
 /*************************************
 * 类名：Tenant

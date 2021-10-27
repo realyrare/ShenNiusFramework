@@ -1,12 +1,12 @@
 ﻿using AspectCore.DynamicProxy;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Concurrent;
-using System.Reflection;
+using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.Caches;
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 /*************************************
 * 类名：CacheInterceptor
 * 作者：realyrare

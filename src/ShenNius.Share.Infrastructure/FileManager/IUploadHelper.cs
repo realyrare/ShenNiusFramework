@@ -21,8 +21,8 @@ namespace ShenNius.Share.Infrastructure.FileManager
         /// <param name="files"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
-         ApiResult Upload(IFormFileCollection files, string prefix);
-         ApiResult Upload(IFormFile file, string prefix);
+        ApiResult Upload(IFormFileCollection files, string prefix);
+        ApiResult Upload(IFormFile file, string prefix);
         /// <summary>
         /// 根据文件名删除文件
         /// </summary>

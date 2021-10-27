@@ -11,12 +11,12 @@
 using ShenNius.Share.Models.Entity.Common;
 
 namespace ShenNius.Share.Models.Dtos.Common
-{  
+{
     /// <summary>
     /// 多租户约定方便Add ,Modify使用
     /// </summary>
     public class GlobalTenantInput : IGlobalTenant
-    {        
+    {
         public int TenantId { get; set; }
     }
     public class UploadInput

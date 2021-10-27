@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShenNius.Share.Models.Dtos.Input
+﻿namespace ShenNius.Share.Models.Dtos.Input
 {
-   public class UserModifyInput
+    public class UserModifyInput
     {
         public int Id { get; set; }
         /// <summary>

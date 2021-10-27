@@ -1,5 +1,5 @@
-﻿using ShenNius.Share.Models.Entity.Sys;
-using ShenNius.Share.Domain.Repository;
+﻿using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Models.Entity.Sys;
 
 namespace ShenNius.Share.Domain.Services.Sys
 {

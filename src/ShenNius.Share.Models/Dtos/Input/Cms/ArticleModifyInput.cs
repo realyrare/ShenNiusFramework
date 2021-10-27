@@ -14,7 +14,7 @@ using System;
 
 namespace ShenNius.Share.Models.Dtos.Input.Cms
 {
-    public class ArticleModifyInput: GlobalTenantInput
+    public class ArticleModifyInput : GlobalTenantInput
     {
         public int Id { get; set; }
         /// <summary>
@@ -115,12 +115,6 @@ namespace ShenNius.Share.Models.Dtos.Input.Cms
         /// Nullable:False
         /// </summary>
         public bool IsComment { get; set; } = false;
-        /// <summary>
-        /// Desc:是否在回收站
-        /// Default:b'0'
-        /// Nullable:False
-        /// </summary>
-        public bool IsRecycle { get; set; } = false;
 
         /// <summary>
         /// Desc:审核状态

@@ -36,7 +36,7 @@ namespace ShenNius.Share.Models.Entity.Cms
         /// Nullable:True
         /// </summary>
         public string SubTitle { get; set; }
-     
+
         /// <summary>
         /// Desc:栏位属性
         /// Default:-

@@ -1,11 +1,10 @@
 ﻿using ShenNius.Share.Models.Entity.Shop;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ShenNius.Share.Models.Dtos.Output.Shop
 {
-  public  class OrderDetailOutput:Order
+    public class OrderDetailOutput : Order
     {
         public string AppUserName { get; set; }
         public OrderAddress Address { get; set; } = new OrderAddress();

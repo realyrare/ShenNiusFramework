@@ -26,10 +26,10 @@ namespace ShenNius.Share.Infrastructure.Attributes
         object logIgnore = null;
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-                     
-            var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;         
-             logIgnore = controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(LogIgnoreAttribute), false).FirstOrDefault();
-            if (logIgnore!=null)
+
+            var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+            logIgnore = controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(LogIgnoreAttribute), false).FirstOrDefault();
+            if (logIgnore != null)
             {
                 return;
             }

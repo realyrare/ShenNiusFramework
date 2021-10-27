@@ -17,9 +17,9 @@ namespace ShenNius.Share.Models.Entity.Cms
     /// 关键词
     /// </summary>
     [SugarTable("Cms_Keyword")]
-    public class Keyword:BaseTenantEntity
+    public class Keyword : BaseTenantEntity
     {
-        public string  Title { get; set; }
+        public string Title { get; set; }
         public string Url { get; set; }
     }
 }

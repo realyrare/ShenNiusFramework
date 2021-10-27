@@ -2,17 +2,11 @@
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Entity.Shop;
-using ShenNius.Share.Models.Enums.Extension;
-using ShenNius.Share.Models.Enums.Shop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShenNius.MiniApp.API.Controllers
 {
-  public  class CartController: MiniAppBaseController
+    public  class CartController: MiniAppBaseController
     {
         private readonly ICartService _cartService;
         private readonly IGoodsService _goodsService;

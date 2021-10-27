@@ -177,9 +177,9 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="param">实体</param>
         /// <param name="ignoreExpression">指定忽略个别字段</param>
         /// <returns></returns>
-        public  int Update(T param, Expression<Func<T, object>> ignoreExpression)
+        public int Update(T param, Expression<Func<T, object>> ignoreExpression)
         {
-            return  Db.Updateable(param).IgnoreColumns(ignoreExpression).ExecuteCommand();
+            return Db.Updateable(param).IgnoreColumns(ignoreExpression).ExecuteCommand();
         }
         /// <summary>
         /// 删除一条或多条数据
@@ -345,7 +345,7 @@ namespace ShenNius.Share.Domain.Repository
         /// <param name="whereExpression">查询条件</param>
         /// <param name="selectExpression">投影</param>
         /// <returns></returns>
-        
+
         public async Task<List<T>> GetListAsync(Expression<Func<T, bool>> whereExpression, Expression<Func<T, T>> selectExpression)
         {
             return await Db.Queryable<T>().WhereIF(whereExpression != null, whereExpression).Select(selectExpression).ToListAsync();
@@ -359,7 +359,7 @@ namespace ShenNius.Share.Domain.Repository
         {
             return await Db.Queryable<T>().ToListAsync();
         }
-       
+
 
         /// <summary>
         /// 修改一条数据

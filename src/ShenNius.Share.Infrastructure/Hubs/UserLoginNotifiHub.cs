@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace ShenNius.Share.Infrastructure.Hubs
 {
     public class UserLoginNotifiHub : Hub
     {
-        
+
         /*
        1.登陆成功前端调用SaveCurrentUserInfo，将userid，过期时间，signalr连接时间存入字典
        2.根据属性判断是否过期
@@ -27,11 +26,11 @@ namespace ShenNius.Share.Infrastructure.Hubs
        解决方案：过期时间存入浏览器localstrage；轮询增加一个hub连接到客户端，客户端发送给服务端更新。暂不处理
         */
         public static Dictionary<int, CurrentUserHub> currentUsers = new Dictionary<int, CurrentUserHub>();
-        public  async Task SaveCurrentUserInfo(int  userId,bool isLogin)
+        public async Task SaveCurrentUserInfo(int userId, bool isLogin)
         {
             if (currentUsers.ContainsKey(userId))
             {
-                
+
                 //如果是同一个用户且是不同的客户端登录，那么给客户端发送通知（下线）
                 if (!currentUsers[userId].ConnectionId.Equals(Context.ConnectionId) && isLogin == true)
                 {
@@ -47,7 +46,7 @@ namespace ShenNius.Share.Infrastructure.Hubs
             }
             else
             {
-                currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin, ConnectionId = Context.ConnectionId ,LastLoginTime=DateTime.Now});
+                currentUsers.Add(userId, new CurrentUserHub() { UserId = userId, IsLogin = isLogin, ConnectionId = Context.ConnectionId, LastLoginTime = DateTime.Now });
             }
         }
         public string GetConnectionId()

@@ -19,7 +19,7 @@ namespace ShenNius.Share.Infrastructure.Common
         /// 如果调用构造函数，默认使用数据困记录日志，其他类型对照nlog.config查看
         /// </summary>
         /// <param name="name"></param>
-        public LogHelper(string name= "database") : this(LogManager.GetLogger(name))
+        public LogHelper(string name = "database") : this(LogManager.GetLogger(name))
         {
 
         }
@@ -28,7 +28,7 @@ namespace ShenNius.Share.Infrastructure.Common
         static LogHelper()
         {
             Default = new LogHelper(LogManager.GetCurrentClassLogger());
-           
+
         }
         /// <summary>
         /// 操作日志
@@ -38,7 +38,7 @@ namespace ShenNius.Share.Infrastructure.Common
         /// <param name="msg">内容</param>
         /// <param name="logLevel">log等级</param>
         /// <param name="exception">异常信息</param>
-        public void Process(string userName, string Logger, string msg, LogLevel logLevel, Exception exception=null)
+        public void Process(string userName, string Logger, string msg, LogLevel logLevel, Exception exception = null)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace ShenNius.Share.Infrastructure.Common
             }
             catch
             {
-            }          
+            }
         }
         /// <summary>
         /// 错误日志
@@ -72,6 +72,6 @@ namespace ShenNius.Share.Infrastructure.Common
             _logger.Log(lei);
         }
 
-     
+
     }
 }
