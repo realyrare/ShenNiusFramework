@@ -47,9 +47,9 @@ namespace ShenNius.API.Hosting
 
             //注入泛型BaseServer
             services.AddScoped(typeof(IBaseServer<>), typeof(BaseServer<>));
-          
+
             services.AddSwaggerSetup();
-                //注入MiniProfiler
+            //注入MiniProfiler
             services.AddMiniProfiler(options =>
                      options.RouteBasePath = "/profiler"
             );
@@ -158,7 +158,7 @@ namespace ShenNius.API.Hosting
             });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {        
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -168,9 +168,9 @@ namespace ShenNius.API.Hosting
                 app.UseExceptionHandler("/error.html");
                 app.UseHsts();
             }
-          
-             app.UseMiniProfiler();
-             app.UseSwaggerMiddle();
+
+            app.UseMiniProfiler();
+            app.UseSwaggerMiddle();
             //加入健康检查中间件
             app.UseHealthChecks("/health");
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
