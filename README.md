@@ -9,9 +9,9 @@
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
 #### 特别申明
- **single分支为单体分支；git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
+ ** single分支为单体分支；git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 
- **module-master 分支为模块化分支；git clone -b module-master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
+ ** module-master 分支为模块化分支；git clone -b module-master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 #### 软件架构
  整体框架分为服务层、基础设施层，实体层，展现层。
 
