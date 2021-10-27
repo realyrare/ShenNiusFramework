@@ -26,9 +26,9 @@ namespace ShenNius.Share.Infrastructure.Caches
         {
             return _cache.TryGetValue(key, out _);
         }
-  
+
         public T Get<T>(string key)
-        {          
+        {
             return _cache.Get<T>(key);
         }
 

@@ -86,7 +86,7 @@ namespace ShenNius.Share.Infrastructure.FileManager
             else
             {
                 path = string.Concat(_webHostEnvironment.WebRootPath, "/Files");
-            }           
+            }
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

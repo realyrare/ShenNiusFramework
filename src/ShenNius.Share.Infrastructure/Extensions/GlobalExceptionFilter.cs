@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ShenNius.Share.Infrastructure.Common;
 using Newtonsoft.Json;
+using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Models.Configs;
 
 namespace ShenNius.Share.Infrastructure.Extensions
@@ -45,10 +45,10 @@ namespace ShenNius.Share.Infrastructure.Extensions
                 else
                 {
                     json.Msg = context.Exception.Message;
-                   new LogHelper().Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
+                    new LogHelper().Process("", "", json.Msg, NLog.LogLevel.Error, context.Exception);
                 }
             }
-            catch 
+            catch
             {
             }
 

@@ -18,9 +18,9 @@
             /// 用户登录非对称加密
             /// </summary>
             public const string loginRSACrypt = "loginRSACrypt";
-           /// <summary>
-           /// 当前用户拥有的所有权限去做校验
-           /// </summary>
+            /// <summary>
+            /// 当前用户拥有的所有权限去做校验
+            /// </summary>
             public const string AuthMenu = "authMenu";
 
             public const string LoginKey = "loginKey";

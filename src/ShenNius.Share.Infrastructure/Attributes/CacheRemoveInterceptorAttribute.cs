@@ -1,9 +1,9 @@
 ﻿using AspectCore.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
+using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using ShenNius.Share.Infrastructure.Caches;
 /*************************************
 * 类名：CacheDeleteInterceptorAttribute
 * 作者：realyrare
@@ -48,7 +48,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var cache = context.ServiceProvider.GetService<ICacheHelper>();
             await next(context);
             //缓存删除方式：1、类名和方法名结合删除；2、自定义的缓存key删除 
-            if (_types.Length>0&&_methods.Length>0)
+            if (_types.Length > 0 && _methods.Length > 0)
             {
                 for (int i = 0; i < _types.Length; i++)
                 {

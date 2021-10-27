@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace ShenNius.Share.Infrastructure.TimedTask
 {
     public class TimedBackgroundService : BackgroundService
-    {       
+    {
         private readonly ILogger _logger;
         private Timer _timer;
         private readonly IHubContext<UserLoginNotifiHub> _hubContext;
@@ -37,11 +37,11 @@ namespace ShenNius.Share.Infrastructure.TimedTask
 
         private void DoWork(object state)
         {
-            
-            //给指定人推送消息	
-           //  _hubContext.Clients.All.SendAsync("ReceiveMessage",  1);
 
-           // _logger.LogInformation($"Hello World! - {DateTime.Now}");
+            //给指定人推送消息	
+            //  _hubContext.Clients.All.SendAsync("ReceiveMessage",  1);
+
+            // _logger.LogInformation($"Hello World! - {DateTime.Now}");
         }
 
         public override void Dispose()
