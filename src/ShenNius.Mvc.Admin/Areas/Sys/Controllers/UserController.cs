@@ -50,8 +50,9 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult SetRole()
+        public IActionResult SetRole(int id)
         {
+            ViewBag.UserId = id;
             return View();
         }
         [HttpGet]

@@ -15,13 +15,12 @@
     layui.use(['form', 'layer', 'table',  'element', 'common'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            table = layui.table,
             apiUtil = layui.common,
             layer = layui.layer;
 
          apiUtil.render({
             elem: '#currentTableId',
-             url: 'role/getListPagesByUser?userId='+@Model.UserId,
+             url: 'role/getListPagesByUser?userId=' +@ViewBag.UserId,
              toolbar: '#toolbarDemo',
             cols: [[
                 { type: "checkbox", width: 50 },
@@ -39,7 +38,7 @@
             console.log("roleId:" + this.value)
 
                     var data = {
-                        userId: @Model.UserId,
+                        userId: @ViewBag.UserId,
                         roleId: this.value,
                         status: obj.elem.checked //? true : false
                     };

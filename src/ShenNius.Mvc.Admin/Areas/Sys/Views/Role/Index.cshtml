@@ -189,7 +189,7 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除吗？', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
                         apiUtil.ajax('role/deletes', { ids: listIds }, "application/json", "delete", function (res) {
