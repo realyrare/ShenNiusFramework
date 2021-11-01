@@ -43,9 +43,9 @@
 #### 安装教程
 
 1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
-2.  在mysql上创建数据库shenniusdb，然后执行源码db文件下的sql语句，以最近日期为准。
+2.  在mysql上创建数据库shenniusdb，然后执行源码db文件下的sql语句，以最近日期为准。db文件夹里面数据库字典文档，word、CHM、html格式的都有。
 3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.jsonwen文件信息。
-
+4、 使用过程中有什么问题欢迎提issues,基本都会第一时间解决。
 #### 使用说明
 
 1.   ShenNius.Share.Infrastructure 基础设施、里面包含常用的扩展方法、静态类。

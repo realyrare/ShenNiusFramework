@@ -26,14 +26,14 @@ namespace ShenNius.Admin.API.Controllers.Sys
         }
 
         [HttpGet, Authority(Module = nameof(Log))]
-        public async Task<ApiResult> GetListPages(int page, string key = null)
+        public async Task<ApiResult> GetListPages(int page, int limit=15,string key = null)
         {
             Expression<Func<Log, bool>> whereExpression = null;
             if (!string.IsNullOrEmpty(key))
             {
                 whereExpression = d => d.Message.Contains(key);
             }
-            var res = await _logService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
+            var res = await _logService.GetPagesAsync(page, limit, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
