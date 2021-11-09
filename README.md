@@ -85,6 +85,7 @@
 #### QQ群：
 
 878303823（dotnet根据地）
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地"></a>
 
 #### 参与贡献
 
