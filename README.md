@@ -19,7 +19,9 @@
  很多人都使用过三层架构，该架构是从三层架构上面简化而来，去掉了以前三层架构中的数据访问层，配合顺手的ORM，不管开发API还是mvc效率和性能都是杠杠的。
 
  以后整体架构会向DDD发展，逐步缓慢的演进，为解决业务需求会把实体层的贫血模型更改为充血模型，这是当下的任务。
+#### QQ群：
 
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地"></a>
 
 #### 使用技术
 
@@ -82,10 +84,6 @@
 ![商品列表2](https://images.gitee.com/uploads/images/2021/0927/220950_1b6df0a5_1173871.png "goods-2.png")
 ![商品编辑](https://images.gitee.com/uploads/images/2021/0927/221005_423e3c97_1173871.png "goods-edit.png")
 ![商品分类](https://images.gitee.com/uploads/images/2021/0927/221028_39281d75_1173871.png "category.png")
-#### QQ群：
-
-878303823（dotnet根据地）
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地"></a>
 
 #### 参与贡献
 
