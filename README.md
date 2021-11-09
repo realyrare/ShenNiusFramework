@@ -13,7 +13,7 @@
 
  ** module-master 分支为模块化分支；git clone -b module-master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 #### 软件架构
-   ![框架架构图](https://images.gitee.com/uploads/images/2021/1109/172302_b3e2777e_1173871.png "Dependencies Graph.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/1109/172453_89cc7f93_1173871.jpeg "项目架构图.jpg")
  整体框架分为服务层、基础设施层，实体层，展现层。
 
  很多人都使用过三层架构，该架构是从三层架构上面简化而来，去掉了以前三层架构中的数据访问层，配合顺手的ORM，不管开发API还是mvc效率和性能都是杠杠的。
