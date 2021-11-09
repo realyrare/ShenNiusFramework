@@ -2,14 +2,14 @@
 
 #### 介绍
 
- **一款基于Asp.net core3.1的开发框架,适合中小型项目快速开发，对CRUD API接口抽象到上层controller,只需要建立对应的实体，即可生成某张表的增删改查接口。** 
+ **基于Asp.net core3.1的开发框架,适合中小型项目快速开发，对CRUD API接口抽象到上层controller,只需要建立对应的实体，即可生成某张表的增删改查接口。** 
 
  所有的代码坚持" **Don't repeat yourself** "。坚决反对" **简单的事情复杂干** "，" **大量代码在应用层过度层层封装** "，反对" **过度设计** "的原则下进行开发。
 
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
 #### 特别申明
- ** single分支为单体分支；git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
+ ** single和master分支为单体分支；git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 
  ** module-master 分支为模块化分支；git clone -b module-master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 #### 软件架构
