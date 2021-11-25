@@ -105,6 +105,7 @@ namespace ShenNius.Mvc.Admin
                  o.Cookie.Name = "ShenNius.Mvc.Admin";
                  o.LoginPath = new PathString("/sys/user/login");
                  o.Cookie.HttpOnly = true;
+                 o.AccessDeniedPath = new PathString("/no-control.html");//没权限跳到这个路径
              });
             services.AddSignalR();
             var mvcBuilder = services.AddControllersWithViews(options =>

@@ -16,5 +16,10 @@ namespace ShenNius.Mvc.Admin.Controllers
         {
             return View();
         }
+        [HttpGet("no-control.html")]
+        public IActionResult NoControl()
+        {
+            return View();
+        }
     }
 }
