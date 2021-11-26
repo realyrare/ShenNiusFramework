@@ -2,6 +2,7 @@ using AspectCore.Extensions.DependencyInjection;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ShenNius.Mvc.Admin.Common;
 using ShenNius.Share.Domain;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Infrastructure.Attributes;
@@ -107,6 +109,18 @@ namespace ShenNius.Mvc.Admin
                  o.Cookie.HttpOnly = true;
                  o.AccessDeniedPath = new PathString("/no-control.html");//没权限跳到这个路径
              });
+
+            services.AddAuthorization(optins =>
+            {
+                //增加授权策略
+                optins.AddPolicy("customPolicy", polic =>
+                {
+                    polic.AddRequirements(new CustomAuthorizationRequirement("Policy01")
+                        // ,new CustomAuthorizationRequirement("Policy02")
+                        );
+                });
+            });
+            services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
             services.AddSignalR();
             var mvcBuilder = services.AddControllersWithViews(options =>
              {
