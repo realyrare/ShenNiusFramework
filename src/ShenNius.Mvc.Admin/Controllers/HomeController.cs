@@ -11,6 +11,16 @@ namespace ShenNius.Mvc.Admin.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 测试用
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        //  [Authorize(policy: "customPolicy")]
+        public IActionResult Index2()
+        {
+            return View();
+        }
         [HttpGet("error.html")]
         public IActionResult Error()
         {

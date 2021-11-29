@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShenNius.Mvc.Admin.Common
@@ -15,6 +13,7 @@ namespace ShenNius.Mvc.Admin.Common
         {
 
         }
+        //https://www.cnblogs.com/wei325/p/15575141.html Asp.NetCore MVC自定义授权解决方案
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirement requirement)
         {
 

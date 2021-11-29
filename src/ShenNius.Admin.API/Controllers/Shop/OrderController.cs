@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Shop;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
@@ -13,7 +12,6 @@ namespace ShenNius.Admin.API.Controllers.Shop
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     [MultiTenant]
     public class OrderController : ControllerBase
     {

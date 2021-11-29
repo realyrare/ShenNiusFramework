@@ -32,7 +32,6 @@ namespace ShenNius.Admin.API.Controllers
     /// <typeparam name="TUpdateInput"></typeparam>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     public abstract class ApiBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
        where TEntity : BaseEntity, new()
        where TDeleteInput : DeletesInput

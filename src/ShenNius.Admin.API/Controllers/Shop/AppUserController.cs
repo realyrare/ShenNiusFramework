@@ -23,7 +23,6 @@ namespace ShenNius.Admin.API.Controllers.Shop
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     [MultiTenant]
     public class AppUserController : ControllerBase
     {

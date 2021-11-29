@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -101,7 +100,8 @@ namespace ShenNius.API.Hosting
             services.AddSignalR();
             var mvcBuilder = services.AddControllers(options =>
             {
-                options.Filters.Add(new AuthorizeFilter());
+                // options.Filters.Add(new AuthorizeFilter());
+                options.Filters.Add(typeof(MvcAndApiAuthorizeFilter));
                 options.Filters.Add(typeof(LogAttribute));
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
@@ -196,7 +196,7 @@ namespace ShenNius.API.Hosting
             // Â·ÓÉÓ³Éä
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization(); 
                 endpoints.MapHub<UserLoginNotifiHub>("userLoginNotifiHub");
             });
         }
