@@ -28,6 +28,9 @@ namespace ShenNius.Share.Infrastructure.Attributes
 /// </summary>
     public class MvcAndApiAuthorizeFilter : Attribute, IAuthorizationFilter
     {
+        /*使用AuthorizeFilter可以提前拦截到controller和action的请求，但在asp.netcore中需要过滤掉同时请求进来的js\img等请求，
+        猜测跟以前asp.net httpmodule的使用方式一样，故选择放弃继续使用ActionFilterAttribute，可以作为了解，看后期asp.net core更新发展，也可以自己过滤掉多余的请求
+        */
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (IsHaveAllow(context.Filters))

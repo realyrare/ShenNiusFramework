@@ -218,7 +218,7 @@ namespace ShenNius.Mvc.Admin
             // 路由映射
             app.UseEndpoints(endpoints =>
             {
-                //这个扩展方法全局添加也可以代替Authorize,因重写了IAuthorizationFilter所以不需要再添加了
+                //这个扩展方法全局添加也可以代替Authorize,如果因重写了IAuthorizationFilter就可以不添加。
                 endpoints.MapControllers().RequireAuthorization();
                 endpoints.MapControllerRoute(
                 name: "MyArea",
