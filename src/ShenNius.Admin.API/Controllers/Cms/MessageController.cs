@@ -25,7 +25,6 @@ namespace ShenNius.Admin.API.Controllers.Cms
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     [MultiTenant]
     public class MessageController : ControllerBase
     {

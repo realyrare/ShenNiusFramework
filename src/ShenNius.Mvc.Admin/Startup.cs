@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -105,11 +104,26 @@ namespace ShenNius.Mvc.Admin
                  o.Cookie.Name = "ShenNius.Mvc.Admin";
                  o.LoginPath = new PathString("/sys/user/login");
                  o.Cookie.HttpOnly = true;
+                 o.AccessDeniedPath = new PathString("/no-control.html");//没权限跳到这个路径
              });
+
+            #region 自定义授权解决方案的其中一种，不采用的原因是所有的Action或controller需要挨个添加 [Authorize(policy: "customPolicy")]，无法做到全局添加。
+            //services.AddAuthorization(optins =>
+            //{
+            //    //增加授权策略
+            //    optins.AddPolicy("customPolicy", polic =>
+            //    {
+            //        polic.AddRequirements(new CustomAuthorizationRequirement("Policy01")
+            //             ,new CustomAuthorizationRequirement("Policy02")
+            //            );
+            //    });
+            //});
+            //services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>(); 
+            #endregion
             services.AddSignalR();
             var mvcBuilder = services.AddControllersWithViews(options =>
              {
-                 options.Filters.Add(new AuthorizeFilter());
+                 // options.Filters.Add(new AuthorizeFilter());这个过滤器全局添加也可以代替Authorize( 身份验证过滤器，可以重写)
                  options.Filters.Add(typeof(LogAttribute));
                  options.Filters.Add(typeof(GlobalExceptionFilter));
              });
@@ -198,12 +212,14 @@ namespace ShenNius.Mvc.Admin
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/error.html");
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthentication();//检测用户是否登录
+            app.UseAuthorization();//授权  检测是否具有权限
 
             // 路由映射
             app.UseEndpoints(endpoints =>
             {
+                //这个扩展方法全局添加也可以代替Authorize,如果因重写了IAuthorizationFilter就可以不添加。
+                endpoints.MapControllers().RequireAuthorization();
                 endpoints.MapControllerRoute(
                 name: "MyArea",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Sys;
@@ -35,7 +34,6 @@ namespace ShenNius.Admin.API.Controllers
     /// <typeparam name="TUpdateInput">更新实体</typeparam>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     [MultiTenant]
     public abstract class ApiTenantBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
        where TEntity : BaseTenantEntity, new()
