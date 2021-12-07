@@ -101,7 +101,7 @@ namespace ShenNius.API.Hosting
             var mvcBuilder = services.AddControllers(options =>
             {
                 // options.Filters.Add(new AuthorizeFilter());
-                options.Filters.Add(typeof(MvcAndApiAuthorizeFilter));
+               // options.Filters.Add(typeof(MvcAndApiAuthorizeFilter));
                 options.Filters.Add(typeof(LogAttribute));
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });

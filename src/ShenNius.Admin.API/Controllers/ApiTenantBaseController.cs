@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Sys;
