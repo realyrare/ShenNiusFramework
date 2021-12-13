@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -32,4 +32,26 @@
 	
 		<PackageReference Include="SqlSugarCore" Version="5.0.1.8" />
 	</ItemGroup>
+</Project>-->
+
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>C:\Code\ShenNius.Framework\src\ShenNius.Share.Models\ShenNius.Share.Models.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+
+		<PackageReference Include="FluentValidation.AspNetCore" Version="10.3.5" />
+
+		<PackageReference Include="SqlSugarCore" Version="5.0.1.8" />
+	</ItemGroup>
 </Project>
+

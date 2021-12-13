@@ -31,7 +31,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         [HttpGet, Authority(Module = nameof(Config))]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
-            Expression<Func<Config, bool>> whereExpression = null;
+            Expression<Func<Config, bool>>? whereExpression = null;
             if (!string.IsNullOrEmpty(key))
             {
                 whereExpression = d => d.Name.Contains(key);

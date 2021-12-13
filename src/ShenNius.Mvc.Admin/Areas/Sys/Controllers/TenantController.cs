@@ -23,7 +23,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         [HttpGet]
         public async Task<IActionResult> Modify(int id = 0)
         {
-            Tenant tenant = null;
+            Tenant? tenant = null;
             if (id == 0)
             {
                 tenant = new Tenant();

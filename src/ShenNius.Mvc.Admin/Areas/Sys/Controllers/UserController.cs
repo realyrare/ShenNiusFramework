@@ -58,7 +58,7 @@ namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
         [HttpGet]
         public async Task<IActionResult> Modify(int id = 0)
         {
-            User model = null;
+            User? model = null;
             if (id == 0)
             {
                 model = new User();

@@ -1,17 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<!--<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <!--不编译Views文件夹【windows下不编译views可以使用，linux因为area必须编译为dll】-->
-	  <!--<RazorCompileOnPublish>false</RazorCompileOnPublish>-->
-	  <!--不输出到框架版本的目录-->
+	  --><!--不编译Views文件夹【windows下不编译views可以使用，linux因为area必须编译为dll】--><!--
+	  --><!--<RazorCompileOnPublish>false</RazorCompileOnPublish>--><!--
+	  --><!--不输出到框架版本的目录--><!--
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	  <!--只使用中文语言包-->
+	  --><!--只使用中文语言包--><!--
 	  <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 	  <UserSecretsId>2449893f-2847-48ac-8028-acb4088c32d1</UserSecretsId>
 	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	  <DockerfileContext>..\..</DockerfileContext>
-	  <!--只要不是语言包文件夹名称就行-->
+	  --><!--只要不是语言包文件夹名称就行--><!--
   </PropertyGroup>
 
   <ItemGroup>
@@ -154,4 +154,26 @@
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
+</Project>-->
+
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<RootNamespace>ShenNius.Mvc.Admin</RootNamespace>
+		<GenerateDocumentationFile>False</GenerateDocumentationFile>
+		<SignAssembly>False</SignAssembly>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.17" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ShenNius.Admin.API\ShenNius.Admin.API.csproj" />
+	</ItemGroup>
 </Project>

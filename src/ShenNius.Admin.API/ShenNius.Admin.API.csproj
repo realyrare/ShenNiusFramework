@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,5 +13,23 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Controllers\Wechat\" />
+	</ItemGroup>
+</Project>-->
+
+
+
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+	</ItemGroup>
+	
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ShenNius.Share.Domain\ShenNius.Share.Domain.csproj" />
+		<ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
 	</ItemGroup>
 </Project>
