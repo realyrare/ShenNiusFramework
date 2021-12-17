@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ShenNius.Share.Models.Configs;
 using TestApi.Model;
 
 namespace WebApplication1.Controllers
@@ -64,11 +62,6 @@ namespace WebApplication1.Controllers
             })
             .ToArray();
         }
-        [HttpGet]
-        [Authorize]
-        public ApiResult Get2()
-        {        
-            return new ApiResult("测试内容信息");
-        }
+ 
     }
 }
