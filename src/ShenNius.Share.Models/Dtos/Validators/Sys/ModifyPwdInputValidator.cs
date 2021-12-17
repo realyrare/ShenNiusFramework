@@ -7,7 +7,7 @@ namespace ShenNius.Share.Models.Dtos.Validators
     {
         public ModifyPwdInputValidator()
         {
-            // CascadeMode = CascadeMode.StopOnFirstFailure;
+            // CascadeMode = CascadeMode.Stop;
             RuleFor(x => x.Id).NotEmpty().WithMessage("请填写用户Id");
             RuleFor(x => x.OldPassword).NotEmpty().WithMessage("请填写用户旧密码");
             RuleFor(x => x.NewPassword).NotEmpty().WithMessage("请填写用户新密码");

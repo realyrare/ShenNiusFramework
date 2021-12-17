@@ -80,7 +80,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                throw e;
+                throw ;
             }
         }
 

@@ -168,7 +168,7 @@ namespace ShenNius.Blog.API.Controllers.Cms
         [HttpGet]
         public async Task<ApiResult> GetList(int siteId, string parentColumnSpell, string childColumnSpell, string keyword, int page = 1)
         {
-            Column? columnModel = null;
+            Column columnModel = null;
             List<int> allChildColumnIdList = new List<int>();
             var columnList = await GetColumnAsync(siteId);
             //keyword

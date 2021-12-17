@@ -17,7 +17,7 @@ namespace ShenNius.Share.Models.Dtos.Validators.Shop
     {
         public CategoryInputValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
+            CascadeMode = CascadeMode.Stop;
             RuleFor(x => x.Name).NotEmpty().WithMessage("标题必须填写");
             RuleFor(x => x.CreateTime).NotNull().WithMessage("创建时间必须填写");
 

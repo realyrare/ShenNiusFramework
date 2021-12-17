@@ -26,6 +26,9 @@ using System.Reflection;
 
 namespace ShenNius.API.Hosting
 {
+    /// <summary>
+    /// 服务和中间件处理
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -135,7 +138,7 @@ namespace ShenNius.API.Hosting
                 {
                     options.RegisterValidatorsFromAssemblyContaining(item);
                 }
-                options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                options.DisableDataAnnotationsValidation = true;
             });
 
             // 模型验证自定义返回格式

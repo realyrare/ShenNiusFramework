@@ -159,7 +159,7 @@ namespace ShenNius.Mvc.Admin
                 {
                     options.RegisterValidatorsFromAssemblyContaining(item);
                 }
-                options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                options.DisableDataAnnotationsValidation = true;
             });
 
             // 模型验证自定义返回格式

@@ -7,7 +7,7 @@ namespace ShenNius.Share.Models.Dtos.Validators
     {
         public UserRegisterInputValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
+            CascadeMode = CascadeMode.Stop;
             RuleFor(x => x.Name).NotEmpty().WithMessage("请填写用户名称");
             RuleFor(x => x.Password).NotEmpty().WithMessage("请填写用户密码");
             RuleFor(x => x.TrueName).NotEmpty().WithMessage("真实姓名必须填写");

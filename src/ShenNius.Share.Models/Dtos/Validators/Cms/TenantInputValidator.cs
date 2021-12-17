@@ -17,7 +17,7 @@ namespace ShenNius.Share.Models.Dtos.Validators.Cms
     {
         public TenantInputValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
+            CascadeMode = CascadeMode.Stop;
             RuleFor(x => x.Title).NotEmpty().WithMessage("标题必须填写");
             RuleFor(x => x.Name).NotEmpty().WithMessage("站点名称必须填写");
             RuleFor(x => x.Keyword).NotEmpty().WithMessage("站点关键字必须填写");
