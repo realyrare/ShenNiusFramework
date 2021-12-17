@@ -1,45 +1,9 @@
-﻿<!--<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Code\ShenNius.Framework\src\ShenNius.Share.Models\ShenNius.Share.Models.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Dtos\Configs\**" />
-    <Compile Remove="Entity\Order\**" />
-    <Compile Remove="Entity\Product\**" />
-    <Compile Remove="Event\**" />
-    <Compile Remove="Maps\**" />
-    <EmbeddedResource Remove="Dtos\Configs\**" />
-    <EmbeddedResource Remove="Entity\Order\**" />
-    <EmbeddedResource Remove="Entity\Product\**" />
-    <EmbeddedResource Remove="Event\**" />
-    <EmbeddedResource Remove="Maps\**" />
-    <None Remove="Dtos\Configs\**" />
-    <None Remove="Entity\Order\**" />
-    <None Remove="Entity\Product\**" />
-    <None Remove="Event\**" />
-    <None Remove="Maps\**" />
-  </ItemGroup>
-	<ItemGroup>
-	
-		<PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
-	
-		<PackageReference Include="SqlSugarCore" Version="5.0.1.8" />
-	</ItemGroup>
-</Project>-->
-
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
+		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 

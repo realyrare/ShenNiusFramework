@@ -177,10 +177,10 @@ namespace ShenNius.Share.Domain.Services.Shop
                 Db.Ado.CommitTran();
                 return new ApiResult();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Db.Ado.RollbackTran();
-                throw ex;
+                throw;
             }
         }
     }

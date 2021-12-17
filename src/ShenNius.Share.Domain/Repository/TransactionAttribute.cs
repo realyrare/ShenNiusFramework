@@ -39,10 +39,10 @@ namespace ShenNius.Share.Domain.Repository
                 dbContext.Db.RollbackTran();
                 throw ex;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dbContext.Db.RollbackTran();
-                throw ex;
+                throw;
             }
         }
         /// <summary>
