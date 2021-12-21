@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Models.Entity.Common;
 using ShenNius.Share.Models.Entity.Sys;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 /*************************************
 * 类名：MultiTenant
@@ -29,18 +31,14 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
             //s  var actionName = actionDescriptor.ActionName.ToLower();
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
-            var tenantId = cache.Get<Tenant>(KeyHelper.Sys.CurrentTenant)?.Id;
-            //如果是增加和修改方法  根据站群id
-            //if (methods.Any(o => actionName.Contains(o)))
-            //{
+            var currentUserId = context.HttpContext.User.Claims.FirstOrDefault(d=>d.Type== JwtRegisteredClaimNames.Sid)?.Value;
+            var tenantId = cache.Get<Tenant>($"{KeyHelper.Sys.CurrentTenant}:{currentUserId}")?.Id;
+          
             foreach (var parameter in actionDescriptor.Parameters)
             {
                 var parameterName = parameter.Name;//获取Action方法中参数的名字
                 var parameterType = parameter.ParameterType;//获取Action方法中参数的类型
-                                                            //if (!typeof(int).IsAssignableFrom(parameterType))//如果不是ID类型
-                                                            //{
-                                                            //    continue;
-                                                            //}
+                                                           
                                                             //自动添加租户id
                 if (typeof(IGlobalTenant).IsAssignableFrom(parameterType))
                 {

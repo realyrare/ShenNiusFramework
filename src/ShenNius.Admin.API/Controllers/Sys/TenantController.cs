@@ -10,8 +10,11 @@
 
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
@@ -59,13 +62,15 @@ namespace ShenNius.Admin.API.Controllers.Sys
         [HttpPut]
         public async Task<ApiResult> SetCurrent([FromBody] TenantCurrentInput TenantCurrentInput)
         {
+     
+           ICurrentUserContext userContext = HttpContext.RequestServices.GetRequiredService(typeof(ICurrentUserContext)) as ICurrentUserContext;
             //把之前缓存存储的站点拿出来设置为不是当前的。
             var model = await _service.GetModelAsync(d => d.Id == TenantCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
             if (model == null)
             {
                 throw new FriendlyException("当前站点实体信息为空!");
             }
-            var currentTenant = _cacheHelper.Get<Tenant>(KeyHelper.Sys.CurrentTenant);
+            var currentTenant = _cacheHelper.Get<Tenant>($"{KeyHelper.Sys.CurrentTenant}:{userContext.Id}");
             if (currentTenant != null)
             {
                 currentTenant.IsCurrent = false;
@@ -76,7 +81,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             model.IsCurrent = true;
             await _service.UpdateAsync(model);
             //这里最好更新下缓存
-            _cacheHelper.Set(KeyHelper.Sys.CurrentTenant, model);
+            _cacheHelper.Set($"{KeyHelper.Sys.CurrentTenant}:{userContext.Id}", model);
             return new ApiResult();
         }
         [HttpGet]
