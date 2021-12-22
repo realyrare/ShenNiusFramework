@@ -84,8 +84,11 @@ namespace ShenNius.Share.Domain.Services.Sys
         }
         public async Task<ApiResult> ModfiyAsync(UserModifyInput userModifyInput)
         {
-            userModifyInput.Password = Md5Crypt.Encrypt(userModifyInput.Password);
-
+            var model = await GetModelAsync(d => d.Id == userModifyInput.Id);
+            if (model!=null&&!model.Password.Equals(userModifyInput.Password))
+            {
+                userModifyInput.Password = Md5Crypt.Encrypt(userModifyInput.Password);
+            }           
             var i = await UpdateAsync(d => new User()
             {
                 Name = userModifyInput.Name,
