@@ -13,7 +13,7 @@
 	  <NoWarn>1701;1702;CS1591;</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="FluentValidation.AspNetCore" Version="10.3.5" />
+		<!--<PackageReference Include="FluentValidation.AspNetCore" Version="10.3.5" />-->
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
 	</ItemGroup>
