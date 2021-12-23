@@ -37,6 +37,7 @@ namespace ShenNius.Share.Domain.Services.Cms
         public async Task<ApiResult> GetPagesAsync(KeyListTenantQuery query)
         {
             var res = await Db.Queryable<Article, Column>((a, c) => new JoinQueryInfos(JoinType.Inner, a.ColumnId == c.Id && a.Status == true))
+                      .WhereIF(query.TenantId!=0,(a,c)=>a.TenantId==query.TenantId&&c.TenantId==query.TenantId)
                       .WhereIF(!string.IsNullOrEmpty(query.Key), (a, c) => a.Title.Contains(query.Key))
                       .OrderBy((a, c) => a.Id, OrderByType.Desc)
                       .Select((a, c) => new Article()
@@ -49,7 +50,7 @@ namespace ShenNius.Share.Domain.Services.Cms
                           Author = a.Author,
                           Source = a.Source,
                           ColumnName = c.Title,
-                          TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == c.TenantId).Select(s => s.Name),
+                          TenantName = SqlFunc.Subqueryable<Tenant>().Where(s => s.Id == query.TenantId).Select(s => s.Name),
                       })
                       .ToPageAsync(query.Page, query.Limit);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });

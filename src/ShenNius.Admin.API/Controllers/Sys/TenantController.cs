@@ -87,13 +87,14 @@ namespace ShenNius.Admin.API.Controllers.Sys
         [HttpGet]
         public async Task<ApiResult> GetList()
         {
+            ICurrentUserContext userContext = HttpContext.RequestServices.GetRequiredService(typeof(ICurrentUserContext)) as ICurrentUserContext;
             //首页加载该列表时赋值于缓存
             var res = await _service.GetListAsync(d => d.IsDel == false);
             foreach (var item in res)
             {
                 if (item.IsCurrent)
                 {
-                    _cacheHelper.Set(KeyHelper.Sys.CurrentTenant, item);
+                    _cacheHelper.Set($"{KeyHelper.Sys.CurrentTenant}:{userContext.Id}", item);
                 }
             }
             return new ApiResult(data: res);
