@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Cms;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Cms;
@@ -57,7 +59,7 @@ namespace ShenNius.Admin.API.Controllers.Cms
         /// <returns></returns>
         [HttpGet]
         public Task<ApiResult> GetAllParentColumn()
-        {
+        {          
             return _columnService.GetAllParentColumnAsync();
         }
     }

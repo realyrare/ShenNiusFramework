@@ -17,6 +17,13 @@ namespace ShenNius.Share.Infrastructure.Attributes
     /// </summary>
     public class LogAttribute : ActionFilterAttribute
     {
+        private static readonly Dictionary<string, string> dic = new Dictionary<string, string>
+                 {
+                     { "POST", LogEnum.Add.GetEnumText() },
+                     { "PUT", LogEnum.Update.GetEnumText() },
+                     { "DELETE", LogEnum.Delete.GetEnumText() },
+                     { "GET", LogEnum.Read.GetEnumText() },
+                };
         /// <summary>
         /// 日志类型
         /// </summary>
@@ -62,13 +69,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
             if (string.IsNullOrEmpty(LogType))
             {
-                Dictionary<string, string> dic = new Dictionary<string, string>
-                 {
-                { "POST", LogEnum.Add.GetEnumText() },
-                { "PUT", LogEnum.Update.GetEnumText() },
-                { "DELETE", LogEnum.Delete.GetEnumText() },
-                { "GET", LogEnum.Read.GetEnumText() },
-                };
+
                 foreach (var item in dic)
                 {
                     if (method.Equals(item.Key, StringComparison.CurrentCultureIgnoreCase))

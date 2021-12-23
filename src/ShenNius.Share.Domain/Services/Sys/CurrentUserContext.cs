@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ShenNius.Share.Infrastructure.Caches;
+using ShenNius.Share.Infrastructure.Extensions;
+using ShenNius.Share.Models.Entity.Sys;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,7 +24,10 @@ namespace ShenNius.Share.Domain.Services.Sys
         /// 用户id
         /// </summary>
         int Id { get; }
-
+        /// <summary>
+        /// 多租户Id
+        /// </summary>
+        int TenantId { get; }
         /// <summary>
         /// 用户手机号
         /// </summary>
@@ -44,12 +50,12 @@ namespace ShenNius.Share.Domain.Services.Sys
     public class CurrentUserContext : ICurrentUserContext
     {
         private readonly IHttpContextAccessor _accessor;
+        private readonly ICacheHelper _cacheHelper;
 
-        public CurrentUserContext(IHttpContextAccessor accessor)
+        public CurrentUserContext(IHttpContextAccessor accessor, ICacheHelper cacheHelper)
         {
             _accessor = accessor;
-
-
+            this._cacheHelper = cacheHelper;
         }
         public string Name => GetName();
 
@@ -71,7 +77,18 @@ namespace ShenNius.Share.Domain.Services.Sys
         }
 
         public string Mobile => GetClaimValueByType("mobile").FirstOrDefault()?.ToString();
+        public int TenantId => GetTenantId();
 
+
+        private int GetTenantId()
+        {
+            var tenant = _cacheHelper.Get<Tenant>($"{KeyHelper.Sys.CurrentTenant}:{Id}")?.Id;
+            if (tenant == null || tenant.Value <= 0)
+            {
+                throw new FriendlyException("当前租户值为空！");
+            }
+            return tenant.Value;
+        }
         public int Id => Convert.ToInt32(GetClaimValueByType(JwtRegisteredClaimNames.Sid).FirstOrDefault());
 
         public bool IsAuthenticated()

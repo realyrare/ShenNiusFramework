@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
@@ -38,10 +39,12 @@ namespace ShenNius.Share.Domain.Services.Cms
     public class ColumnService : BaseServer<Column>, IColumnService
     {
         private readonly IMapper _mapper;
+        private readonly ICurrentUserContext _currentUserContext;
 
-        public ColumnService(IMapper mapper)
+        public ColumnService(IMapper mapper, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
+            this._currentUserContext = currentUserContext;
         }
         [CacheInterceptor]
         public virtual string GetTest()
@@ -92,7 +95,7 @@ namespace ShenNius.Share.Domain.Services.Cms
 
         public async Task<ApiResult> GetAllParentColumnAsync()
         {
-            var list = await GetListAsync(d => d.Status);
+            var list = await GetListAsync(d => d.Status&&d.TenantId== _currentUserContext.TenantId);
             var data = new List<Column>();
             WebHelper.ChildNode(list, data, 0);
             if (data?.Count > 0)

@@ -29,7 +29,6 @@ namespace ShenNius.Share.Infrastructure.Attributes
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-            //s  var actionName = actionDescriptor.ActionName.ToLower();
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var currentUserId = context.HttpContext.User.Claims.FirstOrDefault(d=>d.Type== JwtRegisteredClaimNames.Sid)?.Value;
             var tenantId = cache.Get<Tenant>($"{KeyHelper.Sys.CurrentTenant}:{currentUserId}")?.Id;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Repository.Extensions;
+using ShenNius.Share.Domain.Services.Sys;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
@@ -36,10 +37,12 @@ namespace ShenNius.Share.Domain.Services.Shop
     public class CategoryService : BaseServer<Category>, ICategoryService
     {
         private readonly IMapper _mapper;
+        private readonly ICurrentUserContext _currentUserContext;
 
-        public CategoryService(IMapper mapper)
+        public CategoryService(IMapper mapper, ICurrentUserContext currentUserContext)
         {
             _mapper = mapper;
+            this._currentUserContext = currentUserContext;
         }
 
         public async Task<ApiResult> ModifyAsync(CategoryModifyInput input)
@@ -83,7 +86,7 @@ namespace ShenNius.Share.Domain.Services.Shop
 
         public async Task<ApiResult> GetAllParentCategoryAsync()
         {
-            var list = await GetListAsync(d => d.Status);
+            var list = await GetListAsync(d => d.Status&&d.TenantId== _currentUserContext.TenantId);
             var data = new List<Category>();
             WebHelper.ChildNode(list, data, 0);
             if (data?.Count > 0)
