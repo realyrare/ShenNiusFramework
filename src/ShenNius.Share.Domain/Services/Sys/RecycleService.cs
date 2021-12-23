@@ -50,6 +50,10 @@ namespace ShenNius.Share.Domain.Services.Sys
                     var model = await GetModelAsync(d => d.Id == item);
                     if (model != null)
                     {
+                        if (string.IsNullOrEmpty(model.RestoreSql))
+                        {
+                            throw new FriendlyException($"根据传递的【{item}】参数查出来该条数据不存在！");
+                        }
                         var i = await Db.Ado.ExecuteCommandAsync(model.RestoreSql);
                         if (i > 0)
                         {
@@ -60,7 +64,7 @@ namespace ShenNius.Share.Domain.Services.Sys
                 }
                 Db.CommitTran();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Db.RollbackTran();
                 return new ApiResult(e.Message, 500);
@@ -81,6 +85,10 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     if (item != null)
                     {
+                        if (string.IsNullOrEmpty(item.RealyDelSql))
+                        {
+                            throw new FriendlyException($"根据传递的【{item}】参数查出来该条数据不存在！");
+                        }
                         var i = await Db.Ado.ExecuteCommandAsync(item.RealyDelSql);
                         if (i > 0)
                         {
