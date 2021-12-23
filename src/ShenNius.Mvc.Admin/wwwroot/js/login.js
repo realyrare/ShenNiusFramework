@@ -37,9 +37,8 @@ layui.use(['jquery', 'form', 'common'], function () {
                         $("#btnlogin").attr('disabled', false);
                         os.error("不好意思，该用户当前没有权限。请联系系统管理员分配权限！");
                         return;
-                    }
-                                 
-                   os.SetSession('globalCurrentUserInfo', res.data);                                                                        
+                    }                                 
+                   os.SetSession('globalCurrentUserInfo', res.data);                                                              
                     setTimeout(function () {
                         os.success("恭喜您，登录成功");
                         var rurl = os.getUrlParam('returnUrl');
