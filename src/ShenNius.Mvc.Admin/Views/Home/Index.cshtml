@@ -120,12 +120,13 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/lay-module/mysignalR.js" asp-append-version="true"></script>
     <script>
-        layui.use(['jquery', 'layer', 'miniAdmin', 'common', 'form'], function () {
+        layui.use(['jquery', 'layer', 'miniAdmin', 'common', 'form','miniTab'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
                 form = layui.form,
                 apiUtil = layui.common,
-                miniAdmin = layui.miniAdmin;
+                miniAdmin = layui.miniAdmin,
+                miniTab = layui.miniTab;
             //"api/init.json?v=12",
             var options = {
                 iniUrl: "menu/LoadLeftMenuTrees", // 初始化接口"menu/load-left-menu-trees",//
@@ -170,7 +171,10 @@
                 // console.log("id:" + id);
                 // console.log("id2:" + value);
                 setCurrentSite(id, value);
-            })
+               miniTab.deleteCurrentByIframe();
+            });
+            
+            
             function setCurrentSite(currentSiteId, value) {
                 apiUtil.ajax('tenant/setCurrent', { id: currentSiteId }, "application/json", "put", function (res) {
                     if (res.statusCode == 200 && res.success == true) {

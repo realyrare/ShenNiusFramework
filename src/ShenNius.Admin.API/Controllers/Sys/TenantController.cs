@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Sys;
-using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
@@ -61,24 +60,23 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// <param name="TenantCurrentInput"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ApiResult> SetCurrent([FromBody] TenantCurrentInput TenantCurrentInput)
-        {
-     
+        public async Task<ApiResult> SetCurrent([FromBody] TenantCurrentInput tenantCurrentInput)
+        {     
            ICurrentUserContext userContext = HttpContext.RequestServices.GetRequiredService(typeof(ICurrentUserContext)) as ICurrentUserContext;
             //把之前缓存存储的站点拿出来设置为不是当前的。
-            var model = await _service.GetModelAsync(d => d.Id == TenantCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
+            var model = await _service.GetModelAsync(d => d.Id == tenantCurrentInput.Id && d.IsDel == false && d.IsCurrent == false);
             if (model == null)
             {
-                throw new FriendlyException("当前站点实体信息为空!");
+                throw new FriendlyException("当前数据库站点实体信息不能为空!");
             }
             var currentTenant = _cacheHelper.Get<Tenant>($"{KeyHelper.Sys.CurrentTenant}:{userContext.Id}");
-            if (currentTenant != null)
+            if (currentTenant == null)
             {
-                currentTenant.IsCurrent = false;
-                //不要使用全部更新  有可能缓存的实体比较旧
-                await _service.UpdateAsync(d => new Tenant() { IsCurrent = false }, d => d.Id == currentTenant.Id);
+                throw new FriendlyException("当前缓存的站点实体信息不能为空!");
             }
 
+            //不要使用全部更新  有可能缓存的实体比较旧
+            await _service.UpdateAsync(d => new Tenant() { IsCurrent = false }, d => d.Id == currentTenant.Id);
             model.IsCurrent = true;
             await _service.UpdateAsync(model);
             //这里最好更新下缓存

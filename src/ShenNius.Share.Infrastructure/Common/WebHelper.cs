@@ -19,16 +19,14 @@ namespace ShenNius.Share.Infrastructure.Common
 {
     public class WebHelper
     {
-        public static Dictionary<string, string> GetDicLogEnumText()
-        {
-            return  new Dictionary<string, string>
+        public static Dictionary<string, string> GetDicLogEnumText => new Dictionary<string, string>
                  {
                      { "POST", LogEnum.Add.GetEnumText() },
                      { "PUT", LogEnum.Update.GetEnumText() },
                      { "DELETE", LogEnum.Delete.GetEnumText() },
                      { "GET", LogEnum.Read.GetEnumText() },
                 };
-        }
+
         /// <summary>
         /// 自动注册服务——获取程序集中的实现类对应的多个接口
         /// </summary>

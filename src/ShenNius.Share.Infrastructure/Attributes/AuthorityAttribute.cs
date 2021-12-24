@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using ShenNius.Share.Infrastructure.Caches;
-using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Input.Sys;
 using System;
@@ -32,11 +31,11 @@ namespace ShenNius.Share.Infrastructure.Attributes
             }
             //当用户名为mhg时（超级管理员），不用验证权限。
 #if DEBUG
-            //var currentName = context.HttpContext.User.Identity.Name;
-            //if (currentName.Equals("mhg"))
-            //{
-            //    return;
-            //}
+            var currentName = context.HttpContext.User.Identity.Name;
+            if (currentName.Equals("mhg"))
+            {
+                return;
+            }
 #endif
 
             var controller = context.ActionDescriptor.RouteValues["controller"].ToString();
@@ -44,7 +43,8 @@ namespace ShenNius.Share.Infrastructure.Attributes
             var method = context.HttpContext.Request.Method;
             if (string.IsNullOrEmpty(controller) ||string.IsNullOrEmpty(action) ||string.IsNullOrEmpty(method))
             {
-                throw new FriendlyException("controller and action and method is not found");
+                ReturnResult(context, "controller and action and method is not found", StatusCodes.Status403Forbidden);
+                return;
             }
             ICacheHelper cache = context.HttpContext.RequestServices.GetRequiredService(typeof(ICacheHelper)) as ICacheHelper;
             var userId = context.HttpContext.User.Claims.FirstOrDefault(d => d.Type == JwtRegisteredClaimNames.Sid).Value;
@@ -75,7 +75,6 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 var arryBtn = model.BtnCodeName.Split(',');
                 if (arryBtn.Length > 0)
                 {
-
                     if (!string.IsNullOrEmpty(Action))
                     {
                         action = Action;                        

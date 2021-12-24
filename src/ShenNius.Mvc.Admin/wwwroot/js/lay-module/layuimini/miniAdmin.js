@@ -204,7 +204,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme", 'common']
         deleteLoader: function (loadingTime) {
             setTimeout(function () {
                 $('.layuimini-loader').fadeOut();
-            }, loadingTime * 1000)
+            }, loadingTime * 500)
         },
 
         /**

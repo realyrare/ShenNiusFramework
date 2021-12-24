@@ -2,10 +2,7 @@
 using Newtonsoft.Json;
 using NLog;
 using ShenNius.Share.Infrastructure.Common;
-using ShenNius.Share.Models.Enums;
-using ShenNius.Share.Models.Enums.Extension;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ShenNius.Share.Infrastructure.Attributes
@@ -14,14 +11,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
     /// 审计日志
     /// </summary>
     public class LogAttribute : ActionFilterAttribute
-    {
-        private static readonly Dictionary<string, string> dic = new Dictionary<string, string>
-                 {
-                     { "POST", LogEnum.Add.GetEnumText() },
-                     { "PUT", LogEnum.Update.GetEnumText() },
-                     { "DELETE", LogEnum.Delete.GetEnumText() },
-                     { "GET", LogEnum.Read.GetEnumText() },
-                };
+    {        
         /// <summary>
         /// 日志类型
         /// </summary>
@@ -56,8 +46,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
             if (string.IsNullOrEmpty(LogType))
             {
-
-                foreach (var item in dic)
+                foreach (var item in WebHelper.GetDicLogEnumText)
                 {
                     if (method.Equals(item.Key, StringComparison.CurrentCultureIgnoreCase))
                     {
