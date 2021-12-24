@@ -20,8 +20,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />	
-		<!--<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />-->
-
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ShenNius.Admin.API\ShenNius.Admin.API.csproj" />

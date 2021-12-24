@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Admin.API.Controllers.Sys
 {
+    [Authority]
     public class LogsController : ApiControllerBase
     {
         private readonly ILogService _logService;
@@ -19,13 +20,13 @@ namespace ShenNius.Admin.API.Controllers.Sys
         }
 
 
-        [HttpDelete, Authority(Module = nameof(Log), Method = nameof(Button.Delete))]
+        [HttpDelete, Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _logService.DeleteAsync(commonDeleteInput.Ids));
         }
 
-        [HttpGet, Authority(Module = nameof(Log))]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages(int page, int limit=15,string key = null)
         {
             Expression<Func<Log, bool>> whereExpression = null;
@@ -37,7 +38,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet, Authority(Module = nameof(Log), Method = nameof(Button.Detail))]
+        [HttpGet, Authority]
         public async Task<ApiResult> Detail(int id)
         {
             var res = await _logService.GetModelAsync(d => d.Id == id);

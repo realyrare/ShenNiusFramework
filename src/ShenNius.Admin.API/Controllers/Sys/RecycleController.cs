@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
 using ShenNius.Share.Models.Dtos.Input.Sys;
@@ -20,6 +21,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
     /// <summary>
     /// 回收站
     /// </summary>
+    [Authority]
     public class RecycleController : ApiControllerBase
     {
         private readonly IRecycleService _recycleService;
@@ -32,13 +34,14 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="commonDeleteInput"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Authority]
+        
         public Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return _recycleService.RealyDeleteAsync(commonDeleteInput);
         }
 
-        [HttpGet]
+        [HttpGet, Authority]
         public Task<ApiResult> GetListPages([FromQuery] KeyListQuery query)
         {
             return _recycleService.GetPagesAsync(query);
@@ -49,7 +52,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Authority]
         public Task<ApiResult> Restore([FromBody] DeletesInput input)
         {
             return _recycleService.RestoreAsync(input);

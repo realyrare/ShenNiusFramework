@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using NLog;
 using ShenNius.Share.Infrastructure.Common;
@@ -8,7 +7,6 @@ using ShenNius.Share.Models.Enums.Extension;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace ShenNius.Share.Infrastructure.Attributes
 {
@@ -30,30 +28,19 @@ namespace ShenNius.Share.Infrastructure.Attributes
         public string LogType { get; set; }
         private string ActionArguments { get; set; }
         private Stopwatch Stopwatch { get; set; }
-        object logIgnore = null;
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-
-            var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-            logIgnore = controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(LogIgnoreAttribute), false).FirstOrDefault();
-            if (logIgnore != null)
-            {
-                return;
-            }
+         
             ActionArguments = JsonConvert.SerializeObject(context.ActionArguments);
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
             base.OnActionExecuting(context);
         }
 
-
+       
         public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            if (logIgnore != null)
-            {
-                return;
-            }
-            base.OnActionExecuted(context);
+        {                
             Stopwatch.Stop();
 
             var url = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
@@ -83,14 +70,7 @@ namespace ShenNius.Share.Infrastructure.Attributes
                 }
             }
             new LogHelper().Process(userName, LogType, str, LogLevel.Trace);
+            base.OnActionExecuted(context);
         }
-    }
-
-    /// <summary>
-    /// 【忽略全局日志】，有这个特型标签的action基本上有自己私有定制的log记录，全局审计日志可以忽略
-    /// </summary>
-    public class LogIgnoreAttribute : Attribute
-    {
-
     }
 }

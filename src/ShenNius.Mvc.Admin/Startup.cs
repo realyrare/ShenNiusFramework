@@ -124,7 +124,6 @@ namespace ShenNius.Mvc.Admin
             var mvcBuilder = services.AddControllersWithViews(options =>
              {
                  // options.Filters.Add(new AuthorizeFilter());这个过滤器全局添加也可以代替Authorize( 身份验证过滤器，可以重写)
-                 options.Filters.Add(typeof(LogAttribute));
                  options.Filters.Add(typeof(GlobalExceptionFilter));
              });
 

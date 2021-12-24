@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Repository;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Common;
@@ -32,6 +33,7 @@ namespace ShenNius.Admin.API.Controllers
     /// <typeparam name="TUpdateInput"></typeparam>
     [Route("api/[controller]/[action]")]
     [ApiController]
+
     public abstract class ApiBaseController<TEntity, TDetailQuery, TDeleteInput, TListQuery, TCreateInput, TUpdateInput> : ControllerBase
        where TEntity : BaseEntity, new()
        where TDeleteInput : DeletesInput
@@ -46,7 +48,7 @@ namespace ShenNius.Admin.API.Controllers
             _service = service;
             _mapper = mapper;
         }
-        [HttpDelete]
+        [HttpDelete, Authority]
         public virtual async Task<ApiResult> Deletes([FromBody] TDeleteInput commonDeleteInput)
         {
             var res = await _service.DeleteAsync(commonDeleteInput.Ids);
@@ -56,20 +58,20 @@ namespace ShenNius.Admin.API.Controllers
             }
             return new ApiResult();
         }
-        [HttpGet]
+        [HttpGet, Authority]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
             var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.Status == true, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
 
-        [HttpGet]
+        [HttpGet, Authority]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
             var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.Status == true);
             return new ApiResult(data: res);
         }
-        [HttpPost]
+        [HttpPost, Authority]
         public virtual async Task<ApiResult> Add([FromBody] TCreateInput createInput)
         {
             var entity = _mapper.Map<TEntity>(createInput);
@@ -80,7 +82,7 @@ namespace ShenNius.Admin.API.Controllers
             }
             return new ApiResult(data: res);
         }
-        [HttpPut]
+        [HttpPut, Authority]
         public virtual async Task<ApiResult> Modify([FromBody] TUpdateInput updateInput)
         {
             var entity = _mapper.Map<TEntity>(updateInput);

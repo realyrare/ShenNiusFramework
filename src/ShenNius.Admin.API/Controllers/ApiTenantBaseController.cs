@@ -56,7 +56,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Authority]
         public virtual async Task<ApiResult> Deletes([FromBody] TDeleteInput deleteInput)
         {
             var res = await _service.DeleteAsync(deleteInput.Ids);
@@ -71,7 +71,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Authority]
         public virtual async Task<ApiResult> Delete([FromBody] TDeleteInput deleteInput)
         {
             foreach (var item in deleteInput.Ids)
@@ -89,7 +89,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Authority(Action =nameof(Button.Delete))]
         public virtual Task<ApiResult> SoftDelete([FromBody] TDeleteInput deleteInput)
         {
             var recycleService = HttpContext.RequestServices.GetService(typeof(IRecycleService)) as IRecycleService;
@@ -100,7 +100,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="listQuery">参数实体</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Authority]
         public virtual async Task<ApiResult> GetListPages([FromQuery] TListQuery listQuery)
         {
             var res = await _service.GetPagesAsync(listQuery.Page, listQuery.Limit, d => d.TenantId == listQuery.TenantId && d.Status == true, d => d.Id, false);
@@ -118,7 +118,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="detailQuery">参数实体</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Authority]
         public virtual async Task<ApiResult> Detail([FromQuery] TDetailQuery detailQuery)
         {
             var res = await _service.GetModelAsync(d => d.Id == detailQuery.Id && d.TenantId == detailQuery.TenantId && d.Status == true);
@@ -129,7 +129,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="createInput">添加实体</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Authority]
         public virtual async Task<ApiResult> Add([FromBody] TCreateInput createInput)
         {
             var entity = _mapper.Map<TEntity>(createInput);
@@ -145,7 +145,7 @@ namespace ShenNius.Admin.API.Controllers
         /// </summary>
         /// <param name="updateInput">修改实体</param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut, Authority]
         public virtual async Task<ApiResult> Modify([FromBody] TUpdateInput updateInput)
         {
             var entity = _mapper.Map<TEntity>(updateInput);

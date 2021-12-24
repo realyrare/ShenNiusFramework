@@ -8,6 +8,7 @@ using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Model.Entity.Sys;
+using ShenNius.Share.Models.Configs;
 using ShenNius.Share.Models.Dtos.Output.Sys;
 using System;
 using System.Drawing;
@@ -19,7 +20,6 @@ using System.Threading.Tasks;
 namespace ShenNius.Mvc.Admin.Areas.Sys.Controllers
 {
     [Area("sys")]
-    [LogIgnore]
     public partial class UserController : Controller
     {
         private readonly IUserService _userService;

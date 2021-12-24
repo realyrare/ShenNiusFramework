@@ -8,15 +8,15 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('deletes')"> 删除 </button>
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('edit')">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('delete')">删除</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('modify')">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('deletes')">删除</a>
         </script>
     </div>
 </div>
@@ -38,7 +38,7 @@
                  第二个参数是按钮名称和数据库的btnName也要对应的;
                  event 阻止事件冒泡；
                 */
-                apiUtil.checkAuth("site", btnName, event);
+                apiUtil.checkAuth("tenant", btnName, event);
             };
             apiUtil.render({
                 elem: '#currentTableId',

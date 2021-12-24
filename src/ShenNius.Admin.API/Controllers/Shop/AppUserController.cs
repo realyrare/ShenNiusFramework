@@ -32,7 +32,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
             _appUserService = appUserService;
         }
 
-        [HttpGet]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
             var res = await _appUserService.GetPagesAsync(query.Page, query.Limit, d => d.TenantId == query.TenantId && d.Status == true, d => d.Id, false);

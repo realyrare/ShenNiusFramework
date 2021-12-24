@@ -20,7 +20,6 @@ namespace ShenNius.Admin.API.Controllers.Shop
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     [MultiTenant]
     public class AppUserAddressController : ControllerBase
     {
@@ -30,7 +29,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
         {
             _appUserAddressService = appUserAddressService;
         }
-        [HttpGet]
+        [HttpGet, Authority]
         public Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery query)
         {
             return _appUserAddressService.GetListPageAsync(query);

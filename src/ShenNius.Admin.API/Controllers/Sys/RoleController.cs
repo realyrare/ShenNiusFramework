@@ -24,12 +24,12 @@ namespace ShenNius.Admin.API.Controllers.Sys
             _mapper = mapper;
             _r_Role_MenuService = r_Role_MenuService;
         }
-        [HttpDelete, Authority(Module = nameof(Role), Method = nameof(Button.Delete))]
+        [HttpDelete,Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _roleService.DeleteAsync(commonDeleteInput.Ids));
         }
-        [HttpGet, Authority(Module = nameof(Role))]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             Expression<Func<Role, bool>> whereExpression = null;
@@ -51,7 +51,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         {
             return await _roleService.GetListPagesAsync(page, userId);
         }
-        [HttpGet]
+        [HttpGet, Authority]
         public async Task<ApiResult> Detail(int id)
         {
             if (id == 0)
@@ -68,20 +68,20 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return new ApiResult(data: data);
         }
 
-        [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Add))]
+        [HttpPost, Authority]
         public async Task<ApiResult> Add([FromBody] RoleInput roleInput)
         {
             var role = _mapper.Map<Role>(roleInput);
             return new ApiResult(await _roleService.AddAsync(role));
         }
 
-        [HttpPost, Authority(Module = nameof(Role), Method = nameof(Button.Auth))]
+        [HttpPost, Authority(Action=nameof(Button.Auth))]
         public async Task<ApiResult> SetMenu(SetRoleMenuInput setRoleMenuInput)
         {
             return await _r_Role_MenuService.SetMenuAsync(setRoleMenuInput);
         }
 
-        [HttpPut, Authority(Module = nameof(Role), Method = nameof(Button.Edit))]
+        [HttpPut, Authority]
         public async Task<ApiResult> Modify([FromBody] RoleModifyInput roleModifyInput)
         {
             return new ApiResult(await _roleService.UpdateAsync(d => new Role()

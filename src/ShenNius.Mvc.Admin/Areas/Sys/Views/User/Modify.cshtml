@@ -103,7 +103,7 @@
                             }
                         });
                     } else {
-                        apiUtil.ajax('user/register', data.field, "application/json", "post", function (res) {
+                        apiUtil.ajax('user/add', data.field, "application/json", "post", function (res) {
                             if (res.statusCode == 200 && res.success == true) {
                                 apiUtil.success(res.msg);
                                 parent.layer.close(parentIndex);

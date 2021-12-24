@@ -32,9 +32,13 @@ namespace ShenNius.Share.Models.Configs
         /// </summary>
         public string Delete { get; set; }
         /// <summary>
+        /// 批量删除
+        /// </summary>
+        public string Deletes { get; set; }
+        /// <summary>
         /// 编辑
         /// </summary>
-        public string Edit { get; set; }
+        public string Modify { get; set; }
         /// <summary>
         /// 添加
         /// </summary>

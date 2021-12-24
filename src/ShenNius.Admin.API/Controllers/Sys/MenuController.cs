@@ -29,8 +29,8 @@ namespace ShenNius.Admin.API.Controllers.Sys
         {
             return new ApiResult(await _configService.GetListAsync(d => d.Type == nameof(Button)));
         }
-
-        [HttpDelete, Authority(Module = nameof(Menu), Method = nameof(Button.Delete))]
+       
+        [HttpDelete, Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             foreach (var item in commonDeleteInput.Ids)
@@ -40,7 +40,8 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return new ApiResult();
         }
 
-        [HttpGet, Authority(Module = nameof(Menu))]
+        [HttpGet]
+        [Authority]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             return await _menuService.GetListPagesAsync(page, key);
@@ -71,7 +72,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="roleMenuInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(Menu), Method = nameof(Button.Auth))]
+        [HttpPost]
         public async Task<ApiResult> SetBtnPermissions([FromBody] RoleMenuBtnInput roleMenuInput)
         {
             return await _r_Role_MenuService.SetBtnPermissionsAsync(roleMenuInput);
@@ -81,7 +82,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(Menu), Method = nameof(Button.Auth))]
+        [HttpPost, Authority(Action =nameof(Button.Auth))]
         public async Task<ApiResult> AddPermissions([FromBody] PermissionsInput input)
         {
             var model = await _r_Role_MenuService.GetModelAsync(d => d.RoleId == input.RoleId && d.MenuId == input.MenuId);
@@ -95,6 +96,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         }
 
         [HttpGet]
+        [Authority]
         public async Task<ApiResult> Detail(int id)
         {
             if (id == 0)
@@ -104,13 +106,15 @@ namespace ShenNius.Admin.API.Controllers.Sys
             var res = await _menuService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
         }
-        [HttpPost, Authority(Module = nameof(Menu), Method = nameof(Button.Add))]
+        [HttpPost]
+        [Authority]
         public async Task<ApiResult> Add([FromBody] MenuInput menuInput)
         {
             return await _menuService.AddToUpdateAsync(menuInput);
         }
 
-        [HttpPut, Authority(Module = nameof(Menu), Method = nameof(Button.Edit))]
+        [HttpPut]
+        [Authority]
         public async Task<ApiResult> Modify([FromBody] MenuModifyInput menuModifyInput)
         {
             return await _menuService.ModifyAsync(menuModifyInput);

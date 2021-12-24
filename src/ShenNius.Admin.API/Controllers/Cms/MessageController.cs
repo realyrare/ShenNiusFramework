@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShenNius.Share.Domain.Services.Cms;
 using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Extensions;
@@ -33,7 +32,7 @@ namespace ShenNius.Admin.API.Controllers.Cms
         {
             this._messageService = messageService;
         }
-        [HttpGet]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages([FromQuery] KeyListTenantQuery keywordListTenantQuery)
         {
             Expression<Func<Message, bool>> whereExpression = d => d.Status == true;
@@ -53,7 +52,7 @@ namespace ShenNius.Admin.API.Controllers.Cms
         /// </summary>
         /// <param name="deleteInput"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesTenantInput deleteInput)
         {
             var res = await _messageService.DeleteAsync(deleteInput.Ids);

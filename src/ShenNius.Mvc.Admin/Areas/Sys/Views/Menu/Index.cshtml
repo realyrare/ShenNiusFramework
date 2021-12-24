@@ -28,21 +28,24 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button type="button" class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add" onclick="existAuth('add')"> 添加 </button>
-                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('delete')"> 删除 </button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete" onclick="existAuth('deletes')"> 删除 </button>
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('edit')">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('delete')">删除</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit" onclick="existAuth('modify')">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete" onclick="existAuth('deletes')">删除</a>
         </script>
 
     </div>
 </div>
 
 @section js{
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.isCurrent}}" disabled lay-skin="switch" lay-text="是|否" {{ d.status==1?'checked':''}}>
+    </script>
     <script>
         layui.use(['form', 'layer', 'table', 'element', 'common'], function () {
             var $ = layui.jquery,
@@ -89,6 +92,7 @@
                     { field: 'btnCodeName', width: 350, title: '菜单按钮' },
                     { field: 'httpMethod', title: 'methond' },
                     { field: 'url', title: 'url' },
+                     { field: 'status', title: '是否启用', templet: '#switchTpl' },
                     { field: 'createTime', title: '创建时间' },
                     { field: 'modifyTime', title: '修改时间' },
                     { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
@@ -192,7 +196,7 @@
                     });
                     return false;
                 } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
+                    layer.confirm('真的删除吗？', function (index) {
                         var listIds = new Array();
                         listIds[0] = data.id;
                         apiUtil.ajax('menu/deletes', { ids: listIds }, "application/json", "delete", function (res) {

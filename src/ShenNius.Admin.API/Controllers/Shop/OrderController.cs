@@ -21,7 +21,7 @@ namespace ShenNius.Admin.API.Controllers.Shop
             _OrderService = OrderService;
         }
 
-        [HttpGet]
+        [HttpGet, Authority]
         public Task<ApiResult> GetListPages([FromQuery] OrderKeyListTenantQuery query)
         {
             return _OrderService.GetListPageAsync(query);

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ShenNius.Admin.API.Controllers.Sys
 {
+
     public class ConfigController : ApiControllerBase
     {
         private readonly IConfigService _configService;
@@ -22,13 +23,13 @@ namespace ShenNius.Admin.API.Controllers.Sys
             _configService = configService;
             _mapper = mapper;
         }
-        [HttpDelete, Authority(Module = nameof(Config), Method = nameof(Button.Delete))]
+        [HttpDelete, Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput commonDeleteInput)
         {
             return new ApiResult(await _configService.DeleteAsync(commonDeleteInput.Ids));
         }
 
-        [HttpGet, Authority(Module = nameof(Config))]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages(int page, string key = null)
         {
             Expression<Func<Config, bool>> whereExpression = null;
@@ -39,14 +40,14 @@ namespace ShenNius.Admin.API.Controllers.Sys
             var res = await _configService.GetPagesAsync(page, 15, whereExpression, d => d.Id, false);
             return new ApiResult(data: new { count = res.TotalItems, items = res.Items });
         }
-        [HttpGet]
+        [HttpGet, Authority]
         public async Task<ApiResult> Detail(int id)
         {
             var res = await _configService.GetModelAsync(d => d.Id == id);
             return new ApiResult(data: res);
         }
 
-        [HttpPost, Authority(Module = nameof(Config), Method = nameof(Button.Add))]
+        [HttpPost, Authority]
         public async Task<ApiResult> Add([FromBody] ConfigInput input)
         {
             var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName));
@@ -58,7 +59,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             var res = await _configService.AddAsync(modelInput);
             return new ApiResult(data: res);
         }
-        [HttpPut, Authority(Module = nameof(Config), Method = nameof(Button.Edit))]
+        [HttpPut, Authority]
         public async Task<ApiResult> Modify([FromBody] ConfigModifyInput input)
         {
             var model = await _configService.GetModelAsync(d => d.EnName.Equals(input.EnName) && d.Id != input.Id);

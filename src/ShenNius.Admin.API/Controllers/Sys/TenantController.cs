@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ShenNius.Share.Domain.Repository;
 using ShenNius.Share.Domain.Services.Sys;
+using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Extensions;
 using ShenNius.Share.Infrastructure.FileManager;
@@ -55,7 +56,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return new ApiResult();
         }
         /// <summary>
-        /// 设置当前站点
+        /// 设置当前租户
         /// </summary>
         /// <param name="TenantCurrentInput"></param>
         /// <returns></returns>

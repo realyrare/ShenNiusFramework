@@ -84,19 +84,19 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="userRegisterInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Add))]
-        public async Task<ApiResult> Register([FromBody] UserRegisterInput userRegisterInput)
+        [HttpPost, Authority]
+        public async Task<ApiResult> Add([FromBody] UserRegisterInput userRegisterInput)
         {
             return await _userService.RegisterAsync(userRegisterInput);
         }
 
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Edit))]
+        [HttpPost, Authority]
         public async Task<ApiResult> Modify([FromBody] UserModifyInput userModifyInput)
         {
             return await _userService.ModfiyAsync(userModifyInput);
         }
 
-        [HttpDelete, Authority(Module = nameof(User), Method = nameof(Button.Delete))]
+        [HttpDelete, Authority]
         public async Task<ApiResult> Deletes([FromBody] DeletesInput input)
         {
             return new ApiResult(await _userService.DeleteAsync(input.Ids));
@@ -115,7 +115,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// 查询列表
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Authority(Module = nameof(User))]
+        [HttpGet, Authority]
         public async Task<ApiResult> GetListPages(int page, string key)
         {
             Expression<Func<User, bool>> whereExpression = null;
@@ -131,7 +131,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <param name="setUserRoleInput"></param>
         /// <returns></returns>
-        [HttpPost, Authority(Module = nameof(User), Method = nameof(Button.Auth))]
+        [HttpPost, Authority(Action=nameof(Button.Auth))]
         public async Task<ApiResult> SetRole([FromBody] SetUserRoleInput setUserRoleInput)
         {
             return await _r_User_RoleService.SetRoleAsync(setUserRoleInput);
@@ -213,7 +213,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
             return result;
         }
 
-        [HttpPost, AllowAnonymous, LogIgnore]
+        [HttpPost, AllowAnonymous]
         public async Task<ApiResult<LoginOutput>> MvcLogin([FromBody] LoginInput loginInput)
         {
             try
@@ -273,7 +273,7 @@ namespace ShenNius.Admin.API.Controllers.Sys
         /// </summary>
         /// <returns></returns>
 
-        [HttpPost, LogIgnore]
+        [HttpPost]
         public async Task Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
