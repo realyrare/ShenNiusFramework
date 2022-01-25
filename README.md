@@ -4,9 +4,6 @@
     如果对您有帮助，点击右上角⭐Star⭐关注 ，感谢支持开源！
 </div>
 
-#### QQ群
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
-
 
 #### 介绍
 
@@ -126,6 +123,9 @@
      <td><img src="https://images.gitee.com/uploads/images/2021/0927/221028_39281d75_1173871.png"/></td>
     </tr>
 </table>
+
+#### QQ群
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
 
 #### 参与贡献
 
