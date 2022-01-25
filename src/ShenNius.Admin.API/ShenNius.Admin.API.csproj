@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Wechat\**" />
+    <EmbeddedResource Remove="Controllers\Wechat\**" />
+    <None Remove="Controllers\Wechat\**" />
+  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 
@@ -10,8 +16,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\ShenNius.Share.Domain\ShenNius.Share.Domain.csproj" />
 	  <ProjectReference Include="..\ShenNius.Share.Infrastructure\ShenNius.Share.Infrastructure.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Controllers\Wechat\" />
 	</ItemGroup>
 </Project>
