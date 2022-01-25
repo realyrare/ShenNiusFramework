@@ -72,13 +72,11 @@
 
   #### 权限管理模块
 <table>
-
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/1001/200307_6fa1bb44_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png"/></td>
     </tr>
-
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
@@ -92,12 +90,10 @@
    <tr>
      <td><img src="https://images.gitee.com/uploads/images/2021/0927/220246_a7f94f1e_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0927/220307_c9bedea9_1173871.png"/></td>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0927/220323_f940ac46_1173871.png"/></td>
-    </tr>
-  <tr>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0927/220220_98eeadcf_1173871.png"/></td>
+   <td><img src="https://images.gitee.com/uploads/images/2021/0927/220220_98eeadcf_1173871.png"/></td>
        
     </tr>
+ 
 </table>
 
   #### CMS系统模块
@@ -110,7 +106,7 @@
    <tr>
      <td><img src="https://images.gitee.com/uploads/images/2021/0927/220643_c0c4885d_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0927/220704_d03f4bc4_1173871.png"/></td>
-       <td><img src="https://images.gitee.com/uploads/images/2021/0927/220220_98eeadcf_1173871.png"/></td>
+       <td><img src="https://images.gitee.com/uploads/images/2021/0927/220323_f940ac46_1173871.png"/></td>
     </tr>
 </table>
 
