@@ -72,11 +72,13 @@
 
   #### 权限管理模块
 <table>
+
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/1001/200307_6fa1bb44_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png"/></td>
     </tr>
+
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
@@ -99,11 +101,20 @@
 </table>
 
   #### CMS系统模块
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0927/220844_6f81e7f8_1173871.png "article.png")
-![文章编辑](https://images.gitee.com/uploads/images/2021/0927/220609_911f705d_1173871.png "article-editpng.png")
-![文章栏目将](https://images.gitee.com/uploads/images/2021/0927/220630_db845562_1173871.png "column.png")
-![广告列表](https://images.gitee.com/uploads/images/2021/0927/220643_c0c4885d_1173871.png "adv.png")
-![广告添加](https://images.gitee.com/uploads/images/2021/0927/220704_d03f4bc4_1173871.png "adv-add.png")
+<table>                
+   <tr>
+      <td><img src="https://images.gitee.com/uploads/images/2021/0927/220844_6f81e7f8_1173871.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0927/220609_911f705d_1173871.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0927/220630_db845562_1173871.png"/></td>
+    </tr> 
+   <tr>
+     <td><img src="https://images.gitee.com/uploads/images/2021/0927/220643_c0c4885d_1173871.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0927/220704_d03f4bc4_1173871.png"/></td>
+       <td><img src="https://images.gitee.com/uploads/images/2021/0927/220220_98eeadcf_1173871.png"/></td>
+    </tr>
+</table>
+
+
   #### 商城系统模块
 ![商品列表](https://images.gitee.com/uploads/images/2021/0927/220934_03c65880_1173871.png "goods.png")
 ![商品列表2](https://images.gitee.com/uploads/images/2021/0927/220950_1b6df0a5_1173871.png "goods-2.png")
