@@ -127,6 +127,14 @@
 #### QQ群
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
 
+#### 项目赞助
+<table>                
+   <tr>
+      <td><img src="doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220125182738.jpg"/></td>
+        <td><img src="doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220125182747.jpg"/></td>   
+    </tr>
+</table>
+
 #### 参与贡献
 
 1.  Fork 本仓库
