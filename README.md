@@ -75,6 +75,7 @@
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/1001/200307_6fa1bb44_1173871.png"/></td>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png"/></td>
     </tr>
     <tr>
         <td><img src="https://images.gitee.com/uploads/images/2021/0925/235614_89800b14_1173871.png"/></td>
@@ -98,7 +99,6 @@
     </tr>
 </table>
 
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0304/164851_824fb005_1173871.png "1.PNG")
   #### CMS系统模块
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0927/220844_6f81e7f8_1173871.png "article.png")
 ![文章编辑](https://images.gitee.com/uploads/images/2021/0927/220609_911f705d_1173871.png "article-editpng.png")
