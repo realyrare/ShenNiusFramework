@@ -13,7 +13,7 @@
 
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
-#### 特别申明
+#### 分支概况
 
 
  master分支为asp.netcore3.1单体分支:git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
