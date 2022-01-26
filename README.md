@@ -18,9 +18,10 @@
 
  ** .net6.0分支为asp.netcore6.0单体分支:git clone -b .net6.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 
- ** page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。**  
+ ** page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。** 
 
- ** 特别抱歉，由于单体分支和模块化的分支放在一起导致项目的分支过多且比较分散杂乱，因此借着asp.netcore6.0来临之际，准备把项目的模块化在高度重构下，尽可能的模块之间降低耦合度，因此会单独重新建立一个仓库，大家敬请期待** 
+
+ ** 模块化的项目地址：[基于dotNetCore基础之上开发的模块化框架](http://https://gitee.com/shenniu_code_group/godox-modulesshell.git)** 
 
 
  ** 此外该项目新功能的迭代我都会放在模块化分支上面，单体新功能的迭代一般都会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
