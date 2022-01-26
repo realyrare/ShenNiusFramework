@@ -32,6 +32,7 @@
  注意：**该项目新功能的迭代今后我会放在模块化分支上面，单体新功能的迭代一般可能会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
 
 #### 软件架构
+
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/1109/172453_89cc7f93_1173871.jpeg "项目架构图.jpg")
  整体框架分为服务层、基础设施层，实体层，展现层。
 
@@ -52,7 +53,7 @@
 8. 实体映射：AutoMapper
 9. 数据库使用mysql（后面会做sqlserver等其他数据库的兼容）
 10. 支持跨平台部署 linux/windows
-11. 支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一件切换
+11. 支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一键切换
 12. 支持AOP事务，服务层和控制器都可以打上特性标签使用
 13. 对多租户使用Filter，不管是添加还是更新、查询即可自动赋值
 14. 支持七牛云和本地图片一键切换使用上传
@@ -63,9 +64,9 @@
 
 #### 安装教程
 
-1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
-2.  在mysql上创建数据库shenniusdb，然后执行源码doc文件夹dbscript文件下的sql语句，以最近日期为准。doc文件夹里面数据库字典文档，word、CHM、html格式的都有。
-3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.jsonwen文件信息。
+1.  git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
+2.  在mysql上创建数据库shenniusdb，然后执行源码doc文件夹下的sql脚本语句，以最近日期为准。doc文件夹里面数据库字典文档，word、CHM、html格式的都有。
+3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.json文件信息。
 4、 使用过程中有什么问题欢迎提issues,基本都会第一时间解决。
 #### 使用说明
 
@@ -130,8 +131,10 @@
     </tr>
 </table>
 
-#### QQ群
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
+#### 入群交流
+QQ群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
+
+微信群：喜欢微信交流的扫描下面我的个人二维码，邀请进群。
 
 #### 项目赞助及微信联系
 
