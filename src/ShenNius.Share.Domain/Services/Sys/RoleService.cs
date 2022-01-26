@@ -32,6 +32,9 @@ namespace ShenNius.Share.Domain.Services.Sys
                 {
                     item.Status = true;
                 }
+                else {
+                    item.Status = false;
+                }
             }
             return new ApiResult(data: new { count = query.TotalItems, items = query.Items });
         }
