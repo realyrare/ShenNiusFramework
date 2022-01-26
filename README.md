@@ -13,19 +13,26 @@
 
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
+#### 分支概况
+
+
+ master分支为asp.netcore3.1单体分支:git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
+
+
+ .net6.0分支为asp.netcore6.0单体分支:git clone -b .net6.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git
+
+
+ **page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。** 
+
+
+ **模块化的项目地址：[基于dotNetCore基础之上开发的模块化框架](https://gitee.com/shenniu_code_group/godox-modulesshell.git)** 
+
 #### 特别申明
- **  master分支为asp.netcore3.1单体分支:git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  ** 
 
- ** .net6.0分支为asp.netcore6.0单体分支:git clone -b .net6.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
-
- ** page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。**  
-
- ** 特别抱歉，由于单体分支和模块化的分支放在一起导致项目的分支过多且比较分散杂乱，因此借着asp.netcore6.0来临之际，准备把项目的模块化在高度重构下，尽可能的模块之间降低耦合度，因此会单独重新建立一个仓库，大家敬请期待** 
-
-
- ** 此外该项目新功能的迭代我都会放在模块化分支上面，单体新功能的迭代一般都会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
+ 注意：**该项目新功能的迭代今后我会放在模块化分支上面，单体新功能的迭代一般可能会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
 
 #### 软件架构
+
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/1109/172453_89cc7f93_1173871.jpeg "项目架构图.jpg")
  整体框架分为服务层、基础设施层，实体层，展现层。
 
@@ -46,7 +53,7 @@
 8. 实体映射：AutoMapper
 9. 数据库使用mysql（后面会做sqlserver等其他数据库的兼容）
 10. 支持跨平台部署 linux/windows
-11. 支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一件切换
+11. 支持AOP缓存，使用AspectCore,缓存可做到Memarycache和redis一键切换
 12. 支持AOP事务，服务层和控制器都可以打上特性标签使用
 13. 对多租户使用Filter，不管是添加还是更新、查询即可自动赋值
 14. 支持七牛云和本地图片一键切换使用上传
@@ -57,9 +64,9 @@
 
 #### 安装教程
 
-1.  git clone -b single https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
-2.  在mysql上创建数据库shenniusdb，然后执行源码doc文件夹dbscript文件下的sql语句，以最近日期为准。doc文件夹里面数据库字典文档，word、CHM、html格式的都有。
-3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.jsonwen文件信息。
+1.  git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git 
+2.  在mysql上创建数据库shenniusdb，然后执行源码doc文件夹下的sql脚本语句，以最近日期为准。doc文件夹里面数据库字典文档，word、CHM、html格式的都有。
+3.  ShenNius.Mvc.Admin（前后端不分离）和ShenNius.API.Hosting（前后端分离 API）可以配置你要启动的appsettings.json文件信息。
 4、 使用过程中有什么问题欢迎提issues,基本都会第一时间解决。
 #### 使用说明
 
@@ -124,8 +131,10 @@
     </tr>
 </table>
 
-#### QQ群
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
+#### 入群交流
+QQ群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0fjt2O6b8HtjKuxiNY3I&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="dotnet根据地" title="dotnet根据地">878303823</a>
+
+微信群：喜欢微信交流的扫描下面我的个人二维码，邀请进群。
 
 #### 项目赞助及微信联系
 
