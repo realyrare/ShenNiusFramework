@@ -138,11 +138,12 @@ QQ群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0
 
 #### 项目赞助
 
+
 <table>                
    <tr>
-      <td><img src="doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220125182738.jpg"/></td>
-        <td><img src="doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220125182747.jpg"/></td>
- <td><img src="doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220125182730.jpg"/></td>     
+      <td><img src="https://images.gitee.com/uploads/images/2022/0126/161625_099afc25_1173871.jpeg"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2022/0126/161703_8fbc64fc_1173871.jpeg"/></td>
+ <td><img src="https://images.gitee.com/uploads/images/2022/0126/161727_17765d86_1173871.jpeg"/></td>     
     </tr>
 </table>
 
