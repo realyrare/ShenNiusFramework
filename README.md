@@ -14,17 +14,20 @@
  如果你有这个习惯，并且也想找一款迷你型、上手快，不用学习太多东西的框架，那么它就适合你，只要你会dotnet core,几乎没有学习成本。
 
 #### 特别申明
- **  master分支为asp.netcore3.1单体分支:git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  ** 
 
- ** .net6.0分支为asp.netcore6.0单体分支:git clone -b .net6.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
-
- ** page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。** 
+ **master分支为asp.netcore3.1单体分支:git clone -b master https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  ** 
 
 
- ** 模块化的项目地址：[基于dotNetCore基础之上开发的模块化框架](http://https://gitee.com/shenniu_code_group/godox-modulesshell.git)** 
+ **.net6.0分支为asp.netcore6.0单体分支:git clone -b .net6.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git  **
 
 
- ** 此外该项目新功能的迭代我都会放在模块化分支上面，单体新功能的迭代一般都会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
+ **page5.0分支为asp.netcore5.0单体前后端分离分支:git clone -b page5.0 https://gitee.com/shenniu_code_group/shen-nius.-modularity.git   。 注：该分支不再维护，适合大家学习二开使用。** 
+
+
+ **模块化的项目地址：[基于dotNetCore基础之上开发的模块化框架](https://gitee.com/shenniu_code_group/godox-modulesshell.git)** 
+
+
+ **此外该项目新功能的迭代我都会放在模块化分支上面，单体新功能的迭代一般都会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
 
 #### 软件架构
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/1109/172453_89cc7f93_1173871.jpeg "项目架构图.jpg")
