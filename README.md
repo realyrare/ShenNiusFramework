@@ -27,8 +27,9 @@
 
  **模块化的项目地址：[基于dotNetCore基础之上开发的模块化框架](https://gitee.com/shenniu_code_group/godox-modulesshell.git)** 
 
+#### 特别申明
 
- **此外该项目新功能的迭代我都会放在模块化分支上面，单体新功能的迭代一般都会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
+ **该项目新功能的迭代今后我会放在模块化分支上面，单体新功能的迭代一般可能会在最新的asp.netcore版本上开发。老版本新功能有偿服务！** 
 
 #### 软件架构
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/1109/172453_89cc7f93_1173871.jpeg "项目架构图.jpg")
