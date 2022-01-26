@@ -16,7 +16,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ShenNius.Share.Domain;
 using ShenNius.Share.Domain.Repository;
-using ShenNius.Share.Infrastructure.Attributes;
 using ShenNius.Share.Infrastructure.Caches;
 using ShenNius.Share.Infrastructure.Common;
 using ShenNius.Share.Infrastructure.Extensions;

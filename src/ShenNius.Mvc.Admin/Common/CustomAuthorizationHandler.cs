@@ -19,7 +19,7 @@ namespace ShenNius.Mvc.Admin.Common
 
             bool flag = false;
             if (requirement.Name == "Policy01")
-            {               
+            {
                 //策略1的逻辑
 
             }
@@ -32,10 +32,10 @@ namespace ShenNius.Mvc.Admin.Common
 
             if (flag)
             {
-                context.Succeed(requirement); 
+                context.Succeed(requirement);
             }
 
-            return Task.CompletedTask; 
+            return Task.CompletedTask;
         }
     }
 }

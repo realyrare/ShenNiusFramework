@@ -10,7 +10,7 @@ namespace ShenNius.Mvc.Admin.Controllers
         {
             return View();
         }
-       
+
         [HttpGet("error.html")]
         public IActionResult Error()
         {
