@@ -136,7 +136,7 @@ QQ群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IlNhUh4OZ4IS0
 
 微信群：喜欢微信交流的扫描下面我的个人二维码，邀请进群。
 
-#### 项目赞助及微信联系
+#### 项目赞助
 
 <table>                
    <tr>
